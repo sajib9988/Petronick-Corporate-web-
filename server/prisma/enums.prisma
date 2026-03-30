@@ -1,0 +1,27 @@
+enum Role {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AgentStatus {
+  PENDING
+  REVIEWED
+  APPROVED
+  REJECTED
+}
+
+enum SectionType {
+  HERO
+  ABOUT
+  CTA
+  FEATURE
+  TESTIMONIALS
+  GALLERY
+  CONTACT
+}

@@ -1,0 +1,197 @@
+model User {
+  id                 String     @id @default(cuid())
+  name               String
+  email              String
+  emailVerified      Boolean    @default(false)
+  role               Role       @default(USER)
+  status             UserStatus @default(ACTIVE)
+  needPasswordChange Boolean    @default(false)
+  isDeleted          Boolean    @default(false)
+  deletedAt          DateTime?
+  image              String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  sessions           Session[]
+  accounts           Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AgentStatus {
+  PENDING
+  REVIEWED
+  APPROVED
+  REJECTED
+}
+
+enum SectionType {
+  HERO
+  ABOUT
+  CTA
+  FEATURE
+  TESTIMONIALS
+  GALLERY
+  CONTACT
+}
+
+// ======================
+// CONTACT
+// ======================
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @db.VarChar(255)
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@map("contact")
+}
+
+// ======================
+// PROMOTION AGENT
+// ======================
+model PromotionAgent {
+  id            String         @id @default(cuid())
+  fullName      String
+  email         String
+  phone         String
+  location      String
+  experience    String
+  focus         String
+  message       String
+  status        AgentStatus    @default(PENDING)
+  businessUnits BusinessUnit[]
+  createdAt     DateTime       @default(now())
+
+  @@map("promotion_agent")
+}
+
+model BusinessUnit {
+  id      String         @id @default(cuid())
+  name    String
+  agentId String
+  agent   PromotionAgent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@map("business_unit")
+}
+
+// ======================
+// COMPANY
+// ======================
+model Company {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  description  String
+  logo         String
+  website      String?
+  order        Int      @default(0)
+  isVisible    Boolean  @default(true)
+  revenueStage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("company")
+}
+
+// ======================
+// CMS: PAGE
+// ======================
+model Page {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  title     String
+  sections  Section[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("page")
+}
+
+// ======================
+// CMS: SECTION
+// ======================
+model Section {
+  id          String      @id @default(cuid())
+  pageId      String
+  sectionType SectionType
+  content     Json
+  image       String?
+  sortOrder   Int         @default(0) @map("order")
+  isVisible   Boolean     @default(true)
+  page        Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([pageId, sortOrder])
+  @@map("section")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
