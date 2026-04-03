@@ -24,7 +24,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { registerSchema, RegisterFormData } from "@/lib/validation";
-import { registerUser } from "@/service/auth";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -46,29 +46,19 @@ export default function RegisterForm() {
     setError(null);
 
     try {
-      // const res = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     credentials: "include",
-      //     body: JSON.stringify({
-      //       name: data.name,
-      //       email: data.email,
-      //       password: data.password,
-      //     }),
-      //   },
-      // );
+      const { error } = await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
 
-      const res = await registerUser(data)
-      const result = await res.json();
-
-      if (!res.ok) {
-        setError(result.message || "Registration failed");
+      if (error) {
+        setError(error.message || "Registration failed");
         return;
       }
 
       router.push("/");
+      router.refresh();
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -76,8 +66,11 @@ export default function RegisterForm() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
   };
 
   return (

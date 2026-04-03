@@ -24,7 +24,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LoginFormData, loginSchema } from "@/lib/validation";
-import { loginUser } from "../../service/auth";
+import { authClient } from "@/lib/auth-client";
 
 
 export default function LoginForm() {
@@ -45,29 +45,23 @@ export default function LoginForm() {
     setError(null);
 
     try {
-      // const res = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     credentials: "include", // cookie set করার জন্য
-      //     body: JSON.stringify(data),
-      //   },
-      // );
-         const res = await loginUser(data)
-      const result = await res.json();
+      const { data: session, error } = await authClient.signIn.email({
+        email: data.email,
+        password: data.password,
+      });
 
-      if (!res.ok) {
-        setError(result.message || "Login failed");
+      if (error) {
+        setError(error.message || "Login failed");
         return;
       }
 
       // ADMIN হলে dashboard এ, USER হলে home এ
-      if (result.data?.user?.role === "ADMIN") {
+      if (session?.user?.role === "ADMIN") {
         router.push("/admin");
       } else {
         router.push("/");
       }
+      router.refresh();
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -75,8 +69,11 @@ export default function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
   };
 
   return (
@@ -98,7 +95,7 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }: { field: any }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
@@ -116,7 +113,7 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }: { field: any }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>

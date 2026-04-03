@@ -28,7 +28,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { logoutUser } from "@/service/auth";
+import { authClient } from "@/lib/auth-client";
 
 
 const menuGroups = [
@@ -107,8 +107,9 @@ export default function AdminSidebar() {
   };
 
   const handleLogout = async () => {
-    await logoutUser();
+    await authClient.signOut();
     router.push("/login");
+    router.refresh();
   };
 
   return (

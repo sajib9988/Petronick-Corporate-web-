@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { createAuthMiddleware, APIError } from "better-auth/api";
 import { bearer, emailOTP } from "better-auth/plugins";
 import { envVars } from "../config/env";
 import { sendEmail } from "../shared/utils/email";
@@ -138,8 +139,28 @@ export const auth = betterAuth({
     },
   },
 
-  redirectURLs: {
-    signIn: `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success`,
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/sign-in/email") {
+        const { email } = ctx.body;
+        const user = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        if (user) {
+          if (user.status === UserStatus.BLOCKED) {
+            throw new APIError("FORBIDDEN", {
+              message: "User is blocked",
+            });
+          }
+          if (user.isDeleted || user.status === UserStatus.DELETED) {
+            throw new APIError("NOT_FOUND", {
+              message: "User not found",
+            });
+          }
+        }
+      }
+    }),
   },
 
   advanced: {
