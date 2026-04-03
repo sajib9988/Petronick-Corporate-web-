@@ -1,4 +1,5 @@
-import { Role } from "@prisma/client";
+import { Role } from "../../../generated/prisma-client";
+
 
 export interface IRequestUser {
   id: string;

@@ -24,6 +24,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LoginFormData, loginSchema } from "@/lib/validation";
+import { loginUser } from "../../service/auth";
 
 
 export default function LoginForm() {
@@ -44,16 +45,16 @@ export default function LoginForm() {
     setError(null);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include", // cookie set করার জন্য
-          body: JSON.stringify(data),
-        },
-      );
-
+      // const res = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
+      //   {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     credentials: "include", // cookie set করার জন্য
+      //     body: JSON.stringify(data),
+      //   },
+      // );
+         const res = await loginUser(data)
       const result = await res.json();
 
       if (!res.ok) {

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "pnpm exec tsx watch src/server.ts",
     "build": "tsc",
     "lint": "eslint ./src/**/*",
     "lint:fix": "eslint ./src/**/* --fix",

@@ -1,5 +1,8 @@
 import { createAuthClient } from "better-auth/react";
 
-export const { signIn, signUp, signOut, useSession } = createAuthClient({
+export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL, // অবশ্যই FRONTEND থেকে accessable URL
 });
+
+export const { signIn, signUp, signOut, useSession } = authClient;
+console.log("Auth Client Initialized:", authClient);
