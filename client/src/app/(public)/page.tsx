@@ -1,11 +1,11 @@
+import HeroSection from '@/components/home-components/hero-section'
 import React from 'react'
 
 const HomePage = () => {
   return (
     <main>
-        <h1 className="text-4xl font-bold text-center mt-20">
-            Welcome to Petronick Corporate
-        </h1>
+      <HeroSection></HeroSection>
+      
     </main>
   )
 }   

@@ -5,4 +5,4 @@ export const authClient = createAuthClient({
 });
 
 export const { signIn, signUp, signOut, useSession } = authClient;
-console.log("Auth Client Initialized:", authClient);
+// console.log("Auth Client Initialized:", authClient);

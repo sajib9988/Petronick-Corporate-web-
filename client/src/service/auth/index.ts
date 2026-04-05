@@ -41,6 +41,6 @@ export const getMe = async () => {
 };
 
 // Google login — redirect only, no server action needed
-export const googleLoginUrl = () => {
-  return `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
-};
+// export const googleLoginUrl = () => {
+//   return `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
+// };
