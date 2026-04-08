@@ -39,7 +39,6 @@ export const SECTION_TYPES: SectionType[] = [
   "HERO", "ABOUT", "CTA", "FEATURE", "TESTIMONIALS", "GALLERY", "CONTACT",
 ];
 
-// Content fields config per type
 const FIELDS: Record<SectionType, { key: string; label: string; multiline?: boolean }[]> = {
   HERO: [
     { key: "headline", label: "Headline" },
@@ -93,7 +92,6 @@ const sectionSchema = z.object({
 
 export type SectionFormValues = z.infer<typeof sectionSchema>;
 
-// ─── Default values ───────────────────────────────────────
 export const defaultSectionValues: SectionFormValues = {
   type: "HERO",
   content: {},
@@ -101,7 +99,6 @@ export const defaultSectionValues: SectionFormValues = {
   isVisible: true,
 };
 
-// ─── Props ────────────────────────────────────────────────
 interface SectionFormProps {
   defaultValues?: SectionFormValues;
   existingImage?: string | null;
@@ -112,7 +109,6 @@ interface SectionFormProps {
   error?: string;
 }
 
-// ─── Component ────────────────────────────────────────────
 export default function SectionForm({
   defaultValues = defaultSectionValues,
   existingImage,
@@ -140,41 +136,27 @@ export default function SectionForm({
     setImagePreview(URL.createObjectURL(file));
   };
 
-  // When type changes, reset content
   const handleTypeChange = (val: string, fieldOnChange: (v: string) => void) => {
     fieldOnChange(val);
     form.setValue("content", {});
   };
 
-  const handleSubmit = async (values: SectionFormValues) => {
-    await onSubmit(values, imageFile);
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-
+      <form onSubmit={form.handleSubmit((v) => onSubmit(v, imageFile))} className="space-y-4">
         {error && (
-          <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
-            {error}
-          </p>
+          <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>
         )}
 
-        {/* Section Type */}
         <FormField
           control={form.control}
           name="type"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Section Type</FormLabel>
-              <Select
-                value={field.value}
-                onValueChange={(v) => handleTypeChange(v, field.onChange)}
-              >
+              <Select value={field.value} onValueChange={(v) => handleTypeChange(v, field.onChange)}>
                 <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {SECTION_TYPES.map((t) => (
@@ -182,17 +164,13 @@ export default function SectionForm({
                   ))}
                 </SelectContent>
               </Select>
-              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Dynamic Content Fields */}
         {fields.length > 0 && (
           <div className="space-y-3 border border-gray-100 rounded-xl p-3">
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Content
-            </p>
+            <p className="text-xs font-medium text-gray-500 uppercase">Content</p>
             {fields.map(({ key, label, multiline }) => (
               <FormField
                 key={key}
@@ -203,21 +181,15 @@ export default function SectionForm({
                     <FormLabel className="text-xs">{label}</FormLabel>
                     <FormControl>
                       {multiline ? (
-                        <Textarea
-                          placeholder={label}
-                          className="min-h-[64px] resize-none text-sm"
-                          {...field}
-                          value={field.value ?? ""}
+                        <Textarea 
+                          {...field} 
+                          value={field.value || ""} 
+                          className="min-h-[64px] resize-none text-sm" 
                         />
                       ) : (
-                        <Input
-                          placeholder={label}
-                          {...field}
-                          value={field.value ?? ""}
-                        />
+                        <Input {...field} value={field.value || ""} />
                       )}
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -225,30 +197,12 @@ export default function SectionForm({
           </div>
         )}
 
-        {/* Image Upload */}
         <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-700">
-            Background Image <span className="text-gray-400 font-normal">(optional)</span>
-          </p>
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-full h-28 object-cover rounded-lg"
-            />
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="text-xs text-gray-500 w-full
-              file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0
-              file:text-xs file:bg-gray-100 file:text-gray-700
-              hover:file:bg-gray-200 cursor-pointer"
-          />
+          <p className="text-sm font-medium">Background Image</p>
+          {imagePreview && <img src={imagePreview} className="w-full h-28 object-cover rounded-lg" />}
+          <input type="file" accept="image/*" onChange={handleImageChange} className="text-xs w-full" />
         </div>
 
-        {/* Order + Visibility — side by side */}
         <div className="grid grid-cols-2 gap-3">
           <FormField
             control={form.control}
@@ -256,46 +210,26 @@ export default function SectionForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Sort Order</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
+                <Input type="number" {...field} />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="isVisible"
             render={({ field }) => (
               <FormItem className="flex flex-col justify-end">
                 <FormLabel>Visible</FormLabel>
-                <FormControl>
-                  <div className="flex items-center gap-2 h-8">
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                    <span className="text-xs text-gray-500">
-                      {field.value ? "Visible" : "Hidden"}
-                    </span>
-                  </div>
-                </FormControl>
+                <div className="flex items-center gap-2 h-8">
+                  <Switch checked={field.value} onCheckedChange={field.onChange} />
+                </div>
               </FormItem>
             )}
           />
         </div>
 
-        {/* Actions */}
         <div className="flex justify-end gap-2 pt-1">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onCancel}
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
+          <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>Cancel</Button>
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 size={13} className="mr-1.5 animate-spin" />}
             {submitLabel}
