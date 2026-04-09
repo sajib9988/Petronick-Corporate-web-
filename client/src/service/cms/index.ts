@@ -78,3 +78,17 @@ export const deleteSection = async (id: string) => {
   });
   return await res.json();
 };
+
+export const getSectionById = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
+    cache: "no-store",
+  });
+  return await res.json();
+};
+
+export const getAllSections = async () => {
+  const res = await fetch(`${BASE_URL}/cms/sections`, {
+    cache: "no-store",
+  });
+  return await res.json();
+};
