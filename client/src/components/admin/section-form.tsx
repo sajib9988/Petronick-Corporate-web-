@@ -1,104 +1,46 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { type Resolver, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
-  FormControl,
-  FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormControl,
+  FormField,
 } from "@/components/ui/form";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
 
-// ─── Types ────────────────────────────────────────────────
-export type SectionType =
-  | "HERO"
-  | "ABOUT"
-  | "CTA"
-  | "FEATURE"
-  | "TESTIMONIALS"
-  | "GALLERY"
-  | "CONTACT";
+// ✅ import from external files
+import { SECTION_TYPES, SectionType, FIELDS } from "./section/section.constant";
+import { sectionSchema } from "./section/section.schema";
 
-export const SECTION_TYPES: SectionType[] = [
-  "HERO", "ABOUT", "CTA", "FEATURE", "TESTIMONIALS", "GALLERY", "CONTACT",
-];
+type SectionFormValues = z.infer<typeof sectionSchema>;
 
-const FIELDS: Record<SectionType, { key: string; label: string; multiline?: boolean }[]> = {
-  HERO: [
-    { key: "headline", label: "Headline" },
-    { key: "subheadline", label: "Subheadline", multiline: true },
-    { key: "primaryBtn", label: "Primary Button" },
-    { key: "primaryBtnLink", label: "Primary Button Link" },
-    { key: "secondaryBtn", label: "Secondary Button" },
-    { key: "secondaryBtnLink", label: "Secondary Button Link" },
-  ],
-  ABOUT: [
-    { key: "title", label: "Title" },
-    { key: "subtitle", label: "Subtitle" },
-    { key: "body", label: "Body", multiline: true },
-  ],
-  CTA: [
-    { key: "title", label: "Title" },
-    { key: "description", label: "Description", multiline: true },
-    { key: "btnText", label: "Button Text" },
-    { key: "btnLink", label: "Button Link" },
-  ],
-  FEATURE: [
-    { key: "title", label: "Title" },
-    { key: "description", label: "Description", multiline: true },
-    { key: "icon", label: "Icon (optional)" },
-  ],
-  TESTIMONIALS: [
-    { key: "title", label: "Section Title" },
-    { key: "authorName", label: "Author Name" },
-    { key: "authorTitle", label: "Author Title" },
-    { key: "quote", label: "Quote", multiline: true },
-  ],
-  GALLERY: [
-    { key: "title", label: "Gallery Title" },
-    { key: "caption", label: "Caption (optional)" },
-  ],
-  CONTACT: [
-    { key: "title", label: "Title" },
-    { key: "subtitle", label: "Subtitle", multiline: true },
-    { key: "email", label: "Contact Email" },
-    { key: "phone", label: "Phone (optional)" },
-  ],
-};
+export type { SectionFormValues };
 
-// ─── Zod Schema ───────────────────────────────────────────
-const sectionSchema = z.object({
-  type: z.enum(["HERO", "ABOUT", "CTA", "FEATURE", "TESTIMONIALS", "GALLERY", "CONTACT"]),
-  content: z.record(z.string()).default({}),
-  order: z.coerce.number().int().default(0),
-  isVisible: z.boolean().default(true),
-});
-
-export type SectionFormValues = z.infer<typeof sectionSchema>;
-
-export const defaultSectionValues: SectionFormValues = {
-  type: "HERO",
+const defaultSectionValues: SectionFormValues = {
+  type: "HERO" as const,
   content: {},
   order: 0,
   isVisible: true,
 };
 
+// ─── Props ─────────────────────────
 interface SectionFormProps {
   defaultValues?: SectionFormValues;
   existingImage?: string | null;
@@ -109,6 +51,7 @@ interface SectionFormProps {
   error?: string;
 }
 
+// ─── Component ─────────────────────
 export default function SectionForm({
   defaultValues = defaultSectionValues,
   existingImage,
@@ -119,11 +62,13 @@ export default function SectionForm({
   error,
 }: SectionFormProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(existingImage ?? null);
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    existingImage ?? null
+  );
 
   const form = useForm<SectionFormValues>({
-    resolver: zodResolver(sectionSchema),
     defaultValues,
+    resolver: zodResolver(sectionSchema) as Resolver<SectionFormValues>,
   });
 
   const selectedType = form.watch("type");
@@ -136,31 +81,35 @@ export default function SectionForm({
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleTypeChange = (val: string, fieldOnChange: (v: string) => void) => {
-    fieldOnChange(val);
+  const handleTypeChange = (val: SectionType) => {
+    form.setValue("type", val);
     form.setValue("content", {});
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((v) => onSubmit(v, imageFile))} className="space-y-4">
-        {error && (
-          <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">{error}</p>
-        )}
+      <form
+        onSubmit={form.handleSubmit((values) => onSubmit(values, imageFile))}
+        className="space-y-4"
+      >
+        {error && <p className="text-xs text-red-500 bg-red-50 p-2 rounded">{error}</p>}
 
-        <FormField
-          control={form.control}
+        {/* Section Type */}
+        <Controller
           name="type"
+          control={form.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Section Type</FormLabel>
-              <Select value={field.value} onValueChange={(v) => handleTypeChange(v, field.onChange)}>
-                <FormControl>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                </FormControl>
+              <Select value={field.value} onValueChange={(v) => handleTypeChange(v as SectionType)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
                   {SECTION_TYPES.map((t) => (
-                    <SelectItem key={t} value={t}>{t}</SelectItem>
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -168,26 +117,22 @@ export default function SectionForm({
           )}
         />
 
+        {/* Dynamic Fields */}
         {fields.length > 0 && (
-          <div className="space-y-3 border border-gray-100 rounded-xl p-3">
-            <p className="text-xs font-medium text-gray-500 uppercase">Content</p>
-            {fields.map(({ key, label, multiline }) => (
+          <div className="space-y-3 border p-3 rounded-lg">
+          {fields.map(({ key, label, multiline }: { key: string; label: string; multiline?: boolean }) => (
               <FormField
                 key={key}
                 control={form.control}
-                name={`content.${key}` as any}
+                name={`content.${key}` as `content.${string}`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">{label}</FormLabel>
+                    <FormLabel>{label}</FormLabel>
                     <FormControl>
                       {multiline ? (
-                        <Textarea 
-                          {...field} 
-                          value={field.value || ""} 
-                          className="min-h-[64px] resize-none text-sm" 
-                        />
+                        <Textarea {...field} value={(field.value as string) || ""} />
                       ) : (
-                        <Input {...field} value={field.value || ""} />
+                        <Input {...field} value={(field.value as string) || ""} />
                       )}
                     </FormControl>
                   </FormItem>
@@ -197,44 +142,14 @@ export default function SectionForm({
           </div>
         )}
 
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Background Image</p>
-          {imagePreview && <img src={imagePreview} className="w-full h-28 object-cover rounded-lg" />}
-          <input type="file" accept="image/*" onChange={handleImageChange} className="text-xs w-full" />
-        </div>
+        {/* Image */}
+        <input type="file" accept="image/*" onChange={handleImageChange} />
 
-        <div className="grid grid-cols-2 gap-3">
-          <FormField
-            control={form.control}
-            name="order"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Sort Order</FormLabel>
-                <Input type="number" {...field} />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="isVisible"
-            render={({ field }) => (
-              <FormItem className="flex flex-col justify-end">
-                <FormLabel>Visible</FormLabel>
-                <div className="flex items-center gap-2 h-8">
-                  <Switch checked={field.value} onCheckedChange={field.onChange} />
-                </div>
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex justify-end gap-2 pt-1">
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>Cancel</Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading && <Loader2 size={13} className="mr-1.5 animate-spin" />}
-            {submitLabel}
-          </Button>
-        </div>
+        {/* Buttons */}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading && <Loader2 className="animate-spin mr-1" size={14} />}
+          {submitLabel}
+        </Button>
       </form>
     </Form>
   );
