@@ -64,7 +64,7 @@ export const AuthSection = ({ isMobile = false }) => {
   return (
     <div className={`flex ${isMobile ? "flex-col gap-2" : "items-center gap-2"}`}>
       <Button asChild size="sm" variant="outline" className={isMobile ? "w-full" : ""}>
-        <Link href="/login">Sign in</Link>
+        <Link href="/login">log in</Link>
       </Button>
       <Button asChild size="sm" className={isMobile ? "w-full" : ""}>
         <Link href="/promotion-agent">Apply Now</Link>

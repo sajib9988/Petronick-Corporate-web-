@@ -7,25 +7,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { LoginFormData, loginSchema } from "@/lib/validation";
 import { loginUser } from "../../service/auth";
-
 
 export default function LoginForm() {
   const router = useRouter();
@@ -34,42 +18,22 @@ export default function LoginForm() {
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     setError(null);
-
     try {
-      // const res = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     credentials: "include", // cookie set করার জন্য
-      //     body: JSON.stringify(data),
-      //   },
-      // );
-         const res = await loginUser(data)
-      const result = await res.json();
-
+      const res = await loginUser(data);
       if (!res.ok) {
+        const result = await res.json();
         setError(result.message || "Login failed");
         return;
       }
-
-      // ADMIN হলে dashboard এ, USER হলে home এ
-      if (result.data?.user?.role === "ADMIN") {
-        router.push("/admin");
-      } else {
-        router.push("/");
-      }
+      router.push("/");
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -80,17 +44,19 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-        <CardDescription>Sign in to your account to continue</CardDescription>
-      </CardHeader>
+    <div className="relative p-8 sm:p-10 rounded-[40px] bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[20px_20px_50px_rgba(0,0,0,0.5),inset_5px_5px_15px_rgba(255,255,255,0.1)]">
+      
+      {/* Top Glossy Reflection */}
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-t-[40px]" />
 
-      <CardContent>
+      <div className="relative z-10">
+        <h2 className="text-3xl font-bold text-white text-center mb-1 tracking-tight">Welcome</h2>
+        <p className="text-blue-200/50 text-center text-xs mb-8 uppercase tracking-widest">Petronick Login</p>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md">
+              <div className="bg-red-500/20 border border-red-500/40 text-red-200 text-[11px] p-2.5 rounded-xl text-center animate-pulse">
                 {error}
               </div>
             )}
@@ -98,17 +64,16 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }: { field: any }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
-                      placeholder="john@example.com"
+                      placeholder="Email Address"
+                      className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-blue-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400 text-[10px] ml-2" />
                 </FormItem>
               )}
             />
@@ -116,49 +81,51 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }: { field: any }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="Password"
+                      className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-blue-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400 text-[10px] ml-2" />
                 </FormItem>
               )}
             />
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]"
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Sign in"}
+              {isLoading ? "Signing in..." : "Login"}
             </Button>
           </form>
         </Form>
 
-        <div className="relative my-4">
+        {/* Divider - "Or continue with" */}
+        <div className="relative my-8">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+            <span className="w-full border-t border-white/10" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-muted-foreground">
+          <div className="relative flex justify-center text-[10px] uppercase tracking-tighter">
+            <span className="bg-[#1a2c38] px-3 text-white/40 rounded-full py-0.5 border border-white/5">
               Or continue with
             </span>
           </div>
         </div>
 
+        {/* Google Login Button */}
         <Button
           variant="outline"
-          className="w-full"
+          className="w-full h-12 bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-2xl flex items-center justify-center gap-3 transition-all border-none ring-1 ring-white/20"
           onClick={handleGoogleLogin}
           type="button"
         >
-          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+          <svg className="h-5 w-5" viewBox="0 0 24 24">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -176,18 +143,18 @@ export default function LoginForm() {
               fill="#EA4335"
             />
           </svg>
-          Continue with Google
+          <span className="font-medium">Google</span>
         </Button>
-      </CardContent>
 
-      <CardFooter className="justify-center">
-        <p className="text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-primary font-medium hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </CardFooter>
-    </Card>
+        <div className="mt-8 text-center">
+          <p className="text-[12px] text-white/40">
+            Don't have an account?{" "}
+            <Link href="/register" className="text-blue-400 hover:text-blue-300 font-bold transition-colors">
+              Sign Up
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -64,7 +64,7 @@ export default function CompanyForm({
   const [logoPreview, setLogoPreview] = useState<string | null>(existingLogo ?? null);
 
   const form = useForm<CompanyFormValues>({
-    resolver: zodResolver(companySchema),
+    resolver: zodResolver(companySchema) as any,
     defaultValues,
   });
 
@@ -88,23 +88,24 @@ export default function CompanyForm({
       )}
 
       {/* Name */}
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Name *</FormLabel>
-            <FormControl>
-              <Input placeholder="Petronick Media" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+     <FormField
+          // 2. You can now REMOVE control={form.control} 
+          // It is now picked up automatically from context
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Name *</FormLabel>
+              <FormControl>
+                <Input placeholder="Petronick Media" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
       {/* Description */}
       <FormField
-        control={form.control}
+       
         name="description"
         render={({ field }) => (
           <FormItem>
@@ -147,7 +148,7 @@ export default function CompanyForm({
 
       {/* Website */}
       <FormField
-        control={form.control}
+
         name="website"
         render={({ field }) => (
           <FormItem>
@@ -162,7 +163,7 @@ export default function CompanyForm({
 
       {/* Revenue Stage */}
       <FormField
-        control={form.control}
+  
         name="revenueStage"
         render={({ field }) => (
           <FormItem>
@@ -178,7 +179,7 @@ export default function CompanyForm({
       {/* Order + Visibility */}
       <div className="grid grid-cols-2 gap-3">
         <FormField
-          control={form.control}
+      
           name="order"
           render={({ field }) => (
             <FormItem>
@@ -192,7 +193,7 @@ export default function CompanyForm({
         />
 
         <FormField
-          control={form.control}
+
           name="isVisible"
           render={({ field }) => (
             <FormItem className="flex flex-col justify-end">
