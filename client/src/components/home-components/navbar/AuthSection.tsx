@@ -18,6 +18,7 @@ export const AuthSection = ({ isMobile = false }) => {
         setSession(data.user || null);
       } catch (err) {
         setSession(null);
+        
       } finally {
         setLoading(false);
       }
