@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL, // অবশ্যই FRONTEND থেকে accessable URL
+   baseURL: "http://localhost:5000", // অবশ্যই FRONTEND থেকে accessable URL
 });
 
 export const { signIn, signUp, signOut, useSession } = authClient;
