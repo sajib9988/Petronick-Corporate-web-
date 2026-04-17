@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { LoginFormData, loginSchema } from "@/lib/validation";
-import { loginUser } from "../../service/auth";
+import { authClient, signIn } from "@/lib/auth-client";
+import { loginUser } from "@/service/auth";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -39,8 +40,16 @@ export default function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
+  const handleGoogleLogin = async () => {
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      console.error("Google login failed", err);
+      setError("Google login failed");
+    }
   };
 
   return (

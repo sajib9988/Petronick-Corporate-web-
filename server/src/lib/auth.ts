@@ -1,3 +1,5 @@
+// server/src/lib/auth.ts
+
 import { betterAuth } from "better-auth";
 import { bearer, emailOTP } from "better-auth/plugins";
 import { envVars } from "../config/env";
@@ -5,7 +7,6 @@ import { sendEmail } from "../shared/utils/email";
 import { prisma } from "../database/prisma";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { Role, UserStatus } from "../../generated/prisma-client";
-
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -20,6 +21,7 @@ export const auth = betterAuth({
     envVars.FRONTEND_URL,
     envVars.BETTER_AUTH_URL,
     "http://localhost:3000",
+    "http://localhost:5000",
   ],
 
   emailAndPassword: {
@@ -38,7 +40,7 @@ export const auth = betterAuth({
           role: Role.USER,
           status: UserStatus.ACTIVE,
           needPasswordChange: false,
-          emailVerified: false,
+          emailVerified: true, // ✅ Google থেকে আসা email verified
           isDeleted: false,
           deletedAt: null,
         };
@@ -89,12 +91,7 @@ export const auth = betterAuth({
       async sendVerificationOTP({ email, otp, type }) {
         if (type === "email-verification") {
           const user = await prisma.user.findUnique({ where: { email } });
-
-          if (!user) {
-            console.error(`User with email ${email} not found`);
-            return;
-          }
-
+          if (!user) return;
           if (!user.emailVerified) {
             sendEmail({
               to: email,
@@ -109,7 +106,6 @@ export const auth = betterAuth({
           }
         } else if (type === "forget-password") {
           const user = await prisma.user.findUnique({ where: { email } });
-
           if (user) {
             sendEmail({
               to: email,
@@ -124,39 +120,40 @@ export const auth = betterAuth({
           }
         }
       },
-      expiresIn: 5 * 60, // 5 minutes
+      expiresIn: 5 * 60,
       otpLength: 6,
     }),
   ],
 
   session: {
-    expiresIn: 60 * 60 * 24,     // 1 day
-    updateAge: 60 * 60 * 24,     // 1 day
+    expiresIn: 60 * 60 * 24,
+    updateAge: 60 * 60 * 24,
     cookieCache: {
       enabled: true,
-      maxAge: 60 * 60 * 24,      // 1 day
+      maxAge: 60 * 60 * 24,
     },
   },
 
   redirectURLs: {
-    signIn: `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success`,
+    signIn: `${envVars.FRONTEND_URL}/`,
+    signOut: `${envVars.FRONTEND_URL}/login`,
   },
 
   advanced: {
-    useSecureCookies: false,
+    useSecureCookies: process.env.NODE_ENV === "production",
     cookies: {
       state: {
         attributes: {
-          sameSite: "none",
-          secure: true,
+          sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+          secure: process.env.NODE_ENV === "production",
           httpOnly: true,
           path: "/",
         },
       },
       sessionToken: {
         attributes: {
-          sameSite: "none",
-          secure: true,
+          sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+          secure: process.env.NODE_ENV === "production",
           httpOnly: true,
           path: "/",
         },

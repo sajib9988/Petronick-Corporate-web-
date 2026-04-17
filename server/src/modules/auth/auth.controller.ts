@@ -13,8 +13,8 @@ const SESSION_COOKIE = "better-auth.session_token";
 const setCookie = (res: Response, token: string) => {
   cookieUtils.setCookie(res, SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 1000,
   });
@@ -132,40 +132,42 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const googleLogin = catchAsync((req: Request, res: Response) => {
-  const redirectPath = req.query.redirect || "/dashboard";
-  const encodedRedirectPath = encodeURIComponent(redirectPath as string);
+// const googleLogin = catchAsync((req: Request, res: Response) => {
+//   const redirectPath = req.query.redirect || "/dashboard";
+//   const encodedRedirectPath = encodeURIComponent(redirectPath as string);
 
-  const callbackURL = `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodedRedirectPath}`;
+//   const callbackURL = `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodedRedirectPath}`;
 
-  res.render("googleRedirect", {
-    provider: "google",
-    signInEndpoint: `${envVars.BETTER_AUTH_URL}/api/v1/auth/signin`,
-    callbackURL,
-  });
-});
+//   res.render("googleRedirect", {
+//     provider: "google",
+//     signInEndpoint: `${envVars.BETTER_AUTH_URL}/api/v1/auth/signin`,
+//     callbackURL,
+//   });
+// });
 
-const googleLoginSuccess = catchAsync(async (req: Request, res: Response) => {
-  const redirectPath = (req.query.redirect as string) || "/dashboard";
+const googleCallback = catchAsync(async (req: Request, res: Response) => {
   const sessionToken = req.cookies[SESSION_COOKIE];
 
   if (!sessionToken) {
-    return res.redirect(`${envVars.FRONTEND_URL}/login?error=oauth_failed`);
+    // User just signed in with Google, get fresh session
+    const session = await auth.api.getSession({
+      headers: req.headers as HeadersInit,
+    });
+
+    if (!session || !session.user) {
+      return res.redirect(`${envVars.FRONTEND_URL}/login?error=oauth_failed`);
+    }
+
+    if (session.session) {
+      setCookie(res, session.session.token);
+    }
+
+    return res.redirect(`${envVars.FRONTEND_URL}`);
   }
 
-  const session = await auth.api.getSession({
-    headers: { Cookie: `${SESSION_COOKIE}=${sessionToken}` },
-  });
-
-  if (!session || !session.user) {
-    return res.redirect(`${envVars.FRONTEND_URL}/login?error=no_session_found`);
-  }
-
-  await authService.googleLoginSuccess(session);
-
-  const isValid = redirectPath.startsWith("/") && !redirectPath.startsWith("//");
-  res.redirect(`${envVars.FRONTEND_URL}${isValid ? redirectPath : "/dashboard"}`);
+  res.redirect(`${envVars.FRONTEND_URL}`);
 });
+
 
 const handleOAuthError = catchAsync((req: Request, res: Response) => {
   const error = (req.query.error as string) || "oauth_failed";
@@ -181,7 +183,6 @@ export const authController = {
   verifyEmail,
   forgetPassword,
   resetPassword,
-  googleLogin,
-  googleLoginSuccess,
+  googleCallback,
   handleOAuthError,
 };
