@@ -135,11 +135,13 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 const googleLogin = catchAsync((req: Request, res: Response) => {
   const redirectPath = req.query.redirect || "/dashboard";
   const encodedRedirectPath = encodeURIComponent(redirectPath as string);
+
   const callbackURL = `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodedRedirectPath}`;
 
   res.render("googleRedirect", {
+    provider: "google",
+    signInEndpoint: `${envVars.BETTER_AUTH_URL}/api/v1/auth/signin`,
     callbackURL,
-    betterAuthUrl: envVars.BETTER_AUTH_URL,
   });
 });
 

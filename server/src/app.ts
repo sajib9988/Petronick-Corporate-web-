@@ -18,7 +18,14 @@ const app: Application = express();
 // app settings
 app.set("query parser", (str: string) => qs.parse(str));
 app.set("view engine", "ejs");
-app.set("views", path.resolve(process.cwd(), `src/templates`));
+const isProd = process.env.NODE_ENV === "production";
+
+app.set(
+  "views",
+  isProd
+    ? path.resolve(__dirname, "templates")
+    : path.resolve(process.cwd(), "src/templates")
+);
 
 // middlewares
 app.use(express.json());

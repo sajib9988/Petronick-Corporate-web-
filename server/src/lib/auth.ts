@@ -38,7 +38,7 @@ export const auth = betterAuth({
           role: Role.USER,
           status: UserStatus.ACTIVE,
           needPasswordChange: false,
-          emailVerified: true,
+          emailVerified: false,
           isDeleted: false,
           deletedAt: null,
         };
