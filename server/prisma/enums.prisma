@@ -18,6 +18,10 @@ enum AgentStatus {
 
 enum SectionType {
   HERO
+  WHO_WE_ARE
+  ECOSYSTEM
+  REVENUE
+  CLOSING
   ABOUT
   CTA
   FEATURE

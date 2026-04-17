@@ -7,22 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { registerSchema, RegisterFormData } from "@/lib/validation";
 import { registerUser } from "@/service/auth";
 
@@ -44,30 +29,13 @@ export default function RegisterForm() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     setError(null);
-
     try {
-      // const res = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
-      //   {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     credentials: "include",
-      //     body: JSON.stringify({
-      //       name: data.name,
-      //       email: data.email,
-      //       password: data.password,
-      //     }),
-      //   },
-      // );
-
-      const res = await registerUser(data)
-      const result = await res.json();
-
+      const res = await registerUser(data);
       if (!res.ok) {
+        const result = await res.json();
         setError(result.message || "Registration failed");
         return;
       }
-
       router.push("/");
     } catch {
       setError("Something went wrong. Please try again.");
@@ -81,19 +49,19 @@ export default function RegisterForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-        <CardDescription>
-          Enter your details to get started
-        </CardDescription>
-      </CardHeader>
+    <div className="relative p-8 sm:p-10 rounded-[40px] bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[20px_20px_50px_rgba(0,0,0,0.5),inset_5px_5px_15px_rgba(255,255,255,0.1)] max-w-md mx-auto">
+      
+      {/* Top Glossy Reflection with Emerald Glow */}
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-emerald-400/20 via-emerald-400/10 to-transparent pointer-events-none rounded-t-[40px]" />
 
-      <CardContent>
+      <div className="relative z-10">
+        <h2 className="text-3xl font-bold text-white text-center mb-1 tracking-tight">Create Account</h2>
+        <p className="text-emerald-200/60 text-center text-xs mb-8 uppercase tracking-widest">Join Petronick Community</p>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md">
+              <div className="bg-red-500/20 border border-red-500/40 text-red-200 text-[11px] p-2.5 rounded-xl text-center animate-pulse">
                 {error}
               </div>
             )}
@@ -103,11 +71,14 @@ export default function RegisterForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input
+                      placeholder="Full Name"
+                      className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-emerald-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400 text-[10px] ml-2" />
                 </FormItem>
               )}
             />
@@ -117,83 +88,87 @@ export default function RegisterForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="Email Address"
+                      className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-emerald-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400 text-[10px] ml-2" />
                 </FormItem>
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="••••••••"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-emerald-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-400 text-[10px] ml-2" />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="••••••••"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="h-12 bg-white/5 border-white/10 focus:bg-white/10 focus:border-emerald-400/50 text-white placeholder:text-white/20 rounded-2xl transition-all shadow-inner border-none ring-1 ring-white/10"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-400 text-[10px] ml-2" />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-12 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/20 transition-all active:scale-[0.98]"
               disabled={isLoading}
             >
-              {isLoading ? "Creating account..." : "Create account"}
+              {isLoading ? "Creating Account..." : "Register Now"}
             </Button>
           </form>
         </Form>
 
-        <div className="relative my-4">
+        {/* Divider - "Or continue with" */}
+        <div className="relative my-8">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+            <span className="w-full border-t border-white/10" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-muted-foreground">
-              Or continue with
+          <div className="relative flex justify-center text-[10px] uppercase tracking-tighter">
+            <span className="bg-[#1a2c38] px-3 text-white/40 rounded-full py-0.5 border border-white/5">
+              Or join with
             </span>
           </div>
         </div>
 
+        {/* Google Button - Matched with Login */}
         <Button
           variant="outline"
-          className="w-full"
+          className="w-full h-12 bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-2xl flex items-center justify-center gap-3 transition-all border-none ring-1 ring-white/20"
           onClick={handleGoogleLogin}
           type="button"
         >
-          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+          <svg className="h-5 w-5" viewBox="0 0 24 24">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -211,18 +186,18 @@ export default function RegisterForm() {
               fill="#EA4335"
             />
           </svg>
-          Continue with Google
+          <span className="font-medium">Google</span>
         </Button>
-      </CardContent>
 
-      <CardFooter className="justify-center">
-        <p className="text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link href="/login" className="text-primary font-medium hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </CardFooter>
-    </Card>
+        <div className="mt-8 text-center">
+          <p className="text-[12px] text-white/40">
+            Already have an account?{" "}
+            <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors">
+              Login
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
