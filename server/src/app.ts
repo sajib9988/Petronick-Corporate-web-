@@ -53,9 +53,10 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 // API routes
-app.use("/api/auth", (req, res) => {
-  return toNodeHandler(auth)(req, res);
-});
+// app.use("/api/auth", (req, res) => {
+//   return toNodeHandler(auth)(req, res);
+// });
+app.all("/api/auth/*", toNodeHandler(auth.handler));
 app.use("/api/v1", apiRoutes);
 
 // unhandled routes

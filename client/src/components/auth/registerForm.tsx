@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { registerSchema, RegisterFormData } from "@/lib/validation";
 import { registerUser } from "@/service/auth";
-import { signIn } from "@/lib/auth-client";
+
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -45,18 +45,10 @@ export default function RegisterForm() {
     }
   };
 
-const handleGoogleLogin = async () => {
-    try {
-      await signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      console.error("Google login failed", err);
-      setError("Google login failed");
-    }
-  };
-
+const handleGoogleLogin = () => {
+  window.location.href =
+   "http://localhost:5000/api/auth/callback/google"
+};
   return (
     <div className="relative p-8 sm:p-10 rounded-[40px] bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[20px_20px_50px_rgba(0,0,0,0.5),inset_5px_5px_15px_rgba(255,255,255,0.1)] max-w-md mx-auto">
       

@@ -31,21 +31,10 @@ export const auth = betterAuth({
 
   socialProviders: {
     google: {
-      clientId: envVars.GOOGLE_CLIENT_ID,
-      clientSecret: envVars.GOOGLE_CLIENT_SECRET,
+      prompt:"select_account consent",
       accessType: "offline",
-      prompt: "select_account consent",
-      redirectURI: `${envVars.BETTER_AUTH_URL}/api/auth/callback/google`,
-      mapProfileToUser: () => {
-        return {
-          role: Role.USER,
-          status: UserStatus.ACTIVE,
-          needPasswordChange: false,
-          emailVerified: true, // ✅ Google থেকে আসা email verified
-          isDeleted: false,
-          deletedAt: null,
-        };
-      },
+      clientId:"1046307807117-2kbmtvc8i07esgen7opa5cepq5tbghb5.apps.googleusercontent.com",
+      clientSecret:"GOjzCSPX-tnpcWhjeXSjOOLMpgvOHwyGkUBh6"
     },
   },
 
