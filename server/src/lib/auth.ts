@@ -35,6 +35,7 @@ export const auth = betterAuth({
       clientSecret: envVars.GOOGLE_CLIENT_SECRET,
       accessType: "offline",
       prompt: "select_account consent",
+      redirectURI: `${envVars.BETTER_AUTH_URL}/api/auth/callback/google`,
       mapProfileToUser: () => {
         return {
           role: Role.USER,

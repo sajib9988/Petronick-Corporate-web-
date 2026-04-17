@@ -40,17 +40,17 @@ export default function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      console.error("Google login failed", err);
-      setError("Google login failed");
-    }
-  };
+const handleGoogleLogin = async () => {
+  try {
+    await signIn.social({
+      provider: "google",
+      callbackURL: '/', 
+      // অথবা শুধু "/" দিলেও চলতে পারে, কিন্তু absolute ভালো
+    });
+  } catch (err) {
+    console.error("Google login failed", err);
+  }
+};
 
   return (
     <div className="relative p-8 sm:p-10 rounded-[40px] bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[20px_20px_50px_rgba(0,0,0,0.5),inset_5px_5px_15px_rgba(255,255,255,0.1)]">

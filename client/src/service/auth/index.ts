@@ -1,7 +1,7 @@
 "use server";
 
 import { FieldValues } from "react-hook-form";
-
+import { cookies } from "next/headers";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export const registerUser = async (userData: FieldValues) => {
@@ -32,15 +32,19 @@ export const logoutUser = async () => {
   return await res.json();
 };
 
+
+
 export const getMe = async () => {
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+
   const res = await fetch(`${BASE_URL}/auth/me`, {
-    credentials: "include",
+    headers: {
+      Cookie: `better-auth.session_token=${sessionToken}`,
+    },
     cache: "no-store",
   });
-  return await res.json();
-};
 
-// Google login — redirect only, no server action needed
-// export const googleLoginUrl = () => {
-//   return `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login/google`;
-// };
+  if (!res.ok) return null;
+  return res.json();
+};
