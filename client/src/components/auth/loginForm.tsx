@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { LoginFormData, loginSchema } from "@/lib/validation";
 import { signIn } from "@/lib/auth-client";
-import { loginUser } from "@/service/auth";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -24,23 +24,39 @@ export default function LoginForm() {
     defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await loginUser(data);
-      if (!res.ok) {
-        const result = await res.json();
-        setError(result.message || "Login failed");
-        return;
-      }
-      router.push("/");
-    } catch {
-      setError("Something went wrong.");
-    } finally {
-      setIsLoading(false);
+ const onSubmit = async (data: LoginFormData) => {
+  setIsLoading(true);
+  setError(null);
+  try {
+    const { data: result, error: authError } = await signIn.email({
+      email: data.email,
+      password: data.password,
+      callbackURL: "/", // optional
+    });
+    
+    if (authError) {
+      const errorMessage = authError.message || "Login failed";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return;
     }
-  };
+
+    toast.success("Login successful!");
+
+    // role check করে redirect
+    const userRole = (result?.user as any)?.role;
+    if (userRole === "ADMIN") {
+      router.push("/admin");
+    } else {
+      router.push("/");
+    }
+  } catch (err) {
+    setError("Something went wrong.");
+    toast.error("Something went wrong. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
 const handleGoogleLogin = () => {
   window.location.href =

@@ -1,48 +1,68 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
+// Helper to get auth header
+const getAuthHeaders = async (headers: Record<string, string> = {}) => {
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+  return {
+    ...headers,
+    Cookie: `better-auth.session_token=${sessionToken}`,
+  };
+};
+
+// Safe JSON helper
+const safeJson = async (res: Response) => {
+  try {
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    return { success: false, message: "Invalid JSON response from server" };
+  }
+};
 
 // PAGE
 export const getAllPages = async () => {
   const res = await fetch(`${BASE_URL}/cms/pages`, {
     cache: "no-store",
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const getPageBySlug = async (slug: string) => {
   const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
     next: { revalidate: 60 }, // 1 minute cache
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const createPage = async (data: { slug: string; title: string }) => {
   const res = await fetch(`${BASE_URL}/cms/pages`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+    headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(data),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const updatePage = async (slug: string, data: { title: string }) => {
   const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+    headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(data),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const deletePage = async (slug: string) => {
   const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: await getAuthHeaders(),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 // SECTION
@@ -50,45 +70,45 @@ export const getSectionsByPage = async (pageId: string) => {
   const res = await fetch(`${BASE_URL}/cms/sections/page/${pageId}`, {
     cache: "no-store",
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const createSection = async (formData: FormData) => {
   const res = await fetch(`${BASE_URL}/cms/sections`, {
     method: "POST",
-    credentials: "include",
+    headers: await getAuthHeaders(),
     body: formData,
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const updateSection = async (id: string, formData: FormData) => {
   const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
     method: "PATCH",
-    credentials: "include",
+    headers: await getAuthHeaders(),
     body: formData,
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const deleteSection = async (id: string) => {
   const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: await getAuthHeaders(),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const getSectionById = async (id: string) => {
   const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
     cache: "no-store",
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const getAllSections = async () => {
   const res = await fetch(`${BASE_URL}/cms/sections`, {
     cache: "no-store",
   });
-  return await res.json();
+  return await safeJson(res);
 };

@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/form";
 
 import { registerSchema, RegisterFormData } from "@/lib/validation";
-import { registerUser } from "@/service/auth";
+import { signUp } from "@/lib/auth-client";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -38,22 +39,30 @@ export default function RegisterForm() {
     },
   });
 
- const onSubmit = async (data: RegisterFormData) => {
+const onSubmit = async (data: RegisterFormData) => {
   setIsLoading(true);
   setError(null);
-
   try {
-    const res = await registerUser(data);
-
-    if (!res.ok) {
-      setError(res.data?.message || "Registration failed");
+    const { data: result, error: authError } = await signUp.email({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      callbackURL: "/login",
+    });
+    
+    if (authError) {
+      const errorMessage = authError.message || "Registration failed";
+      setError(errorMessage);
+      toast.error(errorMessage);
       return;
     }
 
-    // ✅ success হলে এখানে redirect
-    router.push("/");
+    toast.success("Registration successful! Please login.");
+    router.push("/login");
   } catch (err) {
-    setError("Something went wrong. Please try again.");
+    const errorMessage = "Something went wrong. Please try again.";
+    setError(errorMessage);
+    toast.error(errorMessage);
   } finally {
     setIsLoading(false);
   }

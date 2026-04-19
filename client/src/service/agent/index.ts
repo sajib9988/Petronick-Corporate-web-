@@ -1,6 +1,28 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
+// Helper to get auth header
+const getAuthHeaders = async (headers: Record<string, string> = {}) => {
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+  return {
+    ...headers,
+    Cookie: `better-auth.session_token=${sessionToken}`,
+  };
+};
+
+// Safe JSON helper
+const safeJson = async (res: Response) => {
+  try {
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    return { success: false, message: "Invalid JSON response from server" };
+  }
+};
 
 export const createAgent = async (data: {
   fullName: string;
@@ -17,7 +39,7 @@ export const createAgent = async (data: {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const getAllAgents = async (params?: {
@@ -33,10 +55,11 @@ export const getAllAgents = async (params?: {
   if (params?.status) query.set("status", params.status);
 
   const res = await fetch(`${BASE_URL}/agents?${query}`, {
-    credentials: "include",
+    headers: await getAuthHeaders(),
     cache: "no-store",
   });
-  return await res.json();
+
+  return await safeJson(res);
 };
 
 export const updateAgentStatus = async (
@@ -45,17 +68,16 @@ export const updateAgentStatus = async (
 ) => {
   const res = await fetch(`${BASE_URL}/agents/${id}/status`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+    headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({ status }),
   });
-  return await res.json();
+  return await safeJson(res);
 };
 
 export const deleteAgent = async (id: string) => {
   const res = await fetch(`${BASE_URL}/agents/${id}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: await getAuthHeaders(),
   });
-  return await res.json();
+  return await safeJson(res);
 };

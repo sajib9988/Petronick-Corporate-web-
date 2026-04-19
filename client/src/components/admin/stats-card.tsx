@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 interface StatsCardProps {
   label: string;
   value: number;
-  icon: LucideIcon;
+  icon: React.ReactNode;
   iconBg: string;
   iconColor: string;
   href: string;
@@ -39,7 +39,7 @@ function useCountUp(target: number, duration = 1500) {
 export default function StatsCard({
   label,
   value,
-  icon: Icon,
+  icon,
   iconBg,
   iconColor,
   href,
@@ -60,7 +60,7 @@ export default function StatsCard({
       >
         <div className="flex items-center justify-between mb-4">
           <div className={`p-2.5 rounded-xl ${iconBg}`}>
-            <Icon size={18} className={iconColor} />
+            {icon}
           </div>
           <ArrowUpRight
             size={16}

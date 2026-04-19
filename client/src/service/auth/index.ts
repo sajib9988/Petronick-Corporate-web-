@@ -2,7 +2,28 @@
 
 import { FieldValues } from "react-hook-form";
 import { cookies } from "next/headers";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
+// Helper to get auth header
+const getAuthHeaders = async (headers: Record<string, string> = {}) => {
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+  return {
+    ...headers,
+    Cookie: `better-auth.session_token=${sessionToken}`,
+  };
+};
+
+// Safe JSON helper
+const safeJson = async (res: Response) => {
+  try {
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    return { success: false, message: "Invalid JSON response from server" };
+  }
+};
 
 export const registerUser = async (userData: FieldValues) => {
   const { confirmPassword, ...rest } = userData;
@@ -11,10 +32,9 @@ export const registerUser = async (userData: FieldValues) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(rest),
-    credentials: "include",
   });
 
-  const data = await res.json();
+  const data = await safeJson(res);
 
   return {
     ok: res.ok,
@@ -23,41 +43,42 @@ export const registerUser = async (userData: FieldValues) => {
   };
 };
 
-
-
-
-
 export const loginUser = async (userData: FieldValues) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
-    credentials: "include",
   });
-  return res;
+
+  const data = await safeJson(res);
+
+  return {
+    ok: res.ok,
+    status: res.status,
+    data,
+  };
 };
 
 export const logoutUser = async () => {
   const res = await fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
-    credentials: "include",
+    headers: await getAuthHeaders(),
   });
-  return await res.json();
+  return await safeJson(res);
 };
-
-
 
 export const getMe = async () => {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("better-auth.session_token")?.value;
 
+  if (!sessionToken) return null;
+
   const res = await fetch(`${BASE_URL}/auth/me`, {
-    headers: {
-      Cookie: `better-auth.session_token=${sessionToken}`,
-    },
+    headers: await getAuthHeaders(),
     cache: "no-store",
   });
 
   if (!res.ok) return null;
-  return res.json();
+  const data = await safeJson(res);
+  return data?.success === false ? null : data;
 };
