@@ -45,10 +45,7 @@ if (process.env.NODE_ENV === "production") {
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     title: "Welcome to your Express app",
-    description:
-      "Built with StackKit - A production-ready Express template with TypeScript, security, and best practices.",
-    version: "1.0.0",
-    docs: "https://github.com/tariqul420/stackkit",
+   
   });
 });
 
@@ -56,7 +53,9 @@ app.get("/", (_req: Request, res: Response) => {
 // app.use("/api/auth", (req, res) => {
 //   return toNodeHandler(auth)(req, res);
 // });
-app.all("/api/auth/*", toNodeHandler(auth.handler));
+app.use("/api/auth", (req, res) => {
+  return toNodeHandler(auth)(req, res);
+});
 app.use("/api/v1", apiRoutes);
 
 // unhandled routes

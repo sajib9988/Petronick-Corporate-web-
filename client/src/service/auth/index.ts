@@ -5,14 +5,27 @@ import { cookies } from "next/headers";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export const registerUser = async (userData: FieldValues) => {
+  const { confirmPassword, ...rest } = userData;
+
   const res = await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(rest),
     credentials: "include",
   });
-  return await res.json();
+
+  const data = await res.json();
+
+  return {
+    ok: res.ok,
+    status: res.status,
+    data,
+  };
 };
+
+
+
+
 
 export const loginUser = async (userData: FieldValues) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -21,7 +34,7 @@ export const loginUser = async (userData: FieldValues) => {
     body: JSON.stringify(userData),
     credentials: "include",
   });
-  return await res.json();
+  return res;
 };
 
 export const logoutUser = async () => {
