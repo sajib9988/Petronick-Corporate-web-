@@ -23,8 +23,8 @@ const companySchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   website: z.string().url("Invalid URL").optional().or(z.literal("")),
-  order: z.coerce.number().int().default(0),
-  isVisible: z.boolean().default(true),
+  order: z.number().int(),
+  isVisible: z.boolean(),
   revenueStage: z.string().optional(),
 });
 
@@ -67,7 +67,7 @@ export default function CompanyForm({
 
   const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companySchema),
-    defaultValues,
+    defaultValues: defaultValues as any,
   });
 
   // ─── Logo Change ─────────────────────
@@ -122,7 +122,7 @@ export default function CompanyForm({
               <FormControl>
                 <Textarea
                   placeholder="Brief description..."
-                  className="min-h-[80px]"
+                  className="min-h-20"
                   {...field}
                 />
               </FormControl>
