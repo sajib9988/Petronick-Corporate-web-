@@ -39,11 +39,9 @@ export default function PagesPage() {
   const fetchPages = useCallback(async () => {
     setIsLoading(true);
     try {
-   
-      const res= await getAllPages()
-      
-      const result = await res.json();
-      setData(result.data ?? []);
+      // ✅ FIX: getAllPages already returns parsed JSON — no need for .json()
+      const result = await getAllPages();
+      setData(result?.data ?? []);
     } catch {
       setData([]);
     } finally {
@@ -73,11 +71,10 @@ export default function PagesPage() {
     setIsCreating(true);
     setCreateError("");
     try {
-    
-      const res = await createPage(createForm);
-      const result = await res.json();
-      if (!result.success) {
-        setCreateError(result.message || "Failed to create page");
+      // ✅ FIX: createPage returns parsed result directly
+      const result = await createPage(createForm);
+      if (!result?.success) {
+        setCreateError(result?.message || "Failed to create page");
         return;
       }
       setShowCreate(false);
@@ -93,6 +90,7 @@ export default function PagesPage() {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
+      // ✅ FIX: deletePage returns parsed result directly
       await deletePage(deleteDialog.slug);
       setDeleteDialog({ open: false, slug: "", title: "" });
       fetchPages();
@@ -123,23 +121,14 @@ export default function PagesPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-28 bg-white rounded-xl border border-gray-100 animate-pulse"
-            />
+            <div key={i} className="h-28 bg-white rounded-xl border border-gray-100 animate-pulse" />
           ))}
         </div>
       ) : data.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-100 px-6 py-16 text-center">
           <Layers size={28} className="text-gray-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">
-            No pages yet. Create your first page.
-          </p>
-          <Button
-            size="sm"
-            className="mt-4"
-            onClick={() => setShowCreate(true)}
-          >
+          <p className="text-sm text-gray-400">No pages yet. Create your first page.</p>
+          <Button size="sm" className="mt-4" onClick={() => setShowCreate(true)}>
             <Plus size={13} className="mr-1" />
             Create Page
           </Button>
@@ -151,15 +140,10 @@ export default function PagesPage() {
               key={page.id}
               className="bg-white rounded-xl border border-gray-100 p-5 hover:border-gray-200 hover:shadow-sm transition-all group"
             >
-              {/* Title + slug */}
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">
-                    {page.title}
-                  </h3>
-                  <p className="text-xs text-gray-400 font-mono mt-0.5">
-                    /{page.slug}
-                  </p>
+                  <h3 className="font-semibold text-gray-900 text-sm">{page.title}</h3>
+                  <p className="text-xs text-gray-400 font-mono mt-0.5">/{page.slug}</p>
                 </div>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <a
@@ -167,38 +151,25 @@ export default function PagesPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
-                    title="View page"
                   >
                     <ExternalLink size={13} />
                   </a>
                   <button
-                    onClick={() =>
-                      setDeleteDialog({
-                        open: true,
-                        slug: page.slug,
-                        title: page.title,
-                      })
-                    }
+                    onClick={() => setDeleteDialog({ open: true, slug: page.slug, title: page.title })}
                     className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                    title="Delete page"
                   >
                     <Trash2 size={13} />
                   </button>
                 </div>
               </div>
 
-              {/* Sections count */}
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 bg-gray-50 px-2.5 py-1 rounded-full">
                   <Layers size={11} />
-                  {page.sections.length} section
-                  {page.sections.length !== 1 ? "s" : ""}
+                  {page.sections.length} section{page.sections.length !== 1 ? "s" : ""}
                 </span>
-
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/admin/pages/${page.slug}`}>
-                    Manage Sections →
-                  </Link>
+                  <Link href={`/admin/pages/${page.slug}`}>Manage Sections →</Link>
                 </Button>
               </div>
             </div>
@@ -211,21 +182,14 @@ export default function PagesPage() {
         <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle>Create New Page</DialogTitle>
-            <DialogDescription>
-              Add a new page to manage its sections.
-            </DialogDescription>
+            <DialogDescription>Add a new page to manage its sections.</DialogDescription>
           </DialogHeader>
-
           <div className="space-y-4 py-1">
             {createError && (
-              <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
-                {createError}
-              </p>
+              <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">{createError}</p>
             )}
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-gray-700">
-                Page Title *
-              </label>
+              <label className="text-sm font-medium text-gray-700">Page Title *</label>
               <input
                 className="w-full h-8 rounded-lg border border-input bg-transparent px-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                 placeholder="Home Page"
@@ -234,39 +198,26 @@ export default function PagesPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-gray-700">
-                Slug *
-              </label>
+              <label className="text-sm font-medium text-gray-700">Slug *</label>
               <input
                 className="w-full h-8 rounded-lg border border-input bg-transparent px-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                 placeholder="home-page"
                 value={createForm.slug}
-                onChange={(e) =>
-                  setCreateForm((f) => ({ ...f, slug: e.target.value }))
-                }
+                onChange={(e) => setCreateForm((f) => ({ ...f, slug: e.target.value }))}
               />
-              <p className="text-xs text-gray-400">
-                Auto-generated from title
-              </p>
+              <p className="text-xs text-gray-400">Auto-generated from title</p>
             </div>
           </div>
-
           <DialogFooter>
             <Button
               variant="outline"
-              onClick={() => {
-                setShowCreate(false);
-                setCreateError("");
-                setCreateForm({ title: "", slug: "" });
-              }}
+              onClick={() => { setShowCreate(false); setCreateError(""); setCreateForm({ title: "", slug: "" }); }}
               disabled={isCreating}
             >
               Cancel
             </Button>
             <Button onClick={handleCreate} disabled={isCreating}>
-              {isCreating && (
-                <Loader2 size={13} className="mr-1.5 animate-spin" />
-              )}
+              {isCreating && <Loader2 size={13} className="mr-1.5 animate-spin" />}
               Create Page
             </Button>
           </DialogFooter>
@@ -276,19 +227,14 @@ export default function PagesPage() {
       {/* Delete Dialog */}
       <Dialog
         open={deleteDialog.open}
-        onOpenChange={(open) =>
-          !isDeleting && setDeleteDialog((d) => ({ ...d, open }))
-        }
+        onOpenChange={(open) => !isDeleting && setDeleteDialog((d) => ({ ...d, open }))}
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle>Delete Page</DialogTitle>
             <DialogDescription>
-              Delete{" "}
-              <span className="font-semibold text-gray-900">
-                {deleteDialog.title}
-              </span>
-              ? All sections will also be deleted. This cannot be undone.
+              Delete <span className="font-semibold text-gray-900">{deleteDialog.title}</span>?
+              All sections will also be deleted. This cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -299,14 +245,8 @@ export default function PagesPage() {
             >
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting && (
-                <Loader2 size={13} className="mr-1.5 animate-spin" />
-              )}
+            <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+              {isDeleting && <Loader2 size={13} className="mr-1.5 animate-spin" />}
               Delete
             </Button>
           </DialogFooter>

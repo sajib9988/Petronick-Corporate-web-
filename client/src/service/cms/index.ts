@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-// Helper to get auth header
 const getAuthHeaders = async (headers: Record<string, string> = {}) => {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("better-auth.session_token")?.value;
@@ -14,27 +13,24 @@ const getAuthHeaders = async (headers: Record<string, string> = {}) => {
   };
 };
 
-// Safe JSON helper
 const safeJson = async (res: Response) => {
   try {
-    const data = await res.json();
-    return data;
-  } catch (err) {
+    return await res.json();
+  } catch {
     return { success: false, message: "Invalid JSON response from server" };
   }
 };
 
-// PAGE
+// ─── PAGE ────────────────────────────────────────────────
+
 export const getAllPages = async () => {
-  const res = await fetch(`${BASE_URL}/cms/pages`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${BASE_URL}/cms/pages`, { cache: "no-store" });
   return await safeJson(res);
 };
 
 export const getPageBySlug = async (slug: string) => {
   const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
-    next: { revalidate: 60 }, // 1 minute cache
+    next: { revalidate: 60 },
   });
   return await safeJson(res);
 };
@@ -45,6 +41,7 @@ export const createPage = async (data: { slug: string; title: string }) => {
     headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(data),
   });
+  // ✅ FIX: safeJson দিয়ে parse করো, আর caller-এ আবার .json() ডাকো না
   return await safeJson(res);
 };
 
@@ -62,10 +59,12 @@ export const deletePage = async (slug: string) => {
     method: "DELETE",
     headers: await getAuthHeaders(),
   });
+  // ✅ FIX: raw Response return করা বন্ধ, parsed result return করো
   return await safeJson(res);
 };
 
-// SECTION
+// ─── SECTION ─────────────────────────────────────────────
+
 export const getSectionsByPage = async (pageId: string) => {
   const res = await fetch(`${BASE_URL}/cms/sections/page/${pageId}`, {
     cache: "no-store",
@@ -107,8 +106,6 @@ export const getSectionById = async (id: string) => {
 };
 
 export const getAllSections = async () => {
-  const res = await fetch(`${BASE_URL}/cms/sections`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${BASE_URL}/cms/sections`, { cache: "no-store" });
   return await safeJson(res);
 };
