@@ -238,22 +238,23 @@ export default function PromotionAgentForm() {
                     const selected = field.value.includes(company.name);
 
                     return (
-                      <button
-                        key={company.id}
-                        type="button"
-                        onClick={() =>
-                          field.onChange(
-                            toggleUnit(company.name, field.value as string[])
-                          )
-                        }
-                        className={`px-3 py-1 rounded-full text-xs border ${
-                          selected
-                            ? "bg-black text-white"
-                            : "bg-white border-gray-300"
-                        }`}
-                      >
-                        {company.name}
-                      </button>
+                    <button
+  key={company.id}
+  type="button"
+  onClick={() =>
+    field.onChange(
+      toggleUnit(company.name, field.value as string[])
+    )
+  }
+  className={`px-3 py-1 rounded-full text-xs border flex items-center gap-1 ${
+    selected
+      ? "bg-black text-white"
+      : "bg-white border-gray-300"
+  }`}
+>
+  {selected && <CheckCircle2 size={14} />} {/* ✅ ADD THIS */}
+  {company.name}
+</button>
                     );
                   })}
                 </div>
