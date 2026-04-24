@@ -19,6 +19,7 @@ import {
 
 import { registerSchema, RegisterFormData } from "@/lib/validation";
 import { signUp } from "@/lib/auth-client";
+import { registerUser } from "@/service/auth";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -36,33 +37,33 @@ export default function RegisterForm() {
       email: "",
       password: "",
       confirmPassword: "",
+
     },
   });
+
+// RegisterForm.tsx - onSubmit পরিবর্তন করো
+// তোমার server action
+
+// RegisterForm.tsx
 
 const onSubmit = async (data: RegisterFormData) => {
   setIsLoading(true);
   setError(null);
   try {
-    const { data: result, error: authError } = await signUp.email({
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      callbackURL: "/login",
-    });
-    
-    if (authError) {
-      const errorMessage = authError.message || "Registration failed";
-      setError(errorMessage);
-      toast.error(errorMessage);
+    const { confirmPassword, ...rest } = data; // ✅ বাদ দিলাম
+    const result = await registerUser(rest);   // শুধু name, email, password যাবে
+
+    if (!result.ok) {
+      const msg = result.data?.message || "Registration failed";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
     toast.success("Registration successful! Please login.");
     router.push("/login");
   } catch (err) {
-    const errorMessage = "Something went wrong. Please try again.";
-    setError(errorMessage);
-    toast.error(errorMessage);
+    toast.error("Something went wrong.");
   } finally {
     setIsLoading(false);
   }
@@ -82,7 +83,7 @@ const onSubmit = async (data: RegisterFormData) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           {error && (
-            <div className="text-red-400 text-sm text-center">
+            <div className="text-red-400 text-sm   text-center">
               {error}
             </div>
           )}
@@ -94,7 +95,7 @@ const onSubmit = async (data: RegisterFormData) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Full Name" {...field} />
+                  <Input className="text-white placeholder:text-white/40 border-white/20 focus-visible:ring-white"  placeholder="Full Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +109,7 @@ const onSubmit = async (data: RegisterFormData) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input type="email" placeholder="Email" {...field} />
+                  <Input className="text-white placeholder:text-white/40 border-white/20 focus-visible:ring-white"  type="email" placeholder="Email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,7 +123,7 @@ const onSubmit = async (data: RegisterFormData) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="relative">
+                  <div className="relative  text-white ">
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password (min 8 characters)"
@@ -156,7 +157,7 @@ const onSubmit = async (data: RegisterFormData) => {
               <FormItem>
                 <FormControl>
                   <div className="relative">
-                    <Input
+                    <Input className="text-white placeholder:text-white/40 border-white/20 focus-visible:ring-white" 
                       type={showConfirm ? "text" : "password"}
                       placeholder="Confirm Password"
                       {...field}

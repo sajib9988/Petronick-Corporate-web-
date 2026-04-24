@@ -3,7 +3,7 @@
 import { FieldValues } from "react-hook-form";
 import { cookies } from "next/headers";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+
 
 // Helper to get auth header
 const getAuthHeaders = async (headers: Record<string, string> = {}) => {
@@ -28,7 +28,7 @@ const safeJson = async (res: Response) => {
 export const registerUser = async (userData: FieldValues) => {
   const { confirmPassword, ...rest } = userData;
 
-  const res = await fetch(`${BASE_URL}/auth/register`, {
+  const res = await fetch(`${process.env.BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(rest),
@@ -44,7 +44,7 @@ export const registerUser = async (userData: FieldValues) => {
 };
 
 export const loginUser = async (userData: FieldValues) => {
-  const res = await fetch(`${BASE_URL}/auth/login`, {
+  const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -60,7 +60,7 @@ export const loginUser = async (userData: FieldValues) => {
 };
 
 export const logoutUser = async () => {
-  const res = await fetch(`${BASE_URL}/auth/logout`, {
+  const res = await fetch(`${process.env.BASE_URL}/auth/logout`, {
     method: "POST",
     headers: await getAuthHeaders(),
   });
@@ -73,7 +73,7 @@ export const getMe = async () => {
 
   if (!sessionToken) return null;
 
-  const res = await fetch(`${BASE_URL}/auth/me`, {
+  const res = await fetch(`${process.env.BASE_URL}/auth/me`, {
     headers: await getAuthHeaders(),
     cache: "no-store",
   });

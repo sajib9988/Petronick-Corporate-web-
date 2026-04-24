@@ -7,6 +7,8 @@ import { catchAsync } from "../../shared/utils/catch-async";
 import { cookieUtils } from "../../shared/utils/cookie";
 import { sendResponse } from "../../shared/utils/send-response";
 import { authService } from "./auth.service";
+import { IRegisterUserPayload } from "./auth.type";
+import { prisma } from "../../database/prisma";
 
 const SESSION_COOKIE = "better-auth.session_token";
 
@@ -20,23 +22,25 @@ const setCookie = (res: Response, token: string) => {
   });
 };
 
+// ✅ Proper controller
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.registerUser(req.body);
-
-  if (result.token) {
-    setCookie(res, result.token);
-  }
 
   sendResponse(res, {
     status: status.CREATED,
     success: true,
     message: "User registered successfully",
-    data: {
-      token: result.token,
-      user: result.user,
-    },
+    data: result,
   });
 });
+
+
+
+
+
+
+
+
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.loginUser(req.body);
