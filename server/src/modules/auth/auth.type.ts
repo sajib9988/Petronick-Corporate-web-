@@ -6,7 +6,6 @@ export interface IRequestUser {
   role: Role | string;
   email: string;
 }
-
 export interface ILoginUserPayload {
     email: string;
     password: string;

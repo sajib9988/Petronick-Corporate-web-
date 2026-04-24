@@ -18,6 +18,6 @@ router.post("/reset-password", authController.resetPassword);
 
 // ✅ Better Auth handles OAuth automatically
 // Just make sure this path matches your Google Redirect URI
-router.get("/callback/google", authController.googleCallback);
+
 
 export const authRoutes = router;

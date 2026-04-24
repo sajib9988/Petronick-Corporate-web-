@@ -1,7 +1,10 @@
 import status from "http-status";
+import bcrypt from "bcrypt";
 import { prisma } from "../../database/prisma";
-import { auth } from "../../lib/auth";
 import { AppError } from "../../shared/errors/app-error";
+import { jwtUtils } from "../../shared/utils/jwt";
+import { tokenUtils } from "../../shared/utils/token";
+import { envVars } from "../../config/env";
 import {
   IChangePasswordPayload,
   ILoginUserPayload,
@@ -17,38 +20,63 @@ const registerUser = async (payload: IRegisterUserPayload) => {
     throw new AppError(status.CONFLICT, "Email already exists");
   }
 
-  const data = await auth.api.signUpEmail({
-    body: { name, email, password },
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  const user = await prisma.user.create({
+    data: { name, email, password: hashedPassword },
+    select: { id: true, name: true, email: true, role: true, createdAt: true },
   });
 
-  if (!data.user) {
-    throw new AppError(status.BAD_REQUEST, "Failed to register user");
-  }
-
-  return data;
+  return user;
 };
 
 const loginUser = async (payload: ILoginUserPayload) => {
   const { email, password } = payload;
 
-  const data = await auth.api.signInEmail({
-    body: { email, password },
-  });
+ const user = await prisma.user.findUnique({
+  where: { email },
+  select: {
+    id: true,
+    name: true,
+    email: true,
+    role: true,
+    password: true, // ✅ important
+    status: true,
+    isDeleted: true,
+  },
+});
 
-  if (data.user.status === "BLOCKED") {
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  if (user.status === "BLOCKED") {
     throw new AppError(status.FORBIDDEN, "User is blocked");
   }
 
-  if (data.user.isDeleted || data.user.status === "DELETED") {
-    throw new AppError(status.NOT_FOUND, "User is deleted");
+  if (user.isDeleted || user.status === "DELETED") {
+    throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  return data;
+  // ✅ password check
+  const isPasswordValid = await bcrypt.compare(password, user.password as string);
+  if (!isPasswordValid) {
+    throw new AppError(status.UNAUTHORIZED, "Invalid credentials");
+  }
+
+  // controller token বানাবে, service শুধু user return করবে
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
 };
 
 const getMe = async (user: IRequestUser) => {
   const isUserExists = await prisma.user.findUnique({
     where: { id: user.id },
+    select: { id: true, name: true, email: true, role: true, createdAt: true },
   });
 
   if (!isUserExists) {
@@ -58,122 +86,115 @@ const getMe = async (user: IRequestUser) => {
   return isUserExists;
 };
 
-const changePassword = async (
-  payload: IChangePasswordPayload,
-  sessionToken: string,
-) => {
-  const session = await auth.api.getSession({
-    headers: new Headers({ Authorization: `Bearer ${sessionToken}` }),
-  });
-
-  if (!session) {
-    throw new AppError(status.UNAUTHORIZED, "Invalid session token");
-  }
-
+const changePassword = async (user: IRequestUser, payload: IChangePasswordPayload) => {
   const { currentPassword, newPassword } = payload;
 
-  const result = await auth.api.changePassword({
-    body: { currentPassword, newPassword, revokeOtherSessions: true },
-    headers: new Headers({ Authorization: `Bearer ${sessionToken}` }),
-  });
+ const isUserExists = await prisma.user.findUnique({
+  where: { id: user.id },
+  select: {
+    id: true,
+    password: true, // ✅ MUST ADD
+  },
+});
 
-  if (session.user.needPasswordChange) {
-    await prisma.user.update({
-      where: { id: session.user.id },
-      data: { needPasswordChange: false },
-    });
+  if (!isUserExists) {
+    throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  return result;
+  // ✅ current password check
+  const isPasswordValid = await bcrypt.compare(currentPassword, isUserExists.password as string);
+  if (!isPasswordValid) {
+    throw new AppError(status.UNAUTHORIZED, "Current password is incorrect");
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { password: hashedPassword },
+  });
+
+  return null;
 };
 
-const logoutUser = async (sessionToken: string) => {
-  return await auth.api.signOut({
-    headers: new Headers({ Authorization: `Bearer ${sessionToken}` }),
+const refreshToken = async (token: string) => {
+  // ✅ refresh token verify করো
+  const result = jwtUtils.verifyToken(token, envVars.REFRESH_TOKEN_SECRET);
+
+  if (!result.success || !result.data) {
+    throw new AppError(status.UNAUTHORIZED, "Invalid refresh token");
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: result.data.id } });
+
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  // ✅ নতুন access token তৈরি করো
+  const accessToken = tokenUtils.getAccessToken({
+    id: user.id,
+    email: user.email,
+    role: user.role,
   });
+
+  return { accessToken };
 };
 
 const verifyEmail = async (email: string, otp: string) => {
-  const result = await auth.api.verifyEmailOTP({
-    body: { email, otp },
-  });
+  const user = await prisma.user.findUnique({ where: { email } });
 
-  if (result.status && !result.user.emailVerified) {
-    await prisma.user.update({
-      where: { email },
-      data: { emailVerified: true },
-    });
+  if (!user) {
+    throw new AppError(status.NOT_FOUND, "User not found");
   }
+
+  // OTP verify logic তোমার নিজের implementation অনুযায়ী
+  await prisma.user.update({
+    where: { email },
+    data: { emailVerified: true },
+  });
 };
 
 const forgetPassword = async (email: string) => {
-  const isUserExist = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email } });
 
-  if (!isUserExist) {
+  if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  if (!isUserExist.emailVerified) {
+  if (!user.emailVerified) {
     throw new AppError(status.BAD_REQUEST, "Email not verified");
   }
 
-  if (isUserExist.isDeleted || isUserExist.status === "DELETED") {
+  if (user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  await auth.api.requestPasswordResetEmailOTP({ body: { email } });
+  // OTP generate করে email পাঠাও — তোমার mail service অনুযায়ী
 };
 
-const resetPassword = async (
-  email: string,
-  otp: string,
-  newPassword: string,
-) => {
-  const isUserExist = await prisma.user.findUnique({ where: { email } });
+const resetPassword = async (email: string, otp: string, newPassword: string) => {
+  const user = await prisma.user.findUnique({ where: { email } });
 
-  if (!isUserExist) {
+  if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  if (!isUserExist.emailVerified) {
+  if (!user.emailVerified) {
     throw new AppError(status.BAD_REQUEST, "Email not verified");
   }
 
-  if (isUserExist.isDeleted || isUserExist.status === "DELETED") {
+  if (user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  await auth.api.resetPasswordEmailOTP({
-    body: { email, otp, password: newPassword },
+  // OTP verify করো তারপর password update করো
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+  await prisma.user.update({
+    where: { email },
+    data: { password: hashedPassword },
   });
-
-  if (isUserExist.needPasswordChange) {
-    await prisma.user.update({
-      where: { email },
-      data: { needPasswordChange: false },
-    });
-  }
-
-  await prisma.session.deleteMany({ where: { userId: isUserExist.id } });
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const googleLoginSuccess = async (session: Record<string, any>) => {
-  const isUserExists = await prisma.user.findUnique({
-    where: { id: session.user.id },
-  });
-
-  if (!isUserExists) {
-    await prisma.user.create({
-      data: {
-        id: session.user.id,
-        name: session.user.name,
-        email: session.user.email,
-      },
-    });
-  }
-
-  return { success: true };
 };
 
 export const authService = {
@@ -181,9 +202,8 @@ export const authService = {
   loginUser,
   getMe,
   changePassword,
-  logoutUser,
+  refreshToken,
   verifyEmail,
   forgetPassword,
   resetPassword,
-  googleLoginSuccess,
 };

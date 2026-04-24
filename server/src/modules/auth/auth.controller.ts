@@ -1,28 +1,11 @@
 import { Request, Response } from "express";
 import status from "http-status";
-import { envVars } from "../../config/env";
-import { auth } from "../../lib/auth";
-import { AppError } from "../../shared/errors/app-error";
 import { catchAsync } from "../../shared/utils/catch-async";
-import { cookieUtils } from "../../shared/utils/cookie";
 import { sendResponse } from "../../shared/utils/send-response";
+import { tokenUtils } from "../../shared/utils/token";
+import { cookieUtils } from "../../shared/utils/cookie";
 import { authService } from "./auth.service";
-import { IRegisterUserPayload } from "./auth.type";
-import { prisma } from "../../database/prisma";
 
-const SESSION_COOKIE = "better-auth.session_token";
-
-const setCookie = (res: Response, token: string) => {
-  cookieUtils.setCookie(res, SESSION_COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 1000,
-  });
-};
-
-// ✅ Proper controller
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.registerUser(req.body);
 
@@ -34,31 +17,21 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
-
-
-
-
-
-
-
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.loginUser(req.body);
 
-  if (!result.token) {
-    throw new AppError(status.INTERNAL_SERVER_ERROR, "Session token is missing");
-  }
+  // ✅ token তৈরি করে cookie-তে রাখো
+  const accessToken = tokenUtils.getAccessToken({ id: result.id, email: result.email, role: result.role });
+  const refreshToken = tokenUtils.getRefreshToken({ id: result.id, email: result.email, role: result.role });
 
-  setCookie(res, result.token);
+  tokenUtils.setAccessTokenCookie(res, accessToken);
+  tokenUtils.setRefreshTokenCookie(res, refreshToken);
 
   sendResponse(res, {
     status: status.OK,
     success: true,
     message: "User logged in successfully",
-    data: {
-      token: result.token,
-      user: result.user,
-    },
+    data: result, // শুধু user data, token না
   });
 });
 
@@ -74,8 +47,7 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
 });
 
 const changePassword = catchAsync(async (req: Request, res: Response) => {
-  const sessionToken = req.cookies[SESSION_COOKIE];
-  const result = await authService.changePassword(req.body, sessionToken);
+  const result = await authService.changePassword(req.user, req.body);
 
   sendResponse(res, {
     status: status.OK,
@@ -86,19 +58,46 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 const logoutUser = catchAsync(async (req: Request, res: Response) => {
-  const sessionToken = req.cookies[SESSION_COOKIE];
-  await authService.logoutUser(sessionToken);
-
-  cookieUtils.clearCookie(res, SESSION_COOKIE, {
+  // ✅ cookie clear করো — set করার সময় যে options ছিল, same options দিতে হবে
+  cookieUtils.clearCookie(res, "accessToken", {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    path: "/",
+  });
+
+  cookieUtils.clearCookie(res, "refreshToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
   });
 
   sendResponse(res, {
     status: status.OK,
     success: true,
     message: "User logged out successfully",
+    data: null,
+  });
+});
+
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
+  // ✅ cookie থেকে refresh token পড়ো
+  const token = cookieUtils.getCookie(req, "refreshToken");
+
+  if (!token) {
+    throw new Error("Refresh token not found");
+  }
+
+  const result = await authService.refreshToken(token);
+
+  // ✅ নতুন access token cookie-তে সেট করো
+  tokenUtils.setAccessTokenCookie(res, result.accessToken);
+
+  sendResponse(res, {
+    status: status.OK,
+    success: true,
+    message: "Token refreshed successfully",
     data: null,
   });
 });
@@ -136,57 +135,14 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const googleLogin = catchAsync((req: Request, res: Response) => {
-//   const redirectPath = req.query.redirect || "/dashboard";
-//   const encodedRedirectPath = encodeURIComponent(redirectPath as string);
-
-//   const callbackURL = `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodedRedirectPath}`;
-
-//   res.render("googleRedirect", {
-//     provider: "google",
-//     signInEndpoint: `${envVars.BETTER_AUTH_URL}/api/v1/auth/signin`,
-//     callbackURL,
-//   });
-// });
-
-const googleCallback = catchAsync(async (req: Request, res: Response) => {
-  const sessionToken = req.cookies[SESSION_COOKIE];
-
-  if (!sessionToken) {
-    // User just signed in with Google, get fresh session
-    const session = await auth.api.getSession({
-      headers: req.headers as HeadersInit,
-    });
-
-    if (!session || !session.user) {
-      return res.redirect(`${envVars.FRONTEND_URL}/login?error=oauth_failed`);
-    }
-
-    if (session.session) {
-      setCookie(res, session.session.token);
-    }
-
-    return res.redirect(`${envVars.FRONTEND_URL}`);
-  }
-
-  res.redirect(`${envVars.FRONTEND_URL}`);
-});
-
-
-const handleOAuthError = catchAsync((req: Request, res: Response) => {
-  const error = (req.query.error as string) || "oauth_failed";
-  res.redirect(`${envVars.FRONTEND_URL}/login?error=${error}`);
-});
-
 export const authController = {
   registerUser,
   loginUser,
   getMe,
   changePassword,
   logoutUser,
+  refreshToken,
   verifyEmail,
   forgetPassword,
   resetPassword,
-  googleCallback,
-  handleOAuthError,
 };

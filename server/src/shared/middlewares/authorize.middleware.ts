@@ -1,57 +1,40 @@
 import { NextFunction, Request, Response } from "express";
 import status from "http-status";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { AppError } from "../errors/app-error";
-import { cookieUtils } from "../utils/cookie";
 import { prisma } from "../../database/prisma";
 import { Role, UserStatus } from "../../../generated/prisma-client";
 
 export const authorize = (...authRoles: Role[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const sessionToken = cookieUtils.getCookie(req, "better-auth.session_token");
+      const authHeader = req.headers.authorization;
 
-      if (!sessionToken) {
-        throw new AppError(status.UNAUTHORIZED, "No session token provided");
+      if (!authHeader) {
+        throw new AppError(status.UNAUTHORIZED, "No access token provided");
       }
 
-      const sessionExists = await prisma.session.findFirst({
-        where: {
-          token: sessionToken,
-          expiresAt: { gt: new Date() },
-        },
-        include: { user: true },
+      const token = authHeader.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.id as string },
       });
 
-      if (!sessionExists || !sessionExists.user) {
-        throw new AppError(status.UNAUTHORIZED, "Invalid or expired session");
+      if (!user) {
+        throw new AppError(status.UNAUTHORIZED, "User not found");
       }
 
-      const user = sessionExists.user;
-
-      // Session expiry warning
-      const now = new Date();
-      const expiresAt = new Date(sessionExists.expiresAt);
-      const createdAt = new Date(sessionExists.createdAt);
-      const sessionLifeTime = expiresAt.getTime() - createdAt.getTime();
-      const timeRemaining = expiresAt.getTime() - now.getTime();
-      const percentRemaining = (timeRemaining / sessionLifeTime) * 100;
-
-      if (percentRemaining < 20) {
-        res.setHeader("X-Session-Refresh", "true");
-        res.setHeader("X-Session-Expires-At", expiresAt.toISOString());
-        res.setHeader("X-Time-Remaining", timeRemaining.toString());
-      }
-
-      if (user.status === UserStatus.BLOCKED || user.status === UserStatus.DELETED) {
-        throw new AppError(status.UNAUTHORIZED, "User is not active");
+      if (user.status !== UserStatus.ACTIVE) {
+        throw new AppError(status.FORBIDDEN, "User is not active");
       }
 
       if (user.isDeleted) {
-        throw new AppError(status.UNAUTHORIZED, "User is deleted");
+        throw new AppError(status.FORBIDDEN, "User is deleted");
       }
 
-      if (authRoles.length > 0 && !authRoles.includes(user.role)) {
-        throw new AppError(status.FORBIDDEN, "You do not have permission");
+      if (!authRoles.includes(user.role)) {
+        throw new AppError(status.FORBIDDEN, "User does not have the required role");
       }
 
       req.user = {
@@ -62,7 +45,12 @@ export const authorize = (...authRoles: Role[]) =>
       };
 
       next();
-    } catch (error: unknown) {
-      next(error);
+    } catch (error) {
+      if (error instanceof AppError) {
+        res.status(error.statusCode).json({ message: error.message });
+      } else {
+        res.status(status.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
+      }
     }
   };
+
