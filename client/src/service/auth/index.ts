@@ -58,5 +58,7 @@ export const getMe = async () => {
 
   if (!res.ok) return null;
   const data = await safeJson(res);
+    console.log("User data:", data);
   return data?.success === false ? null : data;
+
 };

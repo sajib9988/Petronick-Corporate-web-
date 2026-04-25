@@ -4,6 +4,8 @@ import { envVars } from "../../config/env";
 import { cookieUtils } from "./cookie";
 import { jwtUtils } from "./jwt";
 
+const isProd = process.env.NODE_ENV === 'production';
+
 //Creating access token
 const getAccessToken = (payload: JwtPayload) => {
     const accessToken = jwtUtils.createToken(
@@ -27,8 +29,8 @@ const getRefreshToken = (payload: JwtPayload) => {
 const setAccessTokenCookie = (res: Response, token: string) => {
     cookieUtils.setCookie(res, 'accessToken', token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
         path: '/',
         //1 day
         maxAge: 60 * 60 * 24 * 1000,
@@ -38,8 +40,8 @@ const setAccessTokenCookie = (res: Response, token: string) => {
 const setRefreshTokenCookie = (res: Response, token: string) => {
     cookieUtils.setCookie(res, 'refreshToken', token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
         path: '/',
         //7d
         maxAge: 60 * 60 * 24 * 1000 * 7,

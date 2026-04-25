@@ -8,13 +8,22 @@ import { Role, UserStatus } from "../../../generated/prisma-client";
 export const authorize = (...authRoles: Role[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const authHeader = req.headers.authorization;
+      // ✅ Read token from cookies first, then fallback to Authorization header
+      let token: string | undefined;
 
-      if (!authHeader) {
+      if (req.cookies?.accessToken) {
+        token = req.cookies.accessToken;
+      } else {
+        const authHeader = req.headers.authorization;
+        if (authHeader) {
+          token = authHeader.split(" ")[1];
+        }
+      }
+
+      if (!token) {
         throw new AppError(status.UNAUTHORIZED, "No access token provided");
       }
 
-      const token = authHeader.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
       const user = await prisma.user.findUnique({

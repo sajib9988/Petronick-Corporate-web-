@@ -58,20 +58,17 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 const logoutUser = catchAsync(async (req: Request, res: Response) => {
-  // ✅ cookie clear করো — set করার সময় যে options ছিল, same options দিতে হবে
-  cookieUtils.clearCookie(res, "accessToken", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
-  });
+  const isProd = process.env.NODE_ENV === "production";
 
-  cookieUtils.clearCookie(res, "refreshToken", {
+  const cookieOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isProd,
+    sameSite: (isProd ? "none" : "lax") as "lax" | "none",
     path: "/",
-  });
+  };
+
+  cookieUtils.clearCookie(res, "accessToken", cookieOptions);
+  cookieUtils.clearCookie(res, "refreshToken", cookieOptions);
 
   sendResponse(res, {
     status: status.OK,
@@ -80,7 +77,6 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
     data: null,
   });
 });
-
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   // ✅ cookie থেকে refresh token পড়ো
   const token = cookieUtils.getCookie(req, "refreshToken");
