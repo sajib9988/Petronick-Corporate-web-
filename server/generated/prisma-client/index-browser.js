@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.6.0
+ * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 Prisma.prismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.6.0",
+  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -124,6 +124,7 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  password: 'password',
   emailVerified: 'emailVerified',
   role: 'role',
   status: 'status',
@@ -131,42 +132,6 @@ exports.Prisma.UserScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   image: 'image',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SessionScalarFieldEnum = {
-  id: 'id',
-  expiresAt: 'expiresAt',
-  token: 'token',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  userId: 'userId'
-};
-
-exports.Prisma.AccountScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  providerId: 'providerId',
-  userId: 'userId',
-  accessToken: 'accessToken',
-  refreshToken: 'refreshToken',
-  idToken: 'idToken',
-  accessTokenExpiresAt: 'accessTokenExpiresAt',
-  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
-  scope: 'scope',
-  password: 'password',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.VerificationScalarFieldEnum = {
-  id: 'id',
-  identifier: 'identifier',
-  value: 'value',
-  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -276,6 +241,10 @@ exports.AgentStatus = exports.$Enums.AgentStatus = {
 
 exports.SectionType = exports.$Enums.SectionType = {
   HERO: 'HERO',
+  WHO_WE_ARE: 'WHO_WE_ARE',
+  ECOSYSTEM: 'ECOSYSTEM',
+  REVENUE: 'REVENUE',
+  CLOSING: 'CLOSING',
   ABOUT: 'ABOUT',
   CTA: 'CTA',
   FEATURE: 'FEATURE',
@@ -286,9 +255,6 @@ exports.SectionType = exports.$Enums.SectionType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Session: 'Session',
-  Account: 'Account',
-  Verification: 'Verification',
   Contact: 'Contact',
   PromotionAgent: 'PromotionAgent',
   BusinessUnit: 'BusinessUnit',

@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { LoginFormData, loginSchema } from "@/lib/validation";
-import { signIn } from "@/lib/auth-client";
+
+import { loginUser } from "@/service/auth";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -24,32 +25,31 @@ export default function LoginForm() {
     defaultValues: { email: "", password: "" },
   });
 
- const onSubmit = async (data: LoginFormData) => {
+const onSubmit = async (formData: LoginFormData) => {
   setIsLoading(true);
   setError(null);
+
   try {
-    const { data: result, error: authError } = await signIn.email({
-      email: data.email,
-      password: data.password,
-      callbackURL: "/", // optional
-    });
-    
-    if (authError) {
-      const errorMessage = authError.message || "Login failed";
+    const result = await loginUser(formData);
+
+    if (!result.ok) {
+      const errorMessage = result.data?.message || "Login failed";
       setError(errorMessage);
       toast.error(errorMessage);
       return;
     }
 
-    toast.success("Login successful!");
+    // ✅ success হলে এখানে আসবে
+    toast.success("Login successful");
 
-    // role check করে redirect
-    const userRole = (result?.user as any)?.role;
+    const userRole = result.data?.user?.role;
+
     if (userRole === "ADMIN") {
       router.push("/admin");
     } else {
       router.push("/");
     }
+
   } catch (err) {
     setError("Something went wrong.");
     toast.error("Something went wrong. Please try again.");
@@ -57,6 +57,7 @@ export default function LoginForm() {
     setIsLoading(false);
   }
 };
+
 
 const handleGoogleLogin = () => {
   window.location.href =
