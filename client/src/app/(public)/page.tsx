@@ -81,7 +81,7 @@ const ecosystemFlow = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto">
+    <main>
       {/* ── Section 1: Hero ── */}
       <HeroSection />
 
