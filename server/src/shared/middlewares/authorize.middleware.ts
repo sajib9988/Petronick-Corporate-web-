@@ -24,7 +24,7 @@ export const authorize = (...authRoles: Role[]) =>
         throw new AppError(status.UNAUTHORIZED, "No access token provided");
       }
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
 
       const user = await prisma.user.findUnique({
         where: { id: decoded.id as string },

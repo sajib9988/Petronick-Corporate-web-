@@ -1,18 +1,5 @@
-"use server";
 
-import { cookies } from "next/headers";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
-
-// Helper to get auth header
-const getAuthHeaders = async (headers: Record<string, string> = {}) => {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
-  return {
-    ...headers,
-    Cookie: `better-auth.session_token=${sessionToken}`,
-  };
-};
+const BASE_URL= process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api";
 
 // Safe JSON helper
 const safeJson = async (res: Response) => {
@@ -37,6 +24,7 @@ export const getAllCompanies = async (params?: {
   if (params?.isVisible !== undefined) query.set("isVisible", String(params.isVisible));
 
   const res = await fetch(`${BASE_URL}/company?${query}`, {
+    credentials: "include",
     cache: "no-store",
   });
 
@@ -54,7 +42,7 @@ export const getCompanyById = async (id: string) => {
 export const createCompany = async (formData: FormData) => {
   const res = await fetch(`${BASE_URL}/company`, {
     method: "POST",
-    headers: await getAuthHeaders(),
+    credentials: "include",
     body: formData, // multipart/form-data
   });
   return await safeJson(res);
@@ -63,7 +51,7 @@ export const createCompany = async (formData: FormData) => {
 export const updateCompany = async (id: string, formData: FormData) => {
   const res = await fetch(`${BASE_URL}/company/${id}`, {
     method: "PATCH",
-    headers: await getAuthHeaders(),
+    credentials: "include",
     body: formData,
   });
   return await safeJson(res);
@@ -72,7 +60,7 @@ export const updateCompany = async (id: string, formData: FormData) => {
 export const deleteCompany = async (id: string) => {
   const res = await fetch(`${BASE_URL}/company/${id}`, {
     method: "DELETE",
-    headers: await getAuthHeaders(),
+    credentials: "include",
   });
   return await safeJson(res);
 };
