@@ -4,15 +4,11 @@ import type { NextRequest } from "next/server";
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Session cookie check
-  // Better Auth এর cookie name → "better-auth.session_token"
-  const sessionToken = request.cookies.get(
-    "better-auth.session_token",
-  )?.value;
 
+ const  accessToken = request.cookies.get("accessToken")!.value
   // ── Admin routes protect ──
   if (pathname.startsWith("/admin")) {
-    if (!sessionToken) {
+    if (!accessToken) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
@@ -21,7 +17,7 @@ export async function proxy(request: NextRequest) {
 
   // ── Auth routes → already logged in হলে redirect ──
   if (pathname === "/login" || pathname === "/register") {
-    if (sessionToken) {
+    if (accessToken) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
   }

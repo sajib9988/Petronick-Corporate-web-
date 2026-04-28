@@ -38,6 +38,7 @@ export const AuthSection = ({ isMobile = false }) => {
       } finally {
         setLoading(false);
       }
+      console.log("Fetched user:", user)
     };
     fetchUser();
   }, []);
