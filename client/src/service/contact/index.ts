@@ -1,18 +1,10 @@
+
 "use server";
 
-import { cookies } from "next/headers";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-// Helper to get auth header
-const getAuthHeaders = async (headers: Record<string, string> = {}) => {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
-  return {
-    ...headers,
-    Cookie: `better-auth.session_token=${sessionToken}`,
-  };
-};
+
 
 // Safe JSON helper
 const safeJson = async (res: Response) => {
@@ -30,12 +22,18 @@ export const createContact = async (data: {
   phone?: string;
   message: string;
 }) => {
-  const res = await fetch(`${BASE_URL}/contact`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return await safeJson(res);
+  try {
+    const res = await fetch(`${BASE_URL}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error creating contact:", err);
+    return { success: false, message: "Failed to create contact" };
+  }
 };
 
 export const getAllContacts = async (params?: {
@@ -43,23 +41,32 @@ export const getAllContacts = async (params?: {
   limit?: number;
   search?: string;
 }) => {
-  const query = new URLSearchParams();
-  if (params?.page) query.set("page", String(params.page));
-  if (params?.limit) query.set("limit", String(params.limit));
-  if (params?.search) query.set("search", params.search);
+  try {
+    const query = new URLSearchParams();
+    if (params?.page) query.set("page", String(params.page));
+    if (params?.limit) query.set("limit", String(params.limit));
+    if (params?.search) query.set("search", params.search);
 
-  const res = await fetch(`${BASE_URL}/contact?${query}`, {
-    headers: await getAuthHeaders(),
-    cache: "no-store",
-  });
+    const res = await fetch(`${BASE_URL}/contact?${query}`, {
+      credentials: "include",
+    });
 
-  return await safeJson(res);
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error fetching contacts:", err);
+    return { success: false, data: [], meta: { total: 0 }, message: "Failed to fetch contacts" };
+  }
 };
 
 export const deleteContact = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/contact/${id}`, {
-    method: "DELETE",
-    headers: await getAuthHeaders(),
-  });
-  return await safeJson(res);
+  try {
+    const res = await fetch(`${BASE_URL}/contact/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error deleting contact:", err);
+    return { success: false, message: "Failed to delete contact" };
+  }
 };

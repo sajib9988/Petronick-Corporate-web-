@@ -2,14 +2,14 @@
 
 import { cookies } from "next/headers";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api";
 
 const getAuthHeaders = async (headers: Record<string, string> = {}) => {
   const cookieStore = await cookies();
-  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+  const accessToken = cookieStore.get("accessToken")?.value;
   return {
     ...headers,
-    Cookie: `better-auth.session_token=${sessionToken}`,
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
   };
 };
 
@@ -21,91 +21,104 @@ const safeJson = async (res: Response) => {
   }
 };
 
+// Helper to catch fetch errors
+const safeFetch = async (url: string, options?: RequestInit) => {
+  try {
+    return await fetch(url, options);
+  } catch (err) {
+    console.error("Fetch error:", err);
+    return null;
+  }
+};
+
 // ─── PAGE ────────────────────────────────────────────────
 
 export const getAllPages = async () => {
-  const res = await fetch(`${BASE_URL}/cms/pages`, { cache: "no-store" });
+  const res = await safeFetch(`${BASE_URL}/cms/pages`);
+  if (!res) return { success: false, data: [], message: "Failed to fetch pages" };
   return await safeJson(res);
 };
 
 export const getPageBySlug = async (slug: string) => {
-  const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await safeFetch(`${BASE_URL}/cms/pages/${slug}`);
+  if (!res) return { success: false, message: "Failed to fetch page" };
   return await safeJson(res);
 };
 
 export const createPage = async (data: { slug: string; title: string }) => {
-  const res = await fetch(`${BASE_URL}/cms/pages`, {
+  const res = await safeFetch(`${BASE_URL}/cms/pages`, {
     method: "POST",
     headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(data),
   });
-  // ✅ FIX: safeJson দিয়ে parse করো, আর caller-এ আবার .json() ডাকো না
+  if (!res) return { success: false, message: "Failed to create page" };
   return await safeJson(res);
 };
 
 export const updatePage = async (slug: string, data: { title: string }) => {
-  const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
+  const res = await safeFetch(`${BASE_URL}/cms/pages/${slug}`, {
     method: "PATCH",
     headers: await getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(data),
   });
+  if (!res) return { success: false, message: "Failed to update page" };
   return await safeJson(res);
 };
 
 export const deletePage = async (slug: string) => {
-  const res = await fetch(`${BASE_URL}/cms/pages/${slug}`, {
+  const res = await safeFetch(`${BASE_URL}/cms/pages/${slug}`, {
     method: "DELETE",
     headers: await getAuthHeaders(),
   });
-  // ✅ FIX: raw Response return করা বন্ধ, parsed result return করো
+  if (!res) return { success: false, message: "Failed to delete page" };
   return await safeJson(res);
 };
 
 // ─── SECTION ─────────────────────────────────────────────
 
 export const getSectionsByPage = async (pageId: string) => {
-  const res = await fetch(`${BASE_URL}/cms/sections/page/${pageId}`, {
-    cache: "no-store",
-  });
+  const res = await safeFetch(`${BASE_URL}/cms/sections/page/${pageId}`);
+  if (!res) return { success: false, data: [], message: "Failed to fetch sections" };
   return await safeJson(res);
 };
 
 export const createSection = async (formData: FormData) => {
-  const res = await fetch(`${BASE_URL}/cms/sections`, {
+  const res = await safeFetch(`${BASE_URL}/cms/sections`, {
     method: "POST",
     headers: await getAuthHeaders(),
     body: formData,
   });
+  if (!res) return { success: false, message: "Failed to create section" };
   return await safeJson(res);
 };
 
 export const updateSection = async (id: string, formData: FormData) => {
-  const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
+  const res = await safeFetch(`${BASE_URL}/cms/sections/${id}`, {
     method: "PATCH",
     headers: await getAuthHeaders(),
     body: formData,
   });
+  if (!res) return { success: false, message: "Failed to update section" };
   return await safeJson(res);
 };
 
 export const deleteSection = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
+  const res = await safeFetch(`${BASE_URL}/cms/sections/${id}`, {
     method: "DELETE",
     headers: await getAuthHeaders(),
   });
+  if (!res) return { success: false, message: "Failed to delete section" };
   return await safeJson(res);
 };
 
 export const getSectionById = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/cms/sections/${id}`, {
-    cache: "no-store",
-  });
+  const res = await safeFetch(`${BASE_URL}/cms/sections/${id}`);
+  if (!res) return { success: false, message: "Failed to fetch section" };
   return await safeJson(res);
 };
 
 export const getAllSections = async () => {
-  const res = await fetch(`${BASE_URL}/cms/sections`, { cache: "no-store" });
+  const res = await safeFetch(`${BASE_URL}/cms/sections`);
+  if (!res) return { success: false, data: [], message: "Failed to fetch sections" };
   return await safeJson(res);
 };
