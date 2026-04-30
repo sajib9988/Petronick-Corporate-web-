@@ -8,8 +8,8 @@
     "skipLibCheck": true,
     "types": ["node"],
     "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true
   }
 }

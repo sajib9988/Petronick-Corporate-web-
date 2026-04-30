@@ -1,4 +1,5 @@
-import { Prisma, SectionType } from "../../../generated/prisma-client";
+import { Prisma, SectionType } from "../../../generated/prisma-client/index.js";
+
 
 export interface ICreatepage{
 slug:string,
@@ -35,7 +36,7 @@ export interface IPageQuery {
 
 export interface ISectionQuery {
   pageId?: string;
-  type?: string;
-  isVisible?: string;
+  type?: SectionType;
+  isVisible?: boolean;
 }
 
