@@ -1,4 +1,4 @@
-import { Prisma } from "../../../generated/prisma-client";
+import { Prisma, SectionType } from "../../../generated/prisma-client";
 
 export interface ICreatepage{
 slug:string,
@@ -7,16 +7,17 @@ title:string,
 
 export interface ICreateSection {
   pageId: string;
-  type: 'HERO' | 'ABOUT' | "CTA" | "TESTIMONIALS" | "GALLERY" | "CONTACT" | "FEATURE";
-  content: Prisma.InputJsonValue; // ✅
+  type: SectionType; // ✅ no manual string union
+  content: Prisma.InputJsonValue;
   image?: string;
-  order?: number; // ✅
+  order?: number;
   isVisible?: boolean;
 }
 
+
 export interface IUpdateSection {
-  type?: 'HERO' | 'ABOUT' | "CTA" | "TESTIMONIALS" | "GALLERY" | "CONTACT" | "FEATURE";
-  content?: Prisma.InputJsonValue; // ✅
+  type?: SectionType; // ✅
+  content?: Prisma.InputJsonValue;
   image?: string;
   order?: number;
   isVisible?: boolean;

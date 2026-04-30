@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: petronick_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: petronick-corporate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: petronick_server
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    environment:
+      DATABASE_URL: "postgresql://postgres:12345@postgres:5432/petronick-corporate?schema=public"
+      NODE_ENV: production
+    depends_on:
+      - postgres
+    command: sh -c "pnpm exec prisma migrate deploy && node dist/server.js"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: petronick_client
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client/.env.local
+    environment:
+      NEXT_PUBLIC_BASE_URL: http://server:5000/api/v1
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:

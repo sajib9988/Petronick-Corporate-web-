@@ -4,8 +4,8 @@ import type { NextRequest } from "next/server";
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  const accessToken = request.cookies.get("accessToken")?.value;
 
- const  accessToken = request.cookies.get("accessToken")!.value
   // ── Admin routes protect ──
   if (pathname.startsWith("/admin")) {
     if (!accessToken) {
@@ -26,9 +26,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/login",
-    "/register",
-  ],
+  matcher: ["/admin/:path*", "/login", "/register"],
 };
