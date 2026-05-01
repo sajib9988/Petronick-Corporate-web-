@@ -1,7 +1,6 @@
 
 "use server";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api";
+const BASE_URL = process.env.INTERNAL_BASE_URL || "http://localhost:5000/api/v1";
 
 // Safe JSON helper
 const safeJson = async (res: Response) => {

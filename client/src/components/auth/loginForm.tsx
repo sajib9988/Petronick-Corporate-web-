@@ -43,6 +43,7 @@ const onSubmit = async (formData: LoginFormData) => {
     toast.success("Login successful");
 
     const userRole = result.data?.user?.role;
+    console.log("User role:", userRole); // ✅ এখানে রোল দেখাও
 
     if (userRole === "ADMIN") {
       router.push("/admin");

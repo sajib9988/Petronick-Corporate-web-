@@ -1,4 +1,10 @@
+
 import { FieldValues } from "react-hook-form";
+
+
+const BASE_URL = process.env.INTERNAL_BASE_URL || "http://localhost:5000/api/v1";
+
+
 
 
 // Safe JSON helper
@@ -14,7 +20,7 @@ const safeJson = async (res: Response) => {
 export const registerUser = async (userData: FieldValues) => {
   const { confirmPassword, ...rest } = userData;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, {
+  const res = await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(rest),
@@ -30,7 +36,7 @@ export const registerUser = async (userData: FieldValues) => {
   };
 };
 export const loginUser = async (userData: FieldValues) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
+  const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -44,7 +50,7 @@ export const loginUser = async (userData: FieldValues) => {
 };
 
 export const logoutUser = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/logout`, {
+  const res = await fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
     credentials: "include",
   });
@@ -52,12 +58,10 @@ export const logoutUser = async () => {
 };
 
 export const getMe = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/me`, {
+  const res = await fetch(`${BASE_URL}/auth/me`, {
     credentials: "include",
     cache: "no-store",        // ← এটা যোগ করো
-    headers: {
-      "Cache-Control": "no-cache",  // ← এটাও
-    },
+    
   });
 
   if (!res.ok) return null;
