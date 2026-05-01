@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { catchAsync } from "../../shared/utils/catch-async";
-import { sendResponse } from "../../shared/utils/send-response";
-import { agentService } from "./promotion-agent.service";
-import { agentValidation } from "./promotion-agent.validation";
-import { IAgentQuery } from "./promotion-agent.interface";
+import { catchAsync } from "../../shared/utils/catch-async.js";
+import { agentValidation } from "./promotion-agent.validation.js";
+import { agentService } from "./promotion-agent.service.js";
+import { sendResponse } from "../../shared/utils/send-response.js";
+import { IAgentQuery } from "./promotion-agent.interface.js";
+
 
 const createAgent = catchAsync(async (req: Request, res: Response) => {
   const parsed = agentValidation.createAgent.parse(req.body);

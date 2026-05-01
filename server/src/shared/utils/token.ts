@@ -1,8 +1,9 @@
 import { Response } from "express";
 import { JwtPayload, SignOptions } from "jsonwebtoken";
-import { envVars } from "../../config/env";
-import { cookieUtils } from "./cookie";
-import { jwtUtils } from "./jwt";
+import { jwtUtils } from "./jwt.js";
+import { envVars } from "../../config/env.js";
+import { cookieUtils } from "./cookie.js";
+
 
 const isProd = process.env.NODE_ENV === 'production';
 

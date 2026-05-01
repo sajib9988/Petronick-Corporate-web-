@@ -1,15 +1,12 @@
-import { envVars } from "../../config/env";
-import { prisma } from "../../database/prisma";
-import { AppError } from "../../shared/errors/app-error";
-import { sendEmail } from "../../shared/utils/email";
-import { getPagination } from "../../shared/utils/pagination";
-import {
-  IAgentQuery,
-  ICreatePromotionAgent,
-  IUpdateAgentStatus,
-} from "./promotion-agent.interface";
+
 import httpStatus from "http-status";
 import { Parser } from "json2csv";
+import { prisma } from "../../database/prisma.js";
+import { sendEmail } from "../../shared/utils/email.js";
+import { envVars } from "../../config/env.js";
+import { getPagination } from "../../shared/utils/pagination.js";
+import { AppError } from "../../shared/errors/app-error.js";
+import { IAgentQuery, ICreatePromotionAgent, IUpdateAgentStatus } from "./promotion-agent.interface.js";
 
 const createAgent = async (payload: ICreatePromotionAgent) => {
   const { businessUnits, ...rest } = payload;
@@ -136,7 +133,7 @@ const exportCSV = async () => {
     include: { businessUnits: true },
   });
 
-  const data = agents.map((agent) => ({
+  const data = agents.map((agent: typeof agents[number]) => ({
     id: agent.id,
     fullName: agent.fullName,
     email: agent.email,
@@ -146,7 +143,7 @@ const exportCSV = async () => {
     focus: agent.focus,
     message: agent.message,
     status: agent.status,
-    businessUnits: agent.businessUnits.map((b) => b.name).join(", "),
+    businessUnits: agent.businessUnits.map((b: { name: string }) => b.name).join(", "),
     createdAt: agent.createdAt,
   }));
 

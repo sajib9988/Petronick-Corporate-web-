@@ -1,11 +1,12 @@
 import httpStatus from 'http-status';
-import { catchAsync } from "../../shared/utils/catch-async"
-import { sendResponse } from "../../shared/utils/send-response"
-import { cmsValidation } from "./cms.validation"
-import { IPageQuery } from './cms.interface';
+
 import { Request, Response } from "express"; 
-import { uploadToCloudinary } from '../../shared/utils/upload';
-import { cmsService } from './cms.service';
+import { catchAsync } from '../../shared/utils/catch-async.js';
+import { cmsValidation } from './cms.validation.js';
+import { cmsService } from './cms.service.js';
+import { sendResponse } from '../../shared/utils/send-response.js';
+import { uploadToCloudinary } from '../../shared/utils/upload.js';
+
 
 
 const createPage = catchAsync(async (req, res)=>{

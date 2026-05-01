@@ -1,8 +1,9 @@
-import { prisma } from "../../database/prisma";
-import { AppError } from "../../shared/errors/app-error";
-import { destroyImage } from "../../shared/utils/cloudinary-destroy";
-import { ICreatepage, ICreateSection, IUpdatePage, IUpdateSection } from "./cms.interface";
+
 import httpStatus from "http-status";
+import { ICreatepage, ICreateSection, IUpdatePage, IUpdateSection } from "./cms.interface.js";
+import { prisma } from "../../database/prisma.js";
+import { AppError } from "../../shared/errors/app-error.js";
+import { destroyImage } from "../../shared/utils/cloudinary-destroy.js";
 
 // ======================
 // PAGE SERVICE

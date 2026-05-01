@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { cmsController } from "./cms.controller.js";
+import { authorize } from "../../shared/middlewares/authorize.middleware.js";
+import { Role } from "../../../generated/prisma-client/index.js";
+import { uploadSectionImage } from "../../shared/utils/upload.js";
 
-import { authorize } from "../../shared/middlewares/authorize.middleware";
-import { cmsController } from "./cms.controller";
-import { uploadSectionImage } from "../../shared/utils/upload";
-import { Role } from "../../../generated/prisma-client";
+
 
 
 const router = Router();

@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import status from "http-status";
-import { catchAsync } from "../../shared/utils/catch-async";
-import { sendResponse } from "../../shared/utils/send-response";
-import { tokenUtils } from "../../shared/utils/token";
-import { cookieUtils } from "../../shared/utils/cookie";
-import { authService } from "./auth.service";
+import { catchAsync } from "../../shared/utils/catch-async.js";
+import { authService } from "./auth.service.js";
+import { sendResponse } from "../../shared/utils/send-response.js";
+import { tokenUtils } from "../../shared/utils/token.js";
+import { cookieUtils } from "../../shared/utils/cookie.js";
+
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.registerUser(req.body);

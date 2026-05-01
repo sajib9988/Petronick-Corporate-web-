@@ -54,11 +54,14 @@ export const logoutUser = async () => {
 export const getMe = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/me`, {
     credentials: "include",
+    cache: "no-store",        // ← এটা যোগ করো
+    headers: {
+      "Cache-Control": "no-cache",  // ← এটাও
+    },
   });
 
   if (!res.ok) return null;
   const data = await safeJson(res);
-    console.log("User data:", data);
+  console.log("User data:", data);
   return data?.success === false ? null : data;
-
 };

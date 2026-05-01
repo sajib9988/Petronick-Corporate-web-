@@ -1,16 +1,13 @@
 import status from "http-status";
 import bcrypt from "bcrypt";
-import { prisma } from "../../database/prisma";
-import { AppError } from "../../shared/errors/app-error";
-import { jwtUtils } from "../../shared/utils/jwt";
-import { tokenUtils } from "../../shared/utils/token";
-import { envVars } from "../../config/env";
-import {
-  IChangePasswordPayload,
-  ILoginUserPayload,
-  IRegisterUserPayload,
-  IRequestUser,
-} from "./auth.type";
+
+
+import { prisma } from "../../database/prisma.js";
+import { AppError } from "../../shared/errors/app-error.js";
+import { IChangePasswordPayload, ILoginUserPayload, IRegisterUserPayload, IRequestUser } from "./auth.type.js";
+import { jwtUtils } from "../../shared/utils/jwt.js";
+import { envVars } from "../../config/env.js";
+import { tokenUtils } from "../../shared/utils/token.js";
 
 const registerUser = async (payload: IRegisterUserPayload) => {
   const { name, email, password } = payload;

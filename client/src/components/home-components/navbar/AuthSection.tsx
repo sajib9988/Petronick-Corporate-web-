@@ -28,20 +28,23 @@ export const AuthSection = ({ isMobile = false }) => {
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await getMe();
-        setUser(res?.data || null);
+        console.log("Full res:", res);
+        const userData = res?.data || null;
+        console.log("Fetched user:", userData) // ✅ এখানে দাও
+        setUser(userData);
       } catch {
         setUser(null);
       } finally {
         setLoading(false);
       }
-      console.log("Fetched user:", user)
     };
     fetchUser();
   }, []);
+
 
   const handleLogout = async () => {
     try {

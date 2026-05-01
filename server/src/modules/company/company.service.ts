@@ -1,9 +1,10 @@
-import { prisma } from "../../database/prisma";
-import { AppError } from "../../shared/errors/app-error";
-import { destroyImage } from "../../shared/utils/cloudinary-destroy";
-import { getPagination } from "../../shared/utils/pagination";
-import { ICompanyQuery, IcreateCompany, IupdateCompany } from "./company.interface";
+
 import httpStatus from "http-status";
+import { prisma } from "../../database/prisma.js";
+import { ICompanyQuery, IcreateCompany, IupdateCompany } from "./company.interface.js";
+import { AppError } from "../../shared/errors/app-error.js";
+import { getPagination } from "../../shared/utils/pagination.js";
+import { destroyImage } from "../../shared/utils/cloudinary-destroy.js";
 
 const createCompany = async (payload: IcreateCompany) => {
   const existing = await prisma.company.findUnique({

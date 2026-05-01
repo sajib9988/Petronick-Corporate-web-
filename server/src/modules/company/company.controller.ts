@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { catchAsync } from "../../shared/utils/catch-async";
-import { AppError } from "../../shared/errors/app-error";
+import { catchAsync } from "../../shared/utils/catch-async.js";
+import { AppError } from "../../shared/errors/app-error.js";
+import { uploadToCloudinary } from "../../shared/utils/upload.js";
+import { companyValidation } from "./company.vaidation.js";
+import { companyService } from "./company.service.js";
+import { sendResponse } from "../../shared/utils/send-response.js";
+import { ICompanyQuery } from "./company.interface.js";
 import httpStatus from "http-status";
-import { uploadToCloudinary } from "../../shared/utils/upload";
-import { companyValidation } from "./company.vaidation";
-import { sendResponse } from "../../shared/utils/send-response";
-import { ICompanyQuery } from "./company.interface";
-import { companyService } from "./company.service";
 
 
 

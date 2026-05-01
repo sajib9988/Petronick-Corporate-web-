@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { agentController } from "./promotion-agent.controller.js";
+import { authorize } from "../../shared/middlewares/authorize.middleware.js";
+import { Role } from "../../../generated/prisma-client/index.js";
 
-import { authorize } from "../../shared/middlewares/authorize.middleware";
-import { agentController } from "./promotion-agent.controller";
-import { Role } from "../../../generated/prisma-client";
+
 
 const router = Router();
 

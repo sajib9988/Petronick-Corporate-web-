@@ -26,6 +26,15 @@ export default function HeroSection({ image, content }: HeroSectionProps) {
   const secondaryBtn = content?.secondaryBtn ?? "Become a Promotion Agent";
   const secondaryBtnLink = content?.secondaryBtnLink ?? "/promotion-agent";
 
+
+
+ const handleHeroSectionCreate=()=>{
+      
+ }
+
+
+
+
   return (
     // min-h কমিয়ে দেয়া হয়েছে এবং justify-start ব্যবহার করা হয়েছে
     <section className="relative w-full min-h-[80vh] flex flex-col items-center justify-start overflow-hidden bg-gray-950">

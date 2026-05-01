@@ -2,15 +2,16 @@ import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 import helmet from "helmet";
 import qs from "qs";
-import { cors } from "./config/cors";
-import { logger } from "./config/logger";
-import { limiter } from "./config/rate-limit";
-import { apiRoutes } from "./routes";
-import { globalErrorHandler } from "./shared/middlewares/error.middleware";
-import { notFound } from "./shared/middlewares/not-found.middleware";
+
 
 
 import path from "path";
+import { logger } from "./config/logger.js";
+import { cors } from "./config/cors.js";
+import { limiter } from "./config/rate-limit.js";
+import { apiRoutes } from "./routes/index.js";
+import { notFound } from "./shared/middlewares/not-found.middleware.js";
+import { globalErrorHandler } from "./shared/middlewares/error.middleware.js";
 
 // app initialization
 const app: Application = express();

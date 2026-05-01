@@ -1,9 +1,10 @@
 // server/src/modules/auth/auth.route.ts
 
 import { Router } from "express";
-import { authorize } from "../../shared/middlewares/authorize.middleware";
-import { authController } from "./auth.controller";
-import { Role } from "../../../generated/prisma-client";
+import { authController } from "./auth.controller.js";
+import { Role } from "../../../generated/prisma-client/index.js";
+import { authorize } from "../../shared/middlewares/authorize.middleware.js";
+
 
 const router = Router();
 
