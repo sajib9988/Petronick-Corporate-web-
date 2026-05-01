@@ -1,4 +1,6 @@
 import HeroSection from "@/components/home-components/hero-section";
+import { ICreatepage } from "@/lib/type";
+import { getAllPages } from "@/service/cms";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -62,6 +64,18 @@ const companies = [
   },
 ];
 
+const pageRes = await getAllPages();
+const pages = pageRes.data || [];
+
+const homePage = pages.find((p: ICreatepage) => p.slug === "home");
+
+const heroSection = homePage?.sections?.find(
+  (s: any) => s.sectionType === "hero"
+);
+
+
+
+
 const stageColors: Record<string, string> = {
   Active: "bg-emerald-50 text-emerald-700",
   Launching: "bg-blue-50 text-blue-700",
@@ -83,7 +97,12 @@ export default function HomePage() {
   return (
     <main>
       {/* ── Section 1: Hero ── */}
-      <HeroSection />
+      <HeroSection
+        image={heroSection?.imageUrl || "/placeholder-hero.jpg"}
+        content={heroSection?.content ?? {}}
+ 
+        
+       />
 
       {/* ── Section 2: Who We Are ── */}
       <section className="bg-white py-16 px-4">
