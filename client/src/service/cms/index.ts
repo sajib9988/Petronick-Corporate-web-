@@ -13,15 +13,6 @@ const getAuthHeaders = async (headers: Record<string, string> = {}) => {
   };
 };
 
-const safeJson = async (res: Response) => {
-  try {
-    return await res.json();
-  } catch {
-    return { success: false, message: "Invalid JSON response from server" };
-  }
-};
-
-// Helper to catch fetch errors
 const safeFetch = async (url: string, options?: RequestInit) => {
   try {
     return await fetch(url, options);
@@ -36,13 +27,13 @@ const safeFetch = async (url: string, options?: RequestInit) => {
 export const getAllPages = async () => {
   const res = await safeFetch(`${BASE_URL}/cms/pages`);
   if (!res) return { success: false, data: [], message: "Failed to fetch pages" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const getPageBySlug = async (slug: string) => {
   const res = await safeFetch(`${BASE_URL}/cms/pages/${slug}`);
   if (!res) return { success: false, message: "Failed to fetch page" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const createPage = async (data: { slug: string; title: string }) => {
@@ -52,7 +43,7 @@ export const createPage = async (data: { slug: string; title: string }) => {
     body: JSON.stringify(data),
   });
   if (!res) return { success: false, message: "Failed to create page" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const updatePage = async (slug: string, data: { title: string }) => {
@@ -62,7 +53,7 @@ export const updatePage = async (slug: string, data: { title: string }) => {
     body: JSON.stringify(data),
   });
   if (!res) return { success: false, message: "Failed to update page" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const deletePage = async (slug: string) => {
@@ -71,7 +62,7 @@ export const deletePage = async (slug: string) => {
     headers: await getAuthHeaders(),
   });
   if (!res) return { success: false, message: "Failed to delete page" };
-  return await safeJson(res);
+  return res.json();
 };
 
 // ─── SECTION ─────────────────────────────────────────────
@@ -79,7 +70,7 @@ export const deletePage = async (slug: string) => {
 export const getSectionsByPage = async (pageId: string) => {
   const res = await safeFetch(`${BASE_URL}/cms/sections/page/${pageId}`);
   if (!res) return { success: false, data: [], message: "Failed to fetch sections" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const createSection = async (formData: FormData) => {
@@ -89,7 +80,7 @@ export const createSection = async (formData: FormData) => {
     body: formData,
   });
   if (!res) return { success: false, message: "Failed to create section" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const updateSection = async (id: string, formData: FormData) => {
@@ -99,7 +90,7 @@ export const updateSection = async (id: string, formData: FormData) => {
     body: formData,
   });
   if (!res) return { success: false, message: "Failed to update section" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const deleteSection = async (id: string) => {
@@ -108,17 +99,17 @@ export const deleteSection = async (id: string) => {
     headers: await getAuthHeaders(),
   });
   if (!res) return { success: false, message: "Failed to delete section" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const getSectionById = async (id: string) => {
   const res = await safeFetch(`${BASE_URL}/cms/sections/${id}`);
   if (!res) return { success: false, message: "Failed to fetch section" };
-  return await safeJson(res);
+  return res.json();
 };
 
 export const getAllSections = async () => {
   const res = await safeFetch(`${BASE_URL}/cms/sections`);
   if (!res) return { success: false, data: [], message: "Failed to fetch sections" };
-  return await safeJson(res);
+  return res.json();
 };

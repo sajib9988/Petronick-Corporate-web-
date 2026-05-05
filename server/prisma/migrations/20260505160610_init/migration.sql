@@ -1,40 +1,33 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER');
 
-  - You are about to drop the `BusinessUnit` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Company` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Contact` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Page` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `PromotionAgent` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Section` table. If the table is not empty, all the data it contains will be lost.
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BLOCKED', 'DELETED');
 
-*/
 -- CreateEnum
 CREATE TYPE "AgentStatus" AS ENUM ('PENDING', 'REVIEWED', 'APPROVED', 'REJECTED');
 
--- DropForeignKey
-ALTER TABLE "BusinessUnit" DROP CONSTRAINT "BusinessUnit_agentId_fkey";
+-- CreateEnum
+CREATE TYPE "SectionType" AS ENUM ('HERO', 'WHO_WE_ARE', 'ECOSYSTEM', 'REVENUE', 'CLOSING', 'ABOUT', 'CTA', 'FEATURE', 'TESTIMONIALS', 'GALLERY', 'CONTACT');
 
--- DropForeignKey
-ALTER TABLE "Section" DROP CONSTRAINT "Section_pageId_fkey";
+-- CreateTable
+CREATE TABLE "user" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
+    "needPasswordChange" BOOLEAN NOT NULL DEFAULT false,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
+    "image" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
--- DropTable
-DROP TABLE "BusinessUnit";
-
--- DropTable
-DROP TABLE "Company";
-
--- DropTable
-DROP TABLE "Contact";
-
--- DropTable
-DROP TABLE "Page";
-
--- DropTable
-DROP TABLE "PromotionAgent";
-
--- DropTable
-DROP TABLE "Section";
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "contact" (
@@ -79,7 +72,7 @@ CREATE TABLE "company" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "logo" TEXT NOT NULL,
-    "website" TEXT NOT NULL,
+    "website" TEXT,
     "order" INTEGER NOT NULL DEFAULT 0,
     "isVisible" BOOLEAN NOT NULL DEFAULT true,
     "revenueStage" TEXT,
@@ -104,7 +97,7 @@ CREATE TABLE "page" (
 CREATE TABLE "section" (
     "id" TEXT NOT NULL,
     "pageId" TEXT NOT NULL,
-    "type" "SectionType" NOT NULL,
+    "sectionType" "SectionType" NOT NULL,
     "content" JSONB NOT NULL,
     "image" TEXT,
     "order" INTEGER NOT NULL DEFAULT 0,
@@ -114,6 +107,9 @@ CREATE TABLE "section" (
 
     CONSTRAINT "section_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE INDEX "contact_email_idx" ON "contact"("email");
