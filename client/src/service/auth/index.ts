@@ -1,21 +1,31 @@
-
+"use server";
 import { FieldValues } from "react-hook-form";
+import { cookies } from "next/headers";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1";
 
-const BASE_URL = process.env.INTERNAL_BASE_URL || "http://localhost:5000/api/v1";
+const getAuthHeaders = async (headers: Record<string, string> = {}) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+  return {
+    ...headers,
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+  };
+};
 
-
-
-
-// Safe JSON helper
-const safeJson = async (res: Response) => {
+const safeFetch = async (url: string, options?: RequestInit) => {
   try {
-    const data = await res.json();
-    return data;
+    return await fetch(url, options);
   } catch (err) {
-    return { success: false, message: "Invalid JSON response from server" };
+    console.error("Fetch error:", err);
+    return null;
   }
 };
+
+
+
+
+
 
 export const registerUser = async (userData: FieldValues) => {
   const { confirmPassword, ...rest } = userData;
@@ -24,10 +34,10 @@ export const registerUser = async (userData: FieldValues) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(rest),
-    credentials: "include",
+    
   });
 
-  const data = await safeJson(res);
+  const data = await res.json();
 
   return {
     ok: res.ok,
@@ -40,32 +50,34 @@ export const loginUser = async (userData: FieldValues) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
-    credentials: "include", // ✅ ব্রাউজারে কুকি সেভ হবে
+    
   });
 
   return {
     ok: res.ok,
-    data: await safeJson(res),
+    data: await res.json(),
   };
 };
 
 export const logoutUser = async () => {
-  const res = await fetch(`${BASE_URL}/auth/logout`, {
+  const res = await safeFetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
-    credentials: "include",
+     headers: await getAuthHeaders(),
+     cache: "no-store",       
   });
-  return await safeJson(res);
+  if (!res) return null;
+  return await res.json();
 };
 
 export const getMe = async () => {
-  const res = await fetch(`${BASE_URL}/auth/me`, {
-    credentials: "include",
+  const res = await safeFetch(`${BASE_URL}/auth/me`, {
+    headers: await getAuthHeaders(),
     cache: "no-store",        // ← এটা যোগ করো
     
   });
 
-  if (!res.ok) return null;
-  const data = await safeJson(res);
+  if (!res || !res.ok) return null;
+  const data = await res.json();
   console.log("User data:", data);
   return data?.success === false ? null : data;
 };
