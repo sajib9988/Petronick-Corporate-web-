@@ -1,6 +1,7 @@
 "use server";
 import { FieldValues } from "react-hook-form";
 import { cookies } from "next/headers";
+import { text } from "stream/consumers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1";
 
@@ -50,12 +51,15 @@ export const loginUser = async (userData: FieldValues) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
-    
   });
+
+  // 👇 এখানে বাইরে declare করো
+  const text = await res.text();
+  console.log("Server response:", text);
 
   return {
     ok: res.ok,
-    data: await res.json(),
+    data: text, // আপাতত raw text ফেরত দাও
   };
 };
 
