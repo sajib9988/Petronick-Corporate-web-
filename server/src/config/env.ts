@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import status from "http-status";
 import path from "path";
-import { AppError } from "../shared/errors/app-error";
+
 
 dotenv.config({ path: path.join(process.cwd(), ".env") });
 
@@ -59,8 +59,7 @@ const loadEnvVars = (): EnvConfig => {
 
   requiredEnvVars.forEach((varName) => {
     if (!process.env[varName]) {
-      throw new AppError(
-        status.INTERNAL_SERVER_ERROR,
+      throw new Error(
         `Environment variable ${varName} is required but not set in .env file.`,
       );
     }
