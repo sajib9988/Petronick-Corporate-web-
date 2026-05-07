@@ -100,6 +100,8 @@ const loginUser = async (payload: ILoginUserPayload) => {
 // ================= GET ME =================
 
 const getMe = async (user: IRequestUser) => {
+  console.log("Decoded user:", user);
+
   const isUserExists = await prisma.user.findUnique({
     where: { id: user.id },
     select: {
@@ -110,6 +112,8 @@ const getMe = async (user: IRequestUser) => {
       createdAt: true,
     },
   });
+
+  console.log("DB user:", isUserExists);
 
   if (!isUserExists) {
     throw new AppError(status.NOT_FOUND, "User not found");

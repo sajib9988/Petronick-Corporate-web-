@@ -8,27 +8,32 @@ import { get } from "node:http";
 import { getTokenFromRequest } from "../utils/auth.token.js";
 
 
-export const authorize = (...authRoles: Role[]) =>
+export const authorize =
+  (...authRoles: Role[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-   
-
+      console.log("=== AUTHORIZE ===");
 
       const token = getTokenFromRequest(req);
+
+      console.log("TOKEN:", token);
 
       if (!token) {
         throw new AppError(status.UNAUTHORIZED, "No access token provided");
       }
 
-     const { success, data } = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
+      const decoded = jwt.verify(
+        token,
+         process.env.ACCESS_TOKEN_SECRET as string
+      ) as JwtPayload;
 
-      if (!success) {
-        throw new AppError(status.UNAUTHORIZED, "Invalid access token");
-      }
-    
+      console.log("DECODED:", decoded);
+
       const user = await prisma.user.findUnique({
-        where: { id: data.id as string },
+        where: { id: decoded.id as string },
       });
+
+      console.log("USER:", user);
 
       if (!user) {
         throw new AppError(status.UNAUTHORIZED, "User not found");
@@ -43,7 +48,10 @@ export const authorize = (...authRoles: Role[]) =>
       }
 
       if (!authRoles.includes(user.role)) {
-        throw new AppError(status.FORBIDDEN, "User does not have the required role");
+        throw new AppError(
+          status.FORBIDDEN,
+          "User does not have the required role"
+        );
       }
 
       req.user = {
@@ -55,10 +63,16 @@ export const authorize = (...authRoles: Role[]) =>
 
       next();
     } catch (error) {
+      console.log("AUTH ERROR:", error);
+
       if (error instanceof AppError) {
-        res.status(error.statusCode).json({ message: error.message });
+        res.status(error.statusCode).json({
+          message: error.message,
+        });
       } else {
-        res.status(status.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
+        res.status(status.UNAUTHORIZED).json({
+          message: "Invalid or expired token",
+        });
       }
     }
   };

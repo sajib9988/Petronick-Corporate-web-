@@ -34,22 +34,28 @@ const onSubmit = async (formData: LoginFormData) => {
 
     if (!result.ok) {
       const errorMessage = result.data?.message || "Login failed";
+
       setError(errorMessage);
       toast.error(errorMessage);
+
       return;
     }
 
-    // ✅ success হলে এখানে আসবে
+    // ✅ success toast
     toast.success("Login successful");
 
     const userRole = result.data?.user?.role;
-    console.log("User role:", userRole); // ✅ এখানে রোল দেখাও
 
-    if (userRole === "ADMIN") {
-      router.push("/admin");
-    } else {
-      router.push("/");
-    }
+    console.log("User role:", userRole);
+
+    // ✅ 5 sec delay before redirect
+    setTimeout(() => {
+      if (userRole === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    }, 5000);
 
   } catch (err) {
     setError("Something went wrong.");

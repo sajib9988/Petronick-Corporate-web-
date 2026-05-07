@@ -31,17 +31,19 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     status: status.OK,
     success: true,
     message: "User logged in successfully",
-    data: result, // শুধু user data, token না
+    data: { ...result, accessToken, refreshToken }, // শুধু user data, token না
   });
 });
 
-const getMe = catchAsync(async (req: Request, res: Response) => {
+const getMe = catchAsync(async (req, res) => {
+  console.log("req.user:", req.user);
+
   const result = await authService.getMe(req.user);
 
   sendResponse(res, {
-    status: status.OK,
     success: true,
-    message: "User profile fetched successfully",
+    status: status.OK,
+    message: "User retrieved successfully",
     data: result,
   });
 });
@@ -77,6 +79,15 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
     data: null,
   });
 });
+
+
+
+
+
+
+
+
+
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   // ✅ cookie থেকে refresh token পড়ো
   const token = getCookie(req, "refreshToken");

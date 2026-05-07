@@ -1,7 +1,7 @@
 import jwt from  "jsonwebtoken"
 import { Request, Response } from "express"
 import { success } from "zod"
-
+import  "dotenv/config"
 const isProd= process.env.NODE_ENV === "production"
 
 
@@ -10,7 +10,7 @@ const isProd= process.env.NODE_ENV === "production"
 export const createToken = (payload: object) => {
   return jwt.sign(
     payload,
-    process.env.JWT_SECRET_KEY as string,
+    process.env.ACCESS_TOKEN_SECRET as string,
     {
       expiresIn: "1d",
     }
@@ -20,7 +20,7 @@ export const createToken = (payload: object) => {
 export const createRefreshToken = (payload: object) => {
   return jwt.sign(
     payload,
-    process.env.JWT_SECRET_KEY as string,
+    process.env.REFRESH_TOKEN_SECRET as string,
     {
       expiresIn: "7d",
     }
@@ -31,7 +31,7 @@ export const verifyToken = (token:string)=>{
     try {
         return {
             success: true,
-            data: jwt.verify(token, process.env.JWT_SECRET_KEY as string)
+            data: jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string)
         }
     } catch (error) {
         return {
@@ -47,14 +47,14 @@ export const setAuthCookies = (res:Response, accessToken:string, refreshToken:st
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: isProd,
-        sameSite: isProd ? "strict" : "lax",
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        
+        
     })
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: isProd,
-        sameSite: isProd ? "strict" : "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+       
+     
     })
 }
 
@@ -90,6 +90,6 @@ export const setAccessTokenCookie = (res: Response, accessToken: string) => {
     httpOnly: true,
     secure: isProd,
     sameSite: isProd ? "strict" : "lax",
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    
   });
 };
