@@ -3,8 +3,8 @@ import status from "http-status";
 import { catchAsync } from "../../shared/utils/catch-async.js";
 import { authService } from "./auth.service.js";
 import { sendResponse } from "../../shared/utils/send-response.js";
-import { tokenUtils } from "../../shared/utils/token.js";
-import { cookieUtils } from "../../shared/utils/cookie.js";
+
+import { createRefreshToken, createToken, setAuthCookies, clearCookie, getCookie, setAccessTokenCookie } from "../../shared/utils/auth.token.js";
 
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
@@ -22,11 +22,10 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.loginUser(req.body);
 
   // ✅ token তৈরি করে cookie-তে রাখো
-  const accessToken = tokenUtils.getAccessToken({ id: result.id, email: result.email, role: result.role });
-  const refreshToken = tokenUtils.getRefreshToken({ id: result.id, email: result.email, role: result.role });
+  const accessToken = createToken({ id: result.id, email: result.email, role: result.role });
+  const refreshToken = createRefreshToken({ id: result.id, email: result.email, role: result.role });
 
-  tokenUtils.setAccessTokenCookie(res, accessToken);
-  tokenUtils.setRefreshTokenCookie(res, refreshToken);
+  setAuthCookies(res, accessToken, refreshToken);
 
   sendResponse(res, {
     status: status.OK,
@@ -68,8 +67,8 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
     path: "/",
   };
 
-  cookieUtils.clearCookie(res, "accessToken", cookieOptions);
-  cookieUtils.clearCookie(res, "refreshToken", cookieOptions);
+  clearCookie(res, "accessToken", cookieOptions);
+  clearCookie(res, "refreshToken", cookieOptions);
 
   sendResponse(res, {
     status: status.OK,
@@ -80,7 +79,7 @@ const logoutUser = catchAsync(async (req: Request, res: Response) => {
 });
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   // ✅ cookie থেকে refresh token পড়ো
-  const token = cookieUtils.getCookie(req, "refreshToken");
+  const token = getCookie(req, "refreshToken");
 
   if (!token) {
     throw new Error("Refresh token not found");
@@ -89,7 +88,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   const result = await authService.refreshToken(token);
 
   // ✅ নতুন access token cookie-তে সেট করো
-  tokenUtils.setAccessTokenCookie(res, result.accessToken);
+  setAccessTokenCookie(res, result.accessToken);
 
   sendResponse(res, {
     status: status.OK,

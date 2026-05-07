@@ -4,31 +4,30 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { Role, UserStatus } from "../../../generated/prisma-client/index.js";
 import { AppError } from "../errors/app-error.js";
 import { prisma } from "../../database/prisma.js";
+import { get } from "node:http";
+import { getTokenFromRequest } from "../utils/auth.token.js";
 
 
 export const authorize = (...authRoles: Role[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // ✅ Read token from cookies first, then fallback to Authorization header
-      let token: string | undefined;
+   
 
-      if (req.cookies?.accessToken) {
-        token = req.cookies.accessToken;
-      } else {
-        const authHeader = req.headers.authorization;
-        if (authHeader) {
-          token = authHeader.split(" ")[1];
-        }
-      }
+
+      const token = getTokenFromRequest(req);
 
       if (!token) {
         throw new AppError(status.UNAUTHORIZED, "No access token provided");
       }
 
-      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
+     const { success, data } = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
 
+      if (!success) {
+        throw new AppError(status.UNAUTHORIZED, "Invalid access token");
+      }
+    
       const user = await prisma.user.findUnique({
-        where: { id: decoded.id as string },
+        where: { id: data.id as string },
       });
 
       if (!user) {

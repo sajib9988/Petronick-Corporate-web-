@@ -1,18 +1,30 @@
 import status from "http-status";
 import bcrypt from "bcrypt";
 
-
 import { prisma } from "../../database/prisma.js";
 import { AppError } from "../../shared/errors/app-error.js";
-import { IChangePasswordPayload, ILoginUserPayload, IRegisterUserPayload, IRequestUser } from "./auth.type.js";
-import { jwtUtils } from "../../shared/utils/jwt.js";
-import { envVars } from "../../config/env.js";
-import { tokenUtils } from "../../shared/utils/token.js";
+
+import {
+  IChangePasswordPayload,
+  ILoginUserPayload,
+  IRegisterUserPayload,
+  IRequestUser,
+} from "./auth.type.js";
+
+import {
+  createToken,
+  verifyToken,
+} from "../../shared/utils/auth.token.js";
+
+// ================= REGISTER =================
 
 const registerUser = async (payload: IRegisterUserPayload) => {
   const { name, email, password } = payload;
 
-  const existingUser = await prisma.user.findUnique({ where: { email } });
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+  });
+
   if (existingUser) {
     throw new AppError(status.CONFLICT, "Email already exists");
   }
@@ -20,28 +32,40 @@ const registerUser = async (payload: IRegisterUserPayload) => {
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const user = await prisma.user.create({
-    data: { name, email, password: hashedPassword },
-    select: { id: true, name: true, email: true, role: true, createdAt: true },
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      createdAt: true,
+    },
   });
 
   return user;
 };
 
+// ================= LOGIN =================
+
 const loginUser = async (payload: ILoginUserPayload) => {
   const { email, password } = payload;
 
- const user = await prisma.user.findUnique({
-  where: { email },
-  select: {
-    id: true,
-    name: true,
-    email: true,
-    role: true,
-    password: true, // ✅ important
-    status: true,
-    isDeleted: true,
-  },
-});
+  const user = await prisma.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      password: true,
+      status: true,
+      isDeleted: true,
+    },
+  });
 
   if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
@@ -55,13 +79,16 @@ const loginUser = async (payload: ILoginUserPayload) => {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // ✅ password check
-  const isPasswordValid = await bcrypt.compare(password, user.password as string);
+  // password check
+  const isPasswordValid = await bcrypt.compare(
+    password,
+    user.password as string
+  );
+
   if (!isPasswordValid) {
     throw new AppError(status.UNAUTHORIZED, "Invalid credentials");
   }
 
-  // controller token বানাবে, service শুধু user return করবে
   return {
     id: user.id,
     name: user.name,
@@ -70,10 +97,18 @@ const loginUser = async (payload: ILoginUserPayload) => {
   };
 };
 
+// ================= GET ME =================
+
 const getMe = async (user: IRequestUser) => {
   const isUserExists = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { id: true, name: true, email: true, role: true, createdAt: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      createdAt: true,
+    },
   });
 
   if (!isUserExists) {
@@ -83,116 +118,176 @@ const getMe = async (user: IRequestUser) => {
   return isUserExists;
 };
 
-const changePassword = async (user: IRequestUser, payload: IChangePasswordPayload) => {
+// ================= CHANGE PASSWORD =================
+
+const changePassword = async (
+  user: IRequestUser,
+  payload: IChangePasswordPayload
+) => {
   const { currentPassword, newPassword } = payload;
 
- const isUserExists = await prisma.user.findUnique({
-  where: { id: user.id },
-  select: {
-    id: true,
-    password: true, // ✅ MUST ADD
-  },
-});
+  const isUserExists = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: {
+      id: true,
+      password: true,
+    },
+  });
 
   if (!isUserExists) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // ✅ current password check
-  const isPasswordValid = await bcrypt.compare(currentPassword, isUserExists.password as string);
+  const isPasswordValid = await bcrypt.compare(
+    currentPassword,
+    isUserExists.password as string
+  );
+
   if (!isPasswordValid) {
-    throw new AppError(status.UNAUTHORIZED, "Current password is incorrect");
+    throw new AppError(
+      status.UNAUTHORIZED,
+      "Current password is incorrect"
+    );
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, 12);
 
   await prisma.user.update({
     where: { id: user.id },
-    data: { password: hashedPassword },
+    data: {
+      password: hashedPassword,
+    },
   });
 
   return null;
 };
 
-const refreshToken = async (token: string) => {
-  // ✅ refresh token verify করো
-  const result = jwtUtils.verifyToken(token, envVars.REFRESH_TOKEN_SECRET);
+// ================= REFRESH TOKEN =================
 
-  if (!result.success || !result.data) {
-    throw new AppError(status.UNAUTHORIZED, "Invalid refresh token");
+const refreshToken = async (token: string) => {
+  const verifiedToken = verifyToken(token);
+
+  if (!verifiedToken.success || !verifiedToken.data) {
+    throw new AppError(
+      status.UNAUTHORIZED,
+      "Invalid refresh token"
+    );
   }
 
-  const user = await prisma.user.findUnique({ where: { id: result.data.id } });
+  const decoded = verifiedToken.data as {
+    id: string;
+    email: string;
+    role: string;
+  };
+
+  const user = await prisma.user.findUnique({
+    where: { id: decoded.id },
+  });
 
   if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // ✅ নতুন access token তৈরি করো
-  const accessToken = tokenUtils.getAccessToken({
+  // create new access token
+  const accessToken = createToken({
     id: user.id,
     email: user.email,
     role: user.role,
   });
 
-  return { accessToken };
+  return {
+    accessToken,
+  };
 };
+
+// ================= VERIFY EMAIL =================
 
 const verifyEmail = async (email: string, otp: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
 
   if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // OTP verify logic তোমার নিজের implementation অনুযায়ী
+  // TODO: verify OTP
+
   await prisma.user.update({
     where: { email },
-    data: { emailVerified: true },
+    data: {
+      emailVerified: true,
+    },
   });
 };
+
+// ================= FORGET PASSWORD =================
 
 const forgetPassword = async (email: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
 
   if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
   if (!user.emailVerified) {
-    throw new AppError(status.BAD_REQUEST, "Email not verified");
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Email not verified"
+    );
   }
 
   if (user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // OTP generate করে email পাঠাও — তোমার mail service অনুযায়ী
+  // TODO: send OTP to email
 };
 
-const resetPassword = async (email: string, otp: string, newPassword: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+// ================= RESET PASSWORD =================
+
+const resetPassword = async (
+  email: string,
+  otp: string,
+  newPassword: string
+) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
 
   if (!user) {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
   if (!user.emailVerified) {
-    throw new AppError(status.BAD_REQUEST, "Email not verified");
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Email not verified"
+    );
   }
 
   if (user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // OTP verify করো তারপর password update করো
-  const hashedPassword = await bcrypt.hash(newPassword, 12);
+  // TODO: verify OTP
+
+  const hashedPassword = await bcrypt.hash(
+    newPassword,
+    12
+  );
 
   await prisma.user.update({
     where: { email },
-    data: { password: hashedPassword },
+    data: {
+      password: hashedPassword,
+    },
   });
 };
+
+// ================= EXPORT =================
 
 export const authService = {
   registerUser,

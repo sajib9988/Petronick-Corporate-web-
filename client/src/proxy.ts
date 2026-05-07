@@ -1,24 +1,32 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-export async function proxy(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const accessToken = request.cookies.get("accessToken")?.value;
 
-  // ── Auth routes → already logged in হলে redirect ──
-  if (pathname === "/login" || pathname === "/register") {
+  const accessToken =
+    request.cookies.get("accessToken")?.value;
+
+  // auth pages
+  if (
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/register")
+  ) {
     if (accessToken) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(
+        new URL("/", request.url)
+      );
     }
-    return NextResponse.next(); // ← token নেই, login page দেখাও
+
+    return NextResponse.next();
   }
 
-  // ── Admin routes protect ──
+  // admin protected
   if (pathname.startsWith("/admin")) {
     if (!accessToken) {
-      const loginUrl = new URL("/login", request.url);
-      loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      return NextResponse.redirect(
+        new URL("/login", request.url)
+      );
     }
   }
 

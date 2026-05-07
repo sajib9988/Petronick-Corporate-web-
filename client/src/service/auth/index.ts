@@ -49,20 +49,22 @@ export const registerUser = async (userData: FieldValues) => {
 export const loginUser = async (userData: FieldValues) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include", // 👈 important
     body: JSON.stringify(userData),
   });
 
-  // 👇 এখানে বাইরে declare করো
-  const text = await res.text();
-  console.log("Server response:", text);
+  const data = await res.json();
+
+  console.log("LOGIN RESPONSE:", data);
 
   return {
     ok: res.ok,
-    data: text, // আপাতত raw text ফেরত দাও
+    data,
   };
 };
-
 export const logoutUser = async () => {
   const res = await safeFetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
