@@ -91,6 +91,7 @@ export const logoutUser = async () => {
 
   // ✅ remove token from Next.js cookie
   cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
 
   const res = await safeFetch(`${BASE_URL}/auth/logout`, {
     method: "POST",

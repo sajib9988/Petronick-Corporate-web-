@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { logoutUser, getMe } from "@/service/auth";
+import { useRouter } from "next/navigation";
 
 function UserAvatar({ name }: { name: string }) {
   const initials = name
@@ -27,6 +28,7 @@ export const AuthSection = ({ isMobile = false }) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
+  const router = useRouter();
 
 useEffect(() => {
     const fetchUser = async () => {
@@ -46,22 +48,29 @@ useEffect(() => {
   }, []);
 
 
-  const handleLogout = async () => {
-    try {
-      setLoggingOut(true);
-      const res = await logoutUser();
-      if (res?.success) {
-        toast.success("Logged out successfully");
-        window.location.reload();
-      } else {
-        toast.error("Logout failed");
-      }
-    } catch {
+ const handleLogout = async () => {
+  try {
+    setLoggingOut(true);
+
+    const res = await logoutUser();
+
+    if (res?.success) {
+      toast.success("Logged out successfully");
+
+      // ✅ clear user state
+      setUser(null);
+
+      // ✅ redirect
+      router.push("/login");
+    } else {
       toast.error("Logout failed");
-    } finally {
-      setLoggingOut(false);
     }
-  };
+  } catch {
+    toast.error("Logout failed");
+  } finally {
+    setLoggingOut(false);
+  }
+};
 
   const isAdmin = user?.role === "ADMIN";
 
