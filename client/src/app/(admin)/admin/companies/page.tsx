@@ -108,6 +108,7 @@ export default function CompaniesPage() {
         }),
       );
       const result = await createCompany(fd);
+      console.log("Create result:", result);
       if (!result?.success) {
         setCreateError(result?.message || "Failed to create company");
         return;

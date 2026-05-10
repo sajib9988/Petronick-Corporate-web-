@@ -64,15 +64,7 @@ const companies = [
   },
 ];
 
-// const pageRes = await getAllPages();
-// console.log("Fetched pages:", pageRes.data); // ✅ Debug log to verify data structure
-// const pages = pageRes.data || [];
 
-// const homePage = pages.find((p: ICreatepage) => p.slug === "home");
-
-// const heroSection = homePage?.sections?.find(
-//   (s: any) => s.sectionType === "hero"
-// );
 
 
 
@@ -99,10 +91,10 @@ export default async function HomePage() {
 const pageRes = await getPageBySlug("home-page"); // ✅ direct call
   const homePage = pageRes.data;
   const heroSection = homePage?.sections?.find(
-    (s: any) => s.sectionType === "hero"
+    (s: any) => s.sectionType === "HERO"
   );
 
-
+console.log('hero section:', heroSection);
 
 
 
@@ -111,15 +103,15 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
     <main>
       {/* ── Section 1: Hero ── */}
       <HeroSection
-        image={heroSection?.imageUrl || "/placeholder-hero.jpg"}
+        image={heroSection?.image || "/placeholder-hero.jpg"}
         content={heroSection?.content ?? {}}
  
         
        />
 
       {/* ── Section 2: Who We Are ── */}
-      <section className="bg-white py-16 px-4">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="bg-white py-16 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-hidden">
           <div>
             <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
               Who We Are
@@ -149,7 +141,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
           </div>
 
           {/* Right: visual block */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 min-w-0">
             {[
               { value: "7+", label: "Business Units", bg: "bg-gray-900 text-white" },
               { value: "100%", label: "Revenue Ready", bg: "bg-emerald-50 text-gray-900" },
@@ -166,8 +158,8 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
       </section>
 
       {/* ── Section 3: Our Ecosystem ── */}
-      <section className="bg-gray-50 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
+    <section className="bg-gray-50 py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
               Integrated Capability
@@ -203,8 +195,8 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
       </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
-      <section className="bg-white py-16 px-4">
-        <div className="max-w-6xl mx-auto">
+ <section className="bg-white py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8">
             <div>
               <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
@@ -275,8 +267,8 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
       </section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
-      <section className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+ <section className="bg-gray-900 max-w-7xl mx-auto text-white py-16 rounded-full border-t-4">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ">
           <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Partner With Us
           </p>
@@ -298,8 +290,8 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
       </section>
 
       {/* ── Section 6: Closing Authority ── */}
-      <section className="bg-white py-14 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+    <section className="max-w-7xl mx-auto rounded-full py-14">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-6 flex-wrap justify-center mb-8">
             {[
               { label: "Scalable Infrastructure", color: "text-blue-600" },
