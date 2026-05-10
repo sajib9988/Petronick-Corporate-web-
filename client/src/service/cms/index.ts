@@ -15,7 +15,10 @@ const getAuthHeaders = async (headers: Record<string, string> = {}) => {
 
 const safeFetch = async (url: string, options?: RequestInit) => {
   try {
-    return await fetch(url, options);
+    return await fetch(url, {
+      cache: "no-store", // ✅ add করুন
+      ...options,
+    });
   } catch (err) {
     console.error("Fetch error:", err);
     return null;

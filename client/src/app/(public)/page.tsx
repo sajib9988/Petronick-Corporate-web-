@@ -1,6 +1,6 @@
 import HeroSection from "@/components/home-components/hero-section";
 import { ICreatepage } from "@/lib/type";
-import { getAllPages } from "@/service/cms";
+import { getAllPages, getPageBySlug } from "@/service/cms";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -64,14 +64,15 @@ const companies = [
   },
 ];
 
-const pageRes = await getAllPages();
-const pages = pageRes.data || [];
+// const pageRes = await getAllPages();
+// console.log("Fetched pages:", pageRes.data); // ✅ Debug log to verify data structure
+// const pages = pageRes.data || [];
 
-const homePage = pages.find((p: ICreatepage) => p.slug === "home");
+// const homePage = pages.find((p: ICreatepage) => p.slug === "home");
 
-const heroSection = homePage?.sections?.find(
-  (s: any) => s.sectionType === "hero"
-);
+// const heroSection = homePage?.sections?.find(
+//   (s: any) => s.sectionType === "hero"
+// );
 
 
 
@@ -93,7 +94,19 @@ const ecosystemFlow = [
   { name: "Profit Pioneers", role: "Advises businesses across growth stages", color: "border-indigo-200 bg-indigo-50", dot: "bg-indigo-500" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+
+const pageRes = await getPageBySlug("home-page"); // ✅ direct call
+  const homePage = pageRes.data;
+  const heroSection = homePage?.sections?.find(
+    (s: any) => s.sectionType === "hero"
+  );
+
+
+
+
+
+
   return (
     <main>
       {/* ── Section 1: Hero ── */}

@@ -55,7 +55,7 @@ const onSubmit = async (formData: LoginFormData) => {
       } else {
         router.push("/");
       }
-    }, 5000);
+    }, 2000);
 
   } catch (err) {
     setError("Something went wrong.");
