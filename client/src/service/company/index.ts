@@ -1,6 +1,21 @@
 
 "use server";
+
+import { cookies } from "next/headers";
+
 const BASE_URL = process.env.INTERNAL_BASE_URL || "http://localhost:5000/api/v1";
+
+
+
+const getAuthHeaders = async(extra: Record<string, string>= {})=>{
+  const cookieStore= await cookies()
+  const token = cookieStore.get("accessToken")?.value;
+  return {
+    ...extra,
+    ...(token && { Authorization: `Bearer ${token}` }),
+  }
+
+}
 
 // Safe JSON helper
 const safeJson = async (res: Response) => {
@@ -51,8 +66,8 @@ export const createCompany = async (formData: FormData) => {
   try {
     const res = await fetch(`${BASE_URL}/company`, {
       method: "POST",
-      credentials: "include",
-      body: formData, // multipart/form-data
+      headers: await getAuthHeaders(),
+      body: formData, 
     });
     return await safeJson(res);
   } catch (err) {
@@ -79,7 +94,8 @@ export const deleteCompany = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/company/${id}`, {
       method: "DELETE",
-      credentials: "include",
+      headers: await getAuthHeaders(),
+      
     });
     return await safeJson(res);
   } catch (err) {

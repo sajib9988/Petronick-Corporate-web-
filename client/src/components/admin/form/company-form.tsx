@@ -67,7 +67,7 @@ export default function CompanyForm({
 
   const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companySchema),
-    defaultValues: defaultValues as any,
+    defaultValues: defaultValues,
   });
 
   // ─── Logo Change ─────────────────────
@@ -187,18 +187,25 @@ export default function CompanyForm({
 
         {/* Order + Visibility */}
         <div className="grid grid-cols-2 gap-3">
-          <FormField
-            control={form.control}
-            name="order"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Order</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+         <FormField
+  control={form.control}
+  name="order"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Order</FormLabel>
+      <FormControl>
+        <Input
+          type="number"
+          value={field.value}
+          onChange={(e) => field.onChange(Number(e.target.value))} // ← এটাই fix
+          onBlur={field.onBlur}
+          name={field.name}
+          ref={field.ref}
+        />
+      </FormControl>
+    </FormItem>
+  )}
+/>
 
           <FormField
             control={form.control}

@@ -1,6 +1,7 @@
 import multer from "multer";
-import cloudinary from "../../config/cloudinary";
+
 import { UploadApiResponse } from "cloudinary";
+import cloudinary from "../../config/cloudinary.js";
 
 const storage = multer.memoryStorage();
 

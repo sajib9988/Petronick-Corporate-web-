@@ -13,7 +13,9 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { DataTable } from "./data-table";
-import { companiesColumns } from "./columns";
+
+import { Company } from "@/lib/type";
+import { companiesColumns } from "./companiesColumns";
 
 export default function CompaniesPage() {
   const [data, setData] = useState<Company[]>([]);
@@ -65,7 +67,7 @@ export default function CompaniesPage() {
     }
   };
 
-  const columns = companiesColumns(handleDeleteClick);
+  const columns = companiesColumns({ onDelete: handleDeleteClick });
 
   return (
     <div className="space-y-5 max-w-7xl">

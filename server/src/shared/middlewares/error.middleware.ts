@@ -1,8 +1,9 @@
 import { ErrorRequestHandler } from "express";
 import status from "http-status";
-import { envVars } from "../../config/env";
-import ApiError from "../errors/api-error";
-import { AppError } from "../errors/app-error";
+import { envVars } from "../../config/env.js";
+import { AppError } from "../errors/app-error.js";
+import ApiError from "../errors/api-error.js";
+
 
 type ErrorSource = {
   path: string;

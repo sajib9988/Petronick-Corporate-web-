@@ -49,3 +49,16 @@ export const TYPE_COLORS: Record<string, string>= {
     "GALLERY":"bg-cyan-100 text-cyan-800",
     
 }
+
+
+export type Company = {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  website: string | null;
+  revenueStage: string | null;
+  order: number;
+  isVisible: boolean;
+  createdAt: string;
+};

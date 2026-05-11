@@ -1,68 +1,70 @@
+import CompanyCard from "@/components/admin/card/CompanyCard";
 import HeroSection from "@/components/home-components/hero-section";
-import { ICreatepage } from "@/lib/type";
+import { Company, ICreatepage } from "@/lib/type";
 import { getAllPages, getPageBySlug } from "@/service/cms";
+import { getAllCompanies } from "@/service/company";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 // ─── Static company data (পরে API replace করবে) ─────────
-const companies = [
-  {
-    name: "Fusion DigiWeb",
-    description: "Full-service digital marketing and rapid market launch agency.",
-    initial: "FD",
-    color: "bg-blue-600",
-    revenueStage: "Active",
-    website: null,
-  },
-  {
-    name: "Germ Solutions Shop",
-    description: "Joint venture sanitation supply company with marketing-led revenue structure.",
-    initial: "GS",
-    color: "bg-emerald-600",
-    revenueStage: "Active",
-    website: null,
-  },
-  {
-    name: "Germ Shooters Co",
-    description: "Independent branded e-commerce channel with full profit capture.",
-    initial: "GC",
-    color: "bg-teal-600",
-    revenueStage: "Active",
-    website: "https://germshooters.com",
-  },
-  {
-    name: "Petron Fulfillment",
-    description: "Regional fulfillment and packaging infrastructure operation.",
-    initial: "PF",
-    color: "bg-orange-600",
-    revenueStage: "Launching",
-    website: null,
-  },
-  {
-    name: "Treaded Brands",
-    description: "Graphic-driven apparel and lifestyle brand with 3D product integration.",
-    initial: "TB",
-    color: "bg-purple-600",
-    revenueStage: "Pre-launch",
-    website: null,
-  },
-  {
-    name: "Celebrations Are Sweet",
-    description: "Specialty dessert brand with scalable B2B and B2C distribution.",
-    initial: "CA",
-    color: "bg-pink-600",
-    revenueStage: "Re-launching",
-    website: null,
-  },
-  {
-    name: "Profit Pioneers",
-    description: "Small business advisory focused on marketing, profitability, and technology.",
-    initial: "PP",
-    color: "bg-indigo-600",
-    revenueStage: "Active",
-    website: null,
-  },
-];
+// const companies = [
+//   {
+//     name: "Fusion DigiWeb",
+//     description: "Full-service digital marketing and rapid market launch agency.",
+//     initial: "FD",
+//     color: "bg-blue-600",
+//     revenueStage: "Active",
+//     website: null,
+//   },
+//   {
+//     name: "Germ Solutions Shop",
+//     description: "Joint venture sanitation supply company with marketing-led revenue structure.",
+//     initial: "GS",
+//     color: "bg-emerald-600",
+//     revenueStage: "Active",
+//     website: null,
+//   },
+//   {
+//     name: "Germ Shooters Co",
+//     description: "Independent branded e-commerce channel with full profit capture.",
+//     initial: "GC",
+//     color: "bg-teal-600",
+//     revenueStage: "Active",
+//     website: "https://germshooters.com",
+//   },
+//   {
+//     name: "Petron Fulfillment",
+//     description: "Regional fulfillment and packaging infrastructure operation.",
+//     initial: "PF",
+//     color: "bg-orange-600",
+//     revenueStage: "Launching",
+//     website: null,
+//   },
+//   {
+//     name: "Treaded Brands",
+//     description: "Graphic-driven apparel and lifestyle brand with 3D product integration.",
+//     initial: "TB",
+//     color: "bg-purple-600",
+//     revenueStage: "Pre-launch",
+//     website: null,
+//   },
+//   {
+//     name: "Celebrations Are Sweet",
+//     description: "Specialty dessert brand with scalable B2B and B2C distribution.",
+//     initial: "CA",
+//     color: "bg-pink-600",
+//     revenueStage: "Re-launching",
+//     website: null,
+//   },
+//   {
+//     name: "Profit Pioneers",
+//     description: "Small business advisory focused on marketing, profitability, and technology.",
+//     initial: "PP",
+//     color: "bg-indigo-600",
+//     revenueStage: "Active",
+//     website: null,
+//   },
+// ];
 
 
 
@@ -88,6 +90,8 @@ const ecosystemFlow = [
 
 export default async function HomePage() {
 
+  
+
 const pageRes = await getPageBySlug("home-page"); // ✅ direct call
   const homePage = pageRes.data;
   const heroSection = homePage?.sections?.find(
@@ -95,6 +99,11 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
   );
 
 console.log('hero section:', heroSection);
+
+
+
+   const  allCompanies = await getAllCompanies({ isVisible: true });
+   const  companies: Company[] = allCompanies.data || [];
 
 
 
@@ -213,46 +222,13 @@ console.log('hero section:', heroSection);
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {companies.map((company) => (
-              <div
-                key={company.name}
-                className="border border-gray-100 rounded-xl p-5 hover:shadow-sm hover:border-gray-200 transition-all group"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-9 h-9 rounded-lg ${company.color} flex items-center justify-center flex-shrink-0`}>
-                    <span className="text-white font-bold text-xs">{company.initial}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-sm">{company.name}</h3>
-                    {company.revenueStage && (
-                      <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${stageColors[company.revenueStage] ?? ""}`}>
-                        {company.revenueStage}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <p className="text-xs text-gray-500 leading-relaxed mb-3">
-                  {company.description}
-                </p>
-                {company.website ? (
-                  <a
-                    href={company.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    Visit Website <ExternalLink size={10} />
-                  </a>
-                ) : (
-                  <Link
-                    href="/companies"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-gray-700 transition-colors"
-                  >
-                    Learn more <ArrowRight size={10} />
-                  </Link>
-                )}
-              </div>
-            ))}
+ {companies.map((company, index) => (
+  <CompanyCard
+    key={company.id}
+    company={company}
+    index={index}
+  />
+))}
           </div>
 
           <div className="mt-6 text-center sm:hidden">
