@@ -8,6 +8,11 @@ import {z} from 'zod';
     location: z.string().min(1, "Location is required"),
     experience: z.string().min(1, "Experience is required"),
     focus: z.string().min(1, "Focus is required"),
+   focusType: z
+  .enum(["B2B", "B2C", "Both"])
+  .refine(Boolean, {
+    message: "Please select B2B, B2C, or Both",
+  }),
     message: z.string().min(1, "Message is required"),
     businessUnits: z.array(z.string()).min(1, "At least one business unit is required")
 

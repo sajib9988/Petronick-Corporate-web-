@@ -5,6 +5,7 @@ export interface ICreatePromotionAgent {
   location: string;
   experience: string;
   focus: string;
+  focusType: "B2B" | "B2C" | "Both";
   message: string;
   businessUnits: string[];
 }

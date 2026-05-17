@@ -29,3 +29,9 @@ enum SectionType {
   GALLERY
   CONTACT
 }
+
+enum FocusType {
+  B2B
+  B2C
+  BOTH
+}

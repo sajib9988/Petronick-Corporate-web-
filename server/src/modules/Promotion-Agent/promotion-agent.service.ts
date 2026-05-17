@@ -22,34 +22,34 @@ const createAgent = async (payload: ICreatePromotionAgent) => {
   });
 
   // Agent কে confirmation email
-  sendEmail({
-    to: payload.email,
-    subject: "Application Received — Petronick Corporate Holdings",
-    templateName: "agent-confirmation",
-    templateData: {
-      userName: payload.fullName,
-      businessUnits: businessUnits.join(", "),
-      appName: "Petronick Corporate Holdings",
-    },
-  });
+  // sendEmail({
+  //   to: payload.email,
+  //   subject: "Application Received — Petronick Corporate Holdings",
+  //   templateName: "agent-confirmation",
+  //   templateData: {
+  //     userName: payload.fullName,
+  //     businessUnits: businessUnits.join(", "),
+  //     appName: "Petronick Corporate Holdings",
+  //   },
+  // });
 
-  // Admin কে notification email
-  sendEmail({
-    to: envVars.SUPER_ADMIN_EMAIL,
-    subject: "New Promotion Agent Application",
-    templateName: "agent-admin",
-    templateData: {
-      userName: payload.fullName,
-      email: payload.email,
-      phone: payload.phone,
-      location: payload.location,
-      experience: payload.experience,
-      focus: payload.focus,
-      businessUnits: businessUnits.join(", "),
-      message: payload.message,
-      appName: "Petronick Corporate Holdings",
-    },
-  });
+  // // Admin কে notification email
+  // sendEmail({
+  //   to: envVars.SUPER_ADMIN_EMAIL,
+  //   subject: "New Promotion Agent Application",
+  //   templateName: "agent-admin",
+  //   templateData: {
+  //     userName: payload.fullName,
+  //     email: payload.email,
+  //     phone: payload.phone,
+  //     location: payload.location,
+  //     experience: payload.experience,
+  //     focus: payload.focus,
+  //     businessUnits: businessUnits.join(", "),
+  //     message: payload.message,
+  //     appName: "Petronick Corporate Holdings",
+  //   },
+  // });
 
   return agent;
 };
