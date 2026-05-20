@@ -111,7 +111,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 
 const verifyEmail = catchAsync(async (req: Request, res: Response) => {
   const { email, otp } = req.body;
-  await authService.verifyEmail(email, otp);
+  await authService.verifyEmail(email);
 
   sendResponse(res, {
     status: status.OK,

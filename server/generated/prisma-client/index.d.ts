@@ -96,6 +96,15 @@ export const SectionType: {
 
 export type SectionType = (typeof SectionType)[keyof typeof SectionType]
 
+
+export const FocusType: {
+  B2B: 'B2B',
+  B2C: 'B2C',
+  BOTH: 'BOTH'
+};
+
+export type FocusType = (typeof FocusType)[keyof typeof FocusType]
+
 }
 
 export type Role = $Enums.Role
@@ -113,6 +122,10 @@ export const AgentStatus: typeof $Enums.AgentStatus
 export type SectionType = $Enums.SectionType
 
 export const SectionType: typeof $Enums.SectionType
+
+export type FocusType = $Enums.FocusType
+
+export const FocusType: typeof $Enums.FocusType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -3673,6 +3686,7 @@ export namespace Prisma {
     location: string | null
     experience: string | null
     focus: string | null
+    focusType: $Enums.FocusType | null
     message: string | null
     status: $Enums.AgentStatus | null
     createdAt: Date | null
@@ -3686,6 +3700,7 @@ export namespace Prisma {
     location: string | null
     experience: string | null
     focus: string | null
+    focusType: $Enums.FocusType | null
     message: string | null
     status: $Enums.AgentStatus | null
     createdAt: Date | null
@@ -3699,6 +3714,7 @@ export namespace Prisma {
     location: number
     experience: number
     focus: number
+    focusType: number
     message: number
     status: number
     createdAt: number
@@ -3714,6 +3730,7 @@ export namespace Prisma {
     location?: true
     experience?: true
     focus?: true
+    focusType?: true
     message?: true
     status?: true
     createdAt?: true
@@ -3727,6 +3744,7 @@ export namespace Prisma {
     location?: true
     experience?: true
     focus?: true
+    focusType?: true
     message?: true
     status?: true
     createdAt?: true
@@ -3740,6 +3758,7 @@ export namespace Prisma {
     location?: true
     experience?: true
     focus?: true
+    focusType?: true
     message?: true
     status?: true
     createdAt?: true
@@ -3826,6 +3845,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType: $Enums.FocusType | null
     message: string
     status: $Enums.AgentStatus
     createdAt: Date
@@ -3856,6 +3876,7 @@ export namespace Prisma {
     location?: boolean
     experience?: boolean
     focus?: boolean
+    focusType?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3871,6 +3892,7 @@ export namespace Prisma {
     location?: boolean
     experience?: boolean
     focus?: boolean
+    focusType?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3884,6 +3906,7 @@ export namespace Prisma {
     location?: boolean
     experience?: boolean
     focus?: boolean
+    focusType?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3897,12 +3920,13 @@ export namespace Prisma {
     location?: boolean
     experience?: boolean
     focus?: boolean
+    focusType?: boolean
     message?: boolean
     status?: boolean
     createdAt?: boolean
   }
 
-  export type PromotionAgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "location" | "experience" | "focus" | "message" | "status" | "createdAt", ExtArgs["result"]["promotionAgent"]>
+  export type PromotionAgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "location" | "experience" | "focus" | "focusType" | "message" | "status" | "createdAt", ExtArgs["result"]["promotionAgent"]>
   export type PromotionAgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     businessUnits?: boolean | PromotionAgent$businessUnitsArgs<ExtArgs>
     _count?: boolean | PromotionAgentCountOutputTypeDefaultArgs<ExtArgs>
@@ -3923,6 +3947,7 @@ export namespace Prisma {
       location: string
       experience: string
       focus: string
+      focusType: $Enums.FocusType | null
       message: string
       status: $Enums.AgentStatus
       createdAt: Date
@@ -4357,6 +4382,7 @@ export namespace Prisma {
     readonly location: FieldRef<"PromotionAgent", 'String'>
     readonly experience: FieldRef<"PromotionAgent", 'String'>
     readonly focus: FieldRef<"PromotionAgent", 'String'>
+    readonly focusType: FieldRef<"PromotionAgent", 'FocusType'>
     readonly message: FieldRef<"PromotionAgent", 'String'>
     readonly status: FieldRef<"PromotionAgent", 'AgentStatus'>
     readonly createdAt: FieldRef<"PromotionAgent", 'DateTime'>
@@ -9204,6 +9230,7 @@ export namespace Prisma {
     location: 'location',
     experience: 'experience',
     focus: 'focus',
+    focusType: 'focusType',
     message: 'message',
     status: 'status',
     createdAt: 'createdAt'
@@ -9368,6 +9395,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'FocusType'
+   */
+  export type EnumFocusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FocusType'>
+    
+
+
+  /**
+   * Reference to a field of type 'FocusType[]'
+   */
+  export type ListEnumFocusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FocusType[]'>
     
 
 
@@ -9604,6 +9645,7 @@ export namespace Prisma {
     location?: StringFilter<"PromotionAgent"> | string
     experience?: StringFilter<"PromotionAgent"> | string
     focus?: StringFilter<"PromotionAgent"> | string
+    focusType?: EnumFocusTypeNullableFilter<"PromotionAgent"> | $Enums.FocusType | null
     message?: StringFilter<"PromotionAgent"> | string
     status?: EnumAgentStatusFilter<"PromotionAgent"> | $Enums.AgentStatus
     createdAt?: DateTimeFilter<"PromotionAgent"> | Date | string
@@ -9618,6 +9660,7 @@ export namespace Prisma {
     location?: SortOrder
     experience?: SortOrder
     focus?: SortOrder
+    focusType?: SortOrderInput | SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9635,6 +9678,7 @@ export namespace Prisma {
     location?: StringFilter<"PromotionAgent"> | string
     experience?: StringFilter<"PromotionAgent"> | string
     focus?: StringFilter<"PromotionAgent"> | string
+    focusType?: EnumFocusTypeNullableFilter<"PromotionAgent"> | $Enums.FocusType | null
     message?: StringFilter<"PromotionAgent"> | string
     status?: EnumAgentStatusFilter<"PromotionAgent"> | $Enums.AgentStatus
     createdAt?: DateTimeFilter<"PromotionAgent"> | Date | string
@@ -9649,6 +9693,7 @@ export namespace Prisma {
     location?: SortOrder
     experience?: SortOrder
     focus?: SortOrder
+    focusType?: SortOrderInput | SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9668,6 +9713,7 @@ export namespace Prisma {
     location?: StringWithAggregatesFilter<"PromotionAgent"> | string
     experience?: StringWithAggregatesFilter<"PromotionAgent"> | string
     focus?: StringWithAggregatesFilter<"PromotionAgent"> | string
+    focusType?: EnumFocusTypeNullableWithAggregatesFilter<"PromotionAgent"> | $Enums.FocusType | null
     message?: StringWithAggregatesFilter<"PromotionAgent"> | string
     status?: EnumAgentStatusWithAggregatesFilter<"PromotionAgent"> | $Enums.AgentStatus
     createdAt?: DateTimeWithAggregatesFilter<"PromotionAgent"> | Date | string
@@ -10112,6 +10158,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType?: $Enums.FocusType | null
     message: string
     status?: $Enums.AgentStatus
     createdAt?: Date | string
@@ -10126,6 +10173,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType?: $Enums.FocusType | null
     message: string
     status?: $Enums.AgentStatus
     createdAt?: Date | string
@@ -10140,6 +10188,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10154,6 +10203,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10168,6 +10218,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType?: $Enums.FocusType | null
     message: string
     status?: $Enums.AgentStatus
     createdAt?: Date | string
@@ -10181,6 +10232,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10194,6 +10246,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10717,6 +10770,13 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumFocusTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.FocusType | EnumFocusTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFocusTypeNullableFilter<$PrismaModel> | $Enums.FocusType | null
+  }
+
   export type EnumAgentStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.AgentStatus | EnumAgentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.AgentStatus[] | ListEnumAgentStatusFieldRefInput<$PrismaModel>
@@ -10742,6 +10802,7 @@ export namespace Prisma {
     location?: SortOrder
     experience?: SortOrder
     focus?: SortOrder
+    focusType?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -10755,6 +10816,7 @@ export namespace Prisma {
     location?: SortOrder
     experience?: SortOrder
     focus?: SortOrder
+    focusType?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -10768,9 +10830,20 @@ export namespace Prisma {
     location?: SortOrder
     experience?: SortOrder
     focus?: SortOrder
+    focusType?: SortOrder
     message?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type EnumFocusTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FocusType | EnumFocusTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFocusTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.FocusType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumFocusTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumFocusTypeNullableFilter<$PrismaModel>
   }
 
   export type EnumAgentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -11069,6 +11142,10 @@ export namespace Prisma {
     connect?: BusinessUnitWhereUniqueInput | BusinessUnitWhereUniqueInput[]
   }
 
+  export type NullableEnumFocusTypeFieldUpdateOperationsInput = {
+    set?: $Enums.FocusType | null
+  }
+
   export type EnumAgentStatusFieldUpdateOperationsInput = {
     set?: $Enums.AgentStatus
   }
@@ -11364,11 +11441,28 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumFocusTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.FocusType | EnumFocusTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFocusTypeNullableFilter<$PrismaModel> | $Enums.FocusType | null
+  }
+
   export type NestedEnumAgentStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.AgentStatus | EnumAgentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.AgentStatus[] | ListEnumAgentStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.AgentStatus[] | ListEnumAgentStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumAgentStatusFilter<$PrismaModel> | $Enums.AgentStatus
+  }
+
+  export type NestedEnumFocusTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.FocusType | EnumFocusTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.FocusType[] | ListEnumFocusTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumFocusTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.FocusType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumFocusTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumFocusTypeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumAgentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -11501,6 +11595,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType?: $Enums.FocusType | null
     message: string
     status?: $Enums.AgentStatus
     createdAt?: Date | string
@@ -11514,6 +11609,7 @@ export namespace Prisma {
     location: string
     experience: string
     focus: string
+    focusType?: $Enums.FocusType | null
     message: string
     status?: $Enums.AgentStatus
     createdAt?: Date | string
@@ -11543,6 +11639,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11556,6 +11653,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     experience?: StringFieldUpdateOperationsInput | string
     focus?: StringFieldUpdateOperationsInput | string
+    focusType?: NullableEnumFocusTypeFieldUpdateOperationsInput | $Enums.FocusType | null
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumAgentStatusFieldUpdateOperationsInput | $Enums.AgentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

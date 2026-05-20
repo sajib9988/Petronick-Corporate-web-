@@ -2,8 +2,7 @@
 import httpStatus from "http-status";
 import { Parser } from "json2csv";
 import { prisma } from "../../database/prisma.js";
-import { sendEmail } from "../../shared/utils/email.js";
-import { envVars } from "../../config/env.js";
+
 import { getPagination } from "../../shared/utils/pagination.js";
 import { AppError } from "../../shared/errors/app-error.js";
 import { IAgentQuery, ICreatePromotionAgent, IUpdateAgentStatus } from "./promotion-agent.interface.js";

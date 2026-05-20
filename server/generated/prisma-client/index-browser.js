@@ -153,6 +153,7 @@ exports.Prisma.PromotionAgentScalarFieldEnum = {
   location: 'location',
   experience: 'experience',
   focus: 'focus',
+  focusType: 'focusType',
   message: 'message',
   status: 'status',
   createdAt: 'createdAt'
@@ -230,6 +231,12 @@ exports.UserStatus = exports.$Enums.UserStatus = {
   ACTIVE: 'ACTIVE',
   BLOCKED: 'BLOCKED',
   DELETED: 'DELETED'
+};
+
+exports.FocusType = exports.$Enums.FocusType = {
+  B2B: 'B2B',
+  B2C: 'B2C',
+  BOTH: 'BOTH'
 };
 
 exports.AgentStatus = exports.$Enums.AgentStatus = {

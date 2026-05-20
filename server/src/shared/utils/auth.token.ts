@@ -1,6 +1,6 @@
 import jwt from  "jsonwebtoken"
 import { Request, Response } from "express"
-import { success } from "zod"
+
 import  "dotenv/config"
 const isProd= process.env.NODE_ENV === "production"
 
@@ -33,7 +33,7 @@ export const verifyToken = (token:string)=>{
             success: true,
             data: jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string)
         }
-    } catch (error) {
+    } catch (err) {
         return {
             success: false,
             data: null

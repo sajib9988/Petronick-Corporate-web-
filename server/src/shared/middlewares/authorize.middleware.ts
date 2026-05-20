@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { Role, UserStatus } from "../../../generated/prisma-client/index.js";
 import { AppError } from "../errors/app-error.js";
 import { prisma } from "../../database/prisma.js";
-import { get } from "node:http";
+
 import { getTokenFromRequest } from "../utils/auth.token.js";
 
 

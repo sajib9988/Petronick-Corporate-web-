@@ -49,6 +49,12 @@ enum SectionType {
   CONTACT
 }
 
+enum FocusType {
+  B2B
+  B2C
+  BOTH
+}
+
 // ======================
 // CONTACT
 // ======================
@@ -75,6 +81,7 @@ model PromotionAgent {
   location      String
   experience    String
   focus         String
+  focusType     FocusType?
   message       String
   status        AgentStatus    @default(PENDING)
   businessUnits BusinessUnit[]

@@ -206,7 +206,7 @@ const refreshToken = async (token: string) => {
 
 // ================= VERIFY EMAIL =================
 
-const verifyEmail = async (email: string, otp: string) => {
+const verifyEmail = async (email: string) => {
   const user = await prisma.user.findUnique({
     where: { email },
   });
