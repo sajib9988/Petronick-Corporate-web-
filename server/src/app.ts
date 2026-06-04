@@ -23,9 +23,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 app.set(
   "views",
-  isProd
-    ? path.resolve(__dirname, "templates")
-    : path.resolve(process.cwd(), "src/templates")
+  path.resolve(process.cwd(), "src/templates")
 );
 
 // middlewares
