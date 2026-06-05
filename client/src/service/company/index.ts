@@ -3,7 +3,7 @@
 
 import { cookies } from "next/headers";
 
-const BASE_URL = process.env.INTERNAL_BASE_URL || "http://localhost:5000/api/v1";
+const BASE_URL = process.env.INTERNAL_BASE_URL ;
 
 
 
@@ -42,6 +42,7 @@ export const getAllCompanies = async (params?: {
 
     const res = await fetch(`${BASE_URL}/company?${query}`, {
       credentials: "include",
+      headers: await getAuthHeaders(),
     });
 
     return await safeJson(res);

@@ -98,7 +98,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
     (s: any) => s.sectionType === "HERO"
   );
 
-console.log('hero section:', heroSection);
+// console.log('hero section:', heroSection);
 
 
 
