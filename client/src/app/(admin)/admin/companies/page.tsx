@@ -87,7 +87,7 @@ export default function CompaniesPage() {
 
   // ─── Create ─────────────────────────────────────────────
   const handleCreate = async (values: CompanyFormValues, logoFile: File | null) => {
-     console.log("handleCreate called", values, logoFile);
+    //  console.log("handleCreate called", values, logoFile);
     if (!logoFile) {
       setCreateError("Logo is required");
       return;

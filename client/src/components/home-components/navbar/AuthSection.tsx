@@ -34,9 +34,9 @@ useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await getMe();
-        console.log("Full res:", res);
+        // console.log("Full res:", res);
         const userData = res?.data || null;
-        console.log("Fetched user:", userData) // ✅ এখানে দাও
+        // console.log("Fetched user:", userData) // ✅ এখানে দাও
         setUser(userData);
       } catch {
         setUser(null);

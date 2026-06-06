@@ -58,7 +58,7 @@ export const loginUser = async (userData: FieldValues) => {
 
   const data = await res.json();
 
-  console.log("LOGIN RESPONSE:", data);
+  // console.log("LOGIN RESPONSE:", data);
 
   // backend যদি token return করে
   if (data?.data?.accessToken) {
@@ -119,6 +119,6 @@ export const getMe = async () => {
 
   if (!res || !res.ok) return null;
   const data = await res.json();
-  console.log("User data:", data);
+  // console.log("User data:", data);
   return data?.success === false ? null : data;
 };

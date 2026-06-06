@@ -199,7 +199,7 @@ const handleEditSection = async (
       if (imageFile) formData.append("image", imageFile);
 
       const res = await createSection(formData);
-      console.log("Section created:", res);
+      // console.log("Section created:", res);
 
       alert("Section created successfully ✅");
     } catch (err) {
