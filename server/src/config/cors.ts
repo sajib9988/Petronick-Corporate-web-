@@ -2,7 +2,11 @@ import createCors from "cors";
 import { envVars } from "./env.js";
 
 
-const origin = [envVars.FRONTEND_URL as string, "http://localhost:3000"];
+const origin = [envVars.FRONTEND_URL as string, 
+  "http://localhost:3000",
+  "http://31.220.63.90:3000"
+
+];
 
 const cors = createCors({
   origin,

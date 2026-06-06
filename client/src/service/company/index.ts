@@ -3,7 +3,7 @@
 
 import { cookies } from "next/headers";
 
-const BASE_URL = process.env.INTERNAL_BASE_URL ;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1";
 
 
 
