@@ -54,6 +54,7 @@ export type Section = $Result.DefaultSelection<Prisma.$SectionPayload>
  */
 export namespace $Enums {
   export const Role: {
+  SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
   USER: 'USER'
 };

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   Building2,
@@ -28,9 +29,9 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { logoutUser } from "@/service/auth";
+import { logoutUser, getMe } from "@/service/auth";
 
-
+// ─── Menu Definition ─────────────────────────────
 const menuGroups = [
   {
     group: "Overview",
@@ -93,6 +94,14 @@ const menuGroups = [
         icon: Settings,
         exact: false,
       },
+      // ✅ "Users" item শুধু SUPER_ADMIN এর জন্য, নিচে render এর সময় filter করা হবে
+      {
+        label: "Users",
+        href: "/admin/users",
+        icon: Users,
+        exact: false,
+        requiredRole: "SUPER_ADMIN",
+      },
     ],
   },
 ];
@@ -100,6 +109,20 @@ const menuGroups = [
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [role, setRole] = useState<string | null>(null);
+
+  // ✅ Current user এর role load করা
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const res = await getMe();
+        setRole(res?.data?.role ?? null);
+      } catch {
+        setRole(null);
+      }
+    };
+    fetchRole();
+  }, []);
 
   const isActive = (href: string, exact: boolean) => {
     if (exact) return pathname === href;
@@ -132,60 +155,72 @@ export default function AdminSidebar() {
 
       {/* Menu */}
       <SidebarContent className="px-2 py-3 gap-0">
-        {menuGroups.map((group) => (
-          <SidebarGroup key={group.group} className="mb-2">
-            <SidebarGroupLabel className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-3 mb-1">
-              {group.group}
-            </SidebarGroupLabel>
-            <SidebarMenu>
-              {group.items.map((item) => {
-                const active = isActive(item.href, item.exact);
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton
-                      asChild
-                      tooltip={item.label}
-                      isActive={active}
-                    >
-                      <Link
-                        href={item.href}
-                        className={cn(
-                          "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-150 w-full",
-                          active
-                            ? "bg-gray-900 text-white font-medium shadow-sm"
-                            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
-                        )}
+        {menuGroups.map((group) => {
+          // ✅ role অনুযায়ী items filter করা
+          const visibleItems = group.items.filter((item) => {
+            if ("requiredRole" in item && item.requiredRole) {
+              return role === item.requiredRole;
+            }
+            return true;
+          });
+
+          if (visibleItems.length === 0) return null;
+
+          return (
+            <SidebarGroup key={group.group} className="mb-2">
+              <SidebarGroupLabel className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-3 mb-1">
+                {group.group}
+              </SidebarGroupLabel>
+              <SidebarMenu>
+                {visibleItems.map((item) => {
+                  const active = isActive(item.href, item.exact);
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.label}
+                        isActive={active}
                       >
-                        <item.icon
-                          size={16}
+                        <Link
+                          href={item.href}
                           className={cn(
-                            "flex-shrink-0",
-                            active ? "text-white" : "text-gray-400",
+                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-150 w-full",
+                            active
+                              ? "bg-gray-900 text-white font-medium shadow-sm"
+                              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
                           )}
-                        />
-                        <span className="flex-1 truncate">{item.label}</span>
-                        {item.badge && (
-                          <Badge
-                            variant="secondary"
-                            className="text-[10px] px-1.5 py-0 h-4 bg-emerald-100 text-emerald-700"
-                          >
-                            {item.badge}
-                          </Badge>
-                        )}
-                        {active && (
-                          <ChevronRight
-                            size={14}
-                            className="text-white/60 flex-shrink-0"
+                        >
+                          <item.icon
+                            size={16}
+                            className={cn(
+                              "flex-shrink-0",
+                              active ? "text-white" : "text-gray-400",
+                            )}
                           />
-                        )}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroup>
-        ))}
+                          <span className="flex-1 truncate">{item.label}</span>
+                          {"badge" in item && item.badge && (
+                            <Badge
+                              variant="secondary"
+                              className="text-[10px] px-1.5 py-0 h-4 bg-emerald-100 text-emerald-700"
+                            >
+                              {item.badge}
+                            </Badge>
+                          )}
+                          {active && (
+                            <ChevronRight
+                              size={14}
+                              className="text-white/60 flex-shrink-0"
+                            />
+                          )}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroup>
+          );
+        })}
       </SidebarContent>
 
       {/* Footer */}
@@ -203,7 +238,7 @@ export default function AdminSidebar() {
                   Admin
                 </p>
                 <p className="text-[10px] text-gray-400 truncate">
-                  Super Admin
+                  {role === "SUPER_ADMIN" ? "Super Admin" : "Admin"}
                 </p>
               </div>
               <button

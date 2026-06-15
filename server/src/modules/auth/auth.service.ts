@@ -15,6 +15,7 @@ import {
   createToken,
   verifyToken,
 } from "../../shared/utils/auth.token.js";
+import { envVars } from "../../config/env.js";
 
 // ================= REGISTER =================
 
@@ -30,12 +31,13 @@ const registerUser = async (payload: IRegisterUserPayload) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 12);
-
+  const role = email === envVars.SUPER_ADMIN_EMAIL ? "SUPER_ADMIN" : "USER";
   const user = await prisma.user.create({
     data: {
       name,
       email,
       password: hashedPassword,
+      role,
     },
     select: {
       id: true,
