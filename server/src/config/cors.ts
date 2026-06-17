@@ -4,7 +4,7 @@ import { envVars } from "./env.js";
 
 const origin = [envVars.FRONTEND_URL as string, 
   "http://localhost:3000",
-  "http://petronickholdings.com"
+  "https://petronickholdings.com"
 
 ];
 
