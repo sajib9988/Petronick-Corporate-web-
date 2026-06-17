@@ -72,7 +72,8 @@ useEffect(() => {
   }
 };
 
-  const isAdmin = user?.role === "ADMIN";
+  const isAdmin =
+  user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
 
   if (loading) {
     return (
