@@ -1,4 +1,4 @@
-
+export const dynamic = 'force-dynamic';
 import {
   Building2,
   Users,
@@ -12,7 +12,7 @@ import StatsCard from "@/components/admin/stats-card";
 import { getAllCompanies } from "@/service/company";
 import { getAllAgents } from "@/service/agent";
 import { getAllContacts } from "@/service/contact";
-
+ 
 export default async function AdminDashboardPage() {
   const [companies, contacts, agents] = await Promise.all([
     getAllCompanies(),

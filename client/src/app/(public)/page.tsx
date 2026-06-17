@@ -6,6 +6,9 @@ import { getAllCompanies } from "@/service/company";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
+
+
+export const dynamic = 'force-dynamic';
 // ─── Static company data (পরে API replace করবে) ─────────
 // const companies = [
 //   {
