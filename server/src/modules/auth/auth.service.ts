@@ -22,6 +22,9 @@ import { envVars } from "../../config/env.js";
 const registerUser = async (payload: IRegisterUserPayload) => {
   const { name, email, password } = payload;
 
+    console.log("Email:", email);
+  console.log("Env Email:", envVars.SUPER_ADMIN_EMAIL);
+
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });

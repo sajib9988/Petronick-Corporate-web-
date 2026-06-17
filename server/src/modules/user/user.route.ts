@@ -9,7 +9,7 @@ import { Role } from "../../../generated/prisma-client/edge.js"
 
 const router =Router()
 router.get("/", authorize(Role.SUPER_ADMIN), userController.getAllUsers)
-router.put("/:id", authorize(Role.SUPER_ADMIN), userController.updateUserRole)
+router.patch("/:id", authorize(Role.SUPER_ADMIN), userController.updateUserRole)
 
 
 export const userRoute = router

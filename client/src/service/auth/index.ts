@@ -46,6 +46,9 @@ export const registerUser = async (userData: FieldValues) => {
     data,
   };
 };
+
+
+
 export const loginUser = async (userData: FieldValues) => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
