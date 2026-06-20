@@ -12,8 +12,6 @@ router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
 router.get("/me", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.getMe);
 router.post("/change-password", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.changePassword);
-router.get("/me", authorize(Role.ADMIN, Role.USER), authController.getMe);
-router.post("/change-password", authorize(Role.ADMIN, Role.USER), authController.changePassword);
 router.post("/logout", authController.logoutUser);
 router.post("/verify-email", authController.verifyEmail);
 router.post("/forget-password", authController.forgetPassword);
