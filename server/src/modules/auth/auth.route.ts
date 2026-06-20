@@ -1,0 +1,24 @@
+// server/src/modules/auth/auth.route.ts
+
+import { Router } from "express";
+import { authController } from "./auth.controller.js";
+import { Role } from "../../../generated/prisma-client/index.js";
+import { authorize } from "../../shared/middlewares/authorize.middleware.js";
+
+
+const router = Router();
+
+router.post("/register", authController.registerUser);
+router.post("/login", authController.loginUser);
+router.get("/me", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.getMe);
+router.post("/change-password", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.changePassword);
+router.post("/logout", authController.logoutUser);
+router.post("/verify-email", authController.verifyEmail);
+router.post("/forget-password", authController.forgetPassword);
+router.post("/reset-password", authController.resetPassword);
+
+// ✅ Better Auth handles OAuth automatically
+// Just make sure this path matches your Google Redirect URI
+
+
+export const authRoutes = router;

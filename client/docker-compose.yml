@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  client:
+    image: sajib9988/petronick-client:latest
+    container_name: petronick-client
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    restart: always

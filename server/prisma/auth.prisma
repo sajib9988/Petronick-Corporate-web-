@@ -1,0 +1,20 @@
+model User {
+    id                 String     @id @default(cuid())
+    name               String
+    email              String
+    password           String
+    emailVerified      Boolean    @default(false)
+    role               Role       @default(USER)
+    status             UserStatus @default(ACTIVE)
+    needPasswordChange Boolean    @default(false)
+    isDeleted          Boolean    @default(false)
+    deletedAt          DateTime?
+    image              String?
+    createdAt          DateTime   @default(now())
+    updatedAt          DateTime   @updatedAt
+
+    @@unique([email])
+    @@map("user")
+}
+
+

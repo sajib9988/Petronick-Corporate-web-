@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: petronick_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: petronick-corporate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    image: sajib9988/petronick-server:latest
+    container_name: petronick_server
+    restart: always
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    
+
+volumes:
+  postgres_data:

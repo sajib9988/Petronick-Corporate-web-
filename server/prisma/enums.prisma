@@ -1,0 +1,38 @@
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AgentStatus {
+  PENDING
+  REVIEWED
+  APPROVED
+  REJECTED
+}
+
+enum SectionType {
+  HERO
+  WHO_WE_ARE
+  ECOSYSTEM
+  REVENUE
+  CLOSING
+  ABOUT
+  CTA
+  FEATURE
+  TESTIMONIALS
+  GALLERY
+  CONTACT
+}
+
+enum FocusType {
+  B2B
+  B2C
+  BOTH
+}
