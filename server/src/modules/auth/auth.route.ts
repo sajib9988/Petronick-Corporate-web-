@@ -10,20 +10,15 @@ const router = Router();
 
 router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
-<<<<<<< HEAD
 router.get("/me", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.getMe);
 router.post("/change-password", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.changePassword);
-=======
 router.get("/me", authorize(Role.ADMIN, Role.USER), authController.getMe);
 router.post("/change-password", authorize(Role.ADMIN, Role.USER), authController.changePassword);
->>>>>>> d46dc2ccc3be7bf13afb3608335f3d311c80b009
 router.post("/logout", authController.logoutUser);
 router.post("/verify-email", authController.verifyEmail);
 router.post("/forget-password", authController.forgetPassword);
 router.post("/reset-password", authController.resetPassword);
 
-// ✅ Better Auth handles OAuth automatically
-// Just make sure this path matches your Google Redirect URI
 
 
 export const authRoutes = router;
