@@ -323,12 +323,16 @@ return (
                 <button
                   onClick={() => setEditSection(section)}
                   className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+                  aria-label="Edit section"
+                  title="Edit section"
                 >
                   <Pencil size={13} />
                 </button>
                 <button
                   onClick={() => setDeleteId(section.id)}
                   className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                  aria-label="Delete section"
+                  title="Delete section"
                 >
                   <Trash2 size={13} />
                 </button>
@@ -363,7 +367,7 @@ return (
       {/* ── Edit Dialog ── */}
       <Dialog
         open={!!editSection}
-        onOpenChange={(open) => !open && setEditSection(null)}
+        onOpenChange={(open: boolean) => !open && setEditSection(null)}
       >
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -395,7 +399,7 @@ return (
       {/* ── Delete Dialog ── */}
       <Dialog
         open={!!deleteId}
-        onOpenChange={(open) => !isDeleting && !open && setDeleteId(null)}
+        onOpenChange={(open: boolean) => !isDeleting && !open && setDeleteId(null)}
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>
