@@ -255,18 +255,23 @@ export default function CompaniesPage() {
                       <ExternalLink size={13} />
                     </a>
                   )}
-                  <button
-                    onClick={() => setEditCompany(company)}
-                    className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    <Pencil size={13} />
-                  </button>
-                  <button
-                    onClick={() => setDeleteId(company.id)}
-                    className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                  >
-                    <Trash2 size={13} />
-                  </button>
+            <button
+  onClick={() => setEditCompany(company)}
+  aria-label="Edit company"
+  title="Edit company"
+  className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+>
+  <Pencil size={13} />
+</button>
+
+<button
+  onClick={() => setDeleteId(company.id)}
+  aria-label="Delete company"
+  title="Delete company"
+  className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+>
+  <Trash2 size={13} />
+</button>
                 </div>
               </div>
 
@@ -327,7 +332,7 @@ export default function CompaniesPage() {
       {/* ── Edit Dialog ── */}
       <Dialog
         open={!!editCompany}
-        onOpenChange={(open) => !open && setEditCompany(null)}
+        onOpenChange={(open : boolean) => !open && setEditCompany(null)}
       >
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -363,7 +368,7 @@ export default function CompaniesPage() {
       {/* ── Delete Dialog ── */}
       <Dialog
         open={!!deleteId}
-        onOpenChange={(open) => !isDeleting && !open && setDeleteId(null)}
+        onOpenChange={(open : boolean) => !isDeleting && !open && setDeleteId(null)}
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>

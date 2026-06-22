@@ -123,8 +123,10 @@ export default function SectionsPage() {
 
       {/* Page selector */}
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-gray-700">Page</label>
+        <label htmlFor="page-select" className="text-sm font-medium text-gray-700">Page</label>
         <select
+          id="page-select"
+          aria-label="Select page"
           value={selectedPageId}
           onChange={(e) => setSelectedPageId(e.target.value)}
           className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
