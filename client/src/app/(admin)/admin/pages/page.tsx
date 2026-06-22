@@ -158,6 +158,7 @@ export default function PagesPage() {
                     onClick={() => setDeleteDialog({ open: true, slug: page.slug, title: page.title })}
                     className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
                   >
+                    <span className="sr-only">Delete Page</span>
                     <Trash2 size={13} />
                   </button>
                 </div>
@@ -227,7 +228,7 @@ export default function PagesPage() {
       {/* Delete Dialog */}
       <Dialog
         open={deleteDialog.open}
-        onOpenChange={(open) => !isDeleting && setDeleteDialog((d) => ({ ...d, open }))}
+        onOpenChange={(open : boolean) => !isDeleting && setDeleteDialog((d) => ({ ...d, open }))}
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>
