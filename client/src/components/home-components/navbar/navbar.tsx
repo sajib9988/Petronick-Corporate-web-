@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import { AuthSection } from "./AuthSection";
 import { navLinks } from "./nav-links";
 import { FireBg } from "@/components/design/FireBg";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,14 +23,16 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-7 h-7 bg-gray-900 rounded-md flex items-center justify-center">
-              <span className="text-white text-xs font-bold">P</span>
-            </div>
-            <span className="text-base font-bold text-gray-900 tracking-tight">
-              Petronick
-            </span>
-          </Link>
+         <Link href="/" className="flex items-center flex-shrink-0">
+  <Image
+    src="/logo.jpeg"
+    alt="Petronick"
+    width={160}
+    height={50}
+    priority
+    className="h-10 w-auto"
+  />
+</Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
