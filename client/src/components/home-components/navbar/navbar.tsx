@@ -28,7 +28,7 @@ export default function Navbar() {
     src="/logo.jpeg"
     alt="Petronick"
     width={160}
-    height={50}
+    height={100}
     priority
     className="h-10 w-auto"
   />
