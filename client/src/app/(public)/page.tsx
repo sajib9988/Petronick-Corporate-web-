@@ -172,7 +172,10 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
 
       {/* ── Section 3: Our Ecosystem ── */}
     <section className="bg-gray-50 py-16">
-            <EcosystemSection companies={companies} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ <EcosystemSection companies={companies} />
+      </div>
+           
       </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}

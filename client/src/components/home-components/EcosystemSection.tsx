@@ -96,7 +96,8 @@ const nodeTypes = { companyNode: CompanyNode };
 
 // ─── Main Component ───────────────────────────────────────
 export default function EcosystemSection({ companies }: { companies: Company[] }) {
-  
+  console.log("Companies eco:", companies);
+
 const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
 const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selected, setSelected] = useState<Company | null>(null);
