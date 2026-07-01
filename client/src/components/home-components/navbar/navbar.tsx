@@ -37,8 +37,8 @@ export default function Navbar() {
       {/* Logo */}
       <Link href="/" className="flex items-center flex-shrink-0">
         <Image
-          src="/logo.png"
-          alt="Petronick"
+          src="/logo.jpeg"
+          alt=""
           width={220}
           height={80}
           priority
