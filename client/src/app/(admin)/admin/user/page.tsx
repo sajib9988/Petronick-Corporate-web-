@@ -14,6 +14,9 @@ type AppUser = {
   createdAt: string;
 };
 
+
+
+
 const roleBadge: Record<string, string> = {
   SUPER_ADMIN: "bg-purple-50 text-purple-700",
   ADMIN: "bg-blue-50 text-blue-700",
@@ -118,3 +121,4 @@ export default function UsersPage() {
     </div>
   );
 }
+

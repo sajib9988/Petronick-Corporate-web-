@@ -79,7 +79,7 @@ const menuGroups = [
       },
       {
         label: "Contacts",
-        href: "/admin/contacts",
+        href: "/admin/contact",
         icon: Mail,
         exact: false,
       },
@@ -90,14 +90,14 @@ const menuGroups = [
     items: [
       {
         label: "Settings",
-        href: "/admin/settings",
+        href: "/admin/setting",
         icon: Settings,
         exact: false,
       },
       // ✅ "Users" item শুধু SUPER_ADMIN এর জন্য, নিচে render এর সময় filter করা হবে
       {
         label: "Users",
-        href: "/admin/users",
+        href: "/admin/user",
         icon: Users,
         exact: false,
         requiredRole: "SUPER_ADMIN",
