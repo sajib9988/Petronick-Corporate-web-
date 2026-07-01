@@ -164,7 +164,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Ecosystem</h2>
         <p className="text-gray-500 text-sm">
-          ডায়নামিকভাবে কানেক্টেড সকল বিজনেস ইউনিট। ড্র্যাগ করে পজিশন পরিবর্তন করা যাবে।
+          Explore the diverse range of business units and companies that make up our ecosystem. Each unit contributes to our mission of innovation and excellence.
         </p>
       </div>
 
