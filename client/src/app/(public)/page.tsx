@@ -1,4 +1,5 @@
 import CompanyCard from "@/components/admin/card/CompanyCard";
+import EcosystemSection from "@/components/home-components/EcosystemSection";
 import HeroSection from "@/components/home-components/hero-section";
 import { Company, ICreatepage } from "@/lib/type";
 import { getAllPages, getPageBySlug } from "@/service/cms";
@@ -171,39 +172,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
 
       {/* ── Section 3: Our Ecosystem ── */}
     <section className="bg-gray-50 py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
-              Integrated Capability
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-              Our Ecosystem
-            </h2>
-            <p className="text-gray-500 text-sm max-w-xl mx-auto">
-              Each company plays a distinct role — together they form a
-              self-reinforcing revenue engine.
-            </p>
-          </div>
-
-          {/* Flow grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {ecosystemFlow.map((item, i) => (
-              <div
-                key={item.name}
-                className={`rounded-xl border p-5 ${item.color} relative`}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className={`w-2 h-2 rounded-full ${item.dot}`} />
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    0{i + 1}
-                  </span>
-                </div>
-                <h3 className="font-bold text-gray-900 text-sm mb-1">{item.name}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{item.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+            <EcosystemSection companies={companies} />
       </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
