@@ -23,7 +23,7 @@ const roleBadge: Record<string, string> = {
   USER: "bg-gray-100 text-gray-600",
 };
 
-export default function UsersPage() {
+export default function UserPage() {
   const [users, setUsers] = useState<AppUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
