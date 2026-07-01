@@ -28,11 +28,11 @@ const pageTitles: Record<string, { title: string; description: string }> = {
     title: "Promotion Agents",
     description: "Review agent applications",
   },
-  "/admin/contacts": {
+  "/admin/contact": {
     title: "Contacts",
     description: "View contact messages",
   },
-  "/admin/settings": {
+  "/admin/setting": {
     title: "Settings",
     description: "Manage your account",
   },
