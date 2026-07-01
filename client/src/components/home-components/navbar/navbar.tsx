@@ -4,11 +4,11 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence } from "framer-motion";
+
 
 import { AuthSection } from "./AuthSection";
 import { navLinks } from "./nav-links";
-import { FireBg } from "@/components/design/FireBg";
+
 import Image from "next/image";
 
 export default function Navbar() {
@@ -18,39 +18,37 @@ export default function Navbar() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="w-full bg-white/5 backdrop-blur-[6px] border-b border-emerald-400/40 sticky top-0 z-50">
+    <header className="w-full bg-[#001F3F] backdrop-blur-[6px] border-b border-emerald-400/40 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-         <Link href="/" className="flex items-center flex-shrink-0">
-  <Image
-    src="/logo.jpeg"
-    alt="Petronick"
-    width={160}
-    height={100}
-    priority
-    className="h-10 w-auto"
-  />
-</Link>
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <Image
+              src="/logo.jpeg"
+              alt="Petronick"
+              width={200}
+              height={150}
+              priority
+              className="h-10 w-auto"
+            />
+          </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative px-3.5 py-1.5 text-sm rounded-full font-medium overflow-hidden",
+                  "relative h-16 flex items-center text-lg font-medium transition-colors duration-200",
+
                   isActive(link.href)
-                    ? "text-green-700 font-bold"
-                    : "text-black hover:bg-gray-50"
+                    ? "text-emerald-400 border-b-[3px] border-emerald-400 font-semibold"
+                    : "text-gray-200 border-b-[3px] border-transparent hover:text-emerald-300 hover:border-emerald-300/50"
                 )}
               >
-                <AnimatePresence>
-                  {isActive(link.href) && <FireBg key="fire" />}
-                </AnimatePresence>
-                <span className="relative z-10">{link.label}</span>
+                {link.label}
               </Link>
             ))}
           </nav>
@@ -62,7 +60,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+            className="lg:hidden p-2 rounded-md text-gray-200 hover:text-white hover:bg-white/10"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
