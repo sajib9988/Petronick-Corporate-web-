@@ -190,7 +190,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
             </div>
             <Link
               href="/companies"
-              className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
+              className=" sm:inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
             >
               View all <ArrowRight size={14} />
             </Link>
