@@ -14,21 +14,21 @@ router.get("/:id", companyController.getCompanyById);
 // Admin only
 router.post(
   "/",
-  authorize(Role.ADMIN),
+  authorize(Role.ADMIN, Role.SUPER_ADMIN),
   uploadLogo,
   companyController.createCompany,
 );
 
 router.patch(
   "/:id",
-  authorize(Role.ADMIN),
+  authorize(Role.ADMIN, Role.SUPER_ADMIN),
   uploadLogo,
   companyController.updateCompany,
 );
 
 router.delete(
   "/:id",
-  authorize(Role.ADMIN),
+  authorize(Role.ADMIN, Role.SUPER_ADMIN),
   companyController.deleteCompany,
 );
 
