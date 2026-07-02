@@ -19,11 +19,11 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-
+// client side 
 const companySchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
-  website: z.string().url("Invalid URL").optional().or(z.literal("")),
+  website: z.string().optional(),
   order: z.number().int(),
   isVisible: z.boolean(),
   revenueStage: z.string().optional(),
