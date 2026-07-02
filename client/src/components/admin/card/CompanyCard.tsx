@@ -31,14 +31,14 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.35, delay: index * 0.07, ease: "easeOut" }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className={`group bg-white border rounded-xl p-5 flex flex-col gap-3 transition-shadow hover:shadow-sm ${
-        company.isVisible
+      className={`group bg-white border rounded-xl p-5 flex flex-col gap-3 transition-shadow hover:shadow-sm ${company.isVisible
           ? "border-gray-100 hover:border-gray-200"
           : "border-dashed border-gray-200 opacity-60"
-      }`}
+        }`}
     >
       {/* Top row — logo + visibility */}
       <div className="flex items-center justify-between">
@@ -59,9 +59,8 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         <div className="flex items-center gap-2">
           {company.revenueStage && (
             <span
-              className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                stageColors[company.revenueStage] ?? "bg-gray-50 text-gray-600"
-              }`}
+              className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${stageColors[company.revenueStage] ?? "bg-gray-50 text-gray-600"
+                }`}
             >
               {company.revenueStage}
             </span>
@@ -85,26 +84,26 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       </div>
 
       {/* Footer — link */}
-   {/* Footer — link */}
-<div className="pt-1 border-t border-gray-50">
-  {company.website ? (
-    <a
-      href={company.website}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-    >
-      Visit Website <ExternalLink size={10} />
-    </a>
-  ) : (
-    <Link
-      href="/companies"
-      className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-gray-700 transition-colors"
-    >
-      Learn more <ArrowRight size={10} />
-    </Link>
-  )}
-</div>
+      {/* Footer — link */}
+      <div className="pt-1 border-t border-gray-50">
+        {company.website ? (
+          <a
+            href={company.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            Visit Website <ExternalLink size={10} />
+          </a>
+        ) : (
+          <Link
+            href="/companies"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-gray-700 transition-colors"
+          >
+            Learn more <ArrowRight size={10} />
+          </Link>
+        )}
+      </div>
     </motion.div>
   );
 }
