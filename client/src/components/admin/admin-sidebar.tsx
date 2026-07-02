@@ -168,7 +168,7 @@ export default function AdminSidebar() {
 
           return (
             <SidebarGroup key={group.group} className="mb-2">
-              <SidebarGroupLabel className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-3 mb-1">
+              <SidebarGroupLabel className="text-xs font-semibold text-gray-400 uppercase tracking-widest px-3 mb-1">
                 {group.group}
               </SidebarGroupLabel>
               <SidebarMenu>
