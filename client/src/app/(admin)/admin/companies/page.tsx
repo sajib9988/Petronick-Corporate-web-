@@ -12,6 +12,8 @@ import {
   EyeOff,
   ExternalLink,
   Search,
+  LayoutGrid,
+  MoreVertical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +25,7 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge"; // Ensure you have Badge component in shadcn
 import {
   getAllCompanies,
   createCompany,
@@ -30,12 +33,7 @@ import {
   deleteCompany,
 } from "@/service/company";
 import CompanyForm, { CompanyFormValues, defaultCompanyValues } from "@/components/admin/form/company-form";
-// import CompanyForm, {
-//   CompanyFormValues,
-//   defaultCompanyValues,
-// } from "@/components/admin/company-form";
 
-// ─── Type ─────────────────────────────────────────────────
 type Company = {
   id: string;
   name: string;
@@ -48,27 +46,22 @@ type Company = {
   createdAt: string;
 };
 
-// ─── Page ─────────────────────────────────────────────────
 export default function CompaniesPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
 
-  // Create
   const [showCreate, setShowCreate] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState("");
 
-  // Edit
   const [editCompany, setEditCompany] = useState<Company | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editError, setEditError] = useState("");
 
-  // Delete
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // ─── Fetch ──────────────────────────────────────────────
   const fetchCompanies = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -86,9 +79,7 @@ export default function CompaniesPage() {
     return () => clearTimeout(timer);
   }, [fetchCompanies]);
 
-  // ─── Create ─────────────────────────────────────────────
   const handleCreate = async (values: CompanyFormValues, logoFile: File | null) => {
-    //  console.log("handleCreate called", values, logoFile);
     if (!logoFile) {
       setCreateError("Logo is required");
       return;
@@ -98,19 +89,8 @@ export default function CompaniesPage() {
     try {
       const fd = new FormData();
       fd.append("logo", logoFile);
-      fd.append(
-        "data",
-        JSON.stringify({
-          name: values.name,
-          description: values.description,
-          website: values.website || undefined,
-          order: values.order,
-          isVisible: values.isVisible,
-          revenueStage: values.revenueStage || undefined,
-        }),
-      );
+      fd.append("data", JSON.stringify({ ...values }));
       const result = await createCompany(fd);
-      console.log("Create result:", result);
       if (!result?.success) {
         setCreateError(result?.message || "Failed to create company");
         return;
@@ -124,7 +104,6 @@ export default function CompaniesPage() {
     }
   };
 
-  // ─── Edit ───────────────────────────────────────────────
   const handleEdit = async (values: CompanyFormValues, logoFile: File | null) => {
     if (!editCompany) return;
     setIsEditing(true);
@@ -132,17 +111,7 @@ export default function CompaniesPage() {
     try {
       const fd = new FormData();
       if (logoFile) fd.append("logo", logoFile);
-      fd.append(
-        "data",
-        JSON.stringify({
-          name: values.name,
-          description: values.description,
-          website: values.website || undefined,
-          order: values.order,
-          isVisible: values.isVisible,
-          revenueStage: values.revenueStage || undefined,
-        }),
-      );
+      fd.append("data", JSON.stringify({ ...values }));
       const result = await updateCompany(editCompany.id, fd);
       if (!result?.success) {
         setEditError(result?.message || "Failed to update company");
@@ -157,7 +126,6 @@ export default function CompaniesPage() {
     }
   };
 
-  // ─── Delete ─────────────────────────────────────────────
   const handleDelete = async () => {
     if (!deleteId) return;
     setIsDeleting(true);
@@ -170,135 +138,131 @@ export default function CompaniesPage() {
     }
   };
 
-  // ─── Render ─────────────────────────────────────────────
   return (
-    <div className="space-y-5 max-w-5xl">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 max-w-6xl mx-auto p-4 lg:p-0">
+      
+      {/* --- Morden Header --- */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border shadow-sm">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Companies</h2>
-          <p className="text-sm text-gray-400 mt-0.5">
-            Manage your business units
+          <div className="flex items-center gap-2">
+            <LayoutGrid className="w-5 h-5 text-primary" />
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Portfolio Companies</h2>
+          </div>
+          <p className="text-sm text-muted-foreground mt-1">
+            Manage and monitor your business units across the ecosystem.
           </p>
         </div>
-        <Button size="sm" onClick={() => setShowCreate(true)}>
-          <Plus size={14} className="mr-1" />
-          New Company
-        </Button>
-      </div>
-
-      {/* Search */}
-      <div className="relative max-w-sm">
-        <Search
-          size={14}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-        />
-        <Input
-          placeholder="Search companies..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-8"
-        />
-      </div>
-
-      {/* List */}
-      {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-48 bg-white rounded-xl border border-gray-100 animate-pulse"
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 md:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search by name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9 bg-gray-50/50 border-gray-200 focus:bg-white transition-all"
             />
+          </div>
+          <Button onClick={() => setShowCreate(true)} className="shadow-sm">
+            <Plus className="w-4 h-4 mr-2" />
+            New Company
+          </Button>
+        </div>
+      </div>
+
+      {/* --- List Content --- */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-64 bg-white rounded-2xl border border-gray-100 animate-pulse shadow-sm" />
           ))}
         </div>
       ) : companies.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 px-6 py-16 text-center">
-          <Building2 size={28} className="text-gray-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">
-            {search ? "No companies found." : "No companies yet."}
+        <div className="bg-white rounded-2xl border border-dashed py-24 text-center">
+          <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+             <Building2 size={32} className="text-gray-300" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">No companies found</h3>
+          <p className="text-sm text-muted-foreground mt-1 max-w-xs mx-auto">
+            {search ? `We couldn't find any results for "${search}"` : "Get started by adding your first business unit to the portfolio."}
           </p>
           {!search && (
-            <Button size="sm" className="mt-4" onClick={() => setShowCreate(true)}>
-              <Plus size={13} className="mr-1" />
+            <Button variant="outline" className="mt-6" onClick={() => setShowCreate(true)}>
+              <Plus className="w-4 h-4 mr-2" />
               Add Company
             </Button>
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {companies.map((company) => (
             <div
               key={company.id}
-              className={`bg-white rounded-xl border transition-all group hover:shadow-sm ${
-                company.isVisible
-                  ? "border-gray-100 hover:border-gray-200"
-                  : "border-dashed border-gray-200 opacity-60"
+              className={`group relative bg-white rounded-2xl border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                !company.isVisible && "opacity-75 grayscale-[0.5] border-dashed"
               }`}
             >
-              {/* Logo + actions */}
-              <div className="flex items-start justify-between p-4 pb-3">
-                <div className="w-12 h-12 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden flex-shrink-0">
-                  <img
-                    src={company.logo}
-                    alt={company.name}
-                    className="w-full h-full object-contain p-1"
-                  />
+              {/* Top Banner/Action Row */}
+              <div className="flex items-center justify-between p-5 pb-0">
+                <div className="w-14 h-14 rounded-xl border bg-white p-2 shadow-sm flex items-center justify-center overflow-hidden transition-transform group-hover:scale-110">
+                  <img src={company.logo} alt={company.name} className="w-full h-full object-contain" />
                 </div>
-                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                
+                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {company.website && (
-                    <a
-                      href={company.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      <ExternalLink size={13} />
-                    </a>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" asChild>
+                      <a href={company.website} target="_blank" rel="noreferrer">
+                        <ExternalLink size={14} className="text-muted-foreground hover:text-primary" />
+                      </a>
+                    </Button>
                   )}
-            <button
-  onClick={() => setEditCompany(company)}
-  aria-label="Edit company"
-  title="Edit company"
-  className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
->
-  <Pencil size={13} />
-</button>
-
-<button
-  onClick={() => setDeleteId(company.id)}
-  aria-label="Delete company"
-  title="Delete company"
-  className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
->
-  <Trash2 size={13} />
-</button>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8 rounded-full hover:bg-amber-50 hover:text-amber-600"
+                    onClick={() => setEditCompany(company)}
+                  >
+                    <Pencil size={14} />
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8 rounded-full hover:bg-red-50 hover:text-red-600"
+                    onClick={() => setDeleteId(company.id)}
+                  >
+                    <Trash2 size={14} />
+                  </Button>
                 </div>
               </div>
 
-              {/* Info */}
-              <div className="px-4 pb-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-gray-900 text-sm truncate">
+              {/* Company Body */}
+              <div className="p-5 pt-4 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
                     {company.name}
                   </h3>
                   {company.isVisible ? (
-                    <Eye size={12} className="text-emerald-500 flex-shrink-0" />
+                    <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100 text-[10px] py-0 px-2 h-5">
+                      <Eye className="w-3 h-3 mr-1" /> Active
+                    </Badge>
                   ) : (
-                    <EyeOff size={12} className="text-gray-300 flex-shrink-0" />
+                    <Badge variant="outline" className="text-gray-400 border-gray-200 text-[10px] py-0 px-2 h-5">
+                      <EyeOff className="w-3 h-3 mr-1" /> Hidden
+                    </Badge>
                   )}
                 </div>
-                <p className="text-xs text-gray-500 line-clamp-2 mb-3">
+
+                <p className="text-xs text-muted-foreground line-clamp-3 min-h-[45px]">
                   {company.description}
                 </p>
-                <div className="flex items-center justify-between">
-                  {company.revenueStage && (
-                    <span className="text-[10px] bg-amber-50 text-amber-700 font-medium px-2 py-0.5 rounded-full">
-                      {company.revenueStage}
-                    </span>
-                  )}
-                  <span className="text-[10px] text-gray-400 ml-auto">
+
+                <div className="pt-3 border-t flex items-center justify-between text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    {company.revenueStage || "N/A"}
+                  </div>
+                  <div className="bg-gray-100 px-2 py-0.5 rounded text-gray-600">
                     Order: {company.order}
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -306,95 +270,71 @@ export default function CompaniesPage() {
         </div>
       )}
 
-      {/* ── Create Dialog ── */}
+      {/* --- Dialogs (Create, Edit, Delete) --- */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>New Company</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-xl p-0 overflow-hidden border-none shadow-2xl">
+          <div className="bg-primary p-6 text-white">
+            <DialogTitle className="text-xl">New Company</DialogTitle>
+            <DialogDescription className="text-primary-foreground/80">
               Add a new business unit to your portfolio.
             </DialogDescription>
-          </DialogHeader>
-          <CompanyForm
-            defaultValues={defaultCompanyValues}
-            onSubmit={handleCreate}
-            onCancel={() => {
-              setShowCreate(false);
-              setCreateError("");
-            }}
-            submitLabel="Create Company"
-            isLoading={isCreating}
-            error={createError}
-          />
-        </DialogContent>
-      </Dialog>
-
-      {/* ── Edit Dialog ── */}
-      <Dialog
-        open={!!editCompany}
-        onOpenChange={(open : boolean) => !open && setEditCompany(null)}
-      >
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit Company</DialogTitle>
-            <DialogDescription>
-              Update the company information.
-            </DialogDescription>
-          </DialogHeader>
-          {editCompany && (
+          </div>
+          <div className="p-6 overflow-y-auto max-h-[80vh]">
             <CompanyForm
-              defaultValues={{
-                name: editCompany.name,
-                description: editCompany.description,
-                website: editCompany.website ?? "",
-                order: editCompany.order,
-                isVisible: editCompany.isVisible,
-                revenueStage: editCompany.revenueStage ?? "",
-              }}
-              existingLogo={editCompany.logo}
-              onSubmit={handleEdit}
-              onCancel={() => {
-                setEditCompany(null);
-                setEditError("");
-              }}
-              submitLabel="Save Changes"
-              isLoading={isEditing}
-              error={editError}
+              onSubmit={handleCreate}
+              onCancel={() => setShowCreate(false)}
+              submitLabel="Create Business Unit"
+              isLoading={isCreating}
+              error={createError}
             />
-          )}
+          </div>
         </DialogContent>
       </Dialog>
 
-      {/* ── Delete Dialog ── */}
-      <Dialog
-        open={!!deleteId}
-        onOpenChange={(open : boolean) => !isDeleting && !open && setDeleteId(null)}
-      >
+      <Dialog open={!!editCompany} onOpenChange={(open) => !open && setEditCompany(null)}>
+        <DialogContent className="max-w-xl p-0 overflow-hidden border-none shadow-2xl">
+           <div className="bg-gray-900 p-6 text-white">
+            <DialogTitle className="text-xl">Edit {editCompany?.name}</DialogTitle>
+            <DialogDescription className="text-gray-400">
+              Update company profile and business details.
+            </DialogDescription>
+          </div>
+          <div className="p-6 overflow-y-auto max-h-[80vh]">
+            {editCompany && (
+              <CompanyForm
+                defaultValues={{
+                  name: editCompany.name,
+                  description: editCompany.description,
+                  website: editCompany.website ?? "",
+                  order: editCompany.order,
+                  isVisible: editCompany.isVisible,
+                  revenueStage: editCompany.revenueStage ?? "",
+                }}
+                existingLogo={editCompany.logo}
+                onSubmit={handleEdit}
+                onCancel={() => setEditCompany(null)}
+                submitLabel="Save Changes"
+                isLoading={isEditing}
+                error={editError}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!deleteId} onOpenChange={(open) => !isDeleting && !open && setDeleteId(null)}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>Delete Company</DialogTitle>
+            <DialogTitle>Delete Company?</DialogTitle>
             <DialogDescription>
-              This will permanently delete the company and its logo. This cannot
-              be undone.
+              This action cannot be undone. All data related to this company will be removed.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setDeleteId(null)}
-              disabled={isDeleting}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting && (
-                <Loader2 size={13} className="mr-1.5 animate-spin" />
-              )}
-              Delete
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="ghost" onClick={() => setDeleteId(null)} disabled={isDeleting}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+              {isDeleting ? <Loader2 size={14} className="animate-spin mr-2" /> : <Trash2 size={14} className="mr-2" />}
+              Confirm Delete
             </Button>
           </DialogFooter>
         </DialogContent>
