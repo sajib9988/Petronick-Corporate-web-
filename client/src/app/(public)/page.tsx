@@ -108,6 +108,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
 
    const  allCompanies = await getAllCompanies({ isVisible: true });
    const  companies: Company[] = allCompanies.data || [];
+   console.log('companies from public page:', companies);  
 
 
 
