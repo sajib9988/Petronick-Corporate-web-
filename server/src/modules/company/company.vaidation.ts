@@ -12,7 +12,7 @@ const createCompany = z.object({
 const updateCompany = z.object({
   name: z.string().min(1).optional(),
   description: z.string().min(1).optional(),
-  website: z.string().url("Invalid website URL").optional(),
+  website: z.string().optional(),
   order: z.coerce.number().int().optional(),
   isVisible: z.coerce.boolean().optional(),
   revenueStage: z.string().optional(),

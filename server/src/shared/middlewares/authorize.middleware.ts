@@ -60,7 +60,7 @@ export const authorize =
         email: user.email,
         role: user.role,
       };
-
+     console.log("REQ.USER:", req.user);
       next();
     } catch (error) {
       console.log("AUTH ERROR:", error);
