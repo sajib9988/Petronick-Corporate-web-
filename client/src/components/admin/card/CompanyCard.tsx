@@ -37,20 +37,24 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       transition={{ duration: 0.35, delay: index * 0.07, ease: "easeOut" }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
 
-      className={`group bg-[#18181b] border rounded-xl p-5 flex flex-col gap-3 transition-all hover:shadow-2xl hover:shadow-black/20 ${
-        company.isVisible
-          ? "border-zinc-800 hover:border-zinc-700"
-          : "border-dashed border-zinc-800 opacity-50"
-      }`}
+     className={`group flex flex-col rounded-2xl border border-zinc-800
+bg-gradient-to-b from-zinc-900 to-[#171717]
+p-6 transition-all duration-300
+hover:-translate-y-1
+hover:border-zinc-700
+hover:shadow-[0_20px_60px_rgba(0,0,0,.35)]
+${
+  !company.isVisible && "opacity-60"
+}`}
     >
       {/* Top row — logo + visibility */}
       <div className="flex items-center justify-between">
-        <div className="w-10 h-10 rounded-lg border border-zinc-800 bg-zinc-900/50 overflow-hidden flex-shrink-0 flex items-center justify-center">
+       <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-800/60 shadow-sm">
           {company.logo ? (
             <img
               src={company.logo}
               alt={company.name}
-              className="w-full h-full object-contain p-1.5"
+             className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-zinc-500 font-bold text-sm bg-zinc-800">
@@ -79,10 +83,23 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
       {/* Name + description - সাদা ও ধূসর টেক্সট ব্যবহার করা হয়েছে */}
       <div className="flex-1">
-        <h3 className="font-semibold text-zinc-100 text-sm mb-1 group-hover:text-white transition-colors">
+        <h3 className="
+text-xl
+font-semibold
+tracking-tight
+text-white
+leading-none
+">
           {company.name}
         </h3>
-        <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2">
+        <p className="
+mt-2
+text-sm
+leading-6
+text-zinc-300
+line-clamp-2
+min-h-[48px]
+">
           {company.description}
         </p>
       </div>
