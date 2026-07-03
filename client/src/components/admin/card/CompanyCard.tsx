@@ -49,7 +49,7 @@ ${
     >
       {/* Top row — logo + visibility */}
       <div className="flex items-center justify-between">
-       <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-800/60 shadow-sm">
+       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-800/60 shadow-sm">
           {company.logo ? (
             <img
               src={company.logo}
