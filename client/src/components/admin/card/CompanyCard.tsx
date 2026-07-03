@@ -81,7 +81,7 @@ ${
         </div>
       </div>
 
-      {/* Name + description - সাদা ও ধূসর টেক্সট ব্যবহার করা হয়েছে */}
+      
       <div className="flex-1">
         <h3 className="
 text-xl

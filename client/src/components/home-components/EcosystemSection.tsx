@@ -229,22 +229,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
           </div>
         )}
 
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {companies.map((company, index) => (
-            <div
-              key={company.id}
-              onClick={() => setSelected(company)}
-              className={`p-4 rounded-xl border transition-all cursor-pointer hover:shadow-md ${
-                selected?.id === company.id
-                  ? "bg-white ring-2 ring-blue-500"
-                  : "bg-white border-gray-100"
-              }`}
-            >
-              <h4 className="font-bold text-sm mb-1">{company.name}</h4>
-              <p className="text-xs text-gray-400 line-clamp-1">{company.description}</p>
-            </div>
-          ))}
-        </div> */}
+  
       </div>
 
       <div className="mt-12 text-center">
