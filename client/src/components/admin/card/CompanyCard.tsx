@@ -15,7 +15,7 @@ type Company = {
   isVisible: boolean;
 };
 
-// স্টেজ কালারগুলো ডার্ক ব্যাকগ্রাউন্ডে ফুটে ওঠার জন্য কিছুটা উজ্জ্বল করা হয়েছে
+
 const stageColors: Record<string, string> = {
   Active: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
   Launching: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
@@ -36,7 +36,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.35, delay: index * 0.07, ease: "easeOut" }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      // কার্ডের ব্যাকগ্রাউন্ড Dark Grey (#18181b) করা হয়েছে
+
       className={`group bg-[#18181b] border rounded-xl p-5 flex flex-col gap-3 transition-all hover:shadow-2xl hover:shadow-black/20 ${
         company.isVisible
           ? "border-zinc-800 hover:border-zinc-700"

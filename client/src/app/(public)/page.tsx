@@ -10,65 +10,6 @@ import Link from "next/link";
 
 
 export const dynamic = 'force-dynamic';
-// ─── Static company data (পরে API replace করবে) ─────────
-// const companies = [
-//   {
-//     name: "Fusion DigiWeb",
-//     description: "Full-service digital marketing and rapid market launch agency.",
-//     initial: "FD",
-//     color: "bg-blue-600",
-//     revenueStage: "Active",
-//     website: null,
-//   },
-//   {
-//     name: "Germ Solutions Shop",
-//     description: "Joint venture sanitation supply company with marketing-led revenue structure.",
-//     initial: "GS",
-//     color: "bg-emerald-600",
-//     revenueStage: "Active",
-//     website: null,
-//   },
-//   {
-//     name: "Germ Shooters Co",
-//     description: "Independent branded e-commerce channel with full profit capture.",
-//     initial: "GC",
-//     color: "bg-teal-600",
-//     revenueStage: "Active",
-//     website: "https://germshooters.com",
-//   },
-//   {
-//     name: "Petron Fulfillment",
-//     description: "Regional fulfillment and packaging infrastructure operation.",
-//     initial: "PF",
-//     color: "bg-orange-600",
-//     revenueStage: "Launching",
-//     website: null,
-//   },
-//   {
-//     name: "Treaded Brands",
-//     description: "Graphic-driven apparel and lifestyle brand with 3D product integration.",
-//     initial: "TB",
-//     color: "bg-purple-600",
-//     revenueStage: "Pre-launch",
-//     website: null,
-//   },
-//   {
-//     name: "Celebrations Are Sweet",
-//     description: "Specialty dessert brand with scalable B2B and B2C distribution.",
-//     initial: "CA",
-//     color: "bg-pink-600",
-//     revenueStage: "Re-launching",
-//     website: null,
-//   },
-//   {
-//     name: "Profit Pioneers",
-//     description: "Small business advisory focused on marketing, profitability, and technology.",
-//     initial: "PP",
-//     color: "bg-indigo-600",
-//     revenueStage: "Active",
-//     website: null,
-//   },
-// ];
 
 
 
