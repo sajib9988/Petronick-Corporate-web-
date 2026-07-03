@@ -82,7 +82,7 @@ ${
       </div>
 
       
-      <div className="flex-1">
+      <div className="flex-1 mt-5">
         <h3 className="
 text-xl
 font-semibold
