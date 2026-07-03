@@ -229,7 +229,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {companies.map((company, index) => (
             <div
               key={company.id}
@@ -244,7 +244,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
               <p className="text-xs text-gray-400 line-clamp-1">{company.description}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-12 text-center">
