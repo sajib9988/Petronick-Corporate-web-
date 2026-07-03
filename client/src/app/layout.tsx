@@ -30,6 +30,7 @@ export default function RootLayout({
     >
       <body className={`${geistSans.className}min-h-full flex flex-col`}>
         {children}
+        
         <Toaster position="top-center" />
       </body>
     </html>
