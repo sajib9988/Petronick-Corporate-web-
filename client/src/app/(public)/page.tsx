@@ -112,7 +112,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
         </div>
       </section>
 
-      {/* ── Section 3: Our Ecosystem ── */}
+
   {/* ── Section 3: Our Ecosystem ── */}
 <section className="bg-slate-950 py-16">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
