@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { fadeSlide, fadeUp, staggerContainer } from "@/lib/motion";
+import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
 
 interface HeroContent {
   headline?: string;
@@ -48,10 +48,10 @@ export default function HeroSection({ image, content }: HeroSectionProps) {
       <div className="absolute inset-0 bg-gray-950/70" />
 
       {/* Content */}
-     <motion.div
+      <motion.div
         initial="hidden"
         animate="visible"
-        variants={staggerContainer(0.25, 0.2)}
+        variants={staggerContainer(0.3, 0.2)}
         className="relative z-10 text-center px-4 max-w-3xl"
       >
         <motion.h1
@@ -65,11 +65,8 @@ export default function HeroSection({ image, content }: HeroSectionProps) {
           {subheadline}
         </motion.p>
 
-        <motion.div
-          variants={staggerContainer(0.2)}
-          className="flex gap-3 justify-center"
-        >
-          <motion.div variants={fadeSlide("left", 0, 60, 0.8)}>
+        <div className="flex gap-3 justify-center">
+          <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
             <Button asChild>
               <Link href={primaryBtnLink}>
                 {primaryBtn} <ArrowRight size={16} />
@@ -77,12 +74,12 @@ export default function HeroSection({ image, content }: HeroSectionProps) {
             </Button>
           </motion.div>
 
-          <motion.div variants={fadeSlide("right", 0, 60, 0.8)}>
+          <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
             <Button asChild variant="outline">
               <Link href={secondaryBtnLink}>{secondaryBtn}</Link>
             </Button>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );
