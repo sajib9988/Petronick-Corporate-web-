@@ -1,16 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  ReactFlow, Node, Edge, Background, Controls, MiniMap,
-  useNodesState, useEdgesState, addEdge, Connection,
-  Handle, Position, NodeProps,
-} from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
-import { ExternalLink, X } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
+import { ExternalLink, X, LayoutGrid, Waypoints } from "lucide-react";
+import EcosystemFlow from "./EcosystemFlow";
 
-// ─── Types ────────────────────────────────────────────────
 type Company = {
   id: string;
   name: string;
@@ -22,220 +16,152 @@ type Company = {
   isVisible: boolean;
 };
 
-type NodeData = {
-  label: string;
-  sub?: string;
-  color: string;
-  company?: Company;
-  isCenter?: boolean;
-};
-
-// ─── Dynamic Color Palette ────────────────────────────────
-const PALETTE = [
-  { key: "purple", fill: "#EEEDFE", stroke: "#534AB7", text: "#3C3489" },
-  { key: "teal",   fill: "#E1F5EE", stroke: "#0F6E56", text: "#085041" },
-  { key: "amber",  fill: "#FAEEDA", stroke: "#854F0B", text: "#633806" },
-  { key: "pink",   fill: "#FBEAF0", stroke: "#993556", text: "#72243E" },
-  { key: "coral",  fill: "#FAECE7", stroke: "#993C1D", text: "#712B13" },
-  { key: "blue",   fill: "#E6F1FB", stroke: "#185FA5", text: "#0C447C" },
-];
-
-const CENTER_COLORS = { fill: "#3C3489", stroke: "#534AB7", text: "#fff", subText: "#C8C5F0" };
-
-const STAGE_COLORS: Record<string, string> = {
-  Active:         "bg-emerald-50 text-emerald-700 border border-emerald-200",
-  Launching:      "bg-blue-50 text-blue-700 border border-blue-200",
-  "Pre-launch":   "bg-amber-50 text-amber-700 border border-amber-200",
-  "Re-launching": "bg-purple-50 text-purple-700 border border-purple-200",
-};
-
-// ─── Custom Node Component ────────────────────────────────
-function CompanyNode({ data, selected }: NodeProps) {
-  const nodeData = data as unknown as NodeData;
-  const isSelected = selected;
-
-  const colors = nodeData.isCenter
-    ? CENTER_COLORS
-    : (PALETTE.find(p => p.key === nodeData.color) || PALETTE[0]);
-
-  return (
-    <div style={{
-      background: isSelected && !nodeData.isCenter ? colors.stroke : colors.fill,
-      border: `1.5px solid ${colors.stroke}`,
-      borderRadius: nodeData.isCenter ? 16 : 12,
-      padding: nodeData.isCenter ? "14px 20px" : "10px 14px",
-      minWidth: nodeData.isCenter ? 180 : 150,
-      textAlign: "center",
-      boxShadow: isSelected ? `0 0 0 4px ${colors.stroke}44` : "0 2px 8px rgba(0,0,0,0.08)",
-      transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-      cursor: "pointer",
-      color: isSelected && !nodeData.isCenter ? "#fff" : colors.text,
-    }}>
-      <Handle type="target" position={Position.Top} style={{ visibility: "hidden" }} />
-      <Handle type="source" position={Position.Bottom} style={{ visibility: "hidden" }} />
-
-      <div style={{ fontSize: nodeData.isCenter ? 18 : 13, fontWeight: 700, lineHeight: 1.2 }}>
-        {nodeData.label}
-      </div>
-
-      {nodeData.sub && (
-        <div style={{
-          fontSize: 10,
-          marginTop: 4,
-          opacity: 0.8,
-          color: isSelected && !nodeData.isCenter ? "#eee" : "inherit",
-        }}>
-          {nodeData.sub}
-        </div>
-      )}
-    </div>
-  );
-}
-
-const nodeTypes = { companyNode: CompanyNode };
-
-// ─── Main Component ───────────────────────────────────────
 export default function EcosystemSection({ companies }: { companies: Company[] }) {
-  console.log("Companies eco:", companies);
+  const [activeId, setActiveId] = useState<string | null>(companies[0]?.id ?? null);
+  const [viewMode, setViewMode] = useState<"flow" | "list">("flow");
 
-const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
-  const [selected, setSelected] = useState<Company | null>(null);
+  const activeCompany = companies.find((c) => c.id === activeId) ?? null;
 
-  useEffect(() => {
-    const radius = 280;
-    const centerX = 0;
-    const centerY = 0;
-
-    const centerNode: Node = {
-      id: "center",
-      type: "companyNode",
-      position: { x: centerX, y: centerY },
-      data: { label: "PCH", sub: "Petronick Corporate Holdings", isCenter: true } as NodeData,
-      draggable: true,
-    };
-
-    const companyNodes: Node[] = companies.map((company, index) => {
-      const angle = (index / companies.length) * 2 * Math.PI;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
-      const colorObj = PALETTE[index % PALETTE.length];
-
-      return {
-        id: company.id,
-        type: "companyNode",
-        position: { x, y },
-        data: {
-          label: company.name,
-          sub: company.revenueStage || "Business Unit",
-          color: colorObj.key,
-          company: company,
-        } as NodeData,
-        draggable: true,
-      };
-    });
-
-    const newEdges: Edge[] = companies.map((company, index) => {
-      const colorObj = PALETTE[index % PALETTE.length];
-      return {
-        id: `edge-${company.id}`,
-        source: "center",
-        target: company.id,
-        type: "smoothstep",
-        animated: true,
-        style: { stroke: colorObj.stroke, strokeWidth: 2, opacity: 0.4 },
-      };
-    });
-
-    setNodes([centerNode, ...companyNodes]);
-    setEdges(newEdges);
-  }, [companies, setNodes, setEdges]);
-
-  const handleNodeClick = (_: any, node: Node) => {
-    if (node.id === "center") {
-      setSelected(null);
-    } else {
-      setSelected(node.data.company as Company);
-    }
-  };
+  if (companies.length === 0) return null;
 
   return (
-    <section className="py-10">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Ecosystem</h2>
-        <p className="text-gray-500 text-sm">
-          Explore the diverse range of business units and companies that make up our ecosystem. Each unit contributes to our mission of innovation and excellence.
-        </p>
-      </div>
+    <section className="py-16">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+        <div>
+          <p className="text-xs font-semibold tracking-widest text-indigo-400 uppercase mb-3">
+            About the Holding Company
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-snug">
+            A Connected Business Ecosystem
+          </h2>
+          <p className="text-slate-400 text-sm leading-relaxed max-w-xl">
+            Petronick Corporate Holdings LLC brings together multiple companies
+            that work independently while supporting one another through shared
+            expertise, marketing, logistics, fulfillment, technology, and growth
+            strategies.
+          </p>
+        </div>
 
-      <div className="w-full h-[600px] rounded-3xl border border-gray-200 bg-white overflow-hidden shadow-sm mb-10">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeClick={handleNodeClick}
-          nodeTypes={nodeTypes}
-          fitView
-          proOptions={{ hideAttribution: true }}
-        >
-          <Background color="#f1f5f9" gap={25} />
-          <Controls />
-          <MiniMap zoomable pannable />
-        </ReactFlow>
-      </div>
-
-      <div className="space-y-8">
-        {selected && (
-          <div
-            className="max-w-2xl mx-auto p-6 rounded-2xl border-2 bg-white animate-in fade-in zoom-in duration-300"
-            style={{
-              borderColor:
-                PALETTE[companies.findIndex(c => c.id === selected.id) % PALETTE.length]?.stroke,
-            }}
+        {/* Toggle */}
+        <div className="inline-flex bg-slate-900 border border-slate-800 rounded-full p-1 self-start lg:self-auto">
+          <button
+            onClick={() => setViewMode("flow")}
+            className={`flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full transition-all ${
+              viewMode === "flow"
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "text-slate-400 hover:text-white"
+            }`}
           >
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-white font-bold">
-                  {selected.name.slice(0, 2).toUpperCase()}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">{selected.name}</h3>
-                  <span className="text-xs text-blue-600 font-medium">
-                    {selected.revenueStage}
-                  </span>
-                </div>
-              </div>
-             <button
-  onClick={() => setSelected(null)}
-  className="p-1 hover:bg-gray-100 rounded-full"
-  aria-label="Close company details"
->
-  <X size={20} />
-</button>
-            </div>
-            <p className="text-gray-600 text-sm leading-relaxed mb-4">
-              {selected.description}
-            </p>
-            {selected.website && (
-              <a
-                href={selected.website}
-                target="_blank"
-                className="text-blue-600 text-sm font-semibold inline-flex items-center gap-1"
+            <Waypoints size={13} />
+            Interactive Node Web
+          </button>
+          <button
+            onClick={() => setViewMode("list")}
+            className={`flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full transition-all ${
+              viewMode === "list"
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <LayoutGrid size={13} />
+            Structured Directory List
+          </button>
+        </div>
+      </div>
+
+      {/* Main grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Left: Flow or List */}
+        {viewMode === "flow" ? (
+          <div className="lg:col-span-7 xl:col-span-8">
+            <EcosystemFlow
+              companies={companies}
+              activeNodeId={activeId}
+              onSelectNode={setActiveId}
+            />
+          </div>
+        ) : (
+          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 h-[520px] overflow-y-auto">
+            {companies.map((company) => (
+              <button
+                key={company.id}
+                onClick={() => setActiveId(company.id)}
+                className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
+                  company.id === activeId
+                    ? "bg-slate-800 border-indigo-500"
+                    : "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                }`}
               >
-                Visit Website <ExternalLink size={14} />
-              </a>
-            )}
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">{company.name}</p>
+                  <p className="text-xs text-slate-400 truncate mt-0.5">{company.description}</p>
+                </div>
+                {company.revenueStage && (
+                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 flex-shrink-0">
+                    {company.revenueStage}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
         )}
 
-  
+        {/* Right: Detail panel */}
+        <div className="lg:col-span-5 xl:col-span-4 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 sm:p-7 flex flex-col">
+          {activeCompany ? (
+            <>
+              <p className="text-[10px] font-semibold tracking-widest text-indigo-400 uppercase mb-4">
+                Ecosystem Integration Detail
+              </p>
+
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                  {activeCompany.name.charAt(0)}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-lg font-bold text-white truncate">{activeCompany.name}</h3>
+                  <p className="text-xs text-slate-400">
+                    {activeCompany.revenueStage || "Business Unit"}
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-[10px] font-semibold tracking-widest text-slate-500 uppercase mb-2">
+                Inter-Company Business Synergy
+              </p>
+              <p className="text-sm text-slate-300 leading-relaxed flex-1">
+                {activeCompany.description}
+              </p>
+
+              <div className="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 font-medium">
+                  Part of Petronick Corporate Holdings
+                </span>
+                {activeCompany.website && (
+                  <a
+                    href={activeCompany.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                  >
+                    Visit <ExternalLink size={11} />
+                  </a>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-slate-500 text-sm">
+              Select a company to view details
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="mt-12 text-center">
+      <div className="mt-8 text-center">
         <Link
           href="/companies"
-          className="px-6 py-3 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
+          className="inline-flex items-center gap-1.5 px-6 py-3 bg-white text-slate-900 rounded-full text-sm font-semibold hover:bg-slate-100 transition-all"
         >
           Explore All Units
         </Link>
