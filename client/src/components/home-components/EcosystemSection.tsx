@@ -25,7 +25,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
   if (companies.length === 0) return null;
 
   return (
-    <section className="py-16">
+    <section className="max-w-7xl py-16">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
         <div>
