@@ -44,8 +44,8 @@ export default function Footer() {
             <Image
                src="/logo1.PNG"
               alt="Petronick Logo"
-              width={18}
-              height={18}
+              width={50}
+              height={50}
             />
 
             </Link>
