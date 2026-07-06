@@ -86,7 +86,7 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
       {companies.map((company, index) => (
         <div
           key={company.id}
-          className="border-4 border-yellow-400"
+          className=""
         >
           <CompanyCard
             company={company}
