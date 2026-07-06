@@ -79,30 +79,34 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
 </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
- <section className="bg-white border-amber-300 py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+<section className="bg-white border-4 border-red-500 py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-4 border-blue-500">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
- {companies.map((company, index) => (
-  <CompanyCard
-    key={company.id}
-    company={company}
-    index={index}
-  />
-))}
-          </div>
-
-          <div className="mt-6 text-center sm:hidden">
-            <Link
-              href="/companies"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
-            >
-              View all companies <ArrowRight size={13} />
-            </Link>
-          </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 border-4 border-green-500">
+      {companies.map((company, index) => (
+        <div
+          key={company.id}
+          className="border-4 border-yellow-400"
+        >
+          <CompanyCard
+            company={company}
+            index={index}
+          />
         </div>
-      </section>
+      ))}
+    </div>
+
+    <div className="mt-6 text-center sm:hidden border-4 border-pink-500">
+      <Link
+        href="/companies"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
+      >
+        View all companies <ArrowRight size={13} />
+      </Link>
+    </div>
+
+  </div>
+</section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
  <section className="bg-gray-900 max-w-7xl mx-auto text-white py-16 rounded-full border-t-4">
