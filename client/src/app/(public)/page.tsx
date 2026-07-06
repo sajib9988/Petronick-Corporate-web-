@@ -79,10 +79,10 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
 </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
-<section className="bg-white border-4 border-red-500 py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-4 border-blue-500">
+<section className="bg-white   py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  ">
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 border-4 border-green-500">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {companies.map((company, index) => (
         <div
           key={company.id}
