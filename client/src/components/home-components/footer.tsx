@@ -42,7 +42,7 @@ export default function Footer() {
               <span className="font-bold text-white text-base">Petronick</span> */}
             
             <Image
-              src="/logo.png"
+               src="/logo1.PNG"
               alt="Petronick Logo"
               width={18}
               height={18}
