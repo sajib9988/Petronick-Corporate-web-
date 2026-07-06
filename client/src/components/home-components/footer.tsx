@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = [
   {
@@ -35,10 +36,18 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center">
+              {/* <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center">
                 <span className="text-gray-900 text-xs font-bold">P</span>
               </div>
-              <span className="font-bold text-white text-base">Petronick</span>
+              <span className="font-bold text-white text-base">Petronick</span> */}
+            
+            <Image
+              src="/logo.png"
+              alt="Petronick Logo"
+              width={28}
+              height={28}
+            />
+
             </Link>
             <p className="text-gray-400 text-xs leading-relaxed mb-5">
               A vertically integrated holding company operating multiple
