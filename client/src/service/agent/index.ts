@@ -101,3 +101,18 @@ export const deleteAgent = async (id: string) => {
     return { success: false, message: "Failed to delete agent" };
   }
 };
+
+export const exportAgentsCSV = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/agents/export/csv`, {
+      headers: await getAuthHeaders(),
+      cache: "no-store",
+    });
+    if (!res.ok) return { success: false, message: "Failed to export agents" };
+    const csv = await res.text();
+    return { success: true, csv };
+  } catch (err) {
+    console.error("Error exporting agents:", err);
+    return { success: false, message: "Failed to export agents" };
+  }
+};
