@@ -32,7 +32,12 @@ export default function UserPage() {
     setIsLoading(true);
     try {
       const result = await getAllUsers({ limit: 100 });
-      setUsers(result?.data ?? []);
+      const userList = Array.isArray(result?.data?.data)
+        ? result.data.data
+        : Array.isArray(result?.data)
+          ? result.data
+          : [];
+      setUsers(userList);
     } catch {
       setUsers([]);
     } finally {
