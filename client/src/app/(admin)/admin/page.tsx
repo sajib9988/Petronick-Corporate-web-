@@ -47,7 +47,7 @@ export default async function AdminDashboardPage() {
       icon: <Mail size={18} className="text-purple-600" />,
       iconBg: "bg-purple-50",
       iconColor: "text-purple-600",
-      href: "/admin/contacts",
+      href: "/admin/contact",
       trend: "Total messages",
       delay: 0.2,
     },
@@ -162,7 +162,7 @@ export default async function AdminDashboardPage() {
               Recent Contact Messages
             </h3>
             <Link
-              href="/admin/contacts"
+              href="/admin/contact"
               className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
             >
               View all →
