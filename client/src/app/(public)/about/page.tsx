@@ -31,7 +31,7 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero */}
+      {/* Hero - Full Width */}
       <section className="bg-gray-900 text-white py-20 px-4 relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-5"
@@ -56,57 +56,59 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
-            Our Mission
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 leading-snug">
-            Building and Scaling Revenue-Driven Businesses
-          </h2>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
-            Petronick Corporate Holdings LLC owns and operates multiple business
-            units specifically designed to work together — accelerating market
-            entry, scaling operations, and maximizing profitability across every
-            subsidiary.
-          </p>
-          <p className="text-gray-600 text-sm leading-relaxed mb-6">
-            Our ecosystem model means every company benefits from shared
-            infrastructure, procurement leverage, digital marketing capability,
-            and fulfillment infrastructure — giving each unit a competitive
-            advantage from day one.
-          </p>
-          <Link
-            href="/companies"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 border-b-2 border-gray-900 pb-0.5 hover:gap-3 transition-all"
-          >
-            Explore Our Companies <ArrowRight size={14} />
-          </Link>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-4">
-          {[
-            { value: "7+", label: "Active Business Units", color: "bg-gray-900 text-white" },
-            { value: "100%", label: "Revenue Ready", color: "bg-emerald-50 text-gray-900" },
-            { value: "Multi", label: "Market Reach", color: "bg-blue-50 text-gray-900" },
-            { value: "1", label: "Integrated Ecosystem", color: "bg-amber-50 text-gray-900" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className={`rounded-xl p-6 flex flex-col justify-between min-h-[120px] ${stat.color}`}
+      {/* Mission & Stats */}
+      <section className="max-w-7xl mx-auto my-8 rounded-3xl border border-gray-200 bg-white overflow-hidden">
+        <div className="px-6 py-16 sm:px-8 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-emerald-600 uppercase mb-3">
+              Our Mission
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 leading-snug">
+              Building and Scaling Revenue-Driven Businesses
+            </h2>
+            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+              Petronick Corporate Holdings LLC owns and operates multiple business
+              units specifically designed to work together — accelerating market
+              entry, scaling operations, and maximizing profitability across every
+              subsidiary.
+            </p>
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              Our ecosystem model means every company benefits from shared
+              infrastructure, procurement leverage, digital marketing capability,
+              and fulfillment infrastructure — giving each unit a competitive
+              advantage from day one.
+            </p>
+            <Link
+              href="/companies"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 border-b-2 border-gray-900 pb-0.5 hover:gap-3 transition-all"
             >
-              <span className="text-3xl font-bold">{stat.value}</span>
-              <span className="text-xs font-medium opacity-70 mt-2">{stat.label}</span>
-            </div>
-          ))}
+              Explore Our Companies <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { value: "7+", label: "Active Business Units", color: "bg-gray-900 text-white" },
+              { value: "100%", label: "Revenue Ready", color: "bg-emerald-50 text-gray-900" },
+              { value: "Multi", label: "Market Reach", color: "bg-blue-50 text-gray-900" },
+              { value: "1", label: "Integrated Ecosystem", color: "bg-amber-50 text-gray-900" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className={`rounded-xl p-6 flex flex-col justify-between min-h-[120px] ${stat.color}`}
+              >
+                <span className="text-3xl font-bold">{stat.value}</span>
+                <span className="text-xs font-medium opacity-70 mt-2">{stat.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Strategic Pillars */}
-      <section className="bg-gray-50 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
+      <section className="max-w-7xl mx-auto my-8 rounded-3xl border border-gray-200 bg-gray-50 overflow-hidden">
+        <div className="px-6 py-16 sm:px-8 lg:px-10">
           <div className="text-center mb-10">
             <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
               What We Bring
@@ -129,27 +131,29 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-3">
-          Ready to Partner With Us?
-        </h2>
-        <p className="text-gray-500 text-sm mb-7 max-w-lg mx-auto">
-          Qualified Promotion Agents can represent one or multiple Petronick
-          business units. Join our growing ecosystem today.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/promotion-agent"
-            className="inline-flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Apply as Promotion Agent <ArrowRight size={14} />
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Contact Us
-          </Link>
+      <section className="max-w-7xl mx-auto my-8 rounded-3xl border border-gray-200 bg-white overflow-hidden">
+        <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+            Ready to Partner With Us?
+          </h2>
+          <p className="text-gray-500 text-sm mb-7 max-w-lg mx-auto">
+            Qualified Promotion Agents can represent one or multiple Petronick
+            business units. Join our growing ecosystem today.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/promotion-agent"
+              className="inline-flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Apply as Promotion Agent <ArrowRight size={14} />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
       </section>
     </main>
