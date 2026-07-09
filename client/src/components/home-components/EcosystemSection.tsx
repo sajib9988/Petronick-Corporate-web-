@@ -1,9 +1,16 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import Link from "next/link";
 import { ExternalLink, X, LayoutGrid, Waypoints } from "lucide-react";
-import EcosystemFlow from "./EcosystemFlow";
+
+
+const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
+  ),
+})
 
 type Company = {
   id: string;

@@ -37,20 +37,19 @@ const ecosystemFlow = [
 export default async function HomePage() {
 
   
+const [pageRes, allCompanies] = await Promise.all([
+  getPageBySlug("home-page"),
+  getAllCompanies({ isVisible: true }),
+]);
 
-const pageRes = await getPageBySlug("home-page"); // ✅ direct call
-  const homePage = pageRes.data;
-  const heroSection = homePage?.sections?.find(
-    (s: any) => s.sectionType === "HERO"
-  );
+const homePage = pageRes.data;  
 
-// console.log('hero section:', heroSection);
+const heroSection = homePage?.sections?.find(
+  (s: any) => s.sectionType === "HERO"
+);
 
+const companies: Company[] = allCompanies.data || [];
 
-
-   const  allCompanies = await getAllCompanies({ isVisible: true });
-   const  companies: Company[] = allCompanies.data || [];
-   console.log('companies from public page:', companies);  
 
 
 

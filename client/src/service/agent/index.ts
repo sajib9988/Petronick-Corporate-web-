@@ -31,6 +31,7 @@ export const createAgent = async (data: {
   location: string;
   experience: string;
   focus: string;
+  focusType: "B2B" | "B2C" | "BOTH";
   message: string;
   businessUnits: string[];
 }) => {

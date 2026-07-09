@@ -16,6 +16,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { createAgent } from "@/service/agent";
 
 // ─── Schema ─────────────────────────────
 const agentSchema = z.object({
@@ -80,24 +81,17 @@ export default function PromotionAgentForm() {
     setError("");
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1"}/agents`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            fullName: values.fullName,
-            email: values.email,
-            phone: values.phone,
-            location: values.location,
-            experience: values.experience,
-            focus: values.focus,
-            focusType: values.focusType,
-            message: values.message,
-            businessUnits: values.businessUnits,
-          }),
-        }
-      );
+      const res = await createAgent({
+        fullName: values.fullName,
+        email: values.email,
+        phone: values.phone,
+        location: values.location,
+        experience: values.experience,
+        focus: values.focus,
+        focusType: values.focusType,
+        message: values.message,
+        businessUnits: values.businessUnits,
+      });
 
       const result = await res.json();
 

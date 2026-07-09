@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -38,12 +38,15 @@ export default function HeroSection({ image, content }: HeroSectionProps) {
   return (
     <section className="relative w-full min-h-[80vh] flex items-center justify-center bg-gray-950">
       {/* Background */}
-      {image && (
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${image})` }}
-        />
-      )}
+        {image && (
+    <Image
+      src={image}
+      alt="Hero Background"
+      fill
+      priority
+      className="object-cover"
+    />
+  )}
 
       <div className="absolute inset-0 bg-gray-950/70" />
 

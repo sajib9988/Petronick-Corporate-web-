@@ -21,16 +21,30 @@ function useCountUp(target: number, duration = 1500) {
   const startTime = useRef<number | null>(null);
 
   useEffect(() => {
+    startTime.current = null;
+
+    let frameId: number;
+
     const animate = (timestamp: number) => {
       if (!startTime.current) startTime.current = timestamp;
+
       const progress = Math.min(
         (timestamp - startTime.current) / duration,
-        1,
+        1
       );
-      setCount(Math.floor(progress * target));
-      if (progress < 1) requestAnimationFrame(animate);
+
+      const next = Math.floor(progress * target);
+
+      setCount((prev) => (prev !== next ? next : prev));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate);
+      }
     };
-    requestAnimationFrame(animate);
+
+    frameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(frameId);
   }, [target, duration]);
 
   return count;
