@@ -27,7 +27,7 @@ export default function PromotionAgentPage() {
     <main className="min-h-screen bg-gray-50">
       {/* Hero */}
       <section className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Partnership Opportunity
           </p>

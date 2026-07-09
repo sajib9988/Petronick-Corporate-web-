@@ -186,20 +186,23 @@ export default function EcosystemFlow({ companies, activeNodeId, onSelectNode }:
     <div className="w-full h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 relative overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
 
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        fitView
-        fitViewOptions={{ padding: 0.15 }}
-        zoomOnScroll={false}
-        zoomOnPinch={false}
-        zoomOnDoubleClick={false}
-        panOnScroll={false}
-        panOnDrag={false}
-        preventScrolling={true}
-        className="relative z-10"
-      />
+   // After
+<ReactFlow
+  nodes={nodes}
+  edges={edges}
+  nodeTypes={nodeTypes}
+  fitView
+  fitViewOptions={{ padding: 0.15 }}
+  zoomOnScroll={false}
+  zoomOnPinch={false}
+  zoomOnDoubleClick={false}
+  panOnScroll={false}
+  panOnDrag={false}
+  preventScrolling={false}
+  nodesDraggable={false}
+  elementsSelectable={false}
+  className="relative z-10"
+/>
 
       <div className="absolute bottom-4 left-4 z-20 bg-slate-900/90 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-slate-800 text-[10px] space-y-1.5 shadow-lg">
         <div className="font-semibold text-slate-300 uppercase tracking-wider">Ecosystem Diagram</div>

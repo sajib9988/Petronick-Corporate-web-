@@ -41,7 +41,7 @@ export default function AboutPage() {
             backgroundSize: "60px 60px",
           }}
         />
-        <div className="relative max-w-4xl mx-auto text-center">
+        <div className="relative max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-medium px-3 py-1 rounded-full mb-5 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             Petronick Corporate Holdings LLC
@@ -57,7 +57,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="max-w-5xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
             Our Mission
@@ -129,7 +129,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-5xl mx-auto px-4 py-16 text-center">
+      <section className="max-w-7xl mx-auto px-4 py-16 text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-3">
           Ready to Partner With Us?
         </h2>

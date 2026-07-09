@@ -6,7 +6,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-gray-50">
       {/* Hero */}
       <section className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Get In Touch
           </p>
@@ -19,7 +19,7 @@ export default function ContactPage() {
       </section>
 
       {/* Content */}
-      <section className="max-w-5xl mx-auto px-4 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <section className="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Info Cards */}
         <div className="space-y-5">
           {[
