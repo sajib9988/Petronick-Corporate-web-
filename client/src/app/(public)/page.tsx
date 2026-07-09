@@ -78,6 +78,8 @@ const pageRes = await getPageBySlug("home-page"); // ✅ direct call
   </div>
 </section>
 
+
+
       {/* ── Section 4: Companies Preview Grid ── */}
 <section className="bg-white   py-16">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  ">

@@ -26,9 +26,9 @@ const agentSchema = z.object({
   experience: z.string().min(1, "Experience is required"),
   focus: z.string().min(1, "Focus area is required"),
  focusType: z
-  .enum(["B2B", "B2C", "Both"])
+  .enum(["B2B", "B2C", "BOTH"])
   .refine(Boolean, {
-    message: "Please select B2B, B2C, or Both",
+    message: "Please select B2B, B2C, or BOTH",
   }),
   message: z.string().min(10, "Please write at least 10 characters"),
   businessUnits: z.array(z.string()).min(1, "Select at least one business unit"),
@@ -91,7 +91,8 @@ export default function PromotionAgentForm() {
             phone: values.phone,
             location: values.location,
             experience: values.experience,
-            focus: `${values.focus} (${values.focusType})`,
+            focus: values.focus,
+            focusType: values.focusType,
             message: values.message,
             businessUnits: values.businessUnits,
           }),
@@ -260,7 +261,7 @@ export default function PromotionAgentForm() {
                 <FormLabel>B2B or B2C Focus *</FormLabel>
                 <FormControl>
                   <div className="flex gap-2 mt-0.5">
-                    {(["B2B", "B2C", "Both"] as const).map((type) => (
+                    {(["B2B", "B2C", "BOTH"] as const).map((type) => (
                       <button
                         key={type}
                         type="button"
