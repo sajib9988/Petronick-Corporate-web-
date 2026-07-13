@@ -71,9 +71,11 @@ const companies: Company[] = allCompanies.data || [];
 
 
 {/* ── Section 3: Our Ecosystem ── */}
-<section className=" py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-slate-950 rounded-2xl overflow-hidden">
-    <EcosystemSection companies={companies} />
+<section className="py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
+      <EcosystemSection companies={companies} />
+    </div>
   </div>
 </section>
 
