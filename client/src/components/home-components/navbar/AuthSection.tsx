@@ -77,7 +77,7 @@ export const AuthSection = ({ isMobile = false }) => {
 
   const isAdmin = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
 
-  // Reusable "carved into stone" button style (outline/ghost buttons)
+  // Reusable "carved into stone" button style
   const carvedOutline =
     "border border-amber-600/30 bg-stone-800/40 text-amber-300 hover:text-amber-200 hover:bg-stone-700/60 transition-all";
   const carvedOutlineStyle = {
@@ -89,7 +89,7 @@ export const AuthSection = ({ isMobile = false }) => {
   if (loading) {
     return (
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-full bg-stone-700/50 animate-pulse" />
+        <div className="w-9 h-9 rounded-full bg-stone-700/50 animate-pulse" />
         {!isMobile && <div className="h-4 w-20 bg-stone-700/50 animate-pulse rounded-md" />}
       </div>
     );
@@ -117,7 +117,7 @@ export const AuthSection = ({ isMobile = false }) => {
           <div className="flex items-center gap-2">
             <UserAvatar name={user.name} />
             <span
-              className="text-stone-300 text-sm font-medium"
+              className="text-stone-300 text-[16px] font-semibold"   // ← Matched with navbar
               style={{ textShadow: "0 1px 1px rgba(0,0,0,0.6)" }}
             >
               {user.name}
@@ -132,7 +132,7 @@ export const AuthSection = ({ isMobile = false }) => {
             size="sm"
             variant="outline"
             className={cn(
-              isMobile ? "w-full" : "h-9 text-xs px-3",
+              isMobile ? "w-full" : "h-10 text-[15px] px-3 font-semibold",
               carvedOutline
             )}
             style={carvedOutlineStyle}
@@ -150,8 +150,8 @@ export const AuthSection = ({ isMobile = false }) => {
           variant="ghost"
           className={
             isMobile
-              ? "w-full text-red-400 hover:text-red-300 hover:bg-red-950/30"
-              : "h-9 text-stone-400 font-medium hover:text-red-400 hover:bg-red-950/30 px-3 text-xs transition-colors"
+              ? "w-full text-red-400 hover:text-red-300 hover:bg-red-950/30 text-sm font-medium"
+              : "h-10 text-[15px] font-semibold text-stone-400 hover:text-red-400 hover:bg-red-950/30 px-3 transition-colors"
           }
           style={{ textShadow: "0 1px 1px rgba(0,0,0,0.6)" }}
           onClick={handleLogout}
@@ -164,8 +164,6 @@ export const AuthSection = ({ isMobile = false }) => {
     );
   }
 
-
-  
   // Not logged in
   return (
     <div className={`flex ${isMobile ? "flex-col gap-2" : "items-center gap-3"}`}>
@@ -173,7 +171,10 @@ export const AuthSection = ({ isMobile = false }) => {
         asChild
         size="sm"
         variant="outline"
-        className={cn(isMobile ? "w-full" : "h-9 text-xs px-4", carvedOutline)}
+        className={cn(
+          isMobile ? "w-full" : "h-10 text-[15px] px-4 font-semibold",
+          carvedOutline
+        )}
         style={carvedOutlineStyle}
       >
         <Link href="/login">Log in</Link>
@@ -182,11 +183,12 @@ export const AuthSection = ({ isMobile = false }) => {
       <Button
         asChild
         size="sm"
-        className={
+        className={cn(
           isMobile
-            ? "w-full bg-gradient-to-b from-amber-400 to-amber-700 text-stone-900 border-none font-semibold"
-            : "h-9 bg-gradient-to-b from-amber-400 to-amber-700 text-stone-900 border-none text-xs px-4 font-semibold"
-        }
+            ? "w-full text-sm font-semibold"
+            : "h-10 text-[15px] px-4 font-semibold",
+          "bg-gradient-to-b from-amber-400 to-amber-700 text-stone-900 border-none"
+        )}
         style={{
           boxShadow:
             "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 2px rgba(0,0,0,0.3), 0 2px 5px rgba(0,0,0,0.4)",

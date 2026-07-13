@@ -47,13 +47,13 @@ export default function Navbar() {
       </Link>
 
       {/* Desktop Nav - Carved text effect */}
-      <nav className="hidden lg:flex items-center gap-10">
+      <nav className="hidden lg:flex items-center gap-12">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
             className={cn(
-              "relative h-20 flex items-center text-[15px] font-semibold tracking-wide transition-all duration-200",
+              "relative h-20 flex items-center text-[16px] font-semibold tracking-wide transition-all duration-200",
               isActive(link.href)
                 ? "text-amber-400"
                 : "text-stone-300 hover:text-amber-300"

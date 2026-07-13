@@ -132,13 +132,13 @@ const handleSubmit = async (values: AgentFormValues) => {
             you within 5 business days.
           </p>
         </div>
-        <Button
+        {/* <Button
           variant="outline"
           size="sm"
           onClick={() => setIsSuccess(false)}
         >
           Submit another application
-        </Button>
+        </Button> */}
       </div>
     );
   }
