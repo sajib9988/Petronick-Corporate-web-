@@ -76,38 +76,45 @@ export default function PromotionAgentForm() {
   };
 
   // ─── Submit ───────────────────────────
-  const handleSubmit = async (values: AgentFormValues) => {
-    setIsLoading(true);
-    setError("");
+// ─── Submit ───────────────────────────
+const handleSubmit = async (values: AgentFormValues) => {
+  setIsLoading(true);
+  setError("");
 
-    try {
-      const res = await createAgent({
-        fullName: values.fullName,
-        email: values.email,
-        phone: values.phone,
-        location: values.location,
-        experience: values.experience,
-        focus: values.focus,
-        focusType: values.focusType,
-        message: values.message,
-        businessUnits: values.businessUnits,
-      });
+  try {
+    const result = await createAgent({
+      fullName: values.fullName,
+      email: values.email,
+      phone: values.phone,
+      location: values.location,
+      experience: values.experience,
+      focus: values.focus,
+      focusType: values.focusType,
+      message: values.message,
+      businessUnits: values.businessUnits,
+    });
 
-      const result = await res.json();
+    console.log("Agent API Response:", result);
 
-      if (!result?.success) {
-        setError(result?.message || "Submission failed. Please try again.");
-        return;
-      }
-
-      setIsSuccess(true);
-      form.reset();
-    } catch {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (!result?.success) {
+      setError(result?.message || "Submission failed. Please try again.");
+      return;
     }
-  };
+
+    setIsSuccess(true);
+    form.reset();
+  } catch (error) {
+    console.error("Submit error:", error);
+
+    setError(
+      error instanceof Error
+        ? error.message
+        : "Something went wrong. Please try again."
+    );
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   // ─── Success UI ───────────────────────
   if (isSuccess) {

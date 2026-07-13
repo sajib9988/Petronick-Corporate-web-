@@ -11,10 +11,11 @@ const router = Router();
 router.post("/", agentController.createAgent);
 
 // Admin only
-router.get("/", authorize(Role.ADMIN), agentController.getAllAgents);
-router.get("/export/csv", authorize(Role.ADMIN), agentController.exportCSV);
-router.get("/:id", authorize(Role.ADMIN), agentController.getAgentById);
-router.patch("/:id/status", authorize(Role.ADMIN), agentController.updateAgentStatus);
-router.delete("/:id", authorize(Role.ADMIN), agentController.deleteAgent);
+router.get("/", authorize(Role.ADMIN, Role.SUPER_ADMIN), agentController.getAllAgents);
+router.get("/export/csv", authorize(Role.ADMIN, Role.SUPER_ADMIN), agentController.exportCSV);
+router.get("/:id", authorize(Role.ADMIN, Role.SUPER_ADMIN), agentController.getAgentById);
+
+router.patch("/:id/status", authorize(Role.ADMIN, Role.SUPER_ADMIN), agentController.updateAgentStatus);
+router.delete("/:id", authorize(Role.ADMIN, Role.SUPER_ADMIN), agentController.deleteAgent);
 
 export const agentRoutes = router;
