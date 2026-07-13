@@ -48,12 +48,14 @@ const COLOR_POOL = [
 
 function CenterNode() {
   return (
-    <div className="relative p-5 rounded-2xl bg-slate-950 border-2 border-indigo-500/60 shadow-xl shadow-indigo-500/10 text-center text-white w-60 transition-transform hover:scale-105 duration-300">
+   <div className="relative p-6 rounded-2xl bg-slate-950 border-2 border-indigo-500/60 shadow-xl shadow-indigo-500/10 text-center text-white w-64 transition-transform duration-300 hover:scale-[1.03]">
       <div className="mx-auto w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white flex items-center justify-center mb-2.5 shadow-md">
         <Building2 className="w-5 h-5" />
       </div>
-      <div className="font-bold text-sm tracking-wide">PETRONICK HOLDINGS</div>
-      <div className="text-[9px] text-indigo-300 font-semibold uppercase tracking-widest mt-0.5">
+<div className="text-lg font-bold tracking-tight">
+  PETRONICK HOLDINGS
+</div>
+     <div className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-indigo-300">
         Parent Core
       </div>
 
@@ -72,20 +74,22 @@ function SubsidiaryNode({ data }: any) {
   return (
     <div
       onClick={() => data.onClick(data.id)}
-      className={`p-3.5 rounded-xl border cursor-pointer transition-all duration-300 flex items-center gap-3 w-56 bg-slate-900 ${
+      className={`p-4 rounded-xl border cursor-pointer transition-all duration-300 flex items-center gap-3 w-64 bg-slate-900 ${
         isSelected
-          ? "border-indigo-400 shadow-lg shadow-indigo-500/10 scale-105"
+          ? "border-indigo-400 ring-2 ring-indigo-500/20 shadow-lg shadow-indigo-500/10 scale-[1.03]"
           : "border-slate-800 hover:border-slate-700 hover:bg-slate-800/80"
       }`}
     >
-      <div className={`p-2 rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0`}>
+      <div className={`p-3 rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0`}>
         <IconComponent className="w-4 h-4" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="font-semibold text-xs text-white truncate">{data.name}</div>
-        <div className="text-[9px] text-slate-400 font-medium truncate mt-0.5">
-          {data.sector}
-        </div>
+        <div className="font-semibold text-xs text-white truncate">
+  {data.name}
+</div>
+       <div className="mt-1 text-xs text-slate-400 truncate">
+  {data.sector}
+</div>
       </div>
 
       <Handle type="target" position={Position.Left} className="opacity-0" id="il" />
@@ -109,15 +113,15 @@ export default function EcosystemFlow({ companies, activeNodeId, onSelectNode }:
     const centerNode: Node = {
       id: "center",
       type: "center",
-      position: { x: 260, y: 200 },
+      position: { x: 300, y: 220 },
       data: {},
       draggable: false,
     };
 
-    const radiusX = 330;
-    const radiusY = 200;
-    const centerX = 260;
-    const centerY = 200;
+    const radiusX = 360;
+    const radiusY = 220;
+    const centerX = 300;
+    const centerY = 220;
 
     const subNodes: Node[] = companies.map((company, index) => {
       const angle = (index * 2 * Math.PI) / companies.length - Math.PI / 2;
@@ -192,7 +196,7 @@ export default function EcosystemFlow({ companies, activeNodeId, onSelectNode }:
   edges={edges}
   nodeTypes={nodeTypes}
   fitView
-  fitViewOptions={{ padding: 0.15 }}
+  fitViewOptions={{ padding: 0.25 }}
   zoomOnScroll={false}
   zoomOnPinch={false}
   zoomOnDoubleClick={false}
@@ -204,8 +208,8 @@ export default function EcosystemFlow({ companies, activeNodeId, onSelectNode }:
   className="relative z-10"
 />
 
-      <div className="absolute bottom-4 left-4 z-20 bg-slate-900/90 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-slate-800 text-[10px] space-y-1.5 shadow-lg">
-        <div className="font-semibold text-slate-300 uppercase tracking-wider">Ecosystem Diagram</div>
+      <div className="absolute bottom-4 left-4 z-20 bg-slate-900/90 backdrop-blur-md px-4 py-3 rounded-xl border border-slate-800 text-xs space-y-2 shadow-lg">
+        <div className="text-xs font-bold uppercase tracking-[0.15em] text-slate-300">Ecosystem Diagram</div>
         <div className="flex items-center gap-2 text-slate-400">
           <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
           <span>Active Connected Synergy</span>

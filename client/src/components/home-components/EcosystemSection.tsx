@@ -4,13 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { ExternalLink, X, LayoutGrid, Waypoints } from "lucide-react";
 
-
 const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
   ssr: false,
   loading: () => (
     <div className="w-full h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
   ),
-})
+});
 
 type Company = {
   id: string;
@@ -32,17 +31,17 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
   if (companies.length === 0) return null;
 
   return (
-   <section className="py-16 px-8 lg:px-10">
+    <section className="py-16 px-6 lg:px-10">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
         <div>
-          <p className="text-xs font-semibold tracking-widest text-indigo-400 uppercase mb-3">
+          <p className="text-sm font-semibold tracking-[0.2em] text-indigo-400 uppercase mb-3">
             About the Holding Company
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-snug">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight tracking-tight">
             A Connected Business Ecosystem
           </h2>
-          <p className="text-slate-400 text-sm leading-relaxed max-w-xl">
+          <p className="text-slate-400 text-base md:text-lg leading-8 max-w-xl">
             Petronick Corporate Holdings LLC brings together multiple companies
             that work independently while supporting one another through shared
             expertise, marketing, logistics, fulfillment, technology, and growth
@@ -50,35 +49,35 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
           </p>
         </div>
 
-        {/* Toggle */}
+        {/* Toggle Buttons */}
         <div className="inline-flex bg-slate-900 border border-slate-800 rounded-full p-1 self-start lg:self-auto">
           <button
             onClick={() => setViewMode("flow")}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full transition-all ${
+            className={`flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-all ${
               viewMode === "flow"
                 ? "bg-indigo-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
-            <Waypoints size={13} />
+            <Waypoints size={16} />
             Interactive Node Web
           </button>
           <button
             onClick={() => setViewMode("list")}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full transition-all ${
+            className={`flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-all ${
               viewMode === "list"
                 ? "bg-indigo-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
-            <LayoutGrid size={13} />
+            <LayoutGrid size={16} />
             Structured Directory List
           </button>
         </div>
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Flow or List */}
         {viewMode === "flow" ? (
           <div className="lg:col-span-7 xl:col-span-8">
@@ -89,23 +88,27 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             />
           </div>
         ) : (
-          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-3 space-y-2 h-[520px] overflow-y-auto">
+          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[520px] overflow-y-auto">
             {companies.map((company) => (
               <button
                 key={company.id}
                 onClick={() => setActiveId(company.id)}
-                className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
+                className={`w-full text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
                   company.id === activeId
                     ? "bg-slate-800 border-indigo-500"
                     : "bg-slate-900/40 border-slate-800 hover:border-slate-700"
                 }`}
               >
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{company.name}</p>
-                  <p className="text-xs text-slate-400 truncate mt-0.5">{company.description}</p>
+                  <p className="text-base font-semibold text-white truncate">
+                    {company.name}
+                  </p>
+                  <p className="text-sm text-slate-400 leading-6 truncate mt-1">
+                    {company.description}
+                  </p>
                 </div>
                 {company.revenueStage && (
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 flex-shrink-0">
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 flex-shrink-0">
                     {company.revenueStage}
                   </span>
                 )}
@@ -115,10 +118,10 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
         )}
 
         {/* Right: Detail panel */}
-        <div className="lg:col-span-5 xl:col-span-4 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 sm:p-7 flex flex-col">
+        <div className="lg:col-span-5 xl:col-span-4 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 flex flex-col">
           {activeCompany ? (
             <>
-              <p className="text-[10px] font-semibold tracking-widest text-indigo-400 uppercase mb-4">
+              <p className="text-xs font-semibold tracking-[0.2em] text-indigo-400 uppercase mb-4">
                 Ecosystem Integration Detail
               </p>
 
@@ -127,22 +130,24 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                   {activeCompany.name.charAt(0)}
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-lg font-bold text-white truncate">{activeCompany.name}</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="text-2xl font-bold text-white truncate">
+                    {activeCompany.name}
+                  </h3>
+                  <p className="text-sm text-slate-400">
                     {activeCompany.revenueStage || "Business Unit"}
                   </p>
                 </div>
               </div>
 
-              <p className="text-[10px] font-semibold tracking-widest text-slate-500 uppercase mb-2">
+              <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase mb-2">
                 Inter-Company Business Synergy
               </p>
-              <p className="text-sm text-slate-300 leading-relaxed flex-1">
+              <p className="text-base leading-8 text-slate-300 flex-1">
                 {activeCompany.description}
               </p>
 
               <div className="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-slate-500 font-medium">
+                <span className="text-xs text-slate-500 font-medium">
                   Part of Petronick Corporate Holdings
                 </span>
                 {activeCompany.website && (
@@ -150,9 +155,9 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                     href={activeCompany.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
                   >
-                    Visit <ExternalLink size={11} />
+                    Visit <ExternalLink size={14} />
                   </a>
                 )}
               </div>
@@ -165,10 +170,11 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      {/* Bottom CTA */}
+      <div className="mt-12 text-center">
         <Link
           href="/companies"
-          className="inline-flex items-center gap-1.5 px-6 py-3 bg-white text-slate-900 rounded-full text-sm font-semibold hover:bg-slate-100 transition-all"
+          className="inline-flex items-center gap-1.5 px-8 py-3.5 bg-white text-slate-900 rounded-full text-base font-semibold hover:bg-slate-100 transition-all"
         >
           Explore All Units
         </Link>
