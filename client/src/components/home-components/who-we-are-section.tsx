@@ -20,7 +20,7 @@ const stats = [
 
 export default function WhoWeAreSection() {
   return (
-    <section className="bg-white py-20 lg:py-24">
+    <section className="bg-white py-20 lg:py-24 border border-amber-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center overflow-hidden">
         {/* Left: text — fast slide-in from left */}
         <motion.div
