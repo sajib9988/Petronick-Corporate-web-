@@ -13,6 +13,8 @@ interface HeroContent {
   primaryBtnLink?: string;
   secondaryBtn?: string;
   secondaryBtnLink?: string;
+  image?: string | null;
+  backgroundImage?: string | null;
 }
 
 interface HeroSectionProps {
@@ -37,14 +39,15 @@ export default function HeroSection({
 
   const secondaryBtn = content?.secondaryBtn ?? "Learn More";
   const secondaryBtnLink = content?.secondaryBtnLink ?? "/about";
+  const heroImage = image || content?.image || content?.backgroundImage || null;
 
   return (
     <section className="relative flex min-h-[80vh] w-full items-center justify-center bg-gray-950">
       {/* Background */}
-      {image && (
+      {heroImage && (
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${image})` }}
+          style={{ backgroundImage: `url(${heroImage})` }}
         />
       )}
 
