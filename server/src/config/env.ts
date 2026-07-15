@@ -18,10 +18,10 @@ interface EnvConfig {
   GOOGLE_CLIENT_SECRET: string;
   GOOGLE_CALLBACK_URL: string;
 
-  GMAIL_CLIENT_ID: string;
-  GMAIL_CLIENT_SECRET: string;
-  GMAIL_REFRESH_TOKEN: string;
-  GMAIL_USER: string;
+  GMAIL_CLIENT_ID?: string;
+  GMAIL_CLIENT_SECRET?: string;
+  GMAIL_REFRESH_TOKEN?: string;
+  GMAIL_USER?: string;
 
   EMAIL_SENDER: {
     SMTP_USER: string;
@@ -92,10 +92,10 @@ const loadEnvVars = (): EnvConfig => {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET!,
     GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL!,
 
-    GMAIL_CLIENT_ID: process.env.GMAIL_CLIENT_ID!,
-    GMAIL_CLIENT_SECRET: process.env.GMAIL_CLIENT_SECRET!,
-    GMAIL_REFRESH_TOKEN: process.env.GMAIL_REFRESH_TOKEN!,
-    GMAIL_USER: process.env.GMAIL_USER!,
+    GMAIL_CLIENT_ID: process.env.GMAIL_CLIENT_ID,
+GMAIL_CLIENT_SECRET: process.env.GMAIL_CLIENT_SECRET,
+GMAIL_REFRESH_TOKEN: process.env.GMAIL_REFRESH_TOKEN,
+GMAIL_USER: process.env.GMAIL_USER,
 
     EMAIL_SENDER: {
       SMTP_USER: process.env.EMAIL_SENDER_SMTP_USER!,
