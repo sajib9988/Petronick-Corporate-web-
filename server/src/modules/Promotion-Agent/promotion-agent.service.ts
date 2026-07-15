@@ -6,6 +6,10 @@ import { prisma } from "../../database/prisma.js";
 import { getPagination } from "../../shared/utils/pagination.js";
 import { AppError } from "../../shared/errors/app-error.js";
 import { IAgentQuery, ICreatePromotionAgent, IUpdateAgentStatus } from "./promotion-agent.interface.js";
+import { Agent } from "https";
+import { sendEmail } from "../../shared/utils/email.js";
+import { envVars } from "../../config/env.js";
+
 
 const createAgent = async (payload: ICreatePromotionAgent) => {
   const { businessUnits, ...rest } = payload;
@@ -20,35 +24,35 @@ const createAgent = async (payload: ICreatePromotionAgent) => {
     include: { businessUnits: true },
   });
 
-  // Agent কে confirmation email
-  // sendEmail({
-  //   to: payload.email,
-  //   subject: "Application Received — Petronick Corporate Holdings",
-  //   templateName: "agent-confirmation",
-  //   templateData: {
-  //     userName: payload.fullName,
-  //     businessUnits: businessUnits.join(", "),
-  //     appName: "Petronick Corporate Holdings",
-  //   },
-  // });
+  // Agent কে confirmation email (fire-and-forget, error হলেও agent creation fail করবে না)
+  sendEmail({
+    to: payload.email,
+    subject: "Application Received — Petronick Corporate Holdings",
+    templateName: "agent-confirmation",
+    templateData: {
+      userName: payload.fullName,
+      businessUnits: businessUnits.join(", "),
+      appName: "Petronick Corporate Holdings",
+    },
+  }).catch((err) => console.error("Agent confirmation email failed:", err));
 
-  // // Admin কে notification email
-  // sendEmail({
-  //   to: envVars.SUPER_ADMIN_EMAIL,
-  //   subject: "New Promotion Agent Application",
-  //   templateName: "agent-admin",
-  //   templateData: {
-  //     userName: payload.fullName,
-  //     email: payload.email,
-  //     phone: payload.phone,
-  //     location: payload.location,
-  //     experience: payload.experience,
-  //     focus: payload.focus,
-  //     businessUnits: businessUnits.join(", "),
-  //     message: payload.message,
-  //     appName: "Petronick Corporate Holdings",
-  //   },
-  // });
+  // Admin কে notification email
+  sendEmail({
+    to: envVars.SUPER_ADMIN_EMAIL,
+    subject: "New Promotion Agent Application",
+    templateName: "agent-admin",
+    templateData: {
+      userName: payload.fullName,
+      email: payload.email,
+      phone: payload.phone,
+      location: payload.location,
+      experience: payload.experience,
+      focus: payload.focus,
+      businessUnits: businessUnits.join(", "),
+      message: payload.message,
+      appName: "Petronick Corporate Holdings",
+    },
+  }).catch((err) => console.error("Admin notification email failed:", err));
 
   return agent;
 };

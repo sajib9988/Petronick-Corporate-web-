@@ -6,16 +6,27 @@ import { envVars } from "../../config/env.js";
 import { AppError } from "../errors/app-error.js";
 
 
-const transporter = nodemailer.createTransport({
-  host: envVars.EMAIL_SENDER.SMTP_HOST,
-  secure: true,
-  auth: {
-    user: envVars.EMAIL_SENDER.SMTP_USER,
-    pass: envVars.EMAIL_SENDER.SMTP_PASS,
-  },
-  port: Number(envVars.EMAIL_SENDER.SMTP_PORT),
-});
+// const transporter = nodemailer.createTransport({
+//   host: envVars.EMAIL_SENDER.SMTP_HOST,
+//   secure: true,
+//   auth: {
+//     user: envVars.EMAIL_SENDER.SMTP_USER,
+//     pass: envVars.EMAIL_SENDER.SMTP_PASS,
+//   },
+//   port: Number(envVars.EMAIL_SENDER.SMTP_PORT),
+// });
 
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: envVars.GMAIL_USER,
+    clientId: envVars.GMAIL_CLIENT_ID,
+    clientSecret: envVars.GMAIL_CLIENT_SECRET,
+    refreshToken: envVars.GMAIL_REFRESH_TOKEN,
+  },
+});
 transporter.verify().catch(() => null);
 
 interface SendEmailOptions {
@@ -63,7 +74,7 @@ export const sendEmail = async ({
     
 
     await transporter.sendMail({
-      from: envVars.EMAIL_SENDER.SMTP_FROM,
+      from: envVars.GMAIL_USER,
       to: to,
       subject: subject,
       html: html,
