@@ -4,19 +4,19 @@ import { CheckCircle2, TrendingUp, Users, Zap } from "lucide-react";
 export default function PromotionAgentPage() {
   const perks = [
     {
-      icon: <TrendingUp size={18} className="text-emerald-600" />,
+      icon: <TrendingUp size={20} className="text-emerald-600" />,
       title: "Multiple Revenue Streams",
       desc: "Represent one or multiple business units based on your expertise.",
       bg: "bg-emerald-50",
     },
     {
-      icon: <Users size={18} className="text-blue-600" />,
+      icon: <Users size={20} className="text-blue-600" />,
       title: "Ecosystem Access",
       desc: "Gain access to our vertically integrated network of companies.",
       bg: "bg-blue-50",
     },
     {
-      icon: <Zap size={18} className="text-amber-600" />,
+      icon: <Zap size={20} className="text-amber-600" />,
       title: "Revenue Ready",
       desc: "Our subsidiaries are operational and ready to generate income.",
       bg: "bg-amber-50",
@@ -28,7 +28,7 @@ export default function PromotionAgentPage() {
       {/* Hero */}
       <section className="bg-gray-900 text-white py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+          <p className="text-xl font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Partnership Opportunity
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -42,7 +42,7 @@ export default function PromotionAgentPage() {
       </section>
 
       {/* Perks */}
-      <section className="max-w-5xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {perks.map((p) => (
             <div
@@ -80,7 +80,7 @@ export default function PromotionAgentPage() {
             </div>
 
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
-              <CheckCircle2 size={18} className="text-emerald-600 mb-2" />
+              <CheckCircle2 size={20} className="text-emerald-600 mb-2" />
               <p className="text-xs font-semibold text-emerald-800 mb-1">No upfront cost</p>
               <p className="text-xs text-emerald-700 leading-relaxed">
                 Becoming a Promotion Agent requires no financial commitment from your side.
