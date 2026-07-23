@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <div className=''>
+    <div className='bg-sky-50 '>
       <Navbar/>
       {children}
       <Footer />
