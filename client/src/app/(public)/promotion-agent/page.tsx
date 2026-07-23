@@ -28,13 +28,13 @@ export default function PromotionAgentPage() {
       {/* Hero */}
       <section className="bg-gray-900 text-white py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xl font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+          <p className="text-lg font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Partnership Opportunity
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">
             Become a Promotion Agent
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm leading-relaxed">
+          <p className="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
             Qualified Promotion Agents can represent one or multiple Petronick
             business units depending on experience and focus area.
           </p>
@@ -50,8 +50,8 @@ export default function PromotionAgentPage() {
               className="bg-white rounded-xl border border-gray-100 p-5 hover:shadow-sm transition-shadow"
             >
               <div className={`p-2.5 rounded-xl ${p.bg} w-fit mb-3`}>{p.icon}</div>
-              <h3 className="font-semibold text-gray-900 text-sm mb-1">{p.title}</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">{p.desc}</p>
+              <h3 className="font-semibold text-base text-gray-900 mb-1">{p.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
@@ -61,7 +61,7 @@ export default function PromotionAgentPage() {
           {/* Left: What to expect */}
           <div className="space-y-4">
             <div className="bg-white rounded-xl border border-gray-100 p-5">
-              <h3 className="font-bold text-gray-900 text-sm mb-3">What Happens Next</h3>
+              <h3 className="font-bold text-lg text-gray-900 mb-3">What Happens Next</h3>
               <ul className="space-y-3">
                 {[
                   "Submit your application below",
@@ -73,7 +73,7 @@ export default function PromotionAgentPage() {
                     <span className="w-5 h-5 rounded-full bg-gray-900 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                       {i + 1}
                     </span>
-                    <span className="text-xs text-gray-600 leading-relaxed">{step}</span>
+                    <span className="text-sm text-gray-600 leading-relaxed">{step}</span>
                   </li>
                 ))}
               </ul>
@@ -81,8 +81,8 @@ export default function PromotionAgentPage() {
 
             <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
               <CheckCircle2 size={20} className="text-emerald-600 mb-2" />
-              <p className="text-xs font-semibold text-emerald-800 mb-1">No upfront cost</p>
-              <p className="text-xs text-emerald-700 leading-relaxed">
+              <p className="text-sm font-semibold text-emerald-800 mb-1">No upfront cost</p>
+              <p className="text-sm text-emerald-700 leading-relaxed">
                 Becoming a Promotion Agent requires no financial commitment from your side.
               </p>
             </div>
@@ -90,7 +90,7 @@ export default function PromotionAgentPage() {
 
           {/* Form */}
           <div className="lg:col-span-2 bg-white rounded-xl border border-gray-100 p-6 sm:p-8 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-1">Apply Now</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">Apply Now</h2>
             <p className="text-sm text-gray-400 mb-6">
               Tell us about yourself and which business units interest you most.
             </p>

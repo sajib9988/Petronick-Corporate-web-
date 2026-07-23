@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,18 +26,16 @@ const agentSchema = z.object({
   location: z.string().min(1, "Location is required"),
   experience: z.string().min(1, "Experience is required"),
   focus: z.string().min(1, "Focus area is required"),
- focusType: z
-  .enum(["B2B", "B2C", "BOTH"])
-  .refine(Boolean, {
-    message: "Please select B2B, B2C, or BOTH",
-  }),
+  focusType: z
+    .enum(["B2B", "B2C", "BOTH"])
+    .refine(Boolean, { message: "Please select B2B, B2C, or BOTH" }),
   message: z.string().min(10, "Please write at least 10 characters"),
   businessUnits: z.array(z.string()).min(1, "Select at least one business unit"),
 });
 
 type AgentFormValues = z.infer<typeof agentSchema>;
 
-// ─── Static companies (API call না করে) ──
+// ─── Static companies ─────────────────────
 const COMPANIES = [
   "Fusion DigiWeb",
   "Germ Solutions Shop",
@@ -69,52 +67,46 @@ export default function PromotionAgentForm() {
     },
   });
 
-  // ─── Toggle business unit ──────────────
   const toggleUnit = (name: string, current: string[]) => {
     if (current.includes(name)) return current.filter((u) => u !== name);
     return [...current, name];
   };
 
-  // ─── Submit ───────────────────────────
-// ─── Submit ───────────────────────────
-const handleSubmit = async (values: AgentFormValues) => {
-  setIsLoading(true);
-  setError("");
+  const handleSubmit = async (values: AgentFormValues) => {
+    setIsLoading(true);
+    setError("");
 
-  try {
-    const result = await createAgent({
-      fullName: values.fullName,
-      email: values.email,
-      phone: values.phone,
-      location: values.location,
-      experience: values.experience,
-      focus: values.focus,
-      focusType: values.focusType,
-      message: values.message,
-      businessUnits: values.businessUnits,
-    });
+    try {
+      const result = await createAgent({
+        fullName: values.fullName,
+        email: values.email,
+        phone: values.phone,
+        location: values.location,
+        experience: values.experience,
+        focus: values.focus,
+        focusType: values.focusType,
+        message: values.message,
+        businessUnits: values.businessUnits,
+      });
 
-    console.log("Agent API Response:", result);
+      if (!result?.success) {
+        setError(result?.message || "Submission failed. Please try again.");
+        return;
+      }
 
-    if (!result?.success) {
-      setError(result?.message || "Submission failed. Please try again.");
-      return;
+      setIsSuccess(true);
+      form.reset();
+    } catch (err) {
+      console.error("Submit error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsSuccess(true);
-    form.reset();
-  } catch (error) {
-    console.error("Submit error:", error);
-
-    setError(
-      error instanceof Error
-        ? error.message
-        : "Something went wrong. Please try again."
-    );
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   // ─── Success UI ───────────────────────
   if (isSuccess) {
@@ -124,21 +116,14 @@ const handleSubmit = async (values: AgentFormValues) => {
           <CheckCircle2 size={32} className="text-emerald-600" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-xl font-semibold text-gray-900">
             Application Submitted!
           </h3>
-          <p className="text-sm text-gray-500 mt-1 max-w-sm">
-            Thank you for applying. We'll review your application and contact
+          <p className="text-sm text-gray-500 mt-2 max-w-sm">
+            Thank you for applying. We&apos;ll review your application and contact
             you within 5 business days.
           </p>
         </div>
-        {/* <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setIsSuccess(false)}
-        >
-          Submit another application
-        </Button> */}
       </div>
     );
   }
@@ -146,12 +131,9 @@ const handleSubmit = async (values: AgentFormValues) => {
   // ─── Form UI ─────────────────────────
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-5"
-      >
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {error && (
-          <p className="text-sm text-red-500 bg-red-50 px-4 py-3 rounded-xl">
+          <p className="text-sm text-red-600 bg-red-50 border border-red-100 px-4 py-3 rounded-xl">
             {error}
           </p>
         )}
@@ -163,7 +145,7 @@ const handleSubmit = async (values: AgentFormValues) => {
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name *</FormLabel>
+                <FormLabel className="text-sm font-medium">Full Name *</FormLabel>
                 <FormControl>
                   <Input placeholder="John Doe" {...field} />
                 </FormControl>
@@ -176,7 +158,7 @@ const handleSubmit = async (values: AgentFormValues) => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel className="text-sm font-medium">Email *</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="john@example.com" {...field} />
                 </FormControl>
@@ -193,7 +175,7 @@ const handleSubmit = async (values: AgentFormValues) => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone *</FormLabel>
+                <FormLabel className="text-sm font-medium">Phone *</FormLabel>
                 <FormControl>
                   <Input placeholder="+1 234 567 8900" {...field} />
                 </FormControl>
@@ -206,7 +188,7 @@ const handleSubmit = async (values: AgentFormValues) => {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location *</FormLabel>
+                <FormLabel className="text-sm font-medium">Location *</FormLabel>
                 <FormControl>
                   <Input placeholder="Pittsburgh, PA" {...field} />
                 </FormControl>
@@ -222,7 +204,7 @@ const handleSubmit = async (values: AgentFormValues) => {
           name="experience"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Business Experience *</FormLabel>
+              <FormLabel className="text-sm font-medium">Business Experience *</FormLabel>
               <FormControl>
                 <Input
                   placeholder="e.g. 3 years in B2B sales, retail management..."
@@ -241,7 +223,7 @@ const handleSubmit = async (values: AgentFormValues) => {
             name="focus"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Focus Area *</FormLabel>
+                <FormLabel className="text-sm font-medium">Focus Area *</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Marketing, Sales, Digital..."
@@ -253,24 +235,24 @@ const handleSubmit = async (values: AgentFormValues) => {
             )}
           />
 
-          {/* B2B / B2C */}
+          {/* B2B / B2C Selector */}
           <FormField
             control={form.control}
             name="focusType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>B2B or B2C Focus *</FormLabel>
+                <FormLabel className="text-sm font-medium">B2B or B2C Focus *</FormLabel>
                 <FormControl>
-                  <div className="flex gap-2 mt-0.5">
+                  <div className="flex gap-2 mt-1">
                     {(["B2B", "B2C", "BOTH"] as const).map((type) => (
                       <button
                         key={type}
                         type="button"
                         onClick={() => field.onChange(type)}
-                        className={`flex-1 py-1.5 rounded-lg text-sm font-medium border transition-all ${
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-all ${
                           field.value === type
                             ? "bg-gray-900 text-white border-gray-900"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-gray-400"
+                            : "bg-white text-gray-700 border-gray-200 hover:border-gray-400"
                         }`}
                       >
                         {type}
@@ -290,7 +272,7 @@ const handleSubmit = async (values: AgentFormValues) => {
           name="businessUnits"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Select Business Units *</FormLabel>
+              <FormLabel className="text-sm font-medium">Select Business Units *</FormLabel>
               <FormControl>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {COMPANIES.map((company) => {
@@ -300,17 +282,15 @@ const handleSubmit = async (values: AgentFormValues) => {
                         key={company}
                         type="button"
                         onClick={() =>
-                          field.onChange(
-                            toggleUnit(company, field.value as string[])
-                          )
+                          field.onChange(toggleUnit(company, field.value))
                         }
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                        className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                           selected
                             ? "bg-gray-900 text-white border-gray-900"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-gray-400"
+                            : "bg-white text-gray-700 border-gray-200 hover:border-gray-400"
                         }`}
                       >
-                        {selected && <CheckCircle2 size={12} />}
+                        {selected && <CheckCircle2 size={14} />}
                         {company}
                       </button>
                     );
@@ -328,11 +308,11 @@ const handleSubmit = async (values: AgentFormValues) => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Statement of Interest *</FormLabel>
+              <FormLabel className="text-sm font-medium">Statement of Interest *</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us why you want to become a Promotion Agent and what value you bring..."
-                  className="min-h-[120px] resize-none"
+                  className="min-h-[130px] resize-none"
                   {...field}
                 />
               </FormControl>
@@ -341,12 +321,8 @@ const handleSubmit = async (values: AgentFormValues) => {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full h-11"
-          disabled={isLoading}
-        >
-          {isLoading && <Loader2 size={16} className="mr-2 animate-spin" />}
+        <Button type="submit" className="w-full h-12 text-base" disabled={isLoading}>
+          {isLoading && <Loader2 size={18} className="mr-2 animate-spin" />}
           Submit Application
         </Button>
       </form>
