@@ -181,17 +181,17 @@ export default async function CompaniesPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gray-900 text-white py-16 px-4 mx-4 mb-16 rounded-2xl max-w-5xl lg:mx-auto">
+      <section className="bg-gray-900 text-white py-16 px-4 mx-4 mb-16 rounded-2xl max-w-7xl lg:mx-auto">
         <div className="text-center">
-          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+          <p className="text-base font-semibold tracking-widest text-emerald-400 uppercase mb-3">
             Partnership Opportunity
           </p>
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-3xl font-bold mb-4">
             Represent Our Business Units
           </h2>
 
-          <p className="text-gray-400 text-sm max-w-xl mx-auto mb-8 leading-relaxed">
+          <p className="text-gray-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
             Qualified Promotion Agents can represent one or multiple Petronick
             business units depending on their experience and focus area.
           </p>
@@ -202,7 +202,7 @@ export default async function CompaniesPage() {
               className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
             >
               Apply as Promotion Agent
-              <ArrowRight size={14} />
+              <ArrowRight size={16} />
             </Link>
 
             <Link
