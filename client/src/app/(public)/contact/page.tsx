@@ -1,22 +1,40 @@
 import ContactForm from "@/components/admin/form/contact-form";
 import { Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Hero */}
-      <section className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
-            Get In Touch
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-4">Contact Us</h1>
-          <p className="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
-            Have a question or want to explore partnership opportunities?
-            We&apos;d love to hear from you.
-          </p>
+    <main className="min-h-screen">
+      {/* Image Banner */}
+      <section className="pt-8 sm:pt-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative rounded-3xl overflow-hidden h-[280px] sm:h-[360px] lg:h-[420px]">
+            <Image
+              src="/contact-hero.jpg"
+              alt="Contact Petronick Corporate Holdings"
+              fill
+              priority
+              className="object-cover"
+            />
+            {/* Overlay for text readability */}
+            <div className="absolute inset-0 bg-gray-950/60" />
+
+            <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
+              <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+                Get In Touch
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                Contact Us
+              </h1>
+              <p className="text-gray-200 max-w-xl mx-auto text-sm leading-relaxed">
+                Have a question or want to explore partnership opportunities?
+                We&apos;d love to hear from you.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
+
 
       {/* Content */}
       <section className="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
