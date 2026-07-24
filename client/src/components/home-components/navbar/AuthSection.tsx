@@ -2,13 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { LayoutDashboard, LogOut } from "lucide-react";
+import { LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { logoutUser, getMe } from "@/service/auth";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function UserAvatar({ name }: { name: string }) {
   const initials = name
@@ -46,8 +54,7 @@ export const AuthSection = ({ isMobile = false }) => {
     const fetchUser = async () => {
       try {
         const res = await getMe();
-        const userData = res?.data || null;
-        setUser(userData);
+        setUser(res?.data || null);
       } catch {
         setUser(null);
       } finally {
@@ -77,7 +84,6 @@ export const AuthSection = ({ isMobile = false }) => {
 
   const isAdmin = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
 
-  // Reusable "carved into stone" button style
   const carvedOutline =
     "border border-amber-600/30 bg-stone-800/40 text-amber-300 hover:text-amber-200 hover:bg-stone-700/60 transition-all";
   const carvedOutlineStyle = {
@@ -96,11 +102,10 @@ export const AuthSection = ({ isMobile = false }) => {
   }
 
   if (user) {
-    return (
-      <div className={`flex ${isMobile ? "flex-col gap-2" : "items-center gap-3"}`}>
-
-        {/* Avatar + Name */}
-        {isMobile ? (
+    // ── Mobile: stacked, no dropdown needed (space is not an issue) ──
+    if (isMobile) {
+      return (
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3 px-1 py-2 border-b border-amber-700/20 mb-1">
             <UserAvatar name={user.name} />
             <div className="flex flex-col">
@@ -113,68 +118,105 @@ export const AuthSection = ({ isMobile = false }) => {
               <span className="text-stone-500 text-xs">{user.role}</span>
             </div>
           </div>
-        ) : (
-          <div className="flex items-center gap-2">
+
+          {isAdmin && (
+            <Button
+              asChild
+              size="sm"
+              variant="outline"
+              className={cn("w-full", carvedOutline)}
+              style={carvedOutlineStyle}
+            >
+              <Link href="/admin">
+                <LayoutDashboard size={13} className="mr-1.5" />
+                Dashboard
+              </Link>
+            </Button>
+          )}
+
+          <Button
+            size="sm"
+            variant="ghost"
+            className="w-full text-red-400 hover:text-red-300 hover:bg-red-950/30 text-sm font-medium"
+            onClick={handleLogout}
+            disabled={loggingOut}
+          >
+            <LogOut size={13} className="mr-1.5" />
+            {loggingOut ? "Logging out..." : "Logout"}
+          </Button>
+        </div>
+      );
+    }
+
+    // ── Desktop: dropdown — crowding fix ──
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            className="flex items-center gap-2 rounded-full pl-1 pr-2.5 py-1 border border-amber-600/20 bg-stone-800/40 hover:bg-stone-700/60 transition-all outline-none"
+            style={{
+              boxShadow:
+                "inset 0 1px 2px rgba(0,0,0,0.5), inset 0 -1px 1px rgba(255,255,255,0.04)",
+            }}
+          >
             <UserAvatar name={user.name} />
             <span
-              className="text-stone-300 text-[16px] font-semibold"   // ← Matched with navbar
+              className="text-stone-300 text-[14px] font-semibold max-w-[110px] truncate"
               style={{ textShadow: "0 1px 1px rgba(0,0,0,0.6)" }}
             >
               {user.name}
             </span>
-          </div>
-        )}
+            <ChevronDown size={14} className="text-stone-500" />
+          </button>
+        </DropdownMenuTrigger>
 
-        {/* Admin Dashboard Button */}
-        {isAdmin && (
-          <Button
-            asChild
-            size="sm"
-            variant="outline"
-            className={cn(
-              isMobile ? "w-full" : "h-10 text-[15px] px-3 font-semibold",
-              carvedOutline
-            )}
-            style={carvedOutlineStyle}
-          >
-            <Link href="/admin">
-              <LayoutDashboard size={13} className="mr-1.5" />
-              Dashboard
-            </Link>
-          </Button>
-        )}
-
-        {/* Logout */}
-        <Button
-          size="sm"
-          variant="ghost"
-          className={
-            isMobile
-              ? "w-full text-red-400 hover:text-red-300 hover:bg-red-950/30 text-sm font-medium"
-              : "h-10 text-[15px] font-semibold text-stone-400 hover:text-red-400 hover:bg-red-950/30 px-3 transition-colors"
-          }
-          style={{ textShadow: "0 1px 1px rgba(0,0,0,0.6)" }}
-          onClick={handleLogout}
-          disabled={loggingOut}
+        <DropdownMenuContent
+          align="end"
+          sideOffset={8}
+          className="bg-[#1a1d23] border border-amber-700/20 text-stone-200 min-w-52 shadow-xl"
         >
-          <LogOut size={13} className="mr-1.5" />
-          {loggingOut ? "Logging out..." : "Logout"}
-        </Button>
-      </div>
+          <DropdownMenuLabel className="font-normal">
+            <span className="text-stone-200 text-sm font-semibold block">
+              {user.name}
+            </span>
+            <span className="text-xs text-stone-500">{user.role}</span>
+          </DropdownMenuLabel>
+
+          <DropdownMenuSeparator className="bg-amber-700/20" />
+
+          {isAdmin && (
+            <DropdownMenuItem
+              asChild
+              className="text-stone-300 focus:bg-stone-800 focus:text-amber-300 cursor-pointer"
+            >
+              <Link href="/admin">
+                <LayoutDashboard size={14} />
+                Dashboard
+              </Link>
+            </DropdownMenuItem>
+          )}
+
+          <DropdownMenuItem
+            onClick={handleLogout}
+            disabled={loggingOut}
+            className="text-red-400 focus:bg-red-950/40 focus:text-red-300 cursor-pointer"
+          >
+            <LogOut size={14} />
+            {loggingOut ? "Logging out..." : "Logout"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   }
 
-  // Not logged in
+  // ── Not logged in ──
   return (
     <div className={`flex ${isMobile ? "flex-col gap-2" : "items-center gap-3"}`}>
       <Button
         asChild
         size="sm"
         variant="outline"
-        className={cn(
-          isMobile ? "w-full" : "h-10 text-[15px] px-4 font-semibold",
-          carvedOutline
-        )}
+        className={cn(isMobile ? "w-full" : "h-10 text-[15px] px-4 font-semibold", carvedOutline)}
         style={carvedOutlineStyle}
       >
         <Link href="/login">Log in</Link>
@@ -184,9 +226,7 @@ export const AuthSection = ({ isMobile = false }) => {
         asChild
         size="sm"
         className={cn(
-          isMobile
-            ? "w-full text-sm font-semibold"
-            : "h-10 text-[15px] px-4 font-semibold",
+          isMobile ? "w-full text-sm font-semibold" : "h-10 text-[15px] px-4 font-semibold",
           "bg-gradient-to-b from-amber-400 to-amber-700 text-stone-900 border-none"
         )}
         style={{

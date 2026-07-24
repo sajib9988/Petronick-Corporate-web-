@@ -65,51 +65,46 @@ const companies: Company[] = allCompanies.data || [];
        />
 
       {/* ── Section 2: Who We Are ── */}
+      <div className="py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl border border-amber-100 overflow-hidden">
+            <WhoWeAreSection />
+          </div>
+        </div>
+      </div>
 
-      <WhoWeAreSection></WhoWeAreSection>
-
-
-
-{/* ── Section 3: Our Ecosystem ── */}
-<section className="py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
-      <EcosystemSection companies={companies} />
-    </div>
-  </div>
-</section>
-
-
+      {/* ── Section 3: Our Ecosystem ── */}
+      <section className="py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
+            <EcosystemSection companies={companies} />
+          </div>
+        </div>
+      </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
-<section className="bg-white   py-16">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  ">
+      <section className="py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {companies.map((company, index) => (
+                <div key={company.id}>
+                  <CompanyCard company={company} index={index} />
+                </div>
+              ))}
+            </div>
 
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {companies.map((company, index) => (
-        <div
-          key={company.id}
-          className=""
-        >
-          <CompanyCard
-            company={company}
-            index={index}
-          />
+            <div className="mt-6 text-center sm:hidden">
+              <Link
+                href="/companies"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
+              >
+                View all companies <ArrowRight size={13} />
+              </Link>
+            </div>
+          </div>
         </div>
-      ))}
-    </div>
-
-    <div className="mt-6 text-center sm:hidden border-4 border-pink-500">
-      <Link
-        href="/companies"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
-      >
-        View all companies <ArrowRight size={13} />
-      </Link>
-    </div>
-
-  </div>
-</section>
+      </section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
  <section className="bg-gray-900 max-w-7xl mx-auto text-white py-16 rounded-full border-t-4">
