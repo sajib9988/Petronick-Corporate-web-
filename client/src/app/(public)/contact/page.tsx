@@ -37,7 +37,7 @@ export default function ContactPage() {
 
 
       {/* Content */}
-      <section className="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Info Cards */}
         <div className="space-y-5">
           {[
