@@ -85,7 +85,7 @@ const companies: Company[] = allCompanies.data || [];
       {/* ── Section 4: Companies Preview Grid ── */}
       <section className="py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
+          <div className=" rounded-3xl border border-green-600 overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {companies.map((company, index) => (
                 <div key={company.id}>

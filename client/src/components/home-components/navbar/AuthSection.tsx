@@ -71,7 +71,7 @@ export const AuthSection = ({ isMobile = false }) => {
       if (res?.success) {
         toast.success("Logged out successfully");
         setUser(null);
-        router.push("/login");
+        router.push("/");
       } else {
         toast.error("Logout failed");
       }
