@@ -94,7 +94,7 @@ export default function HeroSection({
               </Link>
             </Button>
           </motion.div>
-        <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+      <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
             <Button
               asChild
               variant="outline"
