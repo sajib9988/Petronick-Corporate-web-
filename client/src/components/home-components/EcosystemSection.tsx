@@ -1,13 +1,14 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ExternalLink, X, LayoutGrid, Waypoints } from "lucide-react";
+import { ExternalLink, LayoutGrid, Waypoints } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
+    <div className="w-full h-[420px] sm:h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
   ),
 });
 
@@ -23,8 +24,22 @@ type Company = {
 };
 
 export default function EcosystemSection({ companies }: { companies: Company[] }) {
+  const isMobile = useIsMobile();
   const [activeId, setActiveId] = useState<string | null>(companies[0]?.id ?? null);
   const [viewMode, setViewMode] = useState<"flow" | "list">("flow");
+  const [userPicked, setUserPicked] = useState(false);
+
+  // Default to List view on mobile, Flow view on desktop — unless user manually toggled
+  useEffect(() => {
+    if (!userPicked) {
+      setViewMode(isMobile ? "list" : "flow");
+    }
+  }, [isMobile, userPicked]);
+
+  const handleViewChange = (mode: "flow" | "list") => {
+    setUserPicked(true);
+    setViewMode(mode);
+  };
 
   const activeCompany = companies.find((c) => c.id === activeId) ?? null;
 
@@ -52,26 +67,28 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
         {/* Toggle Buttons */}
         <div className="inline-flex bg-slate-900 border border-slate-800 rounded-full p-1 self-start lg:self-auto">
           <button
-            onClick={() => setViewMode("flow")}
-            className={`flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-all ${
+            onClick={() => handleViewChange("flow")}
+            className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all ${
               viewMode === "flow"
                 ? "bg-indigo-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
-            <Waypoints size={16} />
-            Interactive Node Web
+            <Waypoints size={15} />
+            <span className="hidden sm:inline">Interactive Node Web</span>
+            <span className="sm:hidden">Node Web</span>
           </button>
           <button
-            onClick={() => setViewMode("list")}
-            className={`flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-all ${
+            onClick={() => handleViewChange("list")}
+            className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all ${
               viewMode === "list"
                 ? "bg-indigo-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
-            <LayoutGrid size={16} />
-            Structured Directory List
+            <LayoutGrid size={15} />
+            <span className="hidden sm:inline">Structured Directory List</span>
+            <span className="sm:hidden">List</span>
           </button>
         </div>
       </div>
@@ -88,7 +105,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             />
           </div>
         ) : (
-          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[520px] overflow-y-auto">
+          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[420px] sm:h-[520px] overflow-y-auto">
             {companies.map((company) => (
               <button
                 key={company.id}
