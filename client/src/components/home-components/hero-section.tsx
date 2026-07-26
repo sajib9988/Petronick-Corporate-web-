@@ -86,7 +86,7 @@ export default function HeroSection({
             <Button
               asChild
               size="lg"
-              className="bg-amber-500 text-black font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400 hover:shadow-amber-400/50 hover:scale-[1.03] transition-all"
+            className="bg-amber-500! text-black! font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400! hover:text-black! hover:shadow-amber-400/50 hover:scale-[1.03] transition-all"
             >
               <Link href={primaryBtnLink}>
                 {primaryBtn}
