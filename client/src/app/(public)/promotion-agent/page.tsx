@@ -24,7 +24,7 @@ export default function PromotionAgentPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-sky-100">
+    <main className="min-h-screen bg-[#4dd0e1]">
       {/* Hero */}
       <section className="bg-gray-900 text-white py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">

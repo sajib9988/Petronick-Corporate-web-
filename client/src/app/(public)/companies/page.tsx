@@ -24,7 +24,7 @@ export default async function CompaniesPage() {
   const companies = apiCompanies;
 
   return (
-    <main className="bg-sky-100 min-h-screen">
+    <main className="bg-[#4dd0e1] min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-gray-100 bg-gray-950 text-white">
         <div
