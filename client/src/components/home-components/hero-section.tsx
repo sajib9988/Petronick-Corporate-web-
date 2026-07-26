@@ -82,14 +82,18 @@ export default function HeroSection({
         </motion.p>
 
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
-            <Button asChild size="lg">
-              <Link href={primaryBtnLink}>
-                {primaryBtn}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
+       <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+  <Button
+    asChild
+    size="lg"
+    className="bg-amber-500 hover:bg-amber-600 text-white"
+  >
+    <Link href={primaryBtnLink}>
+      {primaryBtn}
+      <ArrowRight className="ml-2 h-4 w-4" />
+    </Link>
+  </Button>
+</motion.div>
 
           <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
             <Button asChild variant="outline" size="lg">
