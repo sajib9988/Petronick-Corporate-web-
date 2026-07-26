@@ -106,15 +106,30 @@ const companies: Company[] = allCompanies.data || [];
         </div>
       </section>
 
+    // AFTER
       {/* ── Section 5: Revenue Opportunity ── */}
- <section className="bg-gray-900 max-w-7xl mx-auto text-white py-16 rounded-full border-t-4">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ">
-          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+      <section className="relative overflow-hidden max-w-7xl mx-auto bg-gray-900 text-white py-20 rounded-3xl">
+        {/* Grid pattern texture */}
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+        {/* Dual amber glow */}
+        <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-amber-600/10 blur-3xl" />
+
+        <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
             Partner With Us
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">
             Revenue Opportunity Awaits
           </h2>
+          <div className="mx-auto mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-amber-400 to-amber-600" />
           <p className="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto mb-8">
             Qualified Promotion Agents can represent one or multiple Petronick
             business units depending on their experience and focus area. Join
@@ -122,7 +137,7 @@ const companies: Company[] = allCompanies.data || [];
           </p>
           <Link
             href="/promotion-agent"
-            className="inline-flex items-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-7 py-3 rounded-lg shadow-lg shadow-amber-900/30 hover:shadow-amber-700/40 hover:scale-[1.03] transition-all"
           >
             Apply as a Promotion Agent <ArrowRight size={14} />
           </Link>
@@ -130,35 +145,46 @@ const companies: Company[] = allCompanies.data || [];
       </section>
 
       {/* ── Section 6: Closing Authority ── */}
-    <section className="max-w-7xl mx-auto rounded-full py-14">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-6 flex-wrap justify-center mb-8">
-            {[
-              { label: "Scalable Infrastructure", color: "text-blue-600" },
-              { label: "Multiple Revenue Channels", color: "text-emerald-600" },
-              { label: "Strategic Ownership Model", color: "text-purple-600" },
-            ].map((item, i) => (
-              <div key={item.label} className="flex items-center gap-6">
-                <span className={`text-sm font-semibold ${item.color}`}>{item.label}</span>
-                {i < 2 && <span className="w-1 h-1 rounded-full bg-gray-200" />}
-              </div>
-            ))}
+      <section className="py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-white rounded-3xl border border-amber-100 shadow-sm overflow-hidden py-16 px-4 sm:px-6 lg:px-8 text-center">
+            {/* Top accent line */}
+            <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+
+            <div className="inline-flex items-center gap-3 flex-wrap justify-center mb-8">
+              {[
+                "Scalable Infrastructure",
+                "Multiple Revenue Channels",
+                "Strategic Ownership Model",
+              ].map((label) => (
+                <span
+                  key={label}
+                  className="text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+              Built to Scale. Designed to Win.
+            </h2>
+            <p className="text-gray-500 text-sm max-w-lg mx-auto mb-7">
+              Petronick Corporate Holdings is positioned to grow rapidly across
+              multiple markets with infrastructure already in place.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-6 py-2.5 rounded-lg shadow-md shadow-amber-900/10 hover:shadow-amber-700/20 hover:scale-[1.03] transition-all"
+            >
+              Get in Touch <ArrowRight size={14} />
+            </Link>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-            Built to Scale. Designed to Win.
-          </h2>
-          <p className="text-gray-500 text-sm max-w-lg mx-auto mb-7">
-            Petronick Corporate Holdings is positioned to grow rapidly across
-            multiple markets with infrastructure already in place.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 border border-gray-900 text-gray-900 font-semibold text-sm px-6 py-2.5 rounded-lg hover:bg-gray-900 hover:text-white transition-colors"
-          >
-            Get in Touch <ArrowRight size={14} />
-          </Link>
         </div>
       </section>
+   
+   
+   
     </main>
   );
 }
