@@ -96,9 +96,16 @@ export default function HeroSection({
 </motion.div>
 
           <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
-            <Button asChild variant="outline" size="lg">
-              <Link href={secondaryBtnLink}>{secondaryBtn}</Link>
-            </Button>
+           <Button
+  asChild
+  variant="outline"
+  size="lg"
+  className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+>
+  <Link href={secondaryBtnLink}>
+    {secondaryBtn}
+  </Link>
+</Button>
           </motion.div>
         </div>
       </motion.div>
