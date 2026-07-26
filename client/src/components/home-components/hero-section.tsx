@@ -86,7 +86,7 @@ export default function HeroSection({
   <Button
     asChild
     size="lg"
-    className="bg-amber-400 text-gray-900 hover:bg-amber-500 "
+    className=" bg-amber-500 hover:bg-amber-600 text-black "
   >
     <Link href={primaryBtnLink}>
       {primaryBtn}
@@ -100,7 +100,7 @@ export default function HeroSection({
   asChild
   variant="outline"
   size="lg"
-  className= " border-white/30 text-white hover:bg-white hover:text-gray-900 "
+  className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
 >
   <Link href={secondaryBtnLink}>
     {secondaryBtn}
