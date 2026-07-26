@@ -81,28 +81,28 @@ export default function HeroSection({
           {subheadline}
         </motion.p>
 
-        <div className="flex flex-col justify-center gap-3 sm:flex-row">
-         <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+     <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
             <Button
               asChild
               size="lg"
-            className="bg-amber-500! text-black! font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400! hover:text-black! hover:shadow-amber-400/50 hover:scale-[1.03] transition-all"
+              className="bg-white/10! text-white! font-semibold border-2 border-white/70 backdrop-blur-sm hover:bg-white/20! hover:border-white hover:scale-[1.03] transition-all"
             >
               <Link href={primaryBtnLink}>
                 {primaryBtn}
-                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </motion.div>
-      <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+
+          <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
             <Button
               asChild
-              variant="outline"
               size="lg"
-              className="border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-gray-950"
+              className="bg-orange-500! text-white! font-semibold border-0 shadow-lg shadow-orange-500/40 hover:bg-orange-400! hover:shadow-orange-400/60 hover:scale-[1.03] transition-all"
             >
               <Link href={secondaryBtnLink}>
                 {secondaryBtn}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </motion.div>
