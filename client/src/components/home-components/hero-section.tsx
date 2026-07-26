@@ -61,12 +61,18 @@ export default function HeroSection({
         variants={staggerContainer(0.3, 0.2)}
         className="relative z-10 mx-auto max-w-4xl px-6 text-center"
       >
+       // AFTER
         <motion.h1
           variants={fadeUp(0, 1)}
-          className="mb-6 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+          className="mb-4 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
         >
           {headline}
         </motion.h1>
+
+        <motion.div
+          variants={fadeUp(0.05, 0.8)}
+          className="mx-auto mb-6 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"
+        />
 
         <motion.p
           variants={fadeUp(0, 0.9)}
