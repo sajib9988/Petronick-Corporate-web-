@@ -71,7 +71,7 @@ export default function HeroSection({
 
         <motion.div
           variants={fadeUp(0.05, 0.8)}
-          className="mx-auto mb-6 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"
+          className="mx-auto mb-6 h-1 w-16 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"
         />
 
         <motion.p
@@ -82,30 +82,29 @@ export default function HeroSection({
         </motion.p>
 
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-       <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
-  <Button
-    asChild
-    size="lg"
-    className=" bg-amber-500 hover:bg-amber-600 text-black "
-  >
-    <Link href={primaryBtnLink}>
-      {primaryBtn}
-      <ArrowRight className="ml-2 h-4 w-4" />
-    </Link>
-  </Button>
-</motion.div>
-
-          <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
-           <Button
-  asChild
-  variant="outline"
-  size="lg"
-  className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
->
-  <Link href={secondaryBtnLink}>
-    {secondaryBtn}
-  </Link>
-</Button>
+         <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-amber-500 text-black font-semibold shadow-lg shadow-amber-500/30 hover:bg-amber-400 hover:shadow-amber-400/50 hover:scale-[1.03] transition-all"
+            >
+              <Link href={primaryBtnLink}>
+                {primaryBtn}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </motion.div>
+        <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-gray-950"
+            >
+              <Link href={secondaryBtnLink}>
+                {secondaryBtn}
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </motion.div>
