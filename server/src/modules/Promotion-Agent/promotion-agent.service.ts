@@ -14,6 +14,26 @@ import { envVars } from "../../config/env.js";
 const createAgent = async (payload: ICreatePromotionAgent) => {
   const { businessUnits, ...rest } = payload;
 
+
+const existingAgent = await prisma.promotionAgent.findFirst({
+  where:{
+     email: payload.email,
+     
+      status: { in: ["PENDING", "REVIEWED", "APPROVED"] },
+  }
+})
+
+  if (existingAgent) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      "You have already submitted an application with this email. Please wait for review.",
+    );
+  }
+
+
+
+
+
   const agent = await prisma.promotionAgent.create({
     data: {
       ...rest,

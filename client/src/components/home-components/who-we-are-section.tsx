@@ -1,7 +1,10 @@
 "use client";
 
+
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
+import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
 import { fadeSlide, staggerContainer } from "@/lib/motion";
 
 const features = [
@@ -11,14 +14,44 @@ const features = [
   "Advisory expertise",
 ];
 
+// After
 const stats = [
-  { value: "7+", label: "Business Units", bg: "bg-gray-900 text-white" },
-  { value: "100%", label: "Revenue Ready", bg: "bg-emerald-50 text-gray-900" },
-  { value: "Multi", label: "Market Reach", bg: "bg-blue-50 text-gray-900" },
-  { value: "1", label: "Ecosystem", bg: "bg-amber-50 text-gray-900" },
+  {
+    number: 7,
+    suffix: "+",
+    label: "Business Units",
+    bg: "bg-gradient-to-br from-orange-500 to-orange-600 text-white",
+  },
+  {
+    number: 100,
+    suffix: "%",
+    label: "Revenue Ready",
+    bg: "bg-white text-gray-900 ring-1 ring-blue-100",
+  },
+  {
+    number: null,
+    display: "Multi",
+    label: "Market Reach",
+    bg: "bg-gradient-to-br from-blue-500 to-blue-600 text-white",
+  },
+  {
+    number: 1,
+    suffix: "",
+    label: "Ecosystem",
+    bg: "bg-white text-gray-900 ring-1 ring-orange-100",
+  },
 ];
 
 export default function WhoWeAreSection() {
+
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+
+
+
   return (
     <section className="bg-white py-20 lg:py-24 border border-amber-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center overflow-hidden">
@@ -61,7 +94,9 @@ export default function WhoWeAreSection() {
         </motion.div>
 
         {/* Right: stats grid — fast slide-in from right, staggered */}
+    // After
         <motion.div
+          ref={ref}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -69,19 +104,26 @@ export default function WhoWeAreSection() {
           className="grid grid-cols-2 gap-5 min-w-0"
         >
           {stats.map((s) => (
-           <motion.div
-  key={s.label}
-  variants={fadeSlide("right", 0, 60, 0.4)}
-  className={`rounded-2xl p-7 ${s.bg}`}
->
-  <div className="text-3xl lg:text-4xl font-bold tracking-tight">
-    {s.value}
-  </div>
+            <motion.div
+              key={s.label}
+              variants={fadeSlide("right", 0, 60, 0.4)}
+              className={`rounded-2xl p-7 shadow-sm ${s.bg}`}
+            >
+              <div className="text-3xl lg:text-4xl font-bold tracking-tight">
+                {s.number !== null ? (
+                  <>
+                    {inView ? <CountUp end={s.number} duration={2} /> : 0}
+                    {s.suffix}
+                  </>
+                ) : (
+                  s.display
+                )}
+              </div>
 
-  <div className="mt-2 text-base font-medium opacity-70">
-    {s.label}
-  </div>
-</motion.div>
+              <div className="mt-2 text-base font-medium opacity-70">
+                {s.label}
+              </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>

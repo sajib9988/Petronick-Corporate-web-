@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -72,7 +73,7 @@ export default function PromotionAgentForm() {
     return [...current, name];
   };
 
-  const handleSubmit = async (values: AgentFormValues) => {
+const handleSubmit = async (values: AgentFormValues) => {
     setIsLoading(true);
     setError("");
 
@@ -90,19 +91,23 @@ export default function PromotionAgentForm() {
       });
 
       if (!result?.success) {
-        setError(result?.message || "Submission failed. Please try again.");
+        const msg = result?.message || "Submission failed. Please try again.";
+        setError(msg);
+        toast.error(msg);
         return;
       }
 
+      toast.success("Application submitted successfully!");
       setIsSuccess(true);
       form.reset();
     } catch (err) {
       console.error("Submit error:", err);
-      setError(
+      const msg =
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again."
-      );
+          : "Something went wrong. Please try again.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }

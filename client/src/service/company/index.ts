@@ -77,11 +77,12 @@ export const createCompany = async (formData: FormData) => {
   }
 };
 
+
 export const updateCompany = async (id: string, formData: FormData) => {
   try {
     const res = await fetch(`${BASE_URL}/company/${id}`, {
       method: "PATCH",
-      credentials: "include",
+      headers: await getAuthHeaders(),
       body: formData,
     });
     return await safeJson(res);
