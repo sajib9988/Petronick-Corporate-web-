@@ -49,7 +49,7 @@ export default function AdminHeader() {
   const description = current?.[1]?.description ?? "";
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center gap-3 border-b border-gray-200 bg-white px-4 sm:px-6 shadow-sm">
+   <header className="sticky top-0 z-40 flex h-14 items-center gap-3 border-b border-slate-200 bg-white/80 backdrop-blur-md px-4 sm:px-6 shadow-sm">
       <SidebarTrigger className="-ml-1 text-gray-500 hover:text-gray-900" />
       <Separator orientation="vertical" className="h-5" />
 

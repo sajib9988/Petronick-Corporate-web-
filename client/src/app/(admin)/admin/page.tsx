@@ -20,13 +20,13 @@ export default async function AdminDashboardPage() {
     getAllAgents(),
   ]);
 
+ // After
   const stats = [
     {
       label: "Total Companies",
       value: companies?.meta?.total ?? 0,
-      icon: <Building2 size={18} className="text-blue-600" />,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
+      icon: <Building2 size={18} className="text-white" />,
+      gradient: "from-blue-500 to-blue-700",
       href: "/admin/companies",
       trend: "Business units",
       delay: 0,
@@ -34,9 +34,8 @@ export default async function AdminDashboardPage() {
     {
       label: "Promotion Agents",
       value: agents?.meta?.total ?? 0,
-      icon: <Users size={18} className="text-emerald-600" />,
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-600",
+      icon: <Users size={18} className="text-white" />,
+      gradient: "from-emerald-500 to-emerald-700",
       href: "/admin/agents",
       trend: "Applications",
       delay: 0.1,
@@ -44,9 +43,8 @@ export default async function AdminDashboardPage() {
     {
       label: "Contact Messages",
       value: contacts?.meta?.total ?? 0,
-      icon: <Mail size={18} className="text-purple-600" />,
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-600",
+      icon: <Mail size={18} className="text-white" />,
+      gradient: "from-purple-500 to-purple-700",
       href: "/admin/contact",
       trend: "Total messages",
       delay: 0.2,
@@ -54,15 +52,13 @@ export default async function AdminDashboardPage() {
     {
       label: "Active Units",
       value: 7,
-      icon: <TrendingUp size={18} className="text-amber-600" />,
-      iconBg: "bg-amber-50",
-      iconColor: "text-amber-600",
+      icon: <TrendingUp size={18} className="text-white" />,
+      gradient: "from-amber-500 to-orange-600",
       href: "/admin/companies",
       trend: "Revenue ready",
       delay: 0.3,
     },
   ];
-
   const agentStatusColor: Record<string, string> = {
     PENDING: "bg-amber-50 text-amber-700",
     REVIEWED: "bg-blue-50 text-blue-700",

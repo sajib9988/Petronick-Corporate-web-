@@ -14,7 +14,7 @@ export default function AdminLayout({
         <AdminSidebar />
         <SidebarInset>
           <AdminHeader />
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-[#4dd0e1] min-h-screen">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-slate-50 via-blue-50/40 to-amber-50/30 min-h-screen">
             {children}
           </main>
         </SidebarInset>

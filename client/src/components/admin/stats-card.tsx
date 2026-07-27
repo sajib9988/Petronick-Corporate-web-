@@ -5,12 +5,12 @@ import Link from "next/link";
 import { ArrowUpRight, LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
+
 interface StatsCardProps {
   label: string;
   value: number;
   icon: React.ReactNode;
-  iconBg: string;
-  iconColor: string;
+  gradient: string;
   href: string;
   trend: string;
   delay?: number;
@@ -51,14 +51,7 @@ function useCountUp(target: number, duration = 1500) {
 }
 
 export default function StatsCard({
-  label,
-  value,
-  icon,
-  iconBg,
-  iconColor,
-  href,
-  trend,
-  delay = 0,
+  label, value, icon, gradient, href, trend, delay = 0,
 }: StatsCardProps) {
   const count = useCountUp(value);
 
@@ -70,22 +63,23 @@ export default function StatsCard({
     >
       <Link
         href={href}
-        className="bg-white rounded-xl border border-gray-100 p-5 hover:shadow-md hover:border-gray-200 transition-all duration-200 group flex flex-col"
+        className={`relative overflow-hidden bg-gradient-to-br ${gradient} rounded-xl p-5 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 group flex flex-col`}
       >
-        <div className="flex items-center justify-between mb-4">
-          <div className={`p-2.5 rounded-xl ${iconBg}`}>
+        <div className="absolute -right-4 -top-4 w-24 h-24 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-300" />
+        <div className="relative flex items-center justify-between mb-4">
+          <div className="p-2.5 rounded-xl bg-white/15 backdrop-blur-sm">
             {icon}
           </div>
           <ArrowUpRight
             size={16}
-            className="text-gray-200 group-hover:text-gray-400 transition-colors"
+            className="text-white/50 group-hover:text-white transition-colors"
           />
         </div>
-        <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+        <div className="relative text-2xl sm:text-3xl font-bold text-white mb-1">
           {count}
         </div>
-        <div className="text-sm font-medium text-gray-700">{label}</div>
-        <div className="text-xs text-gray-400 mt-0.5">{trend}</div>
+        <div className="relative text-sm font-medium text-white/90">{label}</div>
+        <div className="relative text-xs text-white/60 mt-0.5">{trend}</div>
       </Link>
     </motion.div>
   );
