@@ -62,35 +62,35 @@ export default function WhoWeAreSection() {
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeSlide("left", 0, 60, 0.4)}
         >
-  <p className="text-sm font-semibold tracking-[0.2em] text-gray-500 uppercase mb-3">
-  Who We Are
-</p>
+          <p className="text-sm font-semibold tracking-[0.2em] text-gray-500 uppercase mb-3">
+            Who We Are
+          </p>
 
-<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
-  One Platform. Multiple Revenue Streams.
-</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+            One Platform. Multiple Revenue Streams.
+          </h2>
 
-<p className="text-base leading-8 text-gray-600 mb-8 max-w-2xl">
-  Petronick Corporate Holdings LLC owns and operates multiple
-  business units designed to work together — accelerating market
-  entry, scaling operations, and maximizing profitability across
-  every subsidiary.
-</p>
+          <p className="text-base leading-8 text-gray-600 mb-8 max-w-2xl">
+            Petronick Corporate Holdings LLC owns and operates multiple
+            business units designed to work together — accelerating market
+            entry, scaling operations, and maximizing profitability across
+            every subsidiary.
+          </p>
 
-<ul className="space-y-3">
-  {features.map((item) => (
-    <li
-      key={item}
-      className="flex items-center gap-3 text-base text-gray-700"
-    >
-      <CheckCircle2
-        size={18}
-        className="text-emerald-500 flex-shrink-0"
-      />
-      {item}
-    </li>
-  ))}
-</ul>
+          <ul className="space-y-3">
+            {features.map((item) => (
+              <li
+                key={item}
+                className="flex items-center gap-3 text-base text-gray-700"
+              >
+                <CheckCircle2
+                  size={18}
+                  className="text-emerald-500 flex-shrink-0"
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
         {/* Right: stats grid — fast slide-in from right, staggered */}
