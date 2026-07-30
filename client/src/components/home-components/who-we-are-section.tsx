@@ -17,7 +17,7 @@ const stats = [
     number: 7,
     suffix: "+",
     label: "Business Units",
-    bg: "bg-gradient-to-br from-orange-500 to-orange-600 text-white",
+    bg: "bg-gradient-to-br from-amber-500 to-amber-600 text-white",
   },
   {
     number: 100,
@@ -29,7 +29,7 @@ const stats = [
     number: null,
     display: "Multi",
     label: "Market Reach",
-    bg: "bg-gradient-to-br from-blue-500 to-blue-600 text-white",
+    bg: "bg-gradient-to-br from-gray-900 to-gray-800 text-white",
   },
   {
     number: 1,
@@ -75,8 +75,8 @@ export default function WhoWeAreSection() {
 
   return (
     <section className="relative py-20 lg:py-24 overflow-hidden">
-      {/* Background: Image 1 style — Red replaced with Orange */}
-      <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-purple-600 to-cyan-500" />
+      {/* Background: amber-dominant gradient, ending dark to connect with Hero/Ecosystem */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-amber-600 to-gray-900" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left: Text */}

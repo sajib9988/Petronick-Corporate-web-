@@ -107,7 +107,7 @@ const companies: Company[] = allCompanies.data || [];
       </section>
 
 
-      {/* ── Section 5: Revenue Opportunity ── */}
+
       
 
       {/* ── Section 5: Revenue Opportunity ── */}

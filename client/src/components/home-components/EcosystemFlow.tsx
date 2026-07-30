@@ -38,14 +38,14 @@ type Company = {
 // Icon & color rotation
 const ICON_POOL = [Globe, ShieldCheck, Sparkles, Truck, Shirt, Gift, TrendingUp, Building2];
 const COLOR_POOL = [
-  "from-blue-500 to-blue-700",
+  "from-amber-500 to-amber-700",
   "from-emerald-500 to-emerald-700",
   "from-teal-500 to-teal-700",
   "from-orange-500 to-orange-700",
   "from-pink-500 to-pink-700",
-  "from-purple-500 to-purple-700",
-  "from-indigo-500 to-indigo-700",
-  "from-amber-500 to-amber-700",
+  "from-amber-600 to-amber-800",
+  "from-yellow-500 to-yellow-700",
+  "from-amber-400 to-amber-600",
 ];
 
 function CenterNode({ data }: any) {
@@ -53,12 +53,12 @@ function CenterNode({ data }: any) {
 
   return (
     <div
-      className={`relative rounded-2xl bg-slate-950 border-2 border-indigo-500/60 shadow-xl shadow-indigo-500/10 text-center text-white transition-transform duration-300 hover:scale-[1.03] ${
+      className={`relative rounded-2xl bg-slate-950 border-2 border-amber-500/60 shadow-xl shadow-amber-500/10 text-center text-white transition-transform duration-300 hover:scale-[1.03] ${
         compact ? "p-3 w-36" : "p-6 w-64"
       }`}
     >
       <div
-        className={`mx-auto rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white flex items-center justify-center shadow-md ${
+        className={`mx-auto rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-md ${
           compact ? "w-7 h-7 mb-1.5" : "w-11 h-11 mb-3"
         }`}
       >
@@ -74,7 +74,7 @@ function CenterNode({ data }: any) {
         PETRONICK HOLDINGS
       </div>
       <div
-        className={`font-semibold uppercase text-indigo-300 ${
+        className={`font-semibold uppercase text-amber-300 ${
           compact ? "mt-0.5 text-[7px] tracking-[0.1em]" : "mt-1 text-sm tracking-[0.2em]"
         }`}
       >
@@ -101,7 +101,7 @@ function SubsidiaryNode({ data }: any) {
         compact ? "p-2.5 gap-2 w-36" : "p-5 gap-3 w-64"
       } ${
         isSelected
-          ? "border-indigo-400 ring-2 ring-indigo-500/20 shadow-lg shadow-indigo-500/10 scale-[1.03]"
+          ? "border-amber-400 ring-2 ring-amber-500/20 shadow-lg shadow-amber-500/10 scale-[1.03]"
           : "border-slate-800 hover:border-slate-700 hover:bg-slate-800/80"
       }`}
     >
@@ -229,7 +229,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         targetHandle,
         animated: isSelected,
         style: {
-          stroke: isSelected ? "#6366f1" : "#334155",
+          stroke: isSelected ? "#f59e0b" : "#334155",
           strokeWidth: isSelected ? 3 : 1.5,
           opacity: isSelected ? 1 : 0.6,
         },
@@ -288,7 +288,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
           Ecosystem Diagram
         </div>
         <div className="flex items-center gap-2 text-slate-400">
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-indigo-500 animate-pulse flex-shrink-0" />
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-500 animate-pulse flex-shrink-0" />
           <span>Active Connected Synergy</span>
         </div>
         <div className="flex items-center gap-2 text-slate-400">

@@ -50,7 +50,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
         <div>
-          <p className="text-sm font-semibold tracking-[0.2em] text-indigo-400 uppercase mb-3">
+          <p className="text-sm font-semibold tracking-[0.2em] text-amber-400 uppercase mb-3">
             About the Holding Company
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight tracking-tight">
@@ -70,7 +70,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             onClick={() => handleViewChange("flow")}
             className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all ${
               viewMode === "flow"
-                ? "bg-indigo-600 text-white shadow-sm"
+                ? "bg-amber-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -82,7 +82,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             onClick={() => handleViewChange("list")}
             className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all ${
               viewMode === "list"
-                ? "bg-indigo-600 text-white shadow-sm"
+                ? "bg-amber-600 text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -112,7 +112,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                 onClick={() => setActiveId(company.id)}
                 className={`w-full text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
                   company.id === activeId
-                    ? "bg-slate-800 border-indigo-500"
+                    ? "bg-slate-800 border-amber-500"
                     : "bg-slate-900/40 border-slate-800 hover:border-slate-700"
                 }`}
               >
@@ -125,7 +125,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                   </p>
                 </div>
                 {company.revenueStage && (
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 flex-shrink-0">
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 flex-shrink-0">
                     {company.revenueStage}
                   </span>
                 )}
@@ -138,12 +138,12 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
         <div className="lg:col-span-5 xl:col-span-4 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 flex flex-col">
           {activeCompany ? (
             <>
-              <p className="text-xs font-semibold tracking-[0.2em] text-indigo-400 uppercase mb-4">
+              <p className="text-xs font-semibold tracking-[0.2em] text-amber-400 uppercase mb-4">
                 Ecosystem Integration Detail
               </p>
 
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
                   {activeCompany.name.charAt(0)}
                 </div>
                 <div className="min-w-0">
@@ -172,7 +172,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                     href={activeCompany.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-amber-400 hover:text-amber-300 transition-colors"
                   >
                     Visit <ExternalLink size={14} />
                   </a>
