@@ -25,7 +25,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      {/* ── Section 1: Hero (FULL WIDTH — Container নেই) ── */}
+      
       <HeroSection
         image={heroSection?.image || "/placeholder-hero.jpg"}
         content={heroSection?.content ?? {}}
