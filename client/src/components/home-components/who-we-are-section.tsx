@@ -23,23 +23,22 @@ const stats = [
     number: 100,
     suffix: "%",
     label: "Revenue Ready",
-    bg: "bg-white text-gray-900 ring-1 ring-white/20",
+    bg: "bg-white/95 text-gray-900 shadow-sm",
   },
   {
     number: null,
     display: "Multi",
     label: "Market Reach",
-    bg: "bg-gradient-to-br from-gray-900 to-gray-800 text-white",
+    bg: "bg-gradient-to-br from-slate-800 to-slate-900 text-white",
   },
   {
     number: 1,
     suffix: "",
     label: "Ecosystem",
-    bg: "bg-white text-gray-900 ring-1 ring-white/20",
+    bg: "bg-white/95 text-gray-900 shadow-sm",
   },
 ];
 
-// ✅ Explicit Variants type — no inference issues
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -75,8 +74,11 @@ export default function WhoWeAreSection() {
 
   return (
     <section className="relative py-20 lg:py-24 overflow-hidden">
-      {/* Background: amber-dominant gradient, ending dark to connect with Hero/Ecosystem */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-amber-600 to-gray-900" />
+      {/* Softened amber gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-600/90 via-amber-700 to-slate-900" />
+      
+      {/* Soft dark overlay for better balance */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left: Text */}
@@ -85,7 +87,7 @@ export default function WhoWeAreSection() {
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
         >
-          <p className="text-sm font-semibold tracking-[0.2em] text-white/70 uppercase mb-3">
+          <p className="text-sm font-semibold tracking-[0.2em] text-amber-100/80 uppercase mb-3">
             Who We Are
           </p>
 
@@ -93,7 +95,7 @@ export default function WhoWeAreSection() {
             One Platform. Multiple Revenue Streams.
           </h2>
 
-          <p className="text-base leading-8 text-white/80 mb-8 max-w-2xl">
+          <p className="text-base leading-8 text-white/85 mb-8 max-w-2xl">
             Petronick Corporate Holdings LLC owns and operates multiple
             business units designed to work together — accelerating market
             entry, scaling operations, and maximizing profitability across
@@ -108,7 +110,7 @@ export default function WhoWeAreSection() {
               >
                 <CheckCircle2
                   size={18}
-                  className="text-emerald-400 flex-shrink-0"
+                  className="text-amber-300 flex-shrink-0"
                 />
                 {item}
               </li>
@@ -128,7 +130,7 @@ export default function WhoWeAreSection() {
             <motion.div
               key={s.label}
               variants={itemVariants}
-              className={`rounded-2xl p-7 shadow-lg ${s.bg}`}
+              className={`rounded-2xl p-7 shadow-xl ${s.bg}`}
             >
               <div className="text-3xl lg:text-4xl font-bold tracking-tight">
                 {s.number !== null ? (
@@ -143,7 +145,7 @@ export default function WhoWeAreSection() {
 
               <div
                 className={`mt-2 text-base font-medium ${
-                  s.bg.includes("bg-white") ? "opacity-60" : "opacity-80"
+                  s.bg.includes("bg-white") ? "text-gray-600" : "text-white/80"
                 }`}
               >
                 {s.label}
