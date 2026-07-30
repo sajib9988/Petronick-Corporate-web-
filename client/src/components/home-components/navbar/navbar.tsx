@@ -16,7 +16,7 @@ export default function Navbar() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
- <header className="w-full relative sticky top-0 z-50 border-b-2 border-amber-700/30">
+<header className="w-full relative sticky top-0 z-50 border-b-2 border-amber-700/30">
   <div 
     className="absolute inset-0"
     style={{
@@ -29,7 +29,6 @@ export default function Navbar() {
     }}
   />
   
-  {/* Stripe-like container: wider + less padding */}
   <div className="relative max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
     <div className="flex items-center justify-between h-20">
 
@@ -45,8 +44,8 @@ export default function Navbar() {
         />
       </Link>
 
-      {/* Desktop Nav — gap কমাও + font size বাড়াও */}
-      <nav className="hidden lg:flex items-center gap-6">
+      {/* Desktop Nav — gap বাড়ানো */}
+      <nav className="hidden lg:flex items-center gap-10">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -65,12 +64,8 @@ export default function Navbar() {
           >
             {link.label}
 
-            {/* Hover Underline */}
-            <span 
-              className="absolute bottom-6 left-0 h-[2px] bg-amber-400 transition-all duration-300 w-0 group-hover:w-full"
-            />
+            <span className="absolute bottom-6 left-0 h-[2px] bg-amber-400 transition-all duration-300 w-0 group-hover:w-full" />
 
-            {/* Active Line */}
             {isActive(link.href) && (
               <span 
                 className="absolute bottom-6 left-0 right-0 h-[2px] bg-amber-500"
