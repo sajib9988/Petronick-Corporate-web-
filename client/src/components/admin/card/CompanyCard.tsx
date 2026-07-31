@@ -44,38 +44,53 @@ export default function CompanyCard({
 }: CompanyCardProps) {
   const direction = index % 2 === 0 ? "left" : "right";
 
-  return (
-    <motion.div
-      variants={fadeSlide(direction, index * 0.08, 90, 0.65)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{
-        once: true,
-        amount: 0.25,
-      }}
-      whileHover={{
-        y: -8,
-        scale: 1.02,
-        transition: {
-          duration: 0.25,
-        },
-      }}
-      className={`group relative flex flex-col overflow-hidden rounded-3xl border
-      bg-gray-50          {/* ← এখানে bg-white থেকে bg-gray-50 করা হয়েছে */}
-      p-7 transition-all duration-300
-      ${
+return (
+  <motion.div
+    variants={fadeSlide(direction, index * 0.08, 90, 0.65)}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{
+      once: true,
+      amount: 0.25,
+    }}
+    whileHover={{
+      y: -8,
+      scale: 1.02,
+      transition: {
+        duration: 0.25,
+      },
+    }}
+    className="group relative"
+  >
+    {/* Back Glow */}
+    <div
+      className="
+        pointer-events-none
+        absolute
+        -inset-3
+        -z-10
+        rounded-[32px]
+        opacity-0
+        blur-3xl
+        transition-all
+        duration-500
+        group-hover:opacity-100
+        group-hover:scale-105
+        bg-gradient-to-r
+        from-orange-400/20
+        via-amber-300/15
+        to-orange-500/20
+      "
+    />
+
+    {/* Card */}
+    <div
+      className={`relative flex flex-col overflow-hidden rounded-3xl border bg-gray-50 p-7 transition-all duration-300 ${
         company.isVisible
-          ? "border-gray-200 hover:border-amber-200 hover:shadow-[0_25px_60px_rgba(0,0,0,.12)]"
+          ? "border-gray-200 hover:border-orange-300 hover:shadow-[0_25px_60px_rgba(0,0,0,.12)]"
           : "border-gray-200 opacity-50 grayscale"
       }`}
     >
-      {/* Glow */}
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-  <div className="absolute -top-20 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-[#F97316]/20 blur-[90px]" />
-
-  <div className="absolute bottom-6 right-6 h-24 w-24 rounded-full bg-[#FBBF24]/20 blur-[60px]" />
-</div>
-
       {/* Top */}
       <div className="relative flex items-start justify-between">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm">
@@ -116,7 +131,7 @@ export default function CompanyCard({
 
       {/* Content */}
       <div className="relative mt-7 flex-1">
-        <h3 className="text-xl font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-amber-600">
+        <h3 className="text-xl font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
           {company.name}
         </h3>
 
@@ -129,7 +144,7 @@ export default function CompanyCard({
       <div className="relative mt-8 flex items-center justify-between border-t border-gray-200 pt-5">
         <Link
           href={`/companies/${company.id}`}
-          className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 transition-all hover:text-amber-600"
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 transition-all hover:text-orange-600"
         >
           View Details
 
@@ -144,14 +159,14 @@ export default function CompanyCard({
             href={company.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-amber-600"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-orange-600"
           >
             Website
-
             <ExternalLink size={14} />
           </a>
         )}
       </div>
-    </motion.div>
-  );
+    </div>
+  </motion.div>
+);
 }
