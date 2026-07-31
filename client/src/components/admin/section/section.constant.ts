@@ -78,13 +78,13 @@ export const FIELDS: Record<
 
   // ─── Revenue / Partner Section ───────────────────────────
   // PDF: Attract Promotion Agents
-  REVENUE: [
-    { key: "headline", label: "Headline" },
-    { key: "paragraph", label: "Paragraph", multiline: true },
-    { key: "btnText", label: "Button Text" },
-    { key: "btnLink", label: "Button Link" },
-  ],
-
+REVENUE: [
+  { key: "label", label: "Badge Label (e.g. Partner With Us)" },
+  { key: "headline", label: "Headline" },
+  { key: "paragraph", label: "Paragraph", multiline: true },
+  { key: "btnText", label: "Button Text" },
+  { key: "btnLink", label: "Button Link" },
+],
   // ─── Closing Authority Section ───────────────────────────
   // PDF: Short reinforcing statement
   CLOSING: [

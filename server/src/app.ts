@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
 
-// Home page route
+
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     title: "Welcome to your Express app",

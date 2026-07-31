@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 interface RevenueOpportunityContent {
+  label?: string;        // ← নতুন
   headline?: string;
   paragraph?: string;
   btnText?: string;
@@ -14,6 +15,7 @@ interface RevenueOpportunitySectionProps {
 }
 
 export default function RevenueOpportunitySection({ image, content }: RevenueOpportunitySectionProps) {
+  const label = content?.label || "Partner With Us";        // ← dynamic
   const headline = content?.headline || "Revenue Opportunity Awaits";
   const paragraph =
     content?.paragraph ||
@@ -44,7 +46,11 @@ export default function RevenueOpportunitySection({ image, content }: RevenueOpp
       )}
 
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">Partner With Us</p>
+        {/* Badge Label — এখন dynamic */}
+        <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
+          {label}
+        </p>
+        
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">{headline}</h2>
         <div className="mx-auto mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-amber-400 to-amber-600" />
         <p className="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto mb-8">{paragraph}</p>
