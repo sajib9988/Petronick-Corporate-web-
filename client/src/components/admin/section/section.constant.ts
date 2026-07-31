@@ -87,12 +87,16 @@ REVENUE: [
 ],
   // ─── Closing Authority Section ───────────────────────────
   // PDF: Short reinforcing statement
-  CLOSING: [
-    { key: "headline", label: "Headline" },
-    { key: "paragraph", label: "Paragraph", multiline: true },
-    { key: "ctaText", label: "CTA Text (optional)" },
-    { key: "ctaLink", label: "CTA Link (optional)" },
-  ],
+// ─── Closing Authority Section ───────────────────────────
+CLOSING: [
+  { key: "headline", label: "Headline" },
+  { key: "paragraph", label: "Paragraph", multiline: true },
+  { key: "badge1", label: "Badge 1" },
+  { key: "badge2", label: "Badge 2" },
+  { key: "badge3", label: "Badge 3" },
+  { key: "ctaText", label: "CTA Text" },
+  { key: "ctaLink", label: "CTA Link" },
+],
 
   // ─── Other existing sections ─────────────────────────────
   ABOUT: [
