@@ -64,24 +64,24 @@ return (
   >
     {/* Back Glow */}
     <div
-      className="
-        pointer-events-none
-        absolute
-        -inset-3
-        -z-10
-        rounded-[32px]
-        opacity-0
-        blur-3xl
-        transition-all
-        duration-500
-        group-hover:opacity-100
-        group-hover:scale-105
-        bg-gradient-to-r
-        from-orange-400/20
-        via-amber-300/15
-        to-orange-500/20
-      "
-    />
+  className="
+    pointer-events-none
+    absolute
+    -inset-5
+    -z-10
+    rounded-[36px]
+    opacity-0
+    transition-all
+    duration-500
+    group-hover:opacity-100
+    group-hover:scale-110
+    bg-gradient-to-r
+    from-[#F97316]/50
+    via-[#FDBA74]/40
+    to-[#F97316]/50
+    blur-[70px]
+  "
+/>
 
     {/* Card */}
     <div
