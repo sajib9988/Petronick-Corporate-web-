@@ -71,8 +71,10 @@ export default function CompanyCard({
     >
       {/* Glow */}
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <div className="absolute -top-24 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-amber-400/10 blur-3xl" />
-      </div>
+  <div className="absolute -top-20 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-[#F97316]/20 blur-[90px]" />
+
+  <div className="absolute bottom-6 right-6 h-24 w-24 rounded-full bg-[#FBBF24]/20 blur-[60px]" />
+</div>
 
       {/* Top */}
       <div className="relative flex items-start justify-between">
