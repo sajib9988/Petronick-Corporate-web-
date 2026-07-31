@@ -58,26 +58,26 @@ export default async function HomePage() {
 
       {/* ── Section 4: Companies Preview Grid ── */}
 
-<section className="py-8 sm:py-10">
-  <Container>
-    <div className="rounded-3xl border border-amber-200 bg-gray-900 overflow-visible px-4 sm:px-6 lg:px-8 py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {companies.map((company, index) => (
-          <CompanyCard key={company.id} company={company} index={index} />
-        ))}
-      </div>
+      <section className="py-8 sm:py-10">
+        <Container>
+          <div className="rounded-3xl border border-amber-200 bg-gray-900 overflow-visible px-4 sm:px-6 lg:px-8 py-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {companies.map((company, index) => (
+                <CompanyCard key={company.id} company={company} index={index} />
+              ))}
+            </div>
 
-      <div className="mt-6 text-center sm:hidden">
-        <Link
-          href="/companies"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-200 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800"
-        >
-          View all companies <ArrowRight size={13} />
-        </Link>
-      </div>
-    </div>
-  </Container>
-</section>
+            <div className="mt-6 text-center sm:hidden">
+              <Link
+                href="/companies"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-200 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800"
+              >
+                View all companies <ArrowRight size={13} />
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
       <section className="py-8 sm:py-10">
