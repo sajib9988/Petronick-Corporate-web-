@@ -61,12 +61,12 @@ export default function CompanyCard({
         },
       }}
       className={`group relative flex flex-col overflow-hidden rounded-3xl border
-      bg-white
+      bg-gray-50          {/* ← এখানে bg-white থেকে bg-gray-50 করা হয়েছে */}
       p-7 transition-all duration-300
       ${
         company.isVisible
-          ? "border-gray-100 hover:border-amber-200 hover:shadow-[0_25px_60px_rgba(0,0,0,.12)]"
-          : "border-gray-100 opacity-50 grayscale"
+          ? "border-gray-200 hover:border-amber-200 hover:shadow-[0_25px_60px_rgba(0,0,0,.12)]"
+          : "border-gray-200 opacity-50 grayscale"
       }`}
     >
       {/* Glow */}
@@ -76,7 +76,7 @@ export default function CompanyCard({
 
       {/* Top */}
       <div className="relative flex items-start justify-between">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gray-100 bg-gray-50 shadow-sm">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm">
           {company.logo ? (
             <img
               src={company.logo}
@@ -124,7 +124,7 @@ export default function CompanyCard({
       </div>
 
       {/* Footer */}
-      <div className="relative mt-8 flex items-center justify-between border-t border-gray-100 pt-5">
+      <div className="relative mt-8 flex items-center justify-between border-t border-gray-200 pt-5">
         <Link
           href={`/companies/${company.id}`}
           className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 transition-all hover:text-amber-600"

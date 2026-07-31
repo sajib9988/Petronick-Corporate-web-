@@ -57,28 +57,29 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 4: Companies Preview Grid ── */}
-      <section className="py-8 sm:py-10">
-        <Container>
-       <div className="rounded-[28px] border border-slate-200 bg-slate-50 overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {companies.map((company, index) => (
-                <div key={company.id}>
-                  <CompanyCard company={company} index={index} />
-                </div>
-              ))}
-            </div>
 
-            <div className="mt-6 text-center sm:hidden">
-              <Link
-                href="/companies"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
-              >
-                View all companies <ArrowRight size={13} />
-              </Link>
-            </div>
+<section className="py-8 sm:py-10">
+  <Container>
+    <div className="rounded-3xl border border-amber-100 bg-white overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {companies.map((company, index) => (
+          <div key={company.id}>
+            <CompanyCard company={company} index={index} />
           </div>
-        </Container>
-      </section>
+        ))}
+      </div>
+
+      <div className="mt-6 text-center sm:hidden">
+        <Link
+          href="/companies"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50"
+        >
+          View all companies <ArrowRight size={13} />
+        </Link>
+      </div>
+    </div>
+  </Container>
+</section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
       <section className="py-8 sm:py-10">
