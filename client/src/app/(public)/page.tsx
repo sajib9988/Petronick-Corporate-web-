@@ -1,8 +1,11 @@
 import CompanyCard from "@/components/admin/card/CompanyCard";
 import { Container } from "@/components/Container";
+import ClosingSection from "@/components/home-components/ClosingSection";
 import EcosystemSection from "@/components/home-components/EcosystemSection";
 import HeroSection from "@/components/home-components/hero-section";
+import RevenueOpportunitySection from "@/components/home-components/RevenueOpportunitySection";
 import WhoWeAreSection from "@/components/home-components/who-we-are-section";
+
 import { Company } from "@/lib/type";
 import { getPageBySlug } from "@/service/cms";
 import { getAllCompanies } from "@/service/company";
@@ -18,14 +21,15 @@ export default async function HomePage() {
   ]);
 
   const homePage = pageRes.data;
-  const heroSection = homePage?.sections?.find(
-    (s: any) => s.sectionType === "HERO"
-  );
+  const heroSection = homePage?.sections?.find((s: any) => s.sectionType === "HERO");
+  const whoWeAreSection = homePage?.sections?.find((s: any) => s.sectionType === "WHO_WE_ARE");
+  const revenueSection = homePage?.sections?.find((s: any) => s.sectionType === "REVENUE");
+  const closingSection = homePage?.sections?.find((s: any) => s.sectionType === "CLOSING");
+
   const companies: Company[] = allCompanies.data || [];
 
   return (
     <main>
-      
       <HeroSection
         image={heroSection?.image || "/placeholder-hero.jpg"}
         content={heroSection?.content ?? {}}
@@ -34,8 +38,11 @@ export default async function HomePage() {
       {/* ── Section 2: Who We Are ── */}
       <section className="py-8 sm:py-10">
         <Container>
-          <div className="bg-white rounded-3xl border border-amber-100 overflow-hidden">
-            <WhoWeAreSection />
+          <div className="rounded-3xl overflow-hidden">
+            <WhoWeAreSection
+              image={whoWeAreSection?.image}
+              content={whoWeAreSection?.content ?? {}}
+            />
           </div>
         </Container>
       </section>
@@ -52,7 +59,7 @@ export default async function HomePage() {
       {/* ── Section 4: Companies Preview Grid ── */}
       <section className="py-8 sm:py-10">
         <Container>
-          <div className="rounded-3xl border border-green-600 overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
+          <div className="rounded-3xl border border-amber-100 bg-white overflow-hidden px-4 sm:px-6 lg:px-8 py-16">
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {companies.map((company, index) => (
                 <div key={company.id}>
@@ -76,81 +83,20 @@ export default async function HomePage() {
       {/* ── Section 5: Revenue Opportunity ── */}
       <section className="py-8 sm:py-10">
         <Container>
-          <div className="relative overflow-hidden bg-gray-900 text-white py-20 rounded-3xl">
-            {/* Grid pattern texture */}
-            <div
-              className="absolute inset-0 opacity-[0.05]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-                backgroundSize: "48px 48px",
-              }}
-            />
-
-            {/* Dual amber glow */}
-            <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-amber-600/10 blur-3xl" />
-
-            <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
-                Partner With Us
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-                Revenue Opportunity Awaits
-              </h2>
-              <div className="mx-auto mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-amber-400 to-amber-600" />
-              <p className="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto mb-8">
-                Qualified Promotion Agents can represent one or multiple Petronick
-                business units depending on their experience and focus area. Join
-                our growing ecosystem and earn across multiple channels.
-              </p>
-              <Link
-                href="/promotion-agent"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-7 py-3 rounded-lg shadow-lg shadow-amber-900/30 hover:shadow-amber-700/40 hover:scale-[1.03] transition-all"
-              >
-                Apply as a Promotion Agent <ArrowRight size={14} />
-              </Link>
-            </div>
-          </div>
+          <RevenueOpportunitySection
+            image={revenueSection?.image}
+            content={revenueSection?.content ?? {}}
+          />
         </Container>
       </section>
 
       {/* ── Section 6: Closing Authority ── */}
       <section className="py-8 sm:py-10">
         <Container>
-          <div className="relative bg-white rounded-3xl border border-amber-100 shadow-sm overflow-hidden py-16 px-4 sm:px-6 lg:px-8 text-center">
-            {/* Top accent line */}
-            <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
-
-            <div className="inline-flex items-center gap-3 flex-wrap justify-center mb-8">
-              {[
-                "Scalable Infrastructure",
-                "Multiple Revenue Channels",
-                "Strategic Ownership Model",
-              ].map((label) => (
-                <span
-                  key={label}
-                  className="text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
-                >
-                  {label}
-                </span>
-              ))}
-            </div>
-
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-              Built to Scale. Designed to Win.
-            </h2>
-            <p className="text-gray-500 text-sm max-w-lg mx-auto mb-7">
-              Petronick Corporate Holdings is positioned to grow rapidly across
-              multiple markets with infrastructure already in place.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-6 py-2.5 rounded-lg shadow-md shadow-amber-900/10 hover:shadow-amber-700/20 hover:scale-[1.03] transition-all"
-            >
-              Get in Touch <ArrowRight size={14} />
-            </Link>
-          </div>
+          <ClosingSection
+            image={closingSection?.image}
+            content={closingSection?.content ?? {}}
+          />
         </Container>
       </section>
     </main>
