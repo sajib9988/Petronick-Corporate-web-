@@ -1,11 +1,21 @@
 
 "use server";
 
-import { Volume1 } from "lucide-react";
+
+import { cookies } from "next/dist/server/request/cookies";
+
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1";
 
 
+const getAuthHeaders = async (headers: Record<string, string> = {}) => {
+   const cookieStore = await cookies();
+   const accessToken = cookieStore.get("accessToken")?.value;
+   return {
+    ...headers,
+     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+  };
+ };
 
 
 // Safe JSON helper
@@ -52,6 +62,8 @@ export const getAllContacts = async (params?: {
 
     const res = await fetch(`${BASE_URL}/contact?${query}`, {
       credentials: "include",
+    headers: await getAuthHeaders(),
+    cache: "no-store",
     });
 
     return await safeJson(res);
@@ -66,6 +78,7 @@ export const deleteContact = async (id: string) => {
     const res = await fetch(`${BASE_URL}/contact/${id}`, {
       method: "DELETE",
       credentials: "include",
+     headers: await getAuthHeaders(),
     });
     return await safeJson(res);
   } catch (err) {
