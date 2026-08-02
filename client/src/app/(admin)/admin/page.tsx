@@ -78,7 +78,7 @@ export default async function AdminDashboardPage() {
             Here&apos;s what&apos;s happening with Petronick today.
           </p>
         </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 bg-sky-400 border border-gray-100 px-3 py-1.5 rounded-lg">
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-white bg-sky-400 border border-gray-100 px-3 py-1.5 rounded-lg">
           <Clock size={12} />
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -98,14 +98,14 @@ export default async function AdminDashboardPage() {
       {/* Recent Tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Recent Agents */}
-        <div className="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
+        <div className="bg-sky-400 rounded-xl border border-gray-100 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
             <h3 className="font-semibold text-gray-900 text-sm">
               Recent Agent Applications
             </h3>
             <Link
               href="/admin/agents"
-              className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+              className="text-xs text-white hover:text-gray-700 transition-colors"
             >
               View all →
             </Link>
@@ -144,8 +144,8 @@ export default async function AdminDashboardPage() {
                 )
             ) : (
               <div className="px-5 py-8 text-center">
-                <Users size={24} className="text-gray-200 mx-auto mb-2" />
-                <p className="text-sm text-gray-400">No applications yet</p>
+                <Users size={24} className="text-white mx-auto mb-2" />
+                <p className="text-sm text-white">No applications yet</p>
               </div>
             )}
           </div>
@@ -159,7 +159,7 @@ export default async function AdminDashboardPage() {
             </h3>
             <Link
               href="/admin/contact"
-              className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+              className="text-xs text-white hover:text-gray-700 transition-colors"
             >
               View all →
             </Link>
@@ -193,8 +193,8 @@ export default async function AdminDashboardPage() {
                 )
             ) : (
               <div className="px-5 py-8 text-center">
-                <Mail size={24} className="text-gray-200 mx-auto mb-2" />
-                <p className="text-sm text-gray-400">No messages yet</p>
+                <Mail size={24} className="text-sky-200 mx-auto mb-2" />
+                <p className="text-sm text-sky-400">No messages yet</p>
               </div>
             )}
           </div>
