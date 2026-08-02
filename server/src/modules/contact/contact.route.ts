@@ -11,9 +11,9 @@ const router = Router();
 router.post("/", contactController.createContact);
 
 // Admin only
-router.get("/", authorize(Role.ADMIN), contactController.getAllContacts);
-router.get("/export/csv", authorize(Role.ADMIN), contactController.exportCSV);
-router.get("/:id", authorize(Role.ADMIN), contactController.getContactById);
-router.delete("/:id", authorize(Role.ADMIN), contactController.deleteContact);
+router.get("/", authorize(Role.ADMIN, Role.SUPER_ADMIN), contactController.getAllContacts);
+router.get("/export/csv", authorize(Role.ADMIN, Role.SUPER_ADMIN), contactController.exportCSV);
+router.get("/:id", authorize(Role.ADMIN, Role.SUPER_ADMIN), contactController.getContactById);
+router.delete("/:id", authorize(Role.ADMIN, Role.SUPER_ADMIN), contactController.deleteContact);
 
 export const contactRoutes = router;
