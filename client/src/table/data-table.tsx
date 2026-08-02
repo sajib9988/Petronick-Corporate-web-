@@ -102,7 +102,7 @@ export function DataTable<TData>({
       )}
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-100 bg-gray-100 overflow-hidden">
+      <div className="rounded-xl border border-gray-100 bg-sky-400 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             {/* Head */}

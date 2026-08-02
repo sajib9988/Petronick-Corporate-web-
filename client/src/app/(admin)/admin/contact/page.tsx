@@ -94,7 +94,7 @@ export default function ContactsPage() {
           <p className="text-sm text-gray-400">No messages yet.</p>
         </div>
       ) : (
-        <div className="bg-gray-100 rounded-xl border border-gray-100 overflow-hidden divide-y divide-gray-50">
+        <div className="bg-sky-400 rounded-xl border border-gray-100 overflow-hidden divide-y divide-gray-50">
           {contacts.map((contact) => (
             <div key={contact.id} className="px-5 py-4 hover:bg-gray-50 transition-colors group">
               <div className="flex items-start justify-between gap-4">
