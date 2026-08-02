@@ -127,10 +127,10 @@ export default async function AdminDashboardPage() {
                       className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors"
                     >
                       <div className="min-w-0 flex-1 mr-3">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                        <p className="text-sm font-medium text-black truncate">
                           {agent.fullName}
                         </p>
-                        <p className="text-xs text-gray-400 truncate">
+                        <p className="text-xs text-black truncate">
                           {agent.focus} · {agent.email}
                         </p>
                       </div>
