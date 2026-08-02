@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-
+import { motion } from "framer-motion";
 import { AuthSection } from "./AuthSection";
 import { navLinks } from "./nav-links";
 import Image from "next/image";
@@ -45,7 +45,7 @@ export default function Navbar() {
       </Link>
 
       {/* Desktop Nav — gap বাড়ানো */}
-      <nav className="hidden lg:flex items-center gap-10">
+      {/* <nav className="hidden lg:flex items-center gap-10">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -74,7 +74,33 @@ export default function Navbar() {
             )}
           </Link>
         ))}
-      </nav>
+      </nav> */}
+
+{/* Desktop Nav — white rounded pill, drops in from top on load */}
+<motion.nav
+  initial={{ y: -70, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  className="hidden lg:flex items-center gap-1 bg-white rounded-full px-2 py-1.5 shadow-lg shadow-black/25 ring-1 ring-black/5"
+>
+  {navLinks.map((link) => (
+    <Link
+      key={link.href}
+      href={link.href}
+      className={cn(
+        "px-4 py-2 rounded-full text-[14px] font-semibold tracking-wide transition-all duration-300",
+        isActive(link.href)
+          ? "bg-gradient-to-r from-amber-400 to-amber-600 text-stone-900 shadow-sm"
+          : "text-gray-600 hover:text-amber-600 hover:bg-amber-50"
+      )}
+    >
+      {link.label}
+    </Link>
+  ))}
+</motion.nav>
+
+
+
 
       <div className="hidden lg:flex items-center gap-2">
         <AuthSection />
