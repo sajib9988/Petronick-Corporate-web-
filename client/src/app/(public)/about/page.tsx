@@ -1,33 +1,39 @@
-import { ArrowRight, Building2, Target, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, Globe, Sparkles, Target, TrendingUp, Truck, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
-  const pillars = [
-    {
-      icon: <TrendingUp size={20} className="text-blue-600" />,
-      bg: "bg-blue-50",
-      title: "Digital Product Launch",
-      desc: "Rapid go-to-market capability through Fusion DigiWeb — from concept to revenue-generating product.",
-    },
-    {
-      icon: <Building2 size={20} className="text-emerald-600" />,
-      bg: "bg-emerald-50",
-      title: "Procurement & Logistics",
-      desc: "Petron Fulfillment provides regional packaging and logistics infrastructure to support all subsidiaries.",
-    },
-    {
-      icon: <Users size={20} className="text-purple-600" />,
-      bg: "bg-purple-50",
-      title: "Advisory Expertise",
-      desc: "Profit Pioneers delivers targeted small business advisory across marketing, management, and technology.",
-    },
-    {
-      icon: <Target size={20} className="text-amber-600" />,
-      bg: "bg-amber-50",
-      title: "B2B & B2C Distribution",
-      desc: "Celebrations Are Sweet and Germ Solutions serve multiple market segments through diversified channels.",
-    },
-  ];
+ const pillars = [
+  {
+    icon: <Building2 size={20} className="text-blue-600" />,
+    bg: "bg-blue-50",
+    title: "Business Creation",
+    desc: "Launching and scaling new ventures under the Petronick umbrella.",
+  },
+  {
+    icon: <Globe size={20} className="text-emerald-600" />,
+    bg: "bg-emerald-50",
+    title: "Digital Growth",
+    desc: "Marketing, websites, and customer acquisition through Fusion DigiWeb.",
+  },
+  {
+    icon: <Truck size={20} className="text-purple-600" />,
+    bg: "bg-purple-50",
+    title: "Fulfillment Support",
+    desc: "Packaging, logistics, and operational support through Petron Fulfillment.",
+  },
+  {
+    icon: <Briefcase size={20} className="text-amber-600" />,
+    bg: "bg-amber-50",
+    title: "Advisory Services",
+    desc: "Business strategy and consulting through Profit Pioneers.",
+  },
+  {
+    icon: <Sparkles size={20} className="text-rose-600" />,
+    bg: "bg-rose-50",
+    title: "Specialty Commerce",
+    desc: "Sourcing, restoring, and selling antique, specialty, and unique consumer products through Coffee Bean Furniture.",
+  },
+];
 
   return (
     <main className="min-h-screen bg-[#4dd0e1]">
@@ -118,7 +124,7 @@ export default function AboutPage() {
               </p>
               <h2 className="text-2xl font-bold text-gray-900">Strategic Capabilities</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {pillars.map((p) => (
                 <div
                   key={p.title}
@@ -133,7 +139,27 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
+{/* Operating Model */}
+<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
+    <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
+      <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
+        HOW WE OPERATE
+      </p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-5">Operating Model</h2>
+      <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
+        Each Petronick company contributes a unique capability — digital growth,
+        fulfillment, advisory, or specialty commerce — while benefiting from
+        shared expertise, marketing infrastructure, and operational support
+        across the ecosystem. This collaborative model lets every business
+        unit scale faster than it could independently, while Petronick
+        Corporate Holdings LLC provides the strategic leadership that keeps
+        the entire portfolio aligned toward sustainable, revenue-driven
+        growth.
+      </p>
+    </div>
+  </div>
+</section>
       {/* CTA Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">

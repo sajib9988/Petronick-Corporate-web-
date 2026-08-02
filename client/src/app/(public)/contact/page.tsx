@@ -1,5 +1,5 @@
 import ContactForm from "@/components/admin/form/contact-form";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Globe, Mail, MapPin, Phone,  } from "lucide-react";
 import Image from "next/image";
 
 export default function ContactPage() {
@@ -47,6 +47,13 @@ export default function ContactPage() {
               value: "info@petronick.com",
               bg: "bg-emerald-50",
             },
+  {
+           icon: <Globe size={18} className="text-orange-600" />,
+            label: "Website",
+            value: "petronickholdings.com",
+            bg: "bg-orange-50",
+          },
+
             {
               icon: <Phone size={18} className="text-blue-600" />,
               label: "Phone",

@@ -23,6 +23,7 @@ const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
+  subject: z.string().min(1, "Subject is required"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
@@ -43,6 +44,7 @@ export default function ContactForm({ className }: ContactFormProps) {
       name: "",
       email: "",
       phone: "",
+      subject: "",
       message: "",
     },
   });
@@ -56,6 +58,7 @@ export default function ContactForm({ className }: ContactFormProps) {
         name: values.name,
         email: values.email,
         phone: values.phone || undefined,
+        subject: values.subject,
         message: values.message,
       });
 
@@ -164,7 +167,22 @@ export default function ContactForm({ className }: ContactFormProps) {
             </FormItem>
           )}
         />
-
+<FormField
+  control={form.control}
+  name="subject"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Subject *</FormLabel>
+      <FormControl>
+        <Input
+          placeholder="Project inquiry"
+          {...field}
+        />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
         {/* Message */}
         <FormField
           control={form.control}

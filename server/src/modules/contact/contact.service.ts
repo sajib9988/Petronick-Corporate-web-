@@ -14,18 +14,18 @@ const createContact = async (payload: ICreateContact) => {
   });
 
   // User কে confirmation
-  sendEmail({
+ sendEmail({
     to: payload.email,
     subject: "We received your message — Petronick Corporate Holdings",
     templateName: "contact-confirmation",
     templateData: {
       userName: payload.name,
       message: payload.message,
+      subject: payload.subject ?? "General Inquiry",
       appName: "Petronick Corporate Holdings",
     },
   });
 
-  // Admin কে notification
   sendEmail({
     to: envVars.SUPER_ADMIN_EMAIL,
     subject: "New Contact Message Received",
@@ -34,6 +34,7 @@ const createContact = async (payload: ICreateContact) => {
       userName: payload.name,
       email: payload.email,
       phone: payload.phone ?? "N/A",
+      subject: payload.subject ?? "General Inquiry",
       message: payload.message,
       appName: "Petronick Corporate Holdings",
     },
@@ -97,7 +98,7 @@ const exportCSV = async () => {
     orderBy: { createdAt: "desc" },
   });
 
-  const fields = ["id", "name", "email", "phone", "message", "createdAt"];
+  const fields = ["id", "name", "email", "phone", "message", "subject", "createdAt"];
   const parser = new Parser({ fields });
   const csv = parser.parse(contacts);
 

@@ -19,6 +19,7 @@ type Contact = {
   name: string;
   email: string;
   phone?: string;
+  subject?: string;
   message: string;
   createdAt: string;
 };
@@ -105,6 +106,11 @@ export default function ContactsPage() {
                       <p className="text-xs text-gray-400">{contact.phone}</p>
                     )}
                   </div>
+                  {contact.subject && (
+                    <p className="text-xs font-medium text-blue-600 bg-blue-100 py-1 px-2 rounded-full">
+                      {contact.subject}
+                    </p>
+                  )}
                   <p className="text-sm text-gray-600 leading-relaxed">{contact.message}</p>
                   <p className="text-xs text-gray-300 mt-2">
                     {new Date(contact.createdAt).toLocaleDateString("en-US", {

@@ -7,6 +7,7 @@ model Contact {
   name      String
   email     String   @db.VarChar(255)
   phone     String?
+  subject   String?
   message   String
   createdAt DateTime @default(now())
 
