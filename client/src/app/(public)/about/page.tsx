@@ -40,7 +40,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-[#4dd0e1]">
       <Container>
         {/* Hero Section */}
-        <section className="bg-gray-900 text-white py-20 relative overflow-hidden">
+        <section className="bg-gray-900 rounded-3xl text-white py-20 relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-5"
             style={{
@@ -49,7 +49,7 @@ export default function AboutPage() {
               backgroundSize: "60px 60px",
             }}
           />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-medium px-3 py-1 rounded-full mb-5 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               Petronick Corporate Holdings LLC
@@ -66,7 +66,7 @@ export default function AboutPage() {
 
         {/* Mission & Stats */}
         <section className="py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -120,7 +120,7 @@ export default function AboutPage() {
 
         {/* Strategic Capabilities */}
         <section className="py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10">
                 <div className="text-center mb-10">
@@ -148,7 +148,7 @@ export default function AboutPage() {
 
         {/* Operating Model */}
         <section className="py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
                 <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
@@ -172,7 +172,7 @@ export default function AboutPage() {
 
         {/* CTA Section */}
         <section className="py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">
