@@ -172,7 +172,7 @@ export default function AboutPage() {
 
         {/* CTA Section */}
         <section className="py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-full mx-auto">
+          <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">
