@@ -65,7 +65,7 @@ export default function AboutPage() {
         </section>
 
         {/* Mission & Stats */}
-        <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <section className="py-8">
           <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -119,7 +119,7 @@ export default function AboutPage() {
         </section>
 
         {/* Strategic Capabilities */}
-        <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <section className="py-8">
           <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10">
@@ -147,7 +147,7 @@ export default function AboutPage() {
         </section>
 
         {/* Operating Model */}
-        <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <section className="py-8">
           <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
@@ -171,7 +171,7 @@ export default function AboutPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-8 px-4 sm:px-6 lg:px-8">
+        <section className="py-8">
           <div className="w-full mx-auto">
             <div className="rounded-3xl border border-gray-200 bg-white overflow-hidden">
               <div className="px-6 py-16 sm:px-8 lg:px-10 text-center">
