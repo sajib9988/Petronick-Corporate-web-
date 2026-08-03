@@ -41,8 +41,7 @@ export const getAllCompanies = async (params?: {
     if (params?.isVisible !== undefined) query.set("isVisible", String(params.isVisible));
 
     const res = await fetch(`${BASE_URL}/company?${query}`, {
-      credentials: "include",
-      headers: await getAuthHeaders(),
+      next: { revalidate: 60 }, 
     });
 
     return await safeJson(res);
@@ -54,7 +53,9 @@ export const getAllCompanies = async (params?: {
 
 export const getCompanyById = async (id: string) => {
   try {
-    const res = await fetch(`${BASE_URL}/company/${id}`);
+    const res = await fetch(`${BASE_URL}/company/${id}`, {
+      next: { revalidate: 60 }, 
+    });
 
     return await safeJson(res);
   } catch (err) {
