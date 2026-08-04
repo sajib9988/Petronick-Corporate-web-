@@ -105,7 +105,7 @@ const handleSubmit = async (values: AgentFormValues) => {
       const msg =
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again.";
+          : "You have already applied with this email. Please wait for review.";
       setError(msg);
       toast.error(msg);
     } finally {
