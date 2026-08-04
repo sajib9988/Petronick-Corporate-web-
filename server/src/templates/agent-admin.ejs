@@ -1,62 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
-<body style="font-family: Arial, sans-serif; padding: 24px;">
-    <h2>New Promotion Agent Application</h2>
-    <table style="width: 100%; border-collapse: collapse;">
-        <tr>
-            <td><strong>Name:</strong></td>
-            <td>
-                <%= userName %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Email:</strong></td>
-            <td>
-                <%= email %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Phone:</strong></td>
-            <td>
-                <%= phone %>
-            </td>
-        </tr>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Promotion Agent Application</title>
+</head>
 
+<body style="margin:0; padding:0; background-color:#f3f4f6;">
+    <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:transparent;">
+        New Promotion Agent Application Received.
+    </div>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f3f4f6; padding:32px 12px;">
         <tr>
-            <td><strong>Subject:</strong></td>
-            <td>
-                <%= subject %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Location:</strong></td>
-            <td>
-                <%= location %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Experience:</strong></td>
-            <td>
-                <%= experience %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Focus:</strong></td>
-            <td>
-                <%= focus %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Business Units:</strong></td>
-            <td>
-                <%= businessUnits %>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Message:</strong></td>
-            <td>
-                <%= message %>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px; background:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.06);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background:linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); padding:36px 32px; text-align:center;">
+                            <div style="width:56px; height:56px; background:#ffffff; border-radius:50%; margin:0 auto 16px;">
+                                <div style="line-height:56px; font-size:24px;">🔔</div>
+                            </div>
+                            <h1 style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:20px; color:#ffffff; font-weight:700; letter-spacing:0.5px;">
+                                New Application Alert
+                            </h1>
+                            <p style="margin:8px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:rgba(255,255,255,0.85);">
+                                Promotion Agent Program
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding:32px 32px 8px 32px; font-family:Arial, Helvetica, sans-serif;">
+                            <p style="margin:0 0 20px; font-size:15px; line-height:24px; color:#4b5563;">
+                                A new Promotion Agent application has been submitted. Please review the details below.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Applicant Details Card -->
+                    <tr>
+                        <td style="padding:0 32px 20px 32px; font-family:Arial, Helvetica, sans-serif;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px;">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+                                        <p style="margin:0 0 14px; font-size:11px; font-weight:700; letter-spacing:1px; color:#64748b; text-transform:uppercase; font-family:Arial, Helvetica, sans-serif;">
+                                            Applicant Details
+                                        </p>
+
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; width:40%; font-family:Arial, Helvetica, sans-serif;"><strong>Name:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= userName %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif;"><strong>Email:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= email %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif;"><strong>Phone:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= phone %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif;"><strong>Location:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= location %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif;"><strong>Experience:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= experience %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif;"><strong>Focus:</strong></td>
+                                                <td style="padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= focus %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0; font-size:13px; color:#64748b; font-family:Arial, Helvetica, sans-serif; vertical-align:top;"><strong>Business Units:</strong></td>
+                                                <td style="padding:8px 0; font-size:14px; color:#1e293b; font-weight:600; font-family:Arial, Helvetica, sans-serif;">
+                                                    <%= businessUnits %>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Message Card -->
+                    <tr>
+                        <td style="padding:0 32px 24px 32px; font-family:Arial, Helvetica, sans-serif;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px;">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+                                        <p style="margin:0 0 8px; font-size:11px; font-weight:700; letter-spacing:1px; color:#b45309; text-transform:uppercase; font-family:Arial, Helvetica, sans-serif;">
+                                            Applicant Message
+                                        </p>
+                                        <p style="margin:0; font-size:14px; line-height:22px; color:#78350f; font-style:italic; font-family:Arial, Helvetica, sans-serif;">
+                                            <%= message %>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:0 32px;">
+                            <div style="border-top:1px solid #e5e7eb;"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding:24px 32px 32px 32px; font-family:Arial, Helvetica, sans-serif;">
+                            <p style="margin:0 0 4px; font-size:14px; color:#374151;">Best regards,</p>
+                            <p style="margin:0 0 16px; font-size:15px; font-weight:700; color:#111827;">
+                                <%= appName %>
+                            </p>
+                            <p style="margin:0; font-size:12px; line-height:18px; color:#9ca3af;">
+                                This is an automated notification — no need to reply directly to this email.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <p style="margin:20px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#9ca3af;">
+                    ©
+                    <%= year %>
+                        <%= appName %>. All rights reserved.
+                </p>
             </td>
         </tr>
     </table>

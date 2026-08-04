@@ -5,18 +5,6 @@ import path from "path";
 import { envVars } from "../../config/env.js";
 import { AppError } from "../errors/app-error.js";
 
-
-// const transporter = nodemailer.createTransport({
-//   host: envVars.EMAIL_SENDER.SMTP_HOST,
-//   secure: true,
-//   auth: {
-//     user: envVars.EMAIL_SENDER.SMTP_USER,
-//     pass: envVars.EMAIL_SENDER.SMTP_PASS,
-//   },
-//   port: Number(envVars.EMAIL_SENDER.SMTP_PORT),
-// });
-
-
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -27,7 +15,12 @@ const transporter = nodemailer.createTransport({
     refreshToken: envVars.GMAIL_REFRESH_TOKEN,
   },
 });
-transporter.verify().catch(() => null);
+
+// Verify transporter on startup
+transporter
+  .verify()
+  .then(() => console.log("✅ Email transporter verified"))
+  .catch((err) => console.error("❌ Email transporter error:", err.message));
 
 interface SendEmailOptions {
   to: string;
@@ -47,11 +40,16 @@ export const sendEmail = async ({
   templateName,
   to,
   attachments,
-}: SendEmailOptions) => {
+}: SendEmailOptions): Promise<void> => {
   try {
-         const templatePath = path.resolve(
+    // Validate recipient
+    if (!to || typeof to !== "string" || !to.includes("@")) {
+      throw new Error(`Invalid recipient email: ${to}`);
+    }
+
+    const templatePath = path.resolve(
       process.cwd(),
-      `src/templates/${templateName}.ejs`,
+      `src/templates/${templateName}.ejs`
     );
 
     const td = templateData as Record<string, unknown>;
@@ -70,22 +68,25 @@ export const sendEmail = async ({
     };
 
     const html = await ejs.renderFile(templatePath, templateDataWithDefaults);
-    
-    
 
-   await transporter.sendMail({
-  from: envVars.GMAIL_FROM,   // ✅ fix
-  to: to,
-  subject: subject,
-  html: html,
-  attachments: attachments?.map((attachment) => ({
-    filename: attachment.filename,
-    content: attachment.content,
-    contentType: attachment.contentType,
-  })),
-});
-  } catch {
-        throw new AppError(status.INTERNAL_SERVER_ERROR, `Failed to send email to ${to}`);
-    
+    const info = await transporter.sendMail({
+      from: `"${envVars.APP_NAME || "Your App"}" <${envVars.GMAIL_FROM}>`,
+      to,
+      subject,
+      html,
+      attachments: attachments?.map((attachment) => ({
+        filename: attachment.filename,
+        content: attachment.content,
+        contentType: attachment.contentType,
+      })),
+    });
+
+    console.log(`✅ Email sent to ${to} | MessageId: ${info.messageId}`);
+  } catch (error: any) {
+    console.error(`❌ Failed to send email to ${to}:`, error.message);
+    throw new AppError(
+      status.INTERNAL_SERVER_ERROR,
+      `Failed to send email to ${to}: ${error.message}`
+    );
   }
 };

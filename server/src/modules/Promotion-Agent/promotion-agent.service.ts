@@ -14,14 +14,12 @@ import { envVars } from "../../config/env.js";
 const createAgent = async (payload: ICreatePromotionAgent) => {
   const { businessUnits, ...rest } = payload;
 
-
-const existingAgent = await prisma.promotionAgent.findFirst({
-  where:{
-     email: payload.email,
-     
+  const existingAgent = await prisma.promotionAgent.findFirst({
+    where: {
+      email: payload.email,
       status: { in: ["PENDING", "REVIEWED", "APPROVED"] },
-  }
-})
+    },
+  });
 
   if (existingAgent) {
     throw new AppError(
@@ -29,10 +27,6 @@ const existingAgent = await prisma.promotionAgent.findFirst({
       "You have already submitted an application with this email. Please wait for review.",
     );
   }
-
-
-
-
 
   const agent = await prisma.promotionAgent.create({
     data: {
@@ -44,35 +38,53 @@ const existingAgent = await prisma.promotionAgent.findFirst({
     include: { businessUnits: true },
   });
 
-  // Agent কে confirmation email (fire-and-forget, error হলেও agent creation fail করবে না)
+  const businessUnitsString = businessUnits.join(", ");
+
+  // Common data for both templates
+  const commonData = {
+    userName: payload.fullName,
+    email: payload.email,
+    phone: payload.phone,
+    location: payload.location,
+    experience: payload.experience,
+    focus: payload.focus,
+    businessUnits: businessUnitsString,
+    message: payload.message,
+    appName: envVars.APP_NAME || "Petronick Corporate Holdings",
+  };
+
+  // 1. Agent Confirmation (fire-and-forget)
   sendEmail({
     to: payload.email,
     subject: "Application Received — Petronick Corporate Holdings",
     templateName: "agent-confirmation",
     templateData: {
-      userName: payload.fullName,
-      businessUnits: businessUnits.join(", "),
-      appName: "Petronick Corporate Holdings",
+      ...commonData,
+      businessUnits: businessUnitsString,
     },
-  }).catch((err) => console.error("Agent confirmation email failed:", err));
+  }).catch((err) =>
+    console.error("❌ Agent confirmation email failed:", err.message || err)
+  );
 
-  // Admin কে notification email
-  sendEmail({
-    to: envVars.SUPER_ADMIN_EMAIL,
-    subject: "New Promotion Agent Application",
-    templateName: "agent-admin",
-    templateData: {
-      userName: payload.fullName,
-      email: payload.email,
-      phone: payload.phone,
-      location: payload.location,
-      experience: payload.experience,
-      focus: payload.focus,
-      businessUnits: businessUnits.join(", "),
-      message: payload.message,
-      appName: "Petronick Corporate Holdings",
-    },
-  }).catch((err) => console.error("Admin notification email failed:", err));
+  // 2. Parse admin emails from env
+  const adminEmails = (envVars.ADMIN_NOTIFICATION_EMAILS || envVars.SUPER_ADMIN_EMAIL || "")
+    .split(",")
+    .map((e: string) => e.trim())
+    .filter((e: string) => e.length > 0 && e.includes("@"));
+
+  // 3. Admin Notifications (fire-and-forget, individually)
+  adminEmails.forEach((adminEmail: string) => {
+    sendEmail({
+      to: adminEmail,
+      subject: `New Promotion Agent Application from ${payload.fullName}`,
+      templateName: "agent-admin",
+      templateData: {
+        ...commonData,
+      },
+    }).catch((err) =>
+      console.error(`❌ Admin email failed for ${adminEmail}:`, err.message || err)
+    );
+  });
 
   return agent;
 };

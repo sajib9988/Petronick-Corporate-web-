@@ -33,6 +33,7 @@ interface EnvConfig {
   };
 
   SUPER_ADMIN_EMAIL: string;
+  ADMIN_NOTIFICATION_EMAILS: string;
   NODE_ENV: string;
   PORT: string;
 
@@ -63,6 +64,7 @@ const loadEnvVars = (): EnvConfig => {
     "EMAIL_SENDER_SMTP_HOST",
     "EMAIL_SENDER_SMTP_PORT",
     "EMAIL_SENDER_SMTP_FROM", "SUPER_ADMIN_EMAIL",
+    "ADMIN_NOTIFICATION_EMAILS",
     "NODE_ENV",
     "PORT",
     "CLOUDINARY_CLOUD_NAME",
@@ -109,6 +111,7 @@ GMAIL_FROM: process.env.GMAIL_FROM,
     },
 
     SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL!,
+    ADMIN_NOTIFICATION_EMAILS: process.env.ADMIN_NOTIFICATION_EMAILS!,
     NODE_ENV: process.env.NODE_ENV!,
     PORT: process.env.PORT!,
 
