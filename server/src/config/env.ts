@@ -22,6 +22,7 @@ interface EnvConfig {
   GMAIL_CLIENT_SECRET?: string;
   GMAIL_REFRESH_TOKEN?: string;
   GMAIL_USER?: string;
+  GMAIL_FROM?: string;
 
   EMAIL_SENDER: {
     SMTP_USER: string;
@@ -56,6 +57,7 @@ const loadEnvVars = (): EnvConfig => {
     "GMAIL_CLIENT_SECRET",
     "GMAIL_REFRESH_TOKEN",
     "GMAIL_USER",
+    "GMAIL_FROM",
     "EMAIL_SENDER_SMTP_USER",
     "EMAIL_SENDER_SMTP_PASS",
     "EMAIL_SENDER_SMTP_HOST",
@@ -96,6 +98,7 @@ const loadEnvVars = (): EnvConfig => {
 GMAIL_CLIENT_SECRET: process.env.GMAIL_CLIENT_SECRET,
 GMAIL_REFRESH_TOKEN: process.env.GMAIL_REFRESH_TOKEN,
 GMAIL_USER: process.env.GMAIL_USER,
+GMAIL_FROM: process.env.GMAIL_FROM,
 
     EMAIL_SENDER: {
       SMTP_USER: process.env.EMAIL_SENDER_SMTP_USER!,

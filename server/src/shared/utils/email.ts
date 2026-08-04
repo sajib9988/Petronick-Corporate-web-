@@ -73,17 +73,17 @@ export const sendEmail = async ({
     
     
 
-    await transporter.sendMail({
-      from: envVars.GMAIL_USER,
-      to: to,
-      subject: subject,
-      html: html,
-      attachments: attachments?.map((attachment) => ({
-        filename: attachment.filename,
-        content: attachment.content,
-        contentType: attachment.contentType,
-      })),
-    });
+   await transporter.sendMail({
+  from: envVars.GMAIL_FROM,   // ✅ fix
+  to: to,
+  subject: subject,
+  html: html,
+  attachments: attachments?.map((attachment) => ({
+    filename: attachment.filename,
+    content: attachment.content,
+    contentType: attachment.contentType,
+  })),
+});
   } catch {
         throw new AppError(status.INTERNAL_SERVER_ERROR, `Failed to send email to ${to}`);
     
