@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
 
   // output: "standalone",
 
-  
+
   reactCompiler: true,
 
   experimental: {
