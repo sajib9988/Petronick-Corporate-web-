@@ -15,14 +15,61 @@ const getAuthHeaders = async (headers: Record<string, string> = {}) => {
 };
 
 // Safe JSON helper
+// const safeJson = async (res: Response) => {
+//   try {
+//     const data = await res.json();
+//     return data;
+//   } catch (err) {
+//     return { success: false, message: "Invalid JSON response from server" };
+//   }
+// };
+
 const safeJson = async (res: Response) => {
+  const text = await res.text();
+
+  console.log("========== API RESPONSE ==========");
+  console.log("URL:", res.url);
+  console.log("Status:", res.status);
+  console.log("Content-Type:", res.headers.get("content-type"));
+  console.log("Body:", text);
+  console.log("==================================");
+
   try {
-    const data = await res.json();
-    return data;
+    return JSON.parse(text);
   } catch (err) {
-    return { success: false, message: "Invalid JSON response from server" };
+    console.error("JSON Parse Error:", err);
+
+    return {
+      success: false,
+      message: "Invalid JSON response from server",
+      raw: text,
+    };
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const createAgent = async (data: {
   fullName: string;
