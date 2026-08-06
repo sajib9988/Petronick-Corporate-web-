@@ -85,6 +85,9 @@ const isZodLikeError = (
 };
 
 const errorHandler: ErrorRequestHandler = (err, _req, res) => {
+
+     console.log("🔥 GLOBAL ERROR HANDLER HIT");
+
   const isDevelopment = envVars.NODE_ENV === "development";
 
   if (isDevelopment) {

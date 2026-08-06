@@ -11,6 +11,8 @@ const createAgent = catchAsync(async (req: Request, res: Response) => {
   const parsed = agentValidation.createAgent.parse(req.body);
   const result = await agentService.createAgent(parsed);
 
+
+    console.log("✅ Controller End");
   sendResponse(res, {
     status: httpStatus.CREATED,
     success: true,
