@@ -135,5 +135,6 @@ CLOSING: [
     { key: "subtitle", label: "Subtitle", multiline: true },
     { key: "email", label: "Contact Email" },
     { key: "phone", label: "Phone (optional)" },
+    { key: "location", label: "Location (optional)" },
   ],
 };
