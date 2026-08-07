@@ -5,6 +5,7 @@ import { authService } from "./auth.service.js";
 import { sendResponse } from "../../shared/utils/send-response.js";
 
 import { createRefreshToken, createToken, setAuthCookies, clearCookie, getCookie, setAccessTokenCookie } from "../../shared/utils/auth.token.js";
+import { authValidation } from "./auth.validation.js";
 
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
@@ -121,7 +122,7 @@ const verifyEmail = catchAsync(async (req: Request, res: Response) => {
 });
 
 const forgetPassword = catchAsync(async (req: Request, res: Response) => {
-  const { email } = req.body;
+  const { email } = authValidation.forgetPassword.parse(req.body);
   await authService.forgetPassword(email);
 
   sendResponse(res, {
@@ -132,7 +133,7 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
-  const { email, otp, newPassword } = req.body;
+  const { email, otp, newPassword } = authValidation.resetPassword.parse(req.body);
   await authService.resetPassword(email, otp, newPassword);
 
   sendResponse(res, {

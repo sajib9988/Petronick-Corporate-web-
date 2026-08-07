@@ -133,6 +133,14 @@ const handleGoogleLogin = () => {
                 </FormItem>
               )}
             />
+<div className="text-right -mt-2">
+        <Link
+           href="/forgot-password"
+           className="text-xs text-blue-300/70 hover:text-blue-200 transition-colors"
+         >
+          Forgot password?
+        </Link>
+      </div>
 
             <Button
               type="submit"

@@ -125,3 +125,65 @@ export const getMe = async () => {
   // console.log("User data:", data);
   return data?.success === false ? null : data;
 };
+
+
+
+const safeJson = async (res: Response) => {
+  try {
+    return await res.json();
+  } catch {
+    return { success: false, message: "Invalid JSON response from server" };
+  }
+};
+
+export const forgetPassword = async (email: string) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/forget-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+      cache: "no-store",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error requesting OTP:", err);
+    return { success: false, message: "Failed to send reset code" };
+  }
+};
+
+export const resetPassword = async (data: {
+  email: string;
+  otp: string;
+  newPassword: string;
+}) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    return { success: false, message: "Failed to reset password" };
+  }
+};
+
+export const changePassword = async (data: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/change-password`, {
+      method: "POST",
+      headers: await getAuthHeaders({ "Content-Type": "application/json" }),
+      body: JSON.stringify(data),
+      cache: "no-store",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error changing password:", err);
+    return { success: false, message: "Failed to change password" };
+  }
+};

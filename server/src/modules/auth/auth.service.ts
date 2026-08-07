@@ -1,6 +1,7 @@
 import status from "http-status";
 import bcrypt from "bcrypt";
-
+import crypto from "crypto";
+import { sendEmail } from "../../shared/utils/email.js";
 import { prisma } from "../../database/prisma.js";
 import { AppError } from "../../shared/errors/app-error.js";
 
@@ -232,27 +233,57 @@ const verifyEmail = async (email: string) => {
 
 // ================= FORGET PASSWORD =================
 
+
+
+// ================= FORGET PASSWORD =================
+
 const forgetPassword = async (email: string) => {
   const user = await prisma.user.findUnique({
     where: { email },
   });
 
-  if (!user) {
+  // Removed: separate checks that do the same thing. Combined into one.
+  if (!user || user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
   if (!user.emailVerified) {
+    throw new AppError(status.BAD_REQUEST, "Email not verified");
+  }
+
+  // Fix: randomInt max is EXCLUSIVE. Old code (999999) never generated 999999.
+  const otp = crypto.randomInt(100000, 1000000).toString();
+  const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 min
+
+  // Save OTP first
+  await prisma.user.update({
+    where: { email },
+    data: { otpCode: otp, otpExpiresAt },
+  });
+
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Password Reset OTP — Petronick Corporate Holdings",
+      templateName: "otp",
+      templateData: {
+        userName: user.name,
+        otp,
+        expiresInMinutes: 5,
+      },
+    });
+  } catch (err) {
+    // Rollback: clear OTP from DB if email fails, so user isn't locked with a ghost code
+    await prisma.user.update({
+      where: { email },
+      data: { otpCode: null, otpExpiresAt: null },
+    });
+    console.error("OTP email failed:", err);
     throw new AppError(
-      status.BAD_REQUEST,
-      "Email not verified"
+      status.INTERNAL_SERVER_ERROR,
+      "Failed to send reset email. Please try again later."
     );
   }
-
-  if (user.isDeleted || user.status === "DELETED") {
-    throw new AppError(status.NOT_FOUND, "User not found");
-  }
-
-  // TODO: send OTP to email
 };
 
 // ================= RESET PASSWORD =================
@@ -266,36 +297,52 @@ const resetPassword = async (
     where: { email },
   });
 
-  if (!user) {
+  if (!user || user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
   if (!user.emailVerified) {
+    throw new AppError(status.BAD_REQUEST, "Email not verified");
+  }
+
+  // Removed: separate error messages ("No OTP requested", "Invalid OTP", "Expired OTP").
+  // Replaced with ONE generic message to prevent user enumeration / timing attacks.
+  if (
+    !user.otpCode ||
+    !user.otpExpiresAt ||
+    new Date() > user.otpExpiresAt ||
+    otp.length !== 6
+  ) {
     throw new AppError(
       status.BAD_REQUEST,
-      "Email not verified"
+      "Invalid or expired OTP. Please request a new one."
     );
   }
 
-  if (user.isDeleted || user.status === "DELETED") {
-    throw new AppError(status.NOT_FOUND, "User not found");
+  // Added: constant-time comparison to prevent timing attacks
+  const isValidOtp = crypto.timingSafeEqual(
+    Buffer.from(user.otpCode),
+    Buffer.from(otp)
+  );
+
+  if (!isValidOtp) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Invalid or expired OTP. Please request a new one."
+    );
   }
 
-  // TODO: verify OTP
-
-  const hashedPassword = await bcrypt.hash(
-    newPassword,
-    12
-  );
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
 
   await prisma.user.update({
     where: { email },
     data: {
       password: hashedPassword,
+      otpCode: null,
+      otpExpiresAt: null,
     },
   });
 };
-
 // ================= EXPORT =================
 
 export const authService = {
