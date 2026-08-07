@@ -84,7 +84,7 @@ const isZodLikeError = (
   });
 };
 
-const errorHandler: ErrorRequestHandler = (err, _req, res) => {
+const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
      console.log("🔥 GLOBAL ERROR HANDLER HIT");
 
