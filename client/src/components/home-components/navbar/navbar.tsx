@@ -35,7 +35,7 @@ export default function Navbar() {
       {/* Logo */}
       <Link href="/" className="flex items-center">
         <Image
-          src="/logo1.PNG"
+          src="/PCH Logo.png"
           alt=""
           width={220}
           height={80}

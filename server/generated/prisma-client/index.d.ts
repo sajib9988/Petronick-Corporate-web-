@@ -1574,6 +1574,8 @@ export namespace Prisma {
     isDeleted: boolean | null
     deletedAt: Date | null
     image: string | null
+    otpCode: string | null
+    otpExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1590,6 +1592,8 @@ export namespace Prisma {
     isDeleted: boolean | null
     deletedAt: Date | null
     image: string | null
+    otpCode: string | null
+    otpExpiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1606,6 +1610,8 @@ export namespace Prisma {
     isDeleted: number
     deletedAt: number
     image: number
+    otpCode: number
+    otpExpiresAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1624,6 +1630,8 @@ export namespace Prisma {
     isDeleted?: true
     deletedAt?: true
     image?: true
+    otpCode?: true
+    otpExpiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1640,6 +1648,8 @@ export namespace Prisma {
     isDeleted?: true
     deletedAt?: true
     image?: true
+    otpCode?: true
+    otpExpiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1656,6 +1666,8 @@ export namespace Prisma {
     isDeleted?: true
     deletedAt?: true
     image?: true
+    otpCode?: true
+    otpExpiresAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1745,6 +1757,8 @@ export namespace Prisma {
     isDeleted: boolean
     deletedAt: Date | null
     image: string | null
+    otpCode: string | null
+    otpExpiresAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1778,6 +1792,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: boolean
     image?: boolean
+    otpCode?: boolean
+    otpExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1794,6 +1810,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: boolean
     image?: boolean
+    otpCode?: boolean
+    otpExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1810,6 +1828,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: boolean
     image?: boolean
+    otpCode?: boolean
+    otpExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1826,11 +1846,13 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: boolean
     image?: boolean
+    otpCode?: boolean
+    otpExpiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "role" | "status" | "needPasswordChange" | "isDeleted" | "deletedAt" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "role" | "status" | "needPasswordChange" | "isDeleted" | "deletedAt" | "image" | "otpCode" | "otpExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1847,6 +1869,8 @@ export namespace Prisma {
       isDeleted: boolean
       deletedAt: Date | null
       image: string | null
+      otpCode: string | null
+      otpExpiresAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2283,6 +2307,8 @@ export namespace Prisma {
     readonly isDeleted: FieldRef<"User", 'Boolean'>
     readonly deletedAt: FieldRef<"User", 'DateTime'>
     readonly image: FieldRef<"User", 'String'>
+    readonly otpCode: FieldRef<"User", 'String'>
+    readonly otpExpiresAt: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2671,6 +2697,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
+    subject: string | null
     message: string | null
     createdAt: Date | null
   }
@@ -2680,6 +2707,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
+    subject: string | null
     message: string | null
     createdAt: Date | null
   }
@@ -2689,6 +2717,7 @@ export namespace Prisma {
     name: number
     email: number
     phone: number
+    subject: number
     message: number
     createdAt: number
     _all: number
@@ -2700,6 +2729,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    subject?: true
     message?: true
     createdAt?: true
   }
@@ -2709,6 +2739,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    subject?: true
     message?: true
     createdAt?: true
   }
@@ -2718,6 +2749,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    subject?: true
     message?: true
     createdAt?: true
     _all?: true
@@ -2800,6 +2832,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string | null
+    subject: string | null
     message: string
     createdAt: Date
     _count: ContactCountAggregateOutputType | null
@@ -2826,6 +2859,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    subject?: boolean
     message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["contact"]>
@@ -2835,6 +2869,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    subject?: boolean
     message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["contact"]>
@@ -2844,6 +2879,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    subject?: boolean
     message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["contact"]>
@@ -2853,11 +2889,12 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    subject?: boolean
     message?: boolean
     createdAt?: boolean
   }
 
-  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "message" | "createdAt", ExtArgs["result"]["contact"]>
+  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone" | "subject" | "message" | "createdAt", ExtArgs["result"]["contact"]>
 
   export type $ContactPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Contact"
@@ -2867,6 +2904,7 @@ export namespace Prisma {
       name: string
       email: string
       phone: string | null
+      subject: string | null
       message: string
       createdAt: Date
     }, ExtArgs["result"]["contact"]>
@@ -3296,6 +3334,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Contact", 'String'>
     readonly email: FieldRef<"Contact", 'String'>
     readonly phone: FieldRef<"Contact", 'String'>
+    readonly subject: FieldRef<"Contact", 'String'>
     readonly message: FieldRef<"Contact", 'String'>
     readonly createdAt: FieldRef<"Contact", 'DateTime'>
   }
@@ -9204,6 +9243,8 @@ export namespace Prisma {
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
     image: 'image',
+    otpCode: 'otpCode',
+    otpExpiresAt: 'otpExpiresAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9216,6 +9257,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phone: 'phone',
+    subject: 'subject',
     message: 'message',
     createdAt: 'createdAt'
   };
@@ -9501,6 +9543,8 @@ export namespace Prisma {
     isDeleted?: BoolFilter<"User"> | boolean
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
+    otpCode?: StringNullableFilter<"User"> | string | null
+    otpExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -9517,6 +9561,8 @@ export namespace Prisma {
     isDeleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    otpCode?: SortOrderInput | SortOrder
+    otpExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9536,6 +9582,8 @@ export namespace Prisma {
     isDeleted?: BoolFilter<"User"> | boolean
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
+    otpCode?: StringNullableFilter<"User"> | string | null
+    otpExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "email">
@@ -9552,6 +9600,8 @@ export namespace Prisma {
     isDeleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    otpCode?: SortOrderInput | SortOrder
+    otpExpiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -9574,6 +9624,8 @@ export namespace Prisma {
     isDeleted?: BoolWithAggregatesFilter<"User"> | boolean
     deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    otpCode?: StringNullableWithAggregatesFilter<"User"> | string | null
+    otpExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -9586,6 +9638,7 @@ export namespace Prisma {
     name?: StringFilter<"Contact"> | string
     email?: StringFilter<"Contact"> | string
     phone?: StringNullableFilter<"Contact"> | string | null
+    subject?: StringNullableFilter<"Contact"> | string | null
     message?: StringFilter<"Contact"> | string
     createdAt?: DateTimeFilter<"Contact"> | Date | string
   }
@@ -9595,6 +9648,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
+    subject?: SortOrderInput | SortOrder
     message?: SortOrder
     createdAt?: SortOrder
   }
@@ -9607,6 +9661,7 @@ export namespace Prisma {
     name?: StringFilter<"Contact"> | string
     email?: StringFilter<"Contact"> | string
     phone?: StringNullableFilter<"Contact"> | string | null
+    subject?: StringNullableFilter<"Contact"> | string | null
     message?: StringFilter<"Contact"> | string
     createdAt?: DateTimeFilter<"Contact"> | Date | string
   }, "id">
@@ -9616,6 +9671,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
+    subject?: SortOrderInput | SortOrder
     message?: SortOrder
     createdAt?: SortOrder
     _count?: ContactCountOrderByAggregateInput
@@ -9631,6 +9687,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Contact"> | string
     email?: StringWithAggregatesFilter<"Contact"> | string
     phone?: StringNullableWithAggregatesFilter<"Contact"> | string | null
+    subject?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     message?: StringWithAggregatesFilter<"Contact"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Contact"> | Date | string
   }
@@ -9988,6 +10045,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: Date | string | null
     image?: string | null
+    otpCode?: string | null
+    otpExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10004,6 +10063,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: Date | string | null
     image?: string | null
+    otpCode?: string | null
+    otpExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10020,6 +10081,8 @@ export namespace Prisma {
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    otpCode?: NullableStringFieldUpdateOperationsInput | string | null
+    otpExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10036,6 +10099,8 @@ export namespace Prisma {
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    otpCode?: NullableStringFieldUpdateOperationsInput | string | null
+    otpExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10052,6 +10117,8 @@ export namespace Prisma {
     isDeleted?: boolean
     deletedAt?: Date | string | null
     image?: string | null
+    otpCode?: string | null
+    otpExpiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10068,6 +10135,8 @@ export namespace Prisma {
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    otpCode?: NullableStringFieldUpdateOperationsInput | string | null
+    otpExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10084,6 +10153,8 @@ export namespace Prisma {
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    otpCode?: NullableStringFieldUpdateOperationsInput | string | null
+    otpExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10093,6 +10164,7 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
+    subject?: string | null
     message: string
     createdAt?: Date | string
   }
@@ -10102,6 +10174,7 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
+    subject?: string | null
     message: string
     createdAt?: Date | string
   }
@@ -10111,6 +10184,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10120,6 +10194,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10129,6 +10204,7 @@ export namespace Prisma {
     name: string
     email: string
     phone?: string | null
+    subject?: string | null
     message: string
     createdAt?: Date | string
   }
@@ -10138,6 +10214,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10147,6 +10224,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10616,6 +10694,8 @@ export namespace Prisma {
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     image?: SortOrder
+    otpCode?: SortOrder
+    otpExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10632,6 +10712,8 @@ export namespace Prisma {
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     image?: SortOrder
+    otpCode?: SortOrder
+    otpExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10648,6 +10730,8 @@ export namespace Prisma {
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     image?: SortOrder
+    otpCode?: SortOrder
+    otpExpiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10749,6 +10833,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    subject?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
   }
@@ -10758,6 +10843,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    subject?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
   }
@@ -10767,6 +10853,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    subject?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
   }

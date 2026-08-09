@@ -10,6 +10,8 @@ model User {
   isDeleted          Boolean    @default(false)
   deletedAt          DateTime?
   image              String?
+  otpCode            String?
+  otpExpiresAt       DateTime?
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
 
@@ -64,6 +66,7 @@ model Contact {
   name      String
   email     String   @db.VarChar(255)
   phone     String?
+  subject   String?
   message   String
   createdAt DateTime @default(now())
 

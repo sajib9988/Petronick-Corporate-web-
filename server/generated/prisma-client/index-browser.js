@@ -132,6 +132,8 @@ exports.Prisma.UserScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   image: 'image',
+  otpCode: 'otpCode',
+  otpExpiresAt: 'otpExpiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -141,6 +143,7 @@ exports.Prisma.ContactScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
+  subject: 'subject',
   message: 'message',
   createdAt: 'createdAt'
 };
