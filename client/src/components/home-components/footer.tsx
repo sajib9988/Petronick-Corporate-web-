@@ -47,7 +47,7 @@ export default function Footer() {
     {/* Main Footer */}
     <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
 
-      {/* Brand */}
+      {/* Brand - Light Background */}
       <div>
         <Image
           src="/Word Mark.png"
@@ -57,7 +57,7 @@ export default function Footer() {
           className="h-auto w-[120px] object-contain"
         />
 
-        <p className="mt-2 mb-6 max-w-sm text-[15px] leading-7 text-[#334155]">
+        <p className="mt-2 mb-6 max-w-sm text-[15px] leading-7 text-[#17324D]">
           A vertically integrated holding company operating multiple
           revenue-generating business units across digital, fulfillment,
           advisory, and e-commerce sectors.
@@ -65,60 +65,100 @@ export default function Footer() {
 
         <Link
           href="/promotion-agent"
-          className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#1E3A5F] transition-colors hover:text-[#0F172A]"
+          className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#123B5D] transition-colors hover:text-[#071D32]"
         >
           Apply as Agent
           <ArrowRight size={15} />
         </Link>
       </div>
 
-      {/* Links */}
-      {footerLinks.map((group) => (
-        <div key={group.title}>
-          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-[#1E293B]">
-            {group.title}
-          </h3>
+      {/* Company - Light/Mid Background */}
+      <div>
+        <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-[#111827]">
+          Company
+        </h3>
 
-          <ul className="space-y-3.5">
-            {group.links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-[15px] text-[#475569] transition-colors hover:text-[#0F172A]"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+        <ul className="space-y-3.5">
+          {footerLinks[0].links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-[15px] font-medium text-[#243B53] transition-colors hover:text-[#000000]"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Opportunities - Mid Background */}
+      <div>
+        <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-[#111827]">
+          Opportunities
+        </h3>
+
+        <ul className="space-y-3.5">
+          {footerLinks[1].links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-[15px] font-medium text-[#243B53] transition-colors hover:text-[#000000]"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Legal - Dark Background */}
+      <div>
+        <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-white">
+          Legal
+        </h3>
+
+        <ul className="space-y-3.5">
+          {footerLinks[2].links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-[15px] font-medium text-white/80 transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </Container>
 
   {/* Bottom Bar */}
-  <div className="border-t border-[#1A2A4F]/20">
+  <div className="border-t border-white/20">
     <Container>
       <div className="flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
 
-        <p className="text-sm text-[#475569]">
+        {/* Left side - light background */}
+        <p className="text-sm font-medium text-[#243B53]">
           © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
           All rights reserved.
         </p>
 
-        <div className="flex items-center gap-4 text-sm text-[#475569]">
+        {/* Right side - dark background */}
+        <div className="flex items-center gap-4 text-sm font-medium text-white/80">
           <Link
             href="/privacy"
-            className="transition-colors hover:text-[#0F172A]"
+            className="transition-colors hover:text-white"
           >
             Privacy Policy
           </Link>
 
-          <span className="text-[#64748B]">·</span>
+          <span className="text-white/50">·</span>
 
           <Link
             href="/terms"
-            className="transition-colors hover:text-[#0F172A]"
+            className="transition-colors hover:text-white"
           >
             Terms of Use
           </Link>
