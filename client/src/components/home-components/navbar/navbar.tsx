@@ -19,14 +19,8 @@ export default function Navbar() {
 <header className="w-full relative sticky top-0 z-50 border-b-2 border-amber-700/30">
   <div 
     className="absolute inset-0"
-    style={{
-      // background: `
-      //   radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0%, transparent 50%),
-      //   radial-gradient(circle at 80% 70%, rgba(0,0,0,0.15) 0%, transparent 50%),
-      //   linear-gradient(135deg, #1a1d23 0%, #2a2e35 50%, #1a1d23 100%)
-      // `,
-      background: "linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
-      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -2px 4px rgba(255,255,255,0.03)",
+   style={{
+      background: `linear-gradient(107.4deg, rgba(255,242,239,1) 11.1%, rgba(255,219,182,1) 37.5%, rgba(247,165,165,1) 54.3%, rgba(26,42,79,1) 84.3%)`
     }}
   />
   
@@ -41,7 +35,7 @@ export default function Navbar() {
           width={220}
           height={140}
           priority
-          className="h-14 w-auto object-contain"
+          className="h-16 w-auto object-contain"
         />
       </Link>
 
