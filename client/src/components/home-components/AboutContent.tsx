@@ -7,11 +7,12 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/Container";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
 
-const stats = [
-  { value: "7+", label: "Active Business Units", gradient: "from-amber-500 to-amber-700" },
-  { value: "100%", label: "Revenue Ready", gradient: "from-emerald-500 to-emerald-700" },
-  { value: "Multi", label: "Market Reach", gradient: "from-slate-700 to-slate-900" },
-  { value: "1", label: "Integrated Ecosystem", gradient: "from-amber-600 to-orange-600" },
+const quickFacts = [
+  { label: "Entity Type", value: "Limited Liability Company (LLC)" },
+  { label: "Headquarters", value: "Pittsburgh, PA, USA" },
+  { label: "Structure", value: "Vertically Integrated Holding Company" },
+  { label: "Business Model", value: "Holding Company + Agent Network" },
+  { label: "Industry Focus", value: "Digital, Fulfillment, Advisory, E-commerce" },
 ];
 
 const defaultValues = [
@@ -142,18 +143,26 @@ export default function AboutContent({
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeSlide("right", 0.1, 70, 0.7)}
-              className="grid grid-cols-2 gap-4"
+              className="rounded-2xl border border-amber-100 bg-amber-50/50 p-7"
             >
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className={`relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br ${stat.gradient} shadow-lg`}
-                >
-                  <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/10" />
-                  <div className="relative text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="relative text-sm font-medium text-white/85">{stat.label}</div>
-                </div>
-              ))}
+              <p className="text-xs font-semibold tracking-widest text-amber-700 uppercase mb-5">
+                Corporate Snapshot
+              </p>
+              <dl className="divide-y divide-amber-100/80">
+                {quickFacts.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="py-3.5 flex items-start justify-between gap-4"
+                  >
+                    <dt className="text-xs text-amber-700/70 font-medium flex-shrink-0">
+                      {fact.label}
+                    </dt>
+                    <dd className="text-xs font-semibold text-gray-800 text-right">
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </motion.div>
           </div>
         </section>

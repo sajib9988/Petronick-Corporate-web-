@@ -20,11 +20,12 @@ export default function Navbar() {
   <div 
     className="absolute inset-0"
     style={{
-      background: `
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(0,0,0,0.15) 0%, transparent 50%),
-        linear-gradient(135deg, #1a1d23 0%, #2a2e35 50%, #1a1d23 100%)
-      `,
+      // background: `
+      //   radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0%, transparent 50%),
+      //   radial-gradient(circle at 80% 70%, rgba(0,0,0,0.15) 0%, transparent 50%),
+      //   linear-gradient(135deg, #1a1d23 0%, #2a2e35 50%, #1a1d23 100%)
+      // `,
+      background: "linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
       boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -2px 4px rgba(255,255,255,0.03)",
     }}
   />
@@ -38,7 +39,7 @@ export default function Navbar() {
           src="/PCH Logo.png"
           alt=""
           width={220}
-          height={80}
+          height={140}
           priority
           className="h-14 w-auto object-contain"
         />
