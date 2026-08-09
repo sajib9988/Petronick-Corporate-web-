@@ -33,7 +33,7 @@ export default function Navbar() {
           src="/PCH Logo.png"
           alt=""
           width={220}
-          height={140}
+          height={180}
           priority
           className="h-16 w-auto object-contain"
         />
