@@ -31,7 +31,7 @@ const footerLinks = [
 export default function Footer() {
   return (
     
-<footer className="bg-gray-900 text-white">
+<footer className="bg-[#101828] text-white">
   <Container>
     {/* Main Footer */}
     <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -45,7 +45,7 @@ export default function Footer() {
           height={90}
         />
 
-        <p className="text-sm leading-relaxed text-gray-400 mb-5">
+        <p className="mb-5 text-sm leading-relaxed text-[#A7B0C0]">
           A vertically integrated holding company operating multiple
           revenue-generating business units across digital, fulfillment,
           advisory, and e-commerce sectors.
@@ -53,7 +53,7 @@ export default function Footer() {
 
         <Link
           href="/promotion-agent"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-400 transition-colors hover:text-emerald-300"
         >
           Apply as Agent
           <ArrowRight size={14} />
@@ -63,7 +63,7 @@ export default function Footer() {
       {/* Links */}
       {footerLinks.map((group) => (
         <div key={group.title}>
-          <h3 className="text-sm font-semibold tracking-widest uppercase text-gray-500 mb-4">
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-[#CBD5E1]">
             {group.title}
           </h3>
 
@@ -72,7 +72,7 @@ export default function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-base text-gray-400 hover:text-white transition-colors"
+                  className="text-base text-[#A7B0C0] transition-colors hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -86,26 +86,26 @@ export default function Footer() {
 
   {/* Bottom Bar */}
   <div className="border-t border-white/10">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div className="max-w-7xl mx-auto flex flex-col items-center justify-between gap-3 px-4 py-5 sm:flex-row sm:px-6 lg:px-8">
 
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-[#8994A6]">
         © {new Date().getFullYear()} Petronick Corporate Holdings LLC. All
         rights reserved.
       </p>
 
-      <div className="flex items-center gap-4 text-sm text-gray-500">
+      <div className="flex items-center gap-4 text-sm text-[#8994A6]">
         <Link
           href="/privacy"
-          className="hover:text-gray-300 transition-colors"
+          className="transition-colors hover:text-white"
         >
           Privacy Policy
         </Link>
 
-        <span>·</span>
+        <span className="text-[#4B5563]">·</span>
 
         <Link
           href="/terms"
-          className="hover:text-gray-300 transition-colors"
+          className="transition-colors hover:text-white"
         >
           Terms of Use
         </Link>
