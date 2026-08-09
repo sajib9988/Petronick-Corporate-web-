@@ -81,166 +81,191 @@ export default function Footer() {
         )`,
       }}
     >
-      {/* Main Footer */}
+      {/* ================= Main Footer ================= */}
       <Container>
-        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="py-12">
+          {/* ================= Main Content ================= */}
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.4fr_1fr]">
+            
+            {/* ================= Brand ================= */}
+            <div>
+              <Link href="/" className="inline-block">
+                <Image
+                  src="/Word Mark.png"
+                  alt="Petronick Logo"
+                  width={120}
+                  height={120}
+                  priority
+                  className="h-auto w-[120px] object-contain"
+                />
+              </Link>
 
-          {/* ================= Brand ================= */}
-          <div>
-            <Link href="/" className="inline-block">
-              <Image
-                src="/Word Mark.png"
-                alt="Petronick Logo"
-                width={120}
-                height={120}
-                priority
-                className="h-auto w-[120px] object-contain"
-              />
-            </Link>
-
-            <p className="mt-2 mb-6 max-w-sm text-[15px] leading-7 text-[#17324D]">
-              A vertically integrated holding company operating multiple
-              revenue-generating business units across digital, fulfillment,
-              advisory, and e-commerce sectors.
-            </p>
-
-            {/* Apply as Agent */}
-            <Link
-              href="/promotion-agent"
-              className="group inline-flex items-center gap-2 text-[15px] font-semibold text-[#123B5D] transition-colors duration-300 hover:text-[#071D32]"
-            >
-              Apply as Agent
-
-              <ArrowRight
-                size={15}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-
-            {/* ================= Social Links ================= */}
-            <div className="mt-7">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#475569]">
-                Follow Us
+              <p className="mt-2 mb-6 max-w-sm text-[15px] leading-7 text-[#526174]">
+                A vertically integrated holding company operating multiple
+                revenue-generating business units across digital, fulfillment,
+                advisory, and e-commerce sectors.
               </p>
 
-              <div className="flex items-center gap-2.5">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon;
+              {/* Apply as Agent */}
+              <Link
+                href="/promotion-agent"
+                className="
+                  group
+                  inline-flex items-center gap-2
+                  rounded-full
+                  border border-amber-300/50
+                  bg-amber-400
+                  px-5 py-2.5
+                  text-[14px]
+                  font-semibold
+                  text-slate-900
+                  shadow-sm
+                  transition-all duration-300
+                  hover:-translate-y-0.5
+                  hover:bg-amber-300
+                  hover:shadow-lg
+                  hover:shadow-amber-900/20
+                "
+              >
+                Apply as Agent
 
-                  return (
+                <ArrowRight
+                  size={15}
+                  className="
+                    transition-transform duration-300
+                    group-hover:translate-x-1
+                  "
+                />
+              </Link>
+            </div>
+
+            {/* ================= Company ================= */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+                Company
+              </h3>
+
+              <ul className="space-y-3.5">
+                {footerLinks[0].links.map((link) => (
+                  <li key={link.href}>
                     <Link
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
+                      href={link.href}
                       className="
-                        group
-                        flex h-10 w-10 items-center justify-center
-                        rounded-full
-                        border border-white/30
-                        bg-white/20
-                        text-[#17324D]
-                        backdrop-blur-md
-                        shadow-sm
-                        transition-all duration-300
-                        hover:-translate-y-1
-                        hover:border-white/60
-                        hover:bg-white/50
-                        hover:text-[#0F172A]
-                        hover:shadow-lg
+                        text-[15px]
+                        font-normal
+                        text-[#526174]
+                        transition-colors
+                        duration-300
+                        hover:text-[#26364A]
                       "
                     >
-                      <Icon
-                        size={17}
-                        className="transition-transform duration-300 group-hover:scale-110"
-                      />
+                      {link.label}
                     </Link>
-                  );
-                })}
-              </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ================= Opportunities ================= */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+                Opportunities
+              </h3>
+
+              <ul className="space-y-3.5">
+                {footerLinks[1].links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="
+                        text-[15px]
+                        font-normal
+                        text-[#526174]
+                        transition-colors
+                        duration-300
+                        hover:text-[#26364A]
+                      "
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ================= Legal ================= */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
+                Legal
+              </h3>
+
+              <ul className="space-y-3.5">
+                {footerLinks[2].links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="
+                        text-[15px]
+                        font-normal
+                        text-white/65
+                        transition-colors
+                        duration-300
+                        hover:text-white/90
+                      "
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* ================= Company ================= */}
-          <div>
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-[#111827]">
-              Company
-            </h3>
+          {/* ================= Center Social Links ================= */}
+          <div className="mt-10 flex flex-col items-center justify-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#526174]">
+              Follow Us
+            </p>
 
-            <ul className="space-y-3.5">
-              {footerLinks[0].links.map((link) => (
-                <li key={link.href}>
+            <div className="flex items-center justify-center gap-2.5">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+
+                return (
                   <Link
-                    href={link.href}
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
                     className="
-                      text-[15px]
-                      font-medium
-                      text-[#243B53]
-                      transition-colors
-                      duration-300
-                      hover:text-[#000000]
+                      group
+                      flex h-10 w-10 items-center justify-center
+                      rounded-full
+                      border border-white/40
+                      bg-white/20
+                      text-[#40556B]
+                      backdrop-blur-sm
+                      shadow-sm
+                      transition-all duration-300
+                      hover:-translate-y-1
+                      hover:border-white/60
+                      hover:bg-white/40
+                      hover:text-[#172B42]
+                      hover:shadow-md
                     "
                   >
-                    {link.label}
+                    <Icon
+                      size={17}
+                      className="
+                        transition-transform duration-300
+                        group-hover:scale-110
+                      "
+                    />
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* ================= Opportunities ================= */}
-          <div>
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-[#111827]">
-              Opportunities
-            </h3>
-
-            <ul className="space-y-3.5">
-              {footerLinks[1].links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="
-                      text-[15px]
-                      font-medium
-                      text-[#243B53]
-                      transition-colors
-                      duration-300
-                      hover:text-[#000000]
-                    "
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* ================= Legal ================= */}
-          <div>
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-[0.15em] text-white">
-              Legal
-            </h3>
-
-            <ul className="space-y-3.5">
-              {footerLinks[2].links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="
-                      text-[15px]
-                      font-medium
-                      text-white/80
-                      transition-colors
-                      duration-300
-                      hover:text-white
-                    "
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Container>
@@ -249,27 +274,27 @@ export default function Footer() {
       <div className="border-t border-white/20">
         <Container>
           <div className="flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
-
+            
             {/* Copyright */}
-            <p className="text-sm font-medium text-[#243B53]">
+            <p className="text-sm font-normal text-[#64748B]">
               © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
               All rights reserved.
             </p>
 
             {/* Legal Links */}
-            <div className="flex items-center gap-4 text-sm font-medium text-white/80">
+            <div className="flex items-center gap-4 text-sm text-white/65">
               <Link
                 href="/privacy"
-                className="transition-colors duration-300 hover:text-white"
+                className="transition-colors duration-300 hover:text-white/90"
               >
                 Privacy Policy
               </Link>
 
-              <span className="text-white/50">·</span>
+              <span className="text-white/40">·</span>
 
               <Link
                 href="/terms"
-                className="transition-colors duration-300 hover:text-white"
+                className="transition-colors duration-300 hover:text-white/90"
               >
                 Terms of Use
               </Link>
