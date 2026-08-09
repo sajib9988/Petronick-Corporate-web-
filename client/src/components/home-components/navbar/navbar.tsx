@@ -35,7 +35,7 @@ export default function Navbar() {
           width={220}
           height={180}
           priority
-          className="h-16 w-auto object-contain"
+          className="h-18 w-auto object-contain"
         />
       </Link>
 
