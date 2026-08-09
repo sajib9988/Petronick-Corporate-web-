@@ -102,24 +102,24 @@ export function DataTable<TData>({
       )}
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-100 bg-sky-400 overflow-hidden">
+      <div className="rounded-xl border border-gray-400 bg-white  shadow-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             {/* Head */}
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-slate-50 border-b border-slate-200">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap"
+                      className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide whitespace-nowrap"
                     >
                       {header.isPlaceholder ? null : (
                         <div
                           className={cn(
                             "flex items-center gap-1",
                             header.column.getCanSort() &&
-                              "cursor-pointer select-none hover:text-gray-900 transition-colors",
+                             "cursor-pointer select-none hover:text-amber-600 transition-colors",
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                         >
@@ -129,11 +129,11 @@ export function DataTable<TData>({
                           )}
                           {/* Sort icon */}
                           {header.column.getCanSort() && (
-                            <span className="text-gray-300">
+                               <span className="text-slate-300">
                               {header.column.getIsSorted() === "asc" ? (
-                                <ChevronUp size={13} className="text-gray-600" />
+                                 <ChevronUp size={13} className="text-amber-600" />
                               ) : header.column.getIsSorted() === "desc" ? (
-                                <ChevronDown size={13} className="text-gray-600" />
+                                  <ChevronDown size={13} className="text-amber-600" />
                               ) : (
                                 <ChevronsUpDown size={13} />
                               )}
@@ -148,14 +148,14 @@ export function DataTable<TData>({
             </thead>
 
             {/* Body */}
-            <tbody className="divide-y divide-gray-50">
+             <tbody className="divide-y divide-slate-100">
               {isLoading ? (
                 // Skeleton rows
                 Array.from({ length: pageSize > 5 ? 5 : pageSize }).map((_, i) => (
                   <tr key={i}>
                     {columns.map((_, j) => (
                       <td key={j} className="px-4 py-3">
-                        <div className="h-4 bg-gray-100 rounded animate-pulse" />
+                      <div className="h-4 bg-slate-100 rounded animate-pulse" />
                       </td>
                     ))}
                   </tr>
@@ -164,7 +164,7 @@ export function DataTable<TData>({
                 <tr>
                   <td
                     colSpan={columns.length}
-                    className="px-4 py-12 text-center text-sm text-gray-400"
+                     className="px-4 py-12 text-center text-sm text-slate-400"
                   >
                     {emptyMessage}
                   </td>
@@ -173,13 +173,13 @@ export function DataTable<TData>({
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="hover:bg-gray-50/50 transition-colors"
+                     className="hover:bg-amber-50/40 transition-colors"
                     data-state={row.getIsSelected() ? "selected" : undefined}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-4 py-3 text-gray-700 whitespace-nowrap"
+                         className="px-4 py-3 text-slate-700 whitespace-nowrap"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
