@@ -9,6 +9,7 @@ import { Loader2, X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+
 import {
   Form,
   FormItem,
@@ -16,6 +17,7 @@ import {
   FormControl,
   FormField,
 } from "@/components/ui/form";
+
 import {
   Select,
   SelectTrigger,
@@ -24,31 +26,62 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-// ✅ imports
-import { SECTION_TYPES, SectionType, FIELDS } from "./section/section.constant";
+import {
+  SECTION_TYPES,
+  SECTION_TYPE_LABELS,
+  type SectionType,
+  FIELDS,
+} from "./section/section.constant";
+
 import { sectionSchema } from "./section/section.schema";
+
+// ============================================================
+// FORM TYPE
+// ============================================================
 
 type SectionFormValues = z.infer<typeof sectionSchema>;
 
 export type { SectionFormValues };
 
+// ============================================================
+// DEFAULT VALUES
+// ============================================================
+
 const defaultSectionValues: SectionFormValues = {
-  type: "HERO" as const,
+  type: "HERO",
   content: {},
   order: 0,
   isVisible: true,
 };
 
+// ============================================================
+// PROPS
+// ============================================================
+
 interface SectionFormProps {
   defaultValues?: SectionFormValues;
+
   existingImage?: string | null;
-  onSubmit: (values: SectionFormValues, imageFile: File | null) => Promise<void>;
+
+  onSubmit: (
+    values: SectionFormValues,
+    imageFile: File | null
+  ) => Promise<void>;
+
   onCancel?: () => void;
-  onClose?: () => void;           // New: for modal close (X icon)
+
+  onClose?: () => void;
+
   submitLabel?: string;
+
   isLoading?: boolean;
+
   error?: string;
 }
+
+// ============================================================
+// COMPONENT
+// ============================================================
 
 export default function SectionForm({
   defaultValues = defaultSectionValues,
@@ -60,59 +93,133 @@ export default function SectionForm({
   isLoading = false,
   error,
 }: SectionFormProps) {
+  // ==========================================================
+  // IMAGE STATE
+  // ==========================================================
+
   const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [imagePreview, setImagePreview] = useState<string | null>(
     existingImage ?? null
   );
+
+  // ==========================================================
+  // FORM
+  // ==========================================================
 
   const form = useForm<SectionFormValues>({
     defaultValues,
     resolver: zodResolver(sectionSchema) as Resolver<SectionFormValues>,
   });
 
+  // ==========================================================
+  // SELECTED SECTION TYPE
+  // ==========================================================
+
   const selectedType = form.watch("type");
+
   const fields = FIELDS[selectedType] ?? [];
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  // ==========================================================
+  // IMAGE CHANGE
+  // ==========================================================
+
+  const handleImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
     if (!file) return;
+
+    // Optional size validation
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image size must be less than 5MB.");
+      return;
+    }
+
     setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+
+    const previewUrl = URL.createObjectURL(file);
+
+    setImagePreview(previewUrl);
   };
 
-  const handleTypeChange = (val: SectionType) => {
-    form.setValue("type", val);
+  // ==========================================================
+  // SECTION TYPE CHANGE
+  // ==========================================================
+
+  const handleTypeChange = (value: SectionType) => {
+    form.setValue("type", value);
+
+    // Previous section content clear
     form.setValue("content", {});
   };
 
+  // ==========================================================
+  // SUBMIT
+  // ==========================================================
+
+  const handleSubmit = async (values: SectionFormValues) => {
+    await onSubmit(values, imageFile);
+  };
+
+  // ==========================================================
+  // UI
+  // ==========================================================
+
   return (
-    <div className="relative bg-white rounded-xl shadow-xl max-w-2xl mx-auto">
-      {/* Header with Close Icon */}
+    <div className="w-full bg-white rounded-2xl">
+      {/* ======================================================
+          HEADER
+      ====================================================== */}
+
       <div className="flex items-center justify-between border-b px-6 py-4">
-        <h2 className="text-xl font-semibold text-gray-900">Edit Section</h2>
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Edit Section
+          </h2>
+
+          <p className="mt-1 text-xs text-gray-500">
+            Configure your website section content.
+          </p>
+        </div>
+
         {onClose && (
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close"
+            className="rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900"
           >
             <X size={20} />
-          </button>
+          </Button>
         )}
       </div>
 
+      {/* ======================================================
+          FORM
+      ====================================================== */}
+
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit((values) => onSubmit(values, imageFile))}
+          onSubmit={form.handleSubmit(handleSubmit)}
           className="space-y-6 p-6"
         >
+          {/* ==================================================
+              ERROR
+          ================================================== */}
+
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
-              {error}
-            </p>
+            <div className="rounded-lg border border-red-200 bg-red-50 p-3">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
           )}
 
-          {/* Section Type */}
+          {/* ==================================================
+              SECTION TYPE
+          ================================================== */}
+
           <Controller
             name="type"
             control={form.control}
@@ -121,17 +228,21 @@ export default function SectionForm({
                 <FormLabel className="text-sm font-medium text-gray-700">
                   Section Type
                 </FormLabel>
+
                 <Select
                   value={field.value}
-                  onValueChange={(v) => handleTypeChange(v as SectionType)}
+                  onValueChange={(value) =>
+                    handleTypeChange(value as SectionType)
+                  }
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue />
+                    <SelectValue placeholder="Select section type" />
                   </SelectTrigger>
+
                   <SelectContent>
-                    {SECTION_TYPES.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t}
+                    {SECTION_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {SECTION_TYPE_LABELS[type]}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -140,11 +251,36 @@ export default function SectionForm({
             )}
           />
 
-          {/* Dynamic Fields */}
+          {/* ==================================================
+              DYNAMIC CONTENT FIELDS
+          ================================================== */}
+
           {fields.length > 0 && (
-            <div className="space-y-5 border border-gray-100 bg-gray-50/50 p-5 rounded-xl">
+            <div className="space-y-5 rounded-xl border border-gray-100 bg-gray-50/50 p-5">
+              {/* Section heading */}
+
+              <div className="border-b border-gray-200 pb-3">
+                <h3 className="text-sm font-semibold text-gray-800">
+                  {SECTION_TYPE_LABELS[selectedType]}
+                </h3>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Enter the content for this section.
+                </p>
+              </div>
+
+              {/* Dynamic fields */}
+
               {fields.map(
-                ({ key, label, multiline }: { key: string; label: string; multiline?: boolean }) => (
+                ({
+                  key,
+                  label,
+                  multiline,
+                }: {
+                  key: string;
+                  label: string;
+                  multiline?: boolean;
+                }) => (
                   <FormField
                     key={key}
                     control={form.control}
@@ -154,18 +290,20 @@ export default function SectionForm({
                         <FormLabel className="text-sm font-medium text-gray-700">
                           {label}
                         </FormLabel>
+
                         <FormControl>
                           {multiline ? (
                             <Textarea
                               {...field}
                               value={(field.value as string) || ""}
-                              className="min-h-[80px] resize-y"
+                              className="min-h-[90px] resize-y bg-white"
                               placeholder={`Enter ${label.toLowerCase()}`}
                             />
                           ) : (
                             <Input
                               {...field}
                               value={(field.value as string) || ""}
+                              className="bg-white"
                               placeholder={`Enter ${label.toLowerCase()}`}
                             />
                           )}
@@ -178,64 +316,170 @@ export default function SectionForm({
             </div>
           )}
 
-          {/* Image Upload */}
+          {/* ==================================================
+              IMAGE UPLOAD
+          ================================================== */}
+
           <div className="space-y-2">
             <FormLabel className="text-sm font-medium text-gray-700">
               Background Image
             </FormLabel>
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 hover:border-gray-400 transition-colors text-center">
+
+            <div className="rounded-xl border-2 border-dashed border-gray-300 p-8 text-center transition-colors hover:border-gray-400">
               <input
                 type="file"
                 accept="image/*"
-                id="image-upload"
+                id="section-image-upload"
                 onChange={handleImageChange}
                 className="hidden"
               />
+
               <label
-                htmlFor="image-upload"
-                className="cursor-pointer flex flex-col items-center gap-3"
+                htmlFor="section-image-upload"
+                className="flex cursor-pointer flex-col items-center gap-3"
               >
                 {imagePreview ? (
-                  <div className="relative w-full max-w-md mx-auto">
+                  <div className="relative mx-auto w-full max-w-md">
                     <img
                       src={imagePreview}
-                      alt="Preview"
-                      className="rounded-lg shadow-sm max-h-48 object-cover mx-auto"
+                      alt="Section preview"
+                      className="mx-auto max-h-52 rounded-lg object-cover shadow-sm"
                     />
-                    <div className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow">
-                      <Upload size={16} className="text-gray-500" />
+
+                    <div className="absolute -right-2 -top-2 rounded-full bg-white p-1.5 shadow">
+                      <Upload
+                        size={16}
+                        className="text-gray-500"
+                      />
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <Upload size={40} className="mx-auto text-gray-400" />
+                    <Upload
+                      size={40}
+                      className="mx-auto text-gray-400"
+                    />
+
                     <p className="mt-3 text-sm text-gray-600">
                       Click to upload image
                     </p>
-                    <p className="text-xs text-gray-400">PNG, JPG up to 5MB</p>
+
+                    <p className="text-xs text-gray-400">
+                      PNG, JPG, WEBP up to 5MB
+                    </p>
                   </div>
                 )}
               </label>
             </div>
+
             {existingImage && !imageFile && (
-              <p className="text-xs text-gray-500">Current image will be kept unless replaced.</p>
+              <p className="text-xs text-gray-500">
+                Current image will be kept unless you upload a new
+                image.
+              </p>
             )}
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 pt-4 border-t">
+          {/* ==================================================
+              VISIBILITY
+          ================================================== */}
+
+          <Controller
+            name="isVisible"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 p-4">
+                <div>
+                  <FormLabel className="text-sm font-medium text-gray-800">
+                    Section Visibility
+                  </FormLabel>
+
+                  <p className="mt-1 text-xs text-gray-500">
+                    Control whether this section appears on the
+                    website.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => field.onChange(!field.value)}
+                  className={`relative h-6 w-11 rounded-full transition-colors ${
+                    field.value
+                      ? "bg-emerald-500"
+                      : "bg-gray-300"
+                  }`}
+                  aria-label="Toggle section visibility"
+                >
+                  <span
+                    className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                      field.value
+                        ? "translate-x-6"
+                        : "translate-x-1"
+                    }`}
+                  />
+                </button>
+              </FormItem>
+            )}
+          />
+
+          {/* ==================================================
+              ORDER
+          ================================================== */}
+
+          <FormField
+            control={form.control}
+            name="order"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium text-gray-700">
+                  Display Order
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={0}
+                    {...field}
+                    onChange={(event) =>
+                      field.onChange(
+                        Number(event.target.value)
+                      )
+                    }
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          {/* ==================================================
+              ACTION BUTTONS
+          ================================================== */}
+
+          <div className="flex gap-3 border-t pt-4">
             {onCancel && (
               <Button
                 type="button"
                 variant="outline"
                 onClick={onCancel}
+                disabled={isLoading}
                 className="flex-1"
               >
                 Cancel
               </Button>
             )}
-            <Button type="submit" disabled={isLoading} className="flex-1">
-              {isLoading && <Loader2 className="animate-spin mr-2" size={16} />}
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1"
+            >
+              {isLoading && (
+                <Loader2
+                  className="mr-2 animate-spin"
+                  size={16}
+                />
+              )}
+
               {submitLabel}
             </Button>
           </div>

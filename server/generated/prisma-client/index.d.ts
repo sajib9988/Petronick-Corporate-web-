@@ -56,7 +56,8 @@ export namespace $Enums {
   export const Role: {
   SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
-  USER: 'USER'
+  USER: 'USER',
+  AGENT: 'AGENT'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
@@ -88,6 +89,8 @@ export const SectionType: {
   REVENUE: 'REVENUE',
   CLOSING: 'CLOSING',
   ABOUT: 'ABOUT',
+  SNAPSHOT: 'SNAPSHOT',
+  VALUES: 'VALUES',
   CTA: 'CTA',
   FEATURE: 'FEATURE',
   TESTIMONIALS: 'TESTIMONIALS',

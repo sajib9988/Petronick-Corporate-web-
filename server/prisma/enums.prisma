@@ -2,6 +2,7 @@ enum Role {
   SUPER_ADMIN
   ADMIN
   USER
+  AGENT
 }
 
 enum UserStatus {
@@ -23,7 +24,11 @@ enum SectionType {
   ECOSYSTEM
   REVENUE
   CLOSING
+
   ABOUT
+  SNAPSHOT
+  VALUES
+
   CTA
   FEATURE
   TESTIMONIALS

@@ -228,7 +228,8 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Role = exports.$Enums.Role = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
-  USER: 'USER'
+  USER: 'USER',
+  AGENT: 'AGENT'
 };
 
 exports.UserStatus = exports.$Enums.UserStatus = {
@@ -257,6 +258,8 @@ exports.SectionType = exports.$Enums.SectionType = {
   REVENUE: 'REVENUE',
   CLOSING: 'CLOSING',
   ABOUT: 'ABOUT',
+  SNAPSHOT: 'SNAPSHOT',
+  VALUES: 'VALUES',
   CTA: 'CTA',
   FEATURE: 'FEATURE',
   TESTIMONIALS: 'TESTIMONIALS',
