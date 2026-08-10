@@ -94,7 +94,7 @@ export default function ContactsPage() {
           <p className="text-sm text-gray-400">No messages yet.</p>
         </div>
       ) : (
-        <div className="bg-sky-400 rounded-xl border border-gray-100 overflow-hidden divide-y divide-gray-50">
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
           {contacts.map((contact) => (
             <div key={contact.id} className="px-5 py-4 hover:bg-gray-50 transition-colors group">
               <div className="flex items-start justify-between gap-4">
@@ -107,25 +107,26 @@ export default function ContactsPage() {
                     )}
                   </div>
                   {contact.subject && (
-                    <p className="text-xs font-medium text-blue-600 bg-blue-100 py-1 px-2 rounded-full">
+                    <p className="text-xs font-medium text-amber-700 bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
                       {contact.subject}
                     </p>
                   )}
                   <p className="text-sm text-gray-600 leading-relaxed">{contact.message}</p>
-                  <p className="text-xs text-gray-300 mt-2">
+                  <p className="text-xs text-gray-400 mt-2">
                     {new Date(contact.createdAt).toLocaleDateString("en-US", {
                       year: "numeric", month: "long", day: "numeric",
                     })}
                   </p>
                 </div>
-               <Button
-  onClick={() => setDeleteId(contact.id)}
-  title="Delete message"
-  aria-label="Delete message"
-  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
->
-  <Trash2 size={13} />
-</Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => setDeleteId(contact.id)}
+                  title="Delete message"
+                  aria-label="Delete message"
+                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                >
+                  <Trash2 size={13} />
+                </Button>
               </div>
             </div>
           ))}

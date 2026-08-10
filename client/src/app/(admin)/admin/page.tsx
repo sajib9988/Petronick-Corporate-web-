@@ -78,7 +78,7 @@ export default async function AdminDashboardPage() {
             Here&apos;s what&apos;s happening with Petronick today.
           </p>
         </div>
-        <div className="hidden sm:flex items-center gap-2 text-xs text-white bg-sky-500 px-4 py-2 rounded-full shadow-lg shadow-sky-200">
+        <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-stone-900 bg-gradient-to-r from-amber-400 to-amber-600 px-4 py-2 rounded-full shadow-sm">
           <Clock size={14} />
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -98,19 +98,19 @@ export default async function AdminDashboardPage() {
       {/* Recent Tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Recent Agents */}
-        <div className="bg-sky-400 rounded-2xl border-2 border-sky-300 overflow-hidden shadow-xl shadow-sky-100">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-sky-300/50">
+        <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <h3 className="font-bold text-white text-sm tracking-wide">
               Recent Agent Applications
             </h3>
             <Link
               href="/admin/agents"
-              className="text-xs text-white/90 hover:text-white font-semibold transition-colors bg-white/20 px-3 py-1 rounded-full hover:bg-white/30"
+              className="text-xs text-amber-400 hover:text-amber-300 font-semibold transition-colors bg-amber-400/10 px-3 py-1 rounded-full hover:bg-amber-400/20"
             >
               View all →
             </Link>
           </div>
-          <div className="divide-y divide-sky-300/30">
+          <div className="divide-y divide-slate-800">
             {agents?.data?.length > 0 ? (
               agents.data
                 .slice(0, 5)
@@ -123,18 +123,18 @@ export default async function AdminDashboardPage() {
                 }) => (
                   <div
                     key={agent.id}
-                    className="flex items-center justify-between px-6 py-3.5 hover:bg-sky-500/50 transition-colors"
+                    className="flex items-center justify-between px-6 py-3.5 hover:bg-slate-800/60 transition-colors"
                   >
                     <div className="min-w-0 flex-1 mr-3">
-                      <p className="text-sm font-bold text-white truncate drop-shadow-sm">
+                      <p className="text-sm font-semibold text-white truncate">
                         {agent.fullName}
                       </p>
-                      <p className="text-xs text-sky-100 truncate">
+                      <p className="text-xs text-slate-400 truncate">
                         {agent.focus} · {agent.email}
                       </p>
                     </div>
                     <span
-                      className={`text-[10px] font-bold px-2.5 py-1 rounded-full flex-shrink-0 shadow-sm ${agentStatusColor[agent.status] ?? "bg-white/20 text-white border border-white/30"}`}
+                      className={`text-[10px] font-bold px-2.5 py-1 rounded-full flex-shrink-0 ${agentStatusColor[agent.status] ?? "bg-slate-800 text-slate-300 border border-slate-700"}`}
                     >
                       {agent.status}
                     </span>
@@ -142,28 +142,28 @@ export default async function AdminDashboardPage() {
                 ))
             ) : (
               <div className="px-6 py-10 text-center">
-                <Users size={28} className="text-white/80 mx-auto mb-3" />
+                <Users size={28} className="text-slate-600 mx-auto mb-3" />
                 <p className="text-sm text-white font-medium">No applications yet</p>
-                <p className="text-xs text-sky-100 mt-1">Agents will appear here</p>
+                <p className="text-xs text-slate-400 mt-1">Agents will appear here</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Recent Contacts */}
-        <div className="bg-sky-400 rounded-2xl border-2 border-sky-300 overflow-hidden shadow-xl shadow-sky-100">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-sky-300/50">
+        <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <h3 className="font-bold text-white text-sm tracking-wide">
               Recent Contact Messages
             </h3>
             <Link
               href="/admin/contact"
-              className="text-xs text-white/90 hover:text-white font-semibold transition-colors bg-white/20 px-3 py-1 rounded-full hover:bg-white/30"
+              className="text-xs text-amber-400 hover:text-amber-300 font-semibold transition-colors bg-amber-400/10 px-3 py-1 rounded-full hover:bg-amber-400/20"
             >
               View all →
             </Link>
           </div>
-          <div className="divide-y divide-sky-300/30">
+          <div className="divide-y divide-slate-800">
             {contacts?.data?.length > 0 ? (
               contacts.data
                 .slice(0, 5)
@@ -175,24 +175,24 @@ export default async function AdminDashboardPage() {
                 }) => (
                   <div
                     key={contact.id}
-                    className="px-6 py-3.5 hover:bg-sky-500/50 transition-colors"
+                    className="px-6 py-3.5 hover:bg-slate-800/60 transition-colors"
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-sm font-bold text-white">
+                      <p className="text-sm font-semibold text-white">
                         {contact.name}
                       </p>
-                      <p className="text-xs text-sky-100">{contact.email}</p>
+                      <p className="text-xs text-slate-400">{contact.email}</p>
                     </div>
-                    <p className="text-xs text-sky-100 line-clamp-1">
+                    <p className="text-xs text-slate-400 line-clamp-1">
                       {contact.message}
                     </p>
                   </div>
                 ))
             ) : (
               <div className="px-6 py-10 text-center">
-                <Mail size={28} className="text-white/80 mx-auto mb-3" />
+                <Mail size={28} className="text-slate-600 mx-auto mb-3" />
                 <p className="text-sm text-white font-medium">No messages yet</p>
-                <p className="text-xs text-sky-100 mt-1">Contacts will appear here</p>
+                <p className="text-xs text-slate-400 mt-1">Contacts will appear here</p>
               </div>
             )}
           </div>
