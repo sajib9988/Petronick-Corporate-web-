@@ -83,24 +83,25 @@ export default function Footer() {
     >
       {/* ================= Main Footer ================= */}
       <Container>
-        <div className="py-12">
+        <div className="py-8">
+
           {/* ================= Main Content ================= */}
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.4fr_1fr]">
-            
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.4fr_1fr]">
+
             {/* ================= Brand ================= */}
             <div>
               <Link href="/" className="inline-block">
                 <Image
                   src="/Word Mark.png"
                   alt="Petronick Logo"
-                  width={120}
-                  height={120}
+                  width={105}
+                  height={105}
                   priority
-                  className="h-auto w-[120px] object-contain"
+                  className="h-auto w-[105px] object-contain"
                 />
               </Link>
 
-              <p className="mt-2 mb-6 max-w-sm text-[15px] leading-7 text-[#526174]">
+              <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 text-[#526174]">
                 A vertically integrated holding company operating multiple
                 revenue-generating business units across digital, fulfillment,
                 advisory, and e-commerce sectors.
@@ -141,11 +142,11 @@ export default function Footer() {
 
             {/* ================= Company ================= */}
             <div>
-              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
                 Company
               </h3>
 
-              <ul className="space-y-3.5">
+              <ul className="space-y-3">
                 {footerLinks[0].links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -168,11 +169,11 @@ export default function Footer() {
 
             {/* ================= Opportunities ================= */}
             <div>
-              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
                 Opportunities
               </h3>
 
-              <ul className="space-y-3.5">
+              <ul className="space-y-3">
                 {footerLinks[1].links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -195,11 +196,11 @@ export default function Footer() {
 
             {/* ================= Legal ================= */}
             <div>
-              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
                 Legal
               </h3>
 
-              <ul className="space-y-3.5">
+              <ul className="space-y-3">
                 {footerLinks[2].links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -222,7 +223,7 @@ export default function Footer() {
           </div>
 
           {/* ================= Center Social Links ================= */}
-          <div className="mt-10 flex flex-col items-center justify-center">
+          <div className="mt-7 flex flex-col items-center justify-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#526174]">
               Follow Us
             </p>
@@ -273,8 +274,8 @@ export default function Footer() {
       {/* ================= Bottom Bar ================= */}
       <div className="border-t border-white/20">
         <Container>
-          <div className="flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
-            
+          <div className="flex flex-col items-center justify-between gap-3 py-4 sm:flex-row">
+
             {/* Copyright */}
             <p className="text-sm font-normal text-[#64748B]">
               © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
@@ -299,6 +300,7 @@ export default function Footer() {
                 Terms of Use
               </Link>
             </div>
+
           </div>
         </Container>
       </div>
