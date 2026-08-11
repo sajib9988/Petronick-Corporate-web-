@@ -328,17 +328,56 @@ export const FIELDS: Record<
   // VALUES
   // ==========================================================
 
-  VALUES: [
-    {
-      key: "label",
-      label: "Section Label",
-    },
+VALUES: [
+  {
+    key: "label",
+    label: "Section Label",
+  },
+  {
+    key: "title",
+    label: "Section Title",
+  },
 
-    {
-      key: "title",
-      label: "Section Title",
-    },
-  ],
+  {
+    key: "value1Title",
+    label: "Value 1 Title",
+  },
+  {
+    key: "value1Description",
+    label: "Value 1 Description",
+    multiline: true,
+  },
+
+  {
+    key: "value2Title",
+    label: "Value 2 Title",
+  },
+  {
+    key: "value2Description",
+    label: "Value 2 Description",
+    multiline: true,
+  },
+
+  {
+    key: "value3Title",
+    label: "Value 3 Title",
+  },
+  {
+    key: "value3Description",
+    label: "Value 3 Description",
+    multiline: true,
+  },
+
+  {
+    key: "value4Title",
+    label: "Value 4 Title",
+  },
+  {
+    key: "value4Description",
+    label: "Value 4 Description",
+    multiline: true,
+  },
+],
 
   // ==========================================================
   // FEATURE
