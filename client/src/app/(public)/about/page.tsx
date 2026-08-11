@@ -31,6 +31,7 @@ export default async function AboutPage() {
   return (
     <AboutContent
       heroImage={heroSection?.image}
+      ctaImage={ctaSection?.image}
       heroContent={heroSection?.content ?? {}}
       aboutContent={aboutSection?.content ?? {}}
       snapshotContent={snapshotSection?.content ?? {}}

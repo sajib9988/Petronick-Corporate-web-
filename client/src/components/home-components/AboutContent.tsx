@@ -15,6 +15,8 @@ interface AboutContentProps {
 
   heroImage?: string | null;
 
+  ctaImage?: string | null;
+
   heroContent?: {
     badge?: string;
     headline?: string;
@@ -87,6 +89,7 @@ interface AboutContentProps {
 
 export default function AboutContent({
   heroImage,
+  ctaImage,
   heroContent = {},
   aboutContent = {},
   snapshotContent = {},
@@ -222,6 +225,7 @@ export default function AboutContent({
               <Image
                 src={heroImage}
                 alt="Petronick Corporate Holdings"
+                unoptimized
                 fill
                 priority
                 className="object-cover opacity-30"
@@ -420,6 +424,19 @@ export default function AboutContent({
 
         <section className="py-8 pb-14">
           <div className="relative overflow-hidden rounded-3xl bg-gray-900 text-white py-16 sm:py-20 px-6 sm:px-10 text-center">
+
+            {ctaImage && (
+              <>
+                <Image
+                  src={ctaImage}
+                  alt=""
+                  unoptimized
+                  fill
+                  className="object-cover opacity-[0.08]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900" />
+              </>
+            )}
 
             <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
 
