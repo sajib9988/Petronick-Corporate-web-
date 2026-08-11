@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -50,7 +51,9 @@ export default function ContactsPage() {
 
   const handleDelete = async () => {
     if (!deleteId) return;
+
     setIsDeleting(true);
+
     try {
       await deleteContact(deleteId);
       setDeleteId(null);
@@ -64,20 +67,27 @@ export default function ContactsPage() {
     <div className="space-y-5 max-w-4xl">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900">Contact Messages</h2>
-        <p className="text-sm text-gray-400 mt-0.5">
+        <h2 className="text-xl font-bold text-white">
+          Contact Messages
+        </h2>
+
+        <p className="text-sm font-medium text-gray-400 mt-0.5">
           View messages sent through the contact form
         </p>
       </div>
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search
+          size={14}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+        />
+
         <Input
           placeholder="Search contacts..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-8"
+          className="pl-8 text-white placeholder:text-gray-500"
         />
       </div>
 
@@ -85,39 +95,70 @@ export default function ContactsPage() {
       {isLoading ? (
         <div className="space-y-2">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-24 bg-white rounded-xl border border-gray-100 animate-pulse" />
+            <div
+              key={i}
+              className="h-24 bg-gray-900 rounded-xl border border-gray-100 animate-pulse"
+            />
           ))}
         </div>
       ) : contacts.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 px-6 py-16 text-center">
-          <Mail size={28} className="text-gray-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">No messages yet.</p>
+        <div className="bg-gray-900 rounded-xl border border-gray-100 px-6 py-16 text-center">
+          <Mail
+            size={28}
+            className="text-gray-500 mx-auto mb-3"
+          />
+
+          <p className="text-sm text-gray-400">
+            No messages yet.
+          </p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden divide-y divide-gray-200">
+        <div className="bg-gray-900 rounded-xl border border-gray-200 overflow-hidden divide-y divide-gray-700">
           {contacts.map((contact) => (
-            <div key={contact.id} className="px-5 py-4 hover:bg-gray-50 transition-colors group">
+            <div
+              key={contact.id}
+              className="px-5 py-4 hover:bg-gray-50 transition-colors group"
+            >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <p className="text-sm font-semibold text-gray-900">{contact.name}</p>
-                    <p className="text-xs text-gray-400">{contact.email}</p>
+                    <p className="text-sm font-semibold text-white">
+                      {contact.name}
+                    </p>
+
+                    <p className="text-xs text-gray-400">
+                      {contact.email}
+                    </p>
+
                     {contact.phone && (
-                      <p className="text-xs text-gray-400">{contact.phone}</p>
+                      <p className="text-xs text-gray-400">
+                        {contact.phone}
+                      </p>
                     )}
                   </div>
+
                   {contact.subject && (
-                    <p className="text-xs font-medium text-amber-700 bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
+                    <p className="text-xs font-medium text-amber-400 bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
                       {contact.subject}
                     </p>
                   )}
-                  <p className="text-sm text-gray-600 leading-relaxed">{contact.message}</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    {new Date(contact.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric", month: "long", day: "numeric",
-                    })}
+
+                  <p className="text-sm text-gray-300 leading-relaxed">
+                    {contact.message}
+                  </p>
+
+                  <p className="text-xs text-gray-500 mt-2">
+                    {new Date(contact.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </p>
                 </div>
+
                 <Button
                   variant="ghost"
                   onClick={() => setDeleteId(contact.id)}
@@ -136,21 +177,39 @@ export default function ContactsPage() {
       {/* Delete Dialog */}
       <Dialog
         open={!!deleteId}
-        onOpenChange={(open: boolean) => !isDeleting && !open && setDeleteId(null)}
+        onOpenChange={(open: boolean) =>
+          !isDeleting && !open && setDeleteId(null)
+        }
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle>Delete Message</DialogTitle>
+
             <DialogDescription>
               This message will be permanently deleted.
             </DialogDescription>
           </DialogHeader>
+
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteId(null)} disabled={isDeleting}>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteId(null)}
+              disabled={isDeleting}
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
-              {isDeleting && <Loader2 size={13} className="mr-1.5 animate-spin" />}
+
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting && (
+                <Loader2
+                  size={13}
+                  className="mr-1.5 animate-spin"
+                />
+              )}
               Delete
             </Button>
           </DialogFooter>
@@ -159,3 +218,4 @@ export default function ContactsPage() {
     </div>
   );
 }
+
