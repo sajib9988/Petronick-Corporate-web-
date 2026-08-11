@@ -146,14 +146,14 @@ export default function PagesPage() {
                   <p className="text-xs text-gray-400 font-mono mt-0.5">/{page.slug}</p>
                 </div>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <a
+                  {/* <a
                     href={`/${page.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-1.5 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                     <ExternalLink size={13} />
-                  </a>
+                  </a> */}
                   <button
                     onClick={() => setDeleteDialog({ open: true, slug: page.slug, title: page.title })}
                     className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"

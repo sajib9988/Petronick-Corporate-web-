@@ -60,7 +60,11 @@ export default function AboutContent({
   return (
     <main className="min-h-screen bg-[#4dd0e1]">
       <Container>
-        {/* ── Hero ── */}
+
+{/* Part-1: Hero Section */}
+
+
+    
         <section className="pt-8 sm:pt-10">
           <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-24 sm:py-32">
             {heroImage && (
@@ -111,8 +115,8 @@ export default function AboutContent({
             </motion.div>
           </div>
         </section>
-
-        {/* ── Mission ── */}
+{/* Part-2  Our Mission */}
+    
         <section className="py-16 sm:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
             <motion.div
@@ -166,9 +170,8 @@ export default function AboutContent({
             </motion.div>
           </div>
         </section>
-
-        {/* ── Core Values ── */}
-        <section className="py-8">
+{/* Part-3: Core Values */}
+ <section className="py-8">
           <div className="rounded-3xl bg-gray-950 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
             <div className="text-center mb-12">
               <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
@@ -204,7 +207,7 @@ export default function AboutContent({
             </motion.div>
           </div>
         </section>
-
+{/* Part-4- CTA Section */}
         {/* ── CTA ── */}
         <section className="py-8 pb-14">
           <div className="relative overflow-hidden rounded-3xl bg-gray-900 text-white py-16 sm:py-20 px-6 sm:px-10 text-center">
