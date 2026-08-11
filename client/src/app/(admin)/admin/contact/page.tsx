@@ -117,7 +117,7 @@ export default function ContactsPage() {
           {contacts.map((contact) => (
             <div
               key={contact.id}
-              className="px-5 py-4 hover:bg-gray-50 transition-colors group"
+              className="px-5 py-4 hover:bg-sky-200 transition-colors group"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">

@@ -145,7 +145,7 @@ export default function SectionsPage() {
       {/* Edit modal */}
       {selected && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-[500px] max-h-[90vh] overflow-y-auto shadow-xl">
+             <div className="bg-white p-6 rounded-xl w-full max-w-3xl mx-4 max-h-[90vh] overflow-y-auto shadow-xl">
             <h3 className="text-lg font-semibold mb-4 text-gray-900">
               Edit Section
             </h3>
