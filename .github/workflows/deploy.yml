@@ -32,8 +32,7 @@ jobs:
           context: ./client
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/petronick-client:latest
-           build-args: |
-        build-args: |
+          build-args: |
            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Deploy on VPS
