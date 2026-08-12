@@ -58,7 +58,7 @@ export default function SectionsPage() {
     try {
       const formData = new FormData();
       formData.append("data", JSON.stringify(values));
-      if (imageFile) formData.append("file", imageFile);
+      if (imageFile) formData.append("image", imageFile);
       await updateSection(selected.id, formData);
       setSelected(null);
       const res = await getSectionsByPage(selectedPageId);
