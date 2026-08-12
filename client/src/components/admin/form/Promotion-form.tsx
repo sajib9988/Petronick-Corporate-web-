@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { createAgent } from "@/service/agent";
+import Turnstile from "@/components/ui/turnstile";
 
 // ─── Schema ─────────────────────────────
 const agentSchema = z.object({
@@ -32,6 +33,8 @@ const agentSchema = z.object({
     .refine(Boolean, { message: "Please select B2B, B2C, or BOTH" }),
   message: z.string().min(10, "Please write at least 10 characters"),
   businessUnits: z.array(z.string()).min(1, "Select at least one business unit"),
+  // schema-তে যোগ
+turnstileToken: z.string().min(1, "Please complete the verification"),
 });
 
 type AgentFormValues = z.infer<typeof agentSchema>;
@@ -53,6 +56,7 @@ export default function PromotionAgentForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
+const [turnstileToken, setTurnstileToken] = useState("");
   const form = useForm<AgentFormValues>({
     resolver: zodResolver(agentSchema),
     defaultValues: {
@@ -73,6 +77,8 @@ export default function PromotionAgentForm() {
     return [...current, name];
   };
 
+
+
 const handleSubmit = async (values: AgentFormValues) => {
     setIsLoading(true);
     setError("");
@@ -88,6 +94,7 @@ const handleSubmit = async (values: AgentFormValues) => {
         focusType: values.focusType,
         message: values.message,
         businessUnits: values.businessUnits,
+        turnstileToken,
       });
 
       if (!result?.success) {
@@ -326,6 +333,9 @@ const handleSubmit = async (values: AgentFormValues) => {
           )}
         />
 
+<Turnstile onVerify={setTurnstileToken} onExpire={() => setTurnstileToken("")} />
+
+<Button type="submit" className="w-full h-11" disabled={isLoading || !turnstileToken}></Button>
         <Button type="submit" className="w-full h-12 text-base" disabled={isLoading}>
           {isLoading && <Loader2 size={18} className="mr-2 animate-spin" />}
           Submit Application

@@ -16,7 +16,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-
+// import
+import Turnstile from "@/components/ui/turnstile";
 import { registerSchema, RegisterFormData } from "@/lib/validation";
 import { signUp } from "@/lib/auth-client";
 import { registerUser } from "@/service/auth";
@@ -30,6 +31,7 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+const [turnstileToken, setTurnstileToken] = useState("");
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -51,7 +53,7 @@ const onSubmit = async (data: RegisterFormData) => {
   setError(null);
   try {
     const { confirmPassword, ...rest } = data; // ✅ বাদ দিলাম
-    const result = await registerUser(rest);   // শুধু name, email, password যাবে
+    const result = await registerUser({ ...rest, turnstileToken });   // শুধু name, email, password যাবে
 
     if (!result.ok) {
       const msg = result.data?.message || "Registration failed";
@@ -176,19 +178,22 @@ const onSubmit = async (data: RegisterFormData) => {
             )}
           />
 
+<Turnstile onVerify={setTurnstileToken} onExpire={() => setTurnstileToken("")} />
+
+<Button type="submit" disabled={isLoading || !turnstileToken} className="w-full"></Button>
           <Button type="submit" disabled={isLoading} className="w-full">
             {isLoading ? "Creating..." : "Register"}
           </Button>
         </form>
       </Form>
 
-      <Button
+      {/* <Button
         onClick={handleGoogleLogin}
         variant="outline"
         className="w-full mt-4"
       >
         Continue with Google
-      </Button>
+      </Button> */}
 
       <p className="text-center text-sm text-white mt-4">
         Already have account? <Link href="/login">Login</Link>
