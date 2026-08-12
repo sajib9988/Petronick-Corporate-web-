@@ -53,7 +53,7 @@ export default function ClosingSection({
     >
       {/* Background overlay */}
    {image && (
-  <div className="absolute inset-0 bg-white/45 backdrop-blur-md" />
+  <div className="absolute inset-0 bg-white/75 " />
 )}
 
       {/* Default background when no CMS image exists */}
