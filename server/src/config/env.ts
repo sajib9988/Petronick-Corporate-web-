@@ -40,6 +40,8 @@ interface EnvConfig {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+
+  TURNSTILE_SECRET_KEY: string;
 }
 
 const loadEnvVars = (): EnvConfig => {
@@ -70,6 +72,7 @@ const loadEnvVars = (): EnvConfig => {
     "CLOUDINARY_CLOUD_NAME",
     "CLOUDINARY_API_KEY",
     "CLOUDINARY_API_SECRET",
+      "TURNSTILE_SECRET_KEY",
   ];
 
   // Validate required environment variables
@@ -118,6 +121,8 @@ GMAIL_FROM: process.env.GMAIL_FROM,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
+
+    TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY!,
   };
 };
 

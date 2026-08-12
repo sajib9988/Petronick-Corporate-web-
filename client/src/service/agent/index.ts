@@ -43,6 +43,7 @@ export const createAgent = async (data: {
   focusType: "B2B" | "B2C" | "BOTH";
   message: string;
   businessUnits: string[];
+  turnstileToken: string;
 }) => {
   try {
     const res = await fetch(`${BASE_URL}/agents`, {

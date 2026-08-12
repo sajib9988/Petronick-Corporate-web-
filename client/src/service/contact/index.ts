@@ -34,6 +34,7 @@ export const createContact = async (data: {
   phone?: string;
   subject?: string;
   message: string;
+    turnstileToken: string;
 }) => {
   try {
     const res = await fetch(`${BASE_URL}/contact`, {

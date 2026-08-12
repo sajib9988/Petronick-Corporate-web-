@@ -5,9 +5,14 @@ import { contactValidation } from "./contact.validation.js";
 import { contactService } from "./contact.service.js";
 import { sendResponse } from "../../shared/utils/send-response.js";
 import { IContactQuery } from "./contact.interface.js";
+import { verifyTurnstile } from "../../shared/utils/verify-turnstile.js";
 
 
 const createContact = catchAsync(async (req: Request, res: Response) => {
+   const { turnstileToken, ...rest } = req.body;
+   await verifyTurnstile(turnstileToken, req.ip);
+ 
+ 
   const parsed = contactValidation.createContact.parse(req.body);
   const result = await contactService.createContact(parsed);
 

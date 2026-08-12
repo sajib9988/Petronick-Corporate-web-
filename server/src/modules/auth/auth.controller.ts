@@ -6,9 +6,13 @@ import { sendResponse } from "../../shared/utils/send-response.js";
 
 import { createRefreshToken, createToken, setAuthCookies, clearCookie, getCookie, setAccessTokenCookie } from "../../shared/utils/auth.token.js";
 import { authValidation } from "./auth.validation.js";
+import { verifyTurnstile } from "../../shared/utils/verify-turnstile.js";
 
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
+    const { turnstileToken, ...rest } = req.body;
+  await verifyTurnstile(turnstileToken, req.ip);
+  
   const result = await authService.registerUser(req.body);
 
   sendResponse(res, {

@@ -5,9 +5,15 @@ import { agentValidation } from "./promotion-agent.validation.js";
 import { agentService } from "./promotion-agent.service.js";
 import { sendResponse } from "../../shared/utils/send-response.js";
 import { IAgentQuery } from "./promotion-agent.interface.js";
+import { verifyTurnstile } from "../../shared/utils/verify-turnstile.js";
 
 
 const createAgent = catchAsync(async (req: Request, res: Response) => {
+    const { turnstileToken, ...rest } = req.body;
+  await verifyTurnstile(turnstileToken, req.ip);
+  
+  
+  
   const parsed = agentValidation.createAgent.parse(req.body);
   const result = await agentService.createAgent(parsed);
 
