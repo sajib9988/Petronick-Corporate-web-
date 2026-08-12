@@ -1,12 +1,373 @@
-<!DOCTYPE html>
-<html>
-<body style="font-family: Arial, sans-serif; padding: 24px;">
-  <h2>New Contact Message</h2>
-  <table style="width: 100%; border-collapse: collapse;">
-    <tr><td><strong>Name:</strong></td><td><%= userName %></td></tr>
-    <tr><td><strong>Email:</strong></td><td><%= email %></td></tr>
-    <tr><td><strong>Phone:</strong></td><td><%= phone %></td></tr>
-    <tr><td><strong>Message:</strong></td><td><%= message %></td></tr>
-  </table>
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        New Contact Message -
+        <%= appName || "Petronick Corporate Holdings" %>
+    </title>
+</head>
+
+<body style="margin:0; padding:0; background-color:#f3f4f6;">
+
+    <!-- Preheader -->
+    <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:transparent;">
+        A new message has been submitted through your website contact form.
+    </div>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f3f4f6; padding:32px 12px;">
+        <tr>
+            <td align="center">
+
+                <!-- Main Container -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="
+                        max-width:560px;
+                        background:#ffffff;
+                        border-radius:16px;
+                        overflow:hidden;
+                        box-shadow:0 4px 12px rgba(0,0,0,0.06);
+                    ">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="
+                                background:linear-gradient(
+                                    135deg,
+                                    #78350f 0%,
+                                    #b45309 50%,
+                                    #d97706 100%
+                                );
+                                padding:36px 32px;
+                                text-align:center;
+                            ">
+
+                            <!-- Icon -->
+                            <div style="
+                                    width:56px;
+                                    height:56px;
+                                    background:#ffffff;
+                                    border-radius:50%;
+                                    margin:0 auto 16px;
+                                ">
+                                <div style="
+                                        line-height:56px;
+                                        font-size:24px;
+                                    ">
+                                    ✉️
+                                </div>
+                            </div>
+
+                            <!-- Title -->
+                            <h1 style="
+                                    margin:0;
+                                    font-family:Arial, Helvetica, sans-serif;
+                                    font-size:20px;
+                                    color:#ffffff;
+                                    font-weight:700;
+                                    letter-spacing:0.5px;
+                                ">
+                                New Contact Message
+                            </h1>
+
+                            <p style="
+                                    margin:8px 0 0;
+                                    font-family:Arial, Helvetica, sans-serif;
+                                    font-size:13px;
+                                    line-height:20px;
+                                    color:#fef3c7;
+                                ">
+                                A new message has been received through your website.
+                            </p>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- Intro -->
+                    <tr>
+                        <td style="
+                                padding:32px 32px 20px 32px;
+                                font-family:Arial, Helvetica, sans-serif;
+                            ">
+
+                            <p style="
+                                    margin:0 0 4px;
+                                    font-size:12px;
+                                    font-weight:700;
+                                    letter-spacing:1.5px;
+                                    color:#d97706;
+                                    text-transform:uppercase;
+                                ">
+                                <%= appName || "Petronick Corporate Holdings" %>
+                            </p>
+
+                            <h2 style="
+                                    margin:0 0 12px;
+                                    font-size:22px;
+                                    line-height:28px;
+                                    color:#111827;
+                                    font-weight:700;
+                                ">
+                                Contact Form Submission
+                            </h2>
+
+                            <p style="
+                                    margin:0;
+                                    font-size:15px;
+                                    line-height:24px;
+                                    color:#4b5563;
+                                ">
+                                Someone has submitted a new message through the contact form on your website.
+                            </p>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- Sender Information -->
+                    <tr>
+                        <td style="
+                                padding:0 32px 24px 32px;
+                                font-family:Arial, Helvetica, sans-serif;
+                            ">
+
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="
+                                    background:#f9fafb;
+                                    border:1px solid #e5e7eb;
+                                    border-radius:12px;
+                                ">
+
+                                <tr>
+                                    <td style="padding:18px 20px;">
+
+                                        <!-- Section Label -->
+                                        <p style="
+                                                margin:0 0 14px;
+                                                font-size:11px;
+                                                font-weight:700;
+                                                letter-spacing:1px;
+                                                color:#b45309;
+                                                text-transform:uppercase;
+                                            ">
+                                            Sender Information
+                                        </p>
+
+
+                                        <!-- Name -->
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
+                                            <tr>
+                                                <td width="90" valign="top" style="
+                                                        font-size:13px;
+                                                        font-weight:700;
+                                                        color:#374151;
+                                                    ">
+                                                    Name
+                                                </td>
+
+                                                <td valign="top" style="
+                                                        font-size:13px;
+                                                        color:#111827;
+                                                    ">
+                                                    <%= userName %>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                        <!-- Email -->
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
+                                            <tr>
+                                                <td width="90" valign="top" style="
+                                                        font-size:13px;
+                                                        font-weight:700;
+                                                        color:#374151;
+                                                    ">
+                                                    Email
+                                                </td>
+
+                                                <td valign="top" style="
+                                                        font-size:13px;
+                                                        color:#111827;
+                                                        word-break:break-word;
+                                                    ">
+                                                    <%= email %>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                        <!-- Phone -->
+                                        <% if (typeof phone !== 'undefined' && phone) { %>
+
+                                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
+                                                <tr>
+                                                    <td width="90" valign="top" style="
+                                                        font-size:13px;
+                                                        font-weight:700;
+                                                        color:#374151;
+                                                    ">
+                                                        Phone
+                                                    </td>
+
+                                                    <td valign="top" style="
+                                                        font-size:13px;
+                                                        color:#111827;
+                                                    ">
+                                                        <%= phone %>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <% } %>
+
+
+                                                <!-- Subject -->
+                                                <% if (typeof subject !== 'undefined' && subject) { %>
+
+                                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                        <tr>
+                                                            <td width="90" valign="top" style="
+                                                        font-size:13px;
+                                                        font-weight:700;
+                                                        color:#374151;
+                                                    ">
+                                                                Subject
+                                                            </td>
+
+                                                            <td valign="top" style="
+                                                        font-size:13px;
+                                                        color:#111827;
+                                                    ">
+                                                                <%= subject %>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <% } %>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- Message Card -->
+                    <tr>
+                        <td style="
+                                padding:0 32px 24px 32px;
+                                font-family:Arial, Helvetica, sans-serif;
+                            ">
+
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="
+                                    background:#fffbeb;
+                                    border:1px solid #fde68a;
+                                    border-radius:12px;
+                                ">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+
+                                        <!-- Message Label -->
+                                        <p style="
+                                                margin:0 0 10px;
+                                                font-size:11px;
+                                                font-weight:700;
+                                                letter-spacing:1px;
+                                                color:#b45309;
+                                                text-transform:uppercase;
+                                            ">
+                                            Message
+                                        </p>
+
+                                        <!-- Message -->
+                                        <p style="
+                                                margin:0;
+                                                font-size:14px;
+                                                line-height:22px;
+                                                color:#78350f;
+                                                white-space:pre-line;
+                                            ">
+                                            <%= message %>
+                                        </p>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+
+                    <!-- Divider -->
+                    <tr>
+                        <td style="padding:0 32px;">
+                            <div style="
+                                    border-top:1px solid #e5e7eb;
+                                "></div>
+                        </td>
+                    </tr>
+
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="
+                                padding:24px 32px 32px 32px;
+                                font-family:Arial, Helvetica, sans-serif;
+                            ">
+
+                            <p style="
+                                    margin:0 0 4px;
+                                    font-size:14px;
+                                    color:#374151;
+                                ">
+                                Best regards,
+                            </p>
+
+                            <p style="
+                                    margin:0 0 16px;
+                                    font-size:15px;
+                                    font-weight:700;
+                                    color:#111827;
+                                ">
+                                <%= appName || "Petronick Corporate Holdings" %>
+                            </p>
+
+                            <p style="
+                                    margin:0;
+                                    font-size:12px;
+                                    line-height:18px;
+                                    color:#9ca3af;
+                                ">
+                                Pittsburgh, PA, USA · This is an automated notification from your website contact form.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <!-- Copyright -->
+                <p style="
+                        margin:20px 0 0;
+                        font-family:Arial, Helvetica, sans-serif;
+                        font-size:11px;
+                        color:#9ca3af;
+                    ">
+                    ©
+                    <%= new Date().getFullYear() %>
+                        <%= appName || "Petronick Corporate Holdings" %>. All rights reserved.
+                </p>
+
+            </td>
+        </tr>
+    </table>
+
 </body>
+
 </html>
