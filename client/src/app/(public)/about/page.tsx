@@ -11,6 +11,8 @@ export default async function AboutPage() {
   const heroSection = sections.find(
     (s: any) => s.sectionType === "HERO"
   );
+console.log("HERO IMAGE:", heroSection?.image);
+
 
   const aboutSection = sections.find(
     (s: any) => s.sectionType === "ABOUT"

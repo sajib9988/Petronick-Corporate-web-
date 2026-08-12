@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { Mail, Loader2, Trash2, Search } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,6 +13,7 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
+
 import { getAllContacts, deleteContact } from "@/service/contact";
 
 type Contact = {
@@ -34,8 +35,13 @@ export default function ContactsPage() {
 
   const fetchContacts = useCallback(async () => {
     setIsLoading(true);
+
     try {
-      const result = await getAllContacts({ search, limit: 100 });
+      const result = await getAllContacts({
+        search,
+        limit: 100,
+      });
+
       setContacts(result?.data ?? []);
     } catch {
       setContacts([]);
@@ -45,7 +51,10 @@ export default function ContactsPage() {
   }, [search]);
 
   useEffect(() => {
-    const timer = setTimeout(() => fetchContacts(), 300);
+    const timer = setTimeout(() => {
+      fetchContacts();
+    }, 300);
+
     return () => clearTimeout(timer);
   }, [fetchContacts]);
 
@@ -56,6 +65,7 @@ export default function ContactsPage() {
 
     try {
       await deleteContact(deleteId);
+
       setDeleteId(null);
       fetchContacts();
     } finally {
@@ -117,10 +127,11 @@ export default function ContactsPage() {
           {contacts.map((contact) => (
             <div
               key={contact.id}
-              className="px-5 py-4 hover:bg-sky-200 transition-colors group"
+              className="px-5 py-4 hover:bg-gray-800 transition-colors group"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
+                  {/* Name / Email / Phone */}
                   <div className="flex items-center gap-3 mb-1">
                     <p className="text-sm font-semibold text-white">
                       {contact.name}
@@ -137,16 +148,19 @@ export default function ContactsPage() {
                     )}
                   </div>
 
+                  {/* Subject */}
                   {contact.subject && (
                     <p className="text-xs font-medium text-amber-400 bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
                       {contact.subject}
                     </p>
                   )}
 
+                  {/* Message */}
                   <p className="text-sm text-gray-300 leading-relaxed">
                     {contact.message}
                   </p>
 
+                  {/* Date */}
                   <p className="text-xs text-gray-500 mt-2">
                     {new Date(contact.createdAt).toLocaleDateString(
                       "en-US",
@@ -159,12 +173,13 @@ export default function ContactsPage() {
                   </p>
                 </div>
 
+                {/* Delete Button */}
                 <Button
                   variant="ghost"
                   onClick={() => setDeleteId(contact.id)}
                   title="Delete message"
                   aria-label="Delete message"
-                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-100 transition-all"
                 >
                   <Trash2 size={13} />
                 </Button>
@@ -183,7 +198,9 @@ export default function ContactsPage() {
       >
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>Delete Message</DialogTitle>
+            <DialogTitle>
+              Delete Message
+            </DialogTitle>
 
             <DialogDescription>
               This message will be permanently deleted.
@@ -210,6 +227,7 @@ export default function ContactsPage() {
                   className="mr-1.5 animate-spin"
                 />
               )}
+
               Delete
             </Button>
           </DialogFooter>
@@ -218,4 +236,3 @@ export default function ContactsPage() {
     </div>
   );
 }
-
