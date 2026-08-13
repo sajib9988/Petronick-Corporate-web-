@@ -45,6 +45,11 @@ export default function ForgotPasswordPage() {
     defaultValues: { otp: "", newPassword: "", confirmPassword: "" },
   });
 
+
+
+
+
+
   const handleRequestOtp = async (data: ForgotPasswordFormData) => {
     setIsLoading(true);
     try {
@@ -88,7 +93,7 @@ export default function ForgotPasswordPage() {
       <h2 className="text-3xl font-bold text-white text-center mb-2">
         {step === "email" ? "Forgot Password" : "Reset Password"}
       </h2>
-      <p className="text-white/50 text-center text-sm mb-8">
+      <p className="text-black text-center text-sm mb-8">
         {step === "email"
           ? "Enter your email to receive a reset code"
           : `Enter the 6-digit code sent to ${email}`}
@@ -106,7 +111,7 @@ export default function ForgotPasswordPage() {
                     <div className="relative">
                       <Mail size={16} className="absolute left-3 top-3 text-white/40" />
                       <Input
-                        className="pl-9 text-white placeholder:text-white/40 border-white/20 focus-visible:ring-white"
+                        className="pl-9 text-black placeholder:text-white/40 border-white/20 focus-visible:ring-white"
                         type="email"
                         placeholder="Email"
                         {...field}
