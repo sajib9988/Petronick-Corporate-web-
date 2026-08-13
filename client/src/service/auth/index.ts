@@ -186,4 +186,37 @@ export const changePassword = async (data: {
     console.error("Error changing password:", err);
     return { success: false, message: "Failed to change password" };
   }
+}
+
+
+export const verifyEmail = async (data: { email: string; otp: string }) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/verify-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error verifying email:", err);
+    return { success: false, message: "Failed to verify email" };
+  }
 };
+
+
+export const resendVerification = async (email: string) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/resend-verification`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+      cache: "no-store",
+    });
+    return await safeJson(res);
+  } catch (err) {
+    console.error("Error resending verification:", err);
+    return { success: false, message: "Failed to resend code" };
+  }
+};
+

@@ -15,6 +15,11 @@ router.get("/me", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authContro
 router.post("/change-password", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.changePassword);
 router.post("/logout", authController.logoutUser);
 router.post("/verify-email", authController.verifyEmail);
+router.post(
+  "/resend-verification",
+  otpLimiter,
+  authController.resendVerification
+);
 router.post("/forget-password", otpLimiter, authController.forgetPassword);
 router.post("/reset-password", otpLimiter, authController.resetPassword);
 

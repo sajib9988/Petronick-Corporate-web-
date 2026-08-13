@@ -23,9 +23,6 @@ import { envVars } from "../../config/env.js";
 const registerUser = async (payload: IRegisterUserPayload) => {
   const { name, email, password } = payload;
 
-    console.log("Email:", email);
-  console.log("Env Email:", envVars.SUPER_ADMIN_EMAIL);
-
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
@@ -35,14 +32,22 @@ const registerUser = async (payload: IRegisterUserPayload) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 12);
-  const role = email === envVars.SUPER_ADMIN_EMAIL ? "SUPER_ADMIN" : "USER";
+  const role =
+    email === envVars.SUPER_ADMIN_EMAIL ? "SUPER_ADMIN" : "USER";
+
+  // ✅ OTP generate for email verification
+  const otp = crypto.randomInt(100000, 1000000).toString();
+  const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 min
+
   const user = await prisma.user.create({
     data: {
       name,
       email,
       password: hashedPassword,
       role,
-      emailVerified: true,
+      emailVerified: false, // ❌ was true
+      otpCode: otp,
+      otpExpiresAt,
     },
     select: {
       id: true,
@@ -50,8 +55,26 @@ const registerUser = async (payload: IRegisterUserPayload) => {
       email: true,
       role: true,
       createdAt: true,
+      emailVerified: true,
     },
   });
+
+  // ✅ Send verification email
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Verify Your Email — Petronick Corporate Holdings",
+      templateName: "otp",
+      templateData: {
+        userName: user.name,
+        otp,
+        expiresInMinutes: 10,
+      },
+    });
+  } catch (err) {
+    console.error("Verification email failed:", err);
+    // Don't throw — user can resend
+  }
 
   return user;
 };
@@ -71,6 +94,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
       password: true,
       status: true,
       isDeleted: true,
+      emailVerified: true,
     },
   });
 
@@ -213,7 +237,7 @@ const refreshToken = async (token: string) => {
 
 // ================= VERIFY EMAIL =================
 
-const verifyEmail = async (email: string) => {
+const verifyEmail = async (email: string, otp: string) => {
   const user = await prisma.user.findUnique({
     where: { email },
   });
@@ -222,16 +246,43 @@ const verifyEmail = async (email: string) => {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
 
-  // TODO: verify OTP
+  if (user.emailVerified) {
+    throw new AppError(status.BAD_REQUEST, "Email already verified");
+  }
+
+  if (
+    !user.otpCode ||
+    !user.otpExpiresAt ||
+    new Date() > user.otpExpiresAt ||
+    otp.length !== 6
+  ) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Invalid or expired OTP. Please request a new one."
+    );
+  }
+
+  const isValidOtp = crypto.timingSafeEqual(
+    Buffer.from(user.otpCode),
+    Buffer.from(otp)
+  );
+
+  if (!isValidOtp) {
+    throw new AppError(
+      status.BAD_REQUEST,
+      "Invalid or expired OTP. Please request a new one."
+    );
+  }
 
   await prisma.user.update({
     where: { email },
     data: {
       emailVerified: true,
+      otpCode: null,
+      otpExpiresAt: null,
     },
   });
 };
-
 // ================= FORGET PASSWORD =================
 
 
@@ -345,6 +396,50 @@ const resetPassword = async (
   });
 };
 // ================= EXPORT =================
+const resendVerificationEmail = async (email: string) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user || user.isDeleted || user.status === "DELETED") {
+    throw new AppError(status.NOT_FOUND, "User not found");
+  }
+
+  if (user.emailVerified) {
+    throw new AppError(status.BAD_REQUEST, "Email already verified");
+  }
+
+  const otp = crypto.randomInt(100000, 1000000).toString();
+  const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+  await prisma.user.update({
+    where: { email },
+    data: { otpCode: otp, otpExpiresAt },
+  });
+
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Verify Your Email — Petronick Corporate Holdings",
+      templateName: "otp",
+      templateData: {
+        userName: user.name,
+        otp,
+        expiresInMinutes: 10,
+      },
+    });
+  } catch (err) {
+    await prisma.user.update({
+      where: { email },
+      data: { otpCode: null, otpExpiresAt: null },
+    });
+    console.error("Resend verification email failed:", err);
+    throw new AppError(
+      status.INTERNAL_SERVER_ERROR,
+      "Failed to send email. Please try again later."
+    );
+  }
+};
 
 export const authService = {
   registerUser,
@@ -355,4 +450,5 @@ export const authService = {
   verifyEmail,
   forgetPassword,
   resetPassword,
+  resendVerificationEmail,
 };

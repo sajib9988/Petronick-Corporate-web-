@@ -118,7 +118,7 @@ export default function ContactsPage() {
             className="text-gray-500 mx-auto mb-3"
           />
 
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-black">
             No messages yet.
           </p>
         </div>
@@ -137,12 +137,12 @@ export default function ContactsPage() {
                       {contact.name}
                     </p>
 
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-white">
                       {contact.email}
                     </p>
 
                     {contact.phone && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-white">
                         {contact.phone}
                       </p>
                     )}
@@ -150,7 +150,7 @@ export default function ContactsPage() {
 
                   {/* Subject */}
                   {contact.subject && (
-                    <p className="text-xs font-medium text-amber-400 bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
+                    <p className="text-xs font-bold text-black bg-amber-50 py-1 px-2 rounded-full w-fit mb-1.5">
                       {contact.subject}
                     </p>
                   )}

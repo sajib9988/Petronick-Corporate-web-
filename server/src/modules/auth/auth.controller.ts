@@ -114,16 +114,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const verifyEmail = catchAsync(async (req: Request, res: Response) => {
-  const { email, otp } = req.body;
-  await authService.verifyEmail(email);
 
-  sendResponse(res, {
-    status: status.OK,
-    success: true,
-    message: "Email verified successfully",
-  });
-});
 
 const forgetPassword = catchAsync(async (req: Request, res: Response) => {
   const { turnstileToken } = req.body;
@@ -149,6 +140,33 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const verifyEmail = catchAsync(async (req: Request, res: Response) => {
+  const { email, otp } = authValidation.verifyEmail.parse(req.body);
+  await authService.verifyEmail(email, otp);
+
+  sendResponse(res, {
+    status: status.OK,
+    success: true,
+    message: "Email verified successfully",
+  });
+});
+
+// ✅ নতুন: Resend verification
+const resendVerification = catchAsync(
+  async (req: Request, res: Response) => {
+    const { email } = authValidation.forgetPassword.parse(req.body);
+    await authService.resendVerificationEmail(email);
+
+    sendResponse(res, {
+      status: status.OK,
+      success: true,
+      message: "Verification code resent successfully",
+    });
+  }
+);
+
+
+
 export const authController = {
   registerUser,
   loginUser,
@@ -159,4 +177,6 @@ export const authController = {
   verifyEmail,
   forgetPassword,
   resetPassword,
+  resendVerification,
+
 };
