@@ -102,7 +102,7 @@ export default function PagesPage() {
   };
 
   return (
-    <div className="space-y-5 max-w-4xl">
+    <div className="space-y-5 max-w-4xl bg-blue-200">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
