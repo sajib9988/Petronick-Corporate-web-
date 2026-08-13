@@ -42,6 +42,7 @@ const registerUser = async (payload: IRegisterUserPayload) => {
       email,
       password: hashedPassword,
       role,
+      emailVerified: true,
     },
     select: {
       id: true,

@@ -126,6 +126,9 @@ const verifyEmail = catchAsync(async (req: Request, res: Response) => {
 });
 
 const forgetPassword = catchAsync(async (req: Request, res: Response) => {
+  const { turnstileToken } = req.body;
+  await verifyTurnstile(turnstileToken, req.ip);
+
   const { email } = authValidation.forgetPassword.parse(req.body);
   await authService.forgetPassword(email);
 
@@ -135,7 +138,6 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
     message: "Password reset OTP sent to email successfully",
   });
 });
-
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const { email, otp, newPassword } = authValidation.resetPassword.parse(req.body);
   await authService.resetPassword(email, otp, newPassword);

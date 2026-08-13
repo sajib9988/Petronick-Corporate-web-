@@ -4,6 +4,7 @@ import { Router } from "express";
 import { authController } from "./auth.controller.js";
 import { Role } from "../../../generated/prisma-client/index.js";
 import { authorize } from "../../shared/middlewares/authorize.middleware.js";
+import { otpLimiter } from "../../config/otp-rate-limit.js";
 
 
 const router = Router();
@@ -14,8 +15,8 @@ router.get("/me", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authContro
 router.post("/change-password", authorize(Role.SUPER_ADMIN, Role.ADMIN, Role.USER), authController.changePassword);
 router.post("/logout", authController.logoutUser);
 router.post("/verify-email", authController.verifyEmail);
-router.post("/forget-password", authController.forgetPassword);
-router.post("/reset-password", authController.resetPassword);
+router.post("/forget-password", otpLimiter, authController.forgetPassword);
+router.post("/reset-password", otpLimiter, authController.resetPassword);
 
 
 

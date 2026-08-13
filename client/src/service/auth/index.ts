@@ -136,12 +136,12 @@ const safeJson = async (res: Response) => {
   }
 };
 
-export const forgetPassword = async (email: string) => {
+export const forgetPassword = async (email: string, turnstileToken: string) => {
   try {
     const res = await fetch(`${BASE_URL}/auth/forget-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, turnstileToken }),
       cache: "no-store",
     });
     return await safeJson(res);

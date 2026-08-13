@@ -23,6 +23,7 @@ import {
   ResetPasswordFormData,
 } from "@/lib/validation";
 import { forgetPassword, resetPassword } from "@/service/auth";
+import Turnstile from "@/components/ui/turnstile";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -31,9 +32,12 @@ export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  // ✅ turnstileToken state — এটাই missing ছিল
+  const [turnstileToken, setTurnstileToken] = useState("");
+
   const emailForm = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: { email: "" },
+    defaultValues: { email: "", turnstileToken: "" },
   });
 
   const resetForm = useForm<ResetPasswordFormData>({
@@ -44,7 +48,7 @@ export default function ForgotPasswordPage() {
   const handleRequestOtp = async (data: ForgotPasswordFormData) => {
     setIsLoading(true);
     try {
-      const res = await forgetPassword(data.email);
+      const res = await forgetPassword(data.email, data.turnstileToken);
       if (!res?.success) {
         toast.error(res?.message || "Failed to send reset code");
         return;
@@ -52,6 +56,9 @@ export default function ForgotPasswordPage() {
       toast.success("Reset code sent to your email");
       setEmail(data.email);
       setStep("reset");
+      // পরের বার email step-এ ফিরলে fresh token লাগবে
+      setTurnstileToken("");
+      emailForm.setValue("turnstileToken", "");
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +117,25 @@ export default function ForgotPasswordPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isLoading} className="w-full">
+
+            {/* ✅ Turnstile — email step-এ, এখানেই থাকা দরকার */}
+            <Turnstile
+              onVerify={(token: string) => {
+                setTurnstileToken(token);
+                emailForm.setValue("turnstileToken", token, { shouldValidate: true });
+              }}
+              onExpire={() => {
+                setTurnstileToken("");
+                emailForm.setValue("turnstileToken", "", { shouldValidate: true });
+              }}
+            />
+            {emailForm.formState.errors.turnstileToken && (
+              <p className="text-sm text-red-400">
+                {emailForm.formState.errors.turnstileToken.message}
+              </p>
+            )}
+
+            <Button type="submit" disabled={isLoading || !turnstileToken} className="w-full">
               {isLoading ? "Sending..." : "Send Reset Code"}
             </Button>
           </form>
@@ -183,6 +208,8 @@ export default function ForgotPasswordPage() {
                 </FormItem>
               )}
             />
+
+    
 
             <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? "Resetting..." : "Reset Password"}

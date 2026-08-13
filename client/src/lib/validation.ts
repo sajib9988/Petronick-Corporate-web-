@@ -21,6 +21,7 @@ export type RegisterFormData = z.infer<typeof registerSchema>;
 
 export const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
+  turnstileToken: z.string().min(1, "Please complete the verification"),
 });
 
 export const resetPasswordSchema = z.object({
@@ -31,6 +32,12 @@ export const resetPasswordSchema = z.object({
   message: "Passwords do not match",
   path: ["confirmPassword"],
 });
+
+
+
+
+
+
 
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
