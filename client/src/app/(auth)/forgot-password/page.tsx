@@ -397,71 +397,38 @@ export default function ForgotPasswordPage() {
                   OTP
               ================================================= */}
 
-          <FormField
+<FormField
   control={resetForm.control}
   name="otp"
   render={({ field }) => (
     <FormItem>
       <FormControl>
         <div className="relative">
-          <KeyRound
-            className="
-              pointer-events-none
-              absolute
-              left-4
-              top-1/2
-              z-10
-              h-4
-              w-4
-              -translate-y-1/2
-              text-black/40
-            "
-          />
-
-          <input
-            ref={field.ref}
-            name={field.name}
+          <KeyRound className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-black/40" />
+          
+          <Input
+            {...field}
             value={field.value || ""}
-            onBlur={field.onBlur}
             onChange={(e) => {
-              field.onChange(e.target.value);
+              // শুধু 0-9 রাখুন, ৬ digit-এর বেশি নয়
+              const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
+              field.onChange(digitsOnly);
             }}
             type="text"
             inputMode="numeric"
+            pattern="[0-9]*"
             maxLength={6}
-            autoComplete="off"
+            autoComplete="one-time-code"
             placeholder="6-digit code"
-            className="
-              h-12
-              w-full
-              rounded-xl
-              border
-              border-black/10
-              bg-white
-              pl-11
-              pr-4
-              text-center
-              text-base
-              font-medium
-              text-black
-              caret-black
-              outline-none
-
-              placeholder:text-black/50
-              placeholder:opacity-100
-
-              focus:border-black/30
-              focus:ring-2
-              focus:ring-black/10
-            "
+            className="h-12 w-full rounded-xl border border-black/10 bg-white pl-11 pr-4 text-center text-base font-medium text-black caret-black placeholder:text-black/50 shadow-sm transition-all duration-200 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
           />
         </div>
       </FormControl>
-
       <FormMessage className="px-1 text-xs text-red-500" />
     </FormItem>
   )}
 />
+
 
               {/* =================================================
                   NEW PASSWORD

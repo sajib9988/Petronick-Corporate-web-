@@ -25,7 +25,8 @@ export const forgotPasswordSchema = z.object({
 });
 
 export const resetPasswordSchema = z.object({
-  otp: z.string().length(6, "OTP must be 6 digits"),
+  otp: z.string()
+    .regex(/^\d{6}$/, "OTP must be exactly 6 digits"),
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string().min(6, "Please confirm your password"),
 }).refine((data) => data.newPassword === data.confirmPassword, {
