@@ -5,6 +5,7 @@ import EcosystemSection from "@/components/home-components/EcosystemSection";
 import HeroSection from "@/components/home-components/hero-section";
 import RevenueOpportunitySection from "@/components/home-components/RevenueOpportunitySection";
 import WhoWeAreSection from "@/components/home-components/who-we-are-section";
+import Reveal from "@/components/ui/motion/Reveal";
 
 import { Company } from "@/lib/type";
 import { getPageBySlug } from "@/service/cms";
@@ -38,21 +39,27 @@ export default async function HomePage() {
       {/* ── Section 2: Who We Are ── */}
       <section className="py-8 sm:py-10">
         <Container>
+      <Reveal>
+
           <div className="rounded-3xl overflow-hidden">
             <WhoWeAreSection
               image={whoWeAreSection?.image}
               content={whoWeAreSection?.content ?? {}}
             />
           </div>
+
+          </Reveal>
         </Container>
       </section>
 
       {/* ── Section 3: Our Ecosystem ── */}
       <section className="py-8 sm:py-10">
         <Container>
+          <Reveal>
           <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
             <EcosystemSection companies={companies} />
           </div>
+             </Reveal>
         </Container>
       </section>
 
@@ -82,20 +89,24 @@ export default async function HomePage() {
       {/* ── Section 5: Revenue Opportunity ── */}
       <section className="py-8 sm:py-10">
         <Container>
+          <Reveal>
           <RevenueOpportunitySection
             image={revenueSection?.image}
             content={revenueSection?.content ?? {}}
           />
+          </Reveal>
         </Container>
       </section>
 
       {/* ── Section 6: Closing Authority ── */}
       <section className="py-8 sm:py-10">
         <Container>
-          <ClosingSection
-            image={closingSection?.image}
-            content={closingSection?.content ?? {}}
-          />
+          <Reveal>
+            <ClosingSection
+              image={closingSection?.image}
+              content={closingSection?.content ?? {}}
+            />
+          </Reveal>
         </Container>
       </section>
     </main>
