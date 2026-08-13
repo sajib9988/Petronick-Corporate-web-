@@ -121,11 +121,11 @@ export default function PagesPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-28 bg-white rounded-xl border border-gray-100 animate-pulse" />
+            <div key={i} className="h-28 bg-gray-200 rounded-xl border border-gray-100 animate-pulse" />
           ))}
         </div>
       ) : data.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 px-6 py-16 text-center">
+        <div className="bg-gray-200 rounded-xl border border-gray-100 px-6 py-16 text-center">
           <Layers size={28} className="text-gray-200 mx-auto mb-3" />
           <p className="text-sm text-gray-400">No pages yet. Create your first page.</p>
           <Button size="sm" className="mt-4" onClick={() => setShowCreate(true)}>
@@ -138,7 +138,7 @@ export default function PagesPage() {
           {data.map((page) => (
             <div
               key={page.id}
-              className="bg-white rounded-xl border border-gray-100 p-5 hover:border-gray-200 hover:shadow-sm transition-all group"
+              className="bg-gray-200 rounded-xl border border-gray-100 p-5 hover:border-gray-200 hover:shadow-sm transition-all group"
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
