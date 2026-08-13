@@ -344,7 +344,7 @@ return (
 
       {/* ── Create Dialog ── */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
-         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Add New Section</DialogTitle>
             <DialogDescription>
@@ -369,7 +369,7 @@ return (
         open={!!editSection}
         onOpenChange={(open: boolean) => !open && setEditSection(null)}
       >
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Section</DialogTitle>
             <DialogDescription>Update this section's content.</DialogDescription>

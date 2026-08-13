@@ -85,7 +85,7 @@ export default function SectionForm({
   };
 
   return (
-    <div className="relative bg-white rounded-xl shadow-xl w-full max-w-3xl mx-auto">
+    <div className="relative bg-white rounded-xl shadow-xl w-full max-w-4xl mx-auto">
       {/* Header with Close Icon */}
       <div className="flex items-center justify-between border-b px-6 py-4">
         <h2 className="text-xl font-semibold text-gray-900">Edit Section</h2>
@@ -111,40 +111,61 @@ export default function SectionForm({
             </p>
           )}
 
-          {/* Section Type */}
-          <Controller
-            name="type"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  Section Type
-                </FormLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={(v) => handleTypeChange(v as SectionType)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent
-                    position="popper"
-                    className="w-[--radix-select-trigger-width]"
+          {/* Top row: Section Type + Order + Visibility — side by side to save vertical space */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Controller
+              name="type"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="sm:col-span-2">
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Section Type
+                  </FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(v) => handleTypeChange(v as SectionType)}
                   >
-                    {SECTION_TYPES.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent
+                      position="popper"
+                      className="w-[--radix-select-trigger-width]"
+                    >
+                      {SECTION_TYPES.map((t) => (
+                        <SelectItem key={t} value={t}>
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
 
-          {/* Dynamic Fields */}
+            <Controller
+              name="order"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Order
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      value={field.value}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Dynamic Fields — 2 columns, multiline fields span full width */}
           {fields.length > 0 && (
-            <div className="space-y-5 border border-gray-100 bg-gray-50/50 p-5 rounded-xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 border border-gray-100 bg-gray-50/50 p-5 rounded-xl">
               {fields.map(
                 ({ key, label, multiline }: { key: string; label: string; multiline?: boolean }) => (
                   <FormField
@@ -152,7 +173,7 @@ export default function SectionForm({
                     control={form.control}
                     name={`content.${key}` as `content.${string}`}
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className={multiline ? "sm:col-span-2" : ""}>
                         <FormLabel className="text-sm font-medium text-gray-700">
                           {label}
                         </FormLabel>
@@ -180,48 +201,79 @@ export default function SectionForm({
             </div>
           )}
 
-          {/* Image Upload */}
-          <div className="space-y-2">
-            <FormLabel className="text-sm font-medium text-gray-700">
-              Background Image
-            </FormLabel>
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 hover:border-gray-400 transition-colors text-center">
-              <input
-                type="file"
-                accept="image/*"
-                id="image-upload"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-              <label
-                htmlFor="image-upload"
-                className="cursor-pointer flex flex-col items-center gap-3"
-              >
-                {imagePreview ? (
-                  <div className="relative w-full max-w-md mx-auto">
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="rounded-lg shadow-sm max-h-48 object-cover mx-auto"
-                    />
-                    <div className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow">
-                      <Upload size={16} className="text-gray-500" />
+          {/* Image Upload + Visibility toggle — side by side on wider screens */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="sm:col-span-2 space-y-2">
+              <FormLabel className="text-sm font-medium text-gray-700">
+                Background Image
+              </FormLabel>
+              <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 hover:border-gray-400 transition-colors text-center">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="image-upload"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+                <label
+                  htmlFor="image-upload"
+                  className="cursor-pointer flex flex-col items-center gap-2"
+                >
+                  {imagePreview ? (
+                    <div className="relative w-full max-w-xs mx-auto">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="rounded-lg shadow-sm max-h-36 object-cover mx-auto"
+                      />
+                      <div className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow">
+                        <Upload size={14} className="text-gray-500" />
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div>
-                    <Upload size={40} className="mx-auto text-gray-400" />
-                    <p className="mt-3 text-sm text-gray-600">
-                      Click to upload image
-                    </p>
-                    <p className="text-xs text-gray-400">PNG, JPG up to 5MB</p>
-                  </div>
-                )}
-              </label>
+                  ) : (
+                    <div>
+                      <Upload size={32} className="mx-auto text-gray-400" />
+                      <p className="mt-2 text-sm text-gray-600">
+                        Click to upload image
+                      </p>
+                      <p className="text-xs text-gray-400">PNG, JPG up to 5MB</p>
+                    </div>
+                  )}
+                </label>
+              </div>
+              {existingImage && !imageFile && (
+                <p className="text-xs text-gray-500">Current image will be kept unless replaced.</p>
+              )}
             </div>
-            {existingImage && !imageFile && (
-              <p className="text-xs text-gray-500">Current image will be kept unless replaced.</p>
-            )}
+
+            {/* Visibility toggle */}
+            <Controller
+              name="isVisible"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Visibility
+                  </FormLabel>
+                  <FormControl>
+                    <button
+                      type="button"
+                      onClick={() => field.onChange(!field.value)}
+                      className={`w-full h-[104px] rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-2 transition-colors ${
+                        field.value
+                          ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                          : "border-gray-300 bg-gray-50 text-gray-500"
+                      }`}
+                    >
+                      <span className="text-sm font-semibold">
+                        {field.value ? "Visible" : "Hidden"}
+                      </span>
+                      <span className="text-xs">Tap to toggle</span>
+                    </button>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
 
           {/* Action Buttons */}

@@ -279,6 +279,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         preventScrolling={false}
         nodesDraggable={false}
         elementsSelectable={false}
+          proOptions={{ hideAttribution: true }}
         className="relative z-10"
       />
 
