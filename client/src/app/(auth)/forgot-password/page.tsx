@@ -38,6 +38,8 @@ export default function ForgotPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
 
+  // ================= EMAIL FORM =================
+
   const emailForm = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -45,6 +47,8 @@ export default function ForgotPasswordPage() {
       turnstileToken: "",
     },
   });
+
+  // ================= RESET FORM =================
 
   const resetForm = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
@@ -55,7 +59,11 @@ export default function ForgotPasswordPage() {
     },
   });
 
-  const handleRequestOtp = async (data: ForgotPasswordFormData) => {
+  // ================= REQUEST OTP =================
+
+  const handleRequestOtp = async (
+    data: ForgotPasswordFormData
+  ) => {
     setIsLoading(true);
 
     try {
@@ -65,7 +73,9 @@ export default function ForgotPasswordPage() {
       );
 
       if (!res?.success) {
-        toast.error(res?.message || "Failed to send reset code");
+        toast.error(
+          res?.message || "Failed to send reset code"
+        );
         return;
       }
 
@@ -74,12 +84,19 @@ export default function ForgotPasswordPage() {
       setEmail(data.email);
       setStep("reset");
 
+      // Reset Turnstile token
       setTurnstileToken("");
-      emailForm.setValue("turnstileToken", "");
+
+      emailForm.setValue(
+        "turnstileToken",
+        ""
+      );
     } finally {
       setIsLoading(false);
     }
   };
+
+  // ================= RESET PASSWORD =================
 
   const handleResetPassword = async (
     data: ResetPasswordFormData
@@ -94,7 +111,9 @@ export default function ForgotPasswordPage() {
       });
 
       if (!res?.success) {
-        toast.error(res?.message || "Failed to reset password");
+        toast.error(
+          res?.message || "Failed to reset password"
+        );
         return;
       }
 
@@ -109,71 +128,99 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-[32px] border border-white/20 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:rounded-[40px] sm:p-8 lg:p-10">
+    <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-[32px] border border-black/5 bg-white/85 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.10)] backdrop-blur-2xl sm:rounded-[40px] sm:p-8 lg:p-10">
 
-      {/* Decorative glow */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+      {/* ================= DECORATIVE GLOW ================= */}
+
+      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-black/[0.03] blur-3xl" />
+
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-black/[0.03] blur-3xl" />
 
       <div className="relative z-10">
 
-        {/* Header */}
+        {/* ================= HEADER ================= */}
+
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 shadow-lg">
+
+          {/* Icon */}
+
+          <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-black/5 bg-white shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+
             {step === "email" ? (
-              <Mail className="h-5 w-5 text-white" />
+              <Mail className="h-5 w-5 text-black/70" />
             ) : (
-              <KeyRound className="h-5 w-5 text-white" />
+              <KeyRound className="h-5 w-5 text-black/70" />
             )}
+
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          {/* Title */}
+
+          <h2 className="text-2xl font-bold tracking-tight text-black sm:text-3xl">
             {step === "email"
               ? "Forgot Password"
               : "Reset Password"}
           </h2>
 
-          <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-white/60">
+          {/* Description */}
+
+          <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-black/55">
             {step === "email"
               ? "Enter your email to receive a reset code"
               : `Enter the 6-digit code sent to ${email}`}
           </p>
+
         </div>
 
-        {/* EMAIL STEP */}
+        {/* ================================================= */}
+        {/*                     EMAIL STEP                   */}
+        {/* ================================================= */}
+
         {step === "email" ? (
           <Form {...emailForm}>
+
             <form
               onSubmit={emailForm.handleSubmit(
                 handleRequestOtp
               )}
               className="space-y-5"
             >
+
+              {/* ================= EMAIL ================= */}
+
               <FormField
                 control={emailForm.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
+
                     <FormControl>
+
                       <div className="group relative">
-                        <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40 transition-colors group-focus-within:text-black/70" />
+
+                        <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 transition-colors group-focus-within:text-black/70" />
 
                         <Input
-                          className="h-12 rounded-xl border border-white/20 bg-white px-11 text-sm text-black shadow-sm outline-none transition-all placeholder:text-black/40 hover:border-white/40 focus-visible:border-white/50 focus-visible:ring-2 focus-visible:ring-white/20"
                           type="email"
                           placeholder="Enter your email"
                           {...field}
+                          className="h-12 rounded-xl border border-black/10 bg-white px-11 text-sm text-black shadow-sm transition-all duration-200 placeholder:text-black/40 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
                         />
+
                       </div>
+
                     </FormControl>
 
-                    <FormMessage className="px-1 text-xs" />
+                    <FormMessage className="px-1 text-xs text-red-500" />
+
                   </FormItem>
                 )}
               />
 
-              {/* Turnstile */}
-              <div className="flex justify-center rounded-xl border border-white/10 bg-white/5 p-3">
+              {/* ================= TURNSTILE ================= */}
+
+              <div className="flex min-h-[60px] items-center justify-center rounded-xl border border-black/5 bg-black/[0.015] p-2">
+
                 <Turnstile
                   onVerify={(token: string) => {
                     setTurnstileToken(token);
@@ -198,10 +245,13 @@ export default function ForgotPasswordPage() {
                     );
                   }}
                 />
+
               </div>
 
+              {/* Turnstile Error */}
+
               {emailForm.formState.errors.turnstileToken && (
-                <p className="text-center text-xs text-red-400">
+                <p className="text-center text-xs text-red-500">
                   {
                     emailForm.formState.errors
                       .turnstileToken.message
@@ -209,58 +259,82 @@ export default function ForgotPasswordPage() {
                 </p>
               )}
 
+              {/* ================= SEND BUTTON ================= */}
+
               <Button
                 type="submit"
-                disabled={isLoading || !turnstileToken}
-                className="h-12 w-full rounded-xl bg-white font-semibold text-black shadow-lg shadow-black/10 transition-all duration-200 hover:bg-white/90 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={
+                  isLoading ||
+                  !turnstileToken
+                }
+                className="h-12 w-full rounded-xl bg-black text-sm font-semibold text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-black/85 hover:shadow-[0_10px_25px_rgba(0,0,0,0.16)] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isLoading
                   ? "Sending..."
                   : "Send Reset Code"}
               </Button>
+
             </form>
+
           </Form>
         ) : (
-          /* RESET STEP */
+
+          /* ================================================= */
+          /*                     RESET STEP                   */
+          /* ================================================= */
+
           <Form {...resetForm}>
+
             <form
               onSubmit={resetForm.handleSubmit(
                 handleResetPassword
               )}
               className="space-y-5"
             >
-              {/* OTP */}
+
+              {/* ================= OTP ================= */}
+
               <FormField
                 control={resetForm.control}
                 name="otp"
                 render={({ field }) => (
                   <FormItem>
+
                     <FormControl>
+
                       <div className="group relative">
-                        <KeyRound className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40 transition-colors group-focus-within:text-black/70" />
+
+                        <KeyRound className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 transition-colors group-focus-within:text-black/70" />
 
                         <Input
-                          className="h-12 rounded-xl border border-white/20 bg-white px-11 text-center text-base font-semibold tracking-[0.35em] text-black shadow-sm transition-all placeholder:text-sm placeholder:font-normal placeholder:tracking-normal placeholder:text-black/40 hover:border-white/40 focus-visible:border-white/50 focus-visible:ring-2 focus-visible:ring-white/20"
                           placeholder="6-digit code"
                           maxLength={6}
                           {...field}
+                          className="h-12 rounded-xl border border-black/10 bg-white px-11 text-center text-base font-semibold tracking-[0.35em] text-black shadow-sm transition-all duration-200 placeholder:text-sm placeholder:font-normal placeholder:tracking-normal placeholder:text-black/40 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
                         />
+
                       </div>
+
                     </FormControl>
 
-                    <FormMessage className="px-1 text-xs" />
+                    <FormMessage className="px-1 text-xs text-red-500" />
+
                   </FormItem>
                 )}
               />
 
-              {/* New Password */}
+              {/* ================= NEW PASSWORD ================= */}
+
               <FormField
                 control={resetForm.control}
                 name="newPassword"
                 render={({ field }) => (
                   <FormItem>
+
                     <FormControl>
-                      <div className="group relative">
+
+                      <div className="relative">
+
                         <Input
                           type={
                             showPassword
@@ -268,8 +342,8 @@ export default function ForgotPasswordPage() {
                               : "password"
                           }
                           placeholder="New Password"
-                          className="h-12 rounded-xl border border-white/20 bg-white px-4 pr-12 text-sm text-black shadow-sm transition-all placeholder:text-black/40 hover:border-white/40 focus-visible:border-white/50 focus-visible:ring-2 focus-visible:ring-white/20"
                           {...field}
+                          className="h-12 rounded-xl border border-black/10 bg-white px-4 pr-12 text-sm text-black shadow-sm transition-all duration-200 placeholder:text-black/40 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
                         />
 
                         <button
@@ -279,12 +353,12 @@ export default function ForgotPasswordPage() {
                               ? "Hide password"
                               : "Show password"
                           }
-                          className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-black/40 transition-colors hover:bg-black/5 hover:text-black/80"
                           onClick={() =>
                             setShowPassword(
                               (p) => !p
                             )
                           }
+                          className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-black/40 transition-all hover:bg-black/5 hover:text-black/80"
                         >
                           {showPassword ? (
                             <EyeOff className="h-4 w-4" />
@@ -292,21 +366,27 @@ export default function ForgotPasswordPage() {
                             <Eye className="h-4 w-4" />
                           )}
                         </button>
+
                       </div>
+
                     </FormControl>
 
-                    <FormMessage className="px-1 text-xs" />
+                    <FormMessage className="px-1 text-xs text-red-500" />
+
                   </FormItem>
                 )}
               />
 
-              {/* Confirm Password */}
+              {/* ================= CONFIRM PASSWORD ================= */}
+
               <FormField
                 control={resetForm.control}
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
+
                     <FormControl>
+
                       <Input
                         type={
                           showPassword
@@ -314,52 +394,63 @@ export default function ForgotPasswordPage() {
                             : "password"
                         }
                         placeholder="Confirm New Password"
-                        className="h-12 rounded-xl border border-white/20 bg-white px-4 text-sm text-black shadow-sm transition-all placeholder:text-black/40 hover:border-white/40 focus-visible:border-white/50 focus-visible:ring-2 focus-visible:ring-white/20"
                         {...field}
+                        className="h-12 rounded-xl border border-black/10 bg-white px-4 text-sm text-black shadow-sm transition-all duration-200 placeholder:text-black/40 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
                       />
+
                     </FormControl>
 
-                    <FormMessage className="px-1 text-xs" />
+                    <FormMessage className="px-1 text-xs text-red-500" />
+
                   </FormItem>
                 )}
               />
 
-              {/* Reset Button */}
+              {/* ================= RESET BUTTON ================= */}
+
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="h-12 w-full rounded-xl bg-white font-semibold text-black shadow-lg shadow-black/10 transition-all duration-200 hover:bg-white/90 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                className="h-12 w-full rounded-xl bg-black text-sm font-semibold text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] transition-all duration-200 hover:bg-black/85 hover:shadow-[0_10px_25px_rgba(0,0,0,0.16)] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isLoading
                   ? "Resetting..."
                   : "Reset Password"}
               </Button>
 
-              {/* Back */}
+              {/* ================= TRY AGAIN ================= */}
+
               <button
                 type="button"
                 onClick={() => setStep("email")}
-                className="w-full pt-1 text-center text-xs text-white/50 transition-colors hover:text-white"
+                className="w-full pt-1 text-center text-xs text-black/45 transition-colors hover:text-black/80"
               >
                 Didn&apos;t get the code?{" "}
-                <span className="font-medium underline underline-offset-2">
+                <span className="font-medium text-black/70 underline underline-offset-2">
                   Try again
                 </span>
               </button>
+
             </form>
+
           </Form>
         )}
 
-        {/* Login */}
-        <p className="mt-7 text-center text-sm text-white/60">
+        {/* ================= LOGIN LINK ================= */}
+
+        <p className="mt-7 text-center text-sm text-black/50">
+
           Remembered your password?{" "}
+
           <Link
             href="/login"
-            className="font-medium text-white underline underline-offset-4 transition-opacity hover:opacity-70"
+            className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-60"
           >
             Login
           </Link>
+
         </p>
+
       </div>
     </div>
   );
