@@ -397,73 +397,71 @@ export default function ForgotPasswordPage() {
                   OTP
               ================================================= */}
 
-              <FormField
-                control={resetForm.control}
-                name="otp"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="group relative">
+          <FormField
+  control={resetForm.control}
+  name="otp"
+  render={({ field }) => (
+    <FormItem>
+      <FormControl>
+        <div className="relative">
+          <KeyRound
+            className="
+              pointer-events-none
+              absolute
+              left-4
+              top-1/2
+              z-10
+              h-4
+              w-4
+              -translate-y-1/2
+              text-black/40
+            "
+          />
 
-                        <KeyRound
-                          className="
-                            absolute
-                            left-4
-                            top-1/2
-                            h-4
-                            w-4
-                            -translate-y-1/2
-                            text-black/40
-                          "
-                        />
+          <input
+            ref={field.ref}
+            name={field.name}
+            value={field.value || ""}
+            onBlur={field.onBlur}
+            onChange={(e) => {
+              field.onChange(e.target.value);
+            }}
+            type="text"
+            inputMode="numeric"
+            maxLength={6}
+            autoComplete="off"
+            placeholder="6-digit code"
+            className="
+              h-12
+              w-full
+              rounded-xl
+              border
+              border-black/10
+              bg-white
+              pl-11
+              pr-4
+              text-center
+              text-base
+              font-medium
+              text-black
+              caret-black
+              outline-none
 
-                        <Input
-                          type="text"
-                          inputMode="numeric"
-                          autoComplete="one-time-code"
-                          placeholder="6-digit code"
-                          maxLength={6}
-                          {...field}
-                          className="
-                            h-12
-                            rounded-xl
-                            border
-                            border-black/10
-                            bg-white
-                            px-11
-                            text-center
-                            font-sans
-                            text-base
-                            font-medium
-                            !text-black
-                            tracking-[0.2em]
+              placeholder:text-black/50
+              placeholder:opacity-100
 
-                            placeholder:font-sans
-                            placeholder:text-sm
-                            placeholder:font-normal
-                            placeholder:!text-black/60
-                            placeholder:opacity-100
-                            placeholder:tracking-normal
+              focus:border-black/30
+              focus:ring-2
+              focus:ring-black/10
+            "
+          />
+        </div>
+      </FormControl>
 
-                            shadow-sm
-                            transition-all
-                            duration-200
-
-                            hover:border-black/20
-
-                            focus-visible:border-black/30
-                            focus-visible:ring-2
-                            focus-visible:ring-black/10
-                          "
-                        />
-
-                      </div>
-                    </FormControl>
-
-                    <FormMessage className="px-1 text-xs text-red-500" />
-                  </FormItem>
-                )}
-              />
+      <FormMessage className="px-1 text-xs text-red-500" />
+    </FormItem>
+  )}
+/>
 
               {/* =================================================
                   NEW PASSWORD
