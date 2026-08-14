@@ -400,25 +400,22 @@ export default function ForgotPasswordPage() {
 <FormField
   control={resetForm.control}
   name="otp"
-  render={({ field }) => (
+  render={({ field: { onChange, value, ...fieldRest } }) => (
     <FormItem>
       <FormControl>
         <div className="relative">
           <KeyRound className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-black/40" />
-          
           <Input
-            {...field}
-            value={field.value || ""}
+            {...fieldRest}
+            value={value || ""}
             onChange={(e) => {
-              // শুধু 0-9 রাখুন, ৬ digit-এর বেশি নয়
               const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
-              field.onChange(digitsOnly);
+              onChange(digitsOnly);
             }}
             type="text"
             inputMode="numeric"
-            pattern="[0-9]*"
-            maxLength={6}
             autoComplete="one-time-code"
+            maxLength={6}
             placeholder="6-digit code"
             className="h-12 w-full rounded-xl border border-black/10 bg-white pl-11 pr-4 text-center text-base font-medium text-black caret-black placeholder:text-black/50 shadow-sm transition-all duration-200 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10"
           />
