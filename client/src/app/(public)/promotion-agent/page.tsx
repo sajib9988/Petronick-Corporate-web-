@@ -75,7 +75,6 @@ export default function PromotionAgentPage() {
       ====================================================== */}
 
       <section className="relative isolate overflow-hidden bg-[#0a0f14] text-white">
-
         {/* Background glow */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px]" />
@@ -128,9 +127,9 @@ export default function PromotionAgentPage() {
               }}
               className="max-w-4xl text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
             >
-              Become a{" "}
+              Become{" "}
               <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-300 bg-clip-text text-transparent">
-                Promotion Agent
+                a Promotion Agent
               </span>
             </motion.h1>
 
@@ -215,10 +214,7 @@ export default function PromotionAgentPage() {
                   Explore
                 </span>
 
-                <ArrowDown
-                  size={15}
-                  className="animate-bounce"
-                />
+                <ArrowDown size={15} className="animate-bounce" />
               </a>
             </motion.div>
 
@@ -236,7 +232,8 @@ export default function PromotionAgentPage() {
       >
         <Container>
 
-          <div className="mx-auto max-w-3xl px-4 text-center">
+          {/* Section Header */}
+          <div className="mx-auto max-w-3xl text-center">
             <motion.div
               initial={{
                 opacity: 0,
@@ -272,7 +269,8 @@ export default function PromotionAgentPage() {
             </motion.div>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-5 px-4 md:grid-cols-3">
+          {/* Benefits */}
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
             {perks.map((perk, index) => {
               const Icon = perk.icon;
 
@@ -302,7 +300,7 @@ export default function PromotionAgentPage() {
                       duration: 0.25,
                     },
                   }}
-                  className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-200/60"
+                  className="group rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-200/60"
                 >
                   <div
                     className={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl ${perk.bgClass} transition-transform duration-300 group-hover:scale-110`}
@@ -338,7 +336,8 @@ export default function PromotionAgentPage() {
       >
         <Container>
 
-          <div className="px-4 text-center">
+          {/* Section Header */}
+          <div className="text-center">
             <motion.div
               initial={{
                 opacity: 0,
@@ -372,10 +371,11 @@ export default function PromotionAgentPage() {
             </motion.div>
           </div>
 
-          <div className="relative mt-16 px-4">
+          {/* Steps */}
+          <div className="relative mt-16">
 
             {/* Connecting line */}
-            <div className="absolute left-[12%] right-[12%] top-7 hidden h-px bg-slate-200 lg:block">
+            <div className="absolute left-[10%] right-[10%] top-7 hidden h-px bg-slate-200 lg:block">
               <motion.div
                 initial={{
                   scaleX: 0,
@@ -396,7 +396,7 @@ export default function PromotionAgentPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
               {steps.map((step, index) => {
                 const Icon = step.icon;
 
@@ -456,7 +456,7 @@ export default function PromotionAgentPage() {
       >
         <Container>
 
-          <div className="grid grid-cols-1 gap-12 px-4 lg:grid-cols-[0.85fr_1.5fr] lg:items-start lg:gap-16">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_1.7fr] lg:items-start lg:gap-16">
 
             {/* LEFT */}
             <motion.div
@@ -629,7 +629,7 @@ export default function PromotionAgentPage() {
               once: true,
               amount: 0.3,
             }}
-            className="relative mx-auto max-w-3xl px-4 text-center"
+            className="relative mx-auto max-w-3xl text-center"
           >
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">
               Ready to Get Started?
@@ -649,7 +649,7 @@ export default function PromotionAgentPage() {
 
             <a
               href="#application"
-              className="group mt-9 inline-flex h-13 items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-slate-950 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-white/10"
+              className="group mt-9 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-slate-950 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-white/10"
             >
               Submit Application
 
