@@ -48,7 +48,17 @@ export default function LoginForm() {
     "login"
   );
 
+  // =====================================================
+  // VERIFY STATES
+  // =====================================================
+
   const [email, setEmail] = useState("");
+
+  const [showOtp, setShowOtp] = useState(false);
+
+  // =====================================================
+  // COMMON STATES
+  // =====================================================
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,7 +80,7 @@ export default function LoginForm() {
   });
 
   // =====================================================
-  // VERIFY EMAIL FORM
+  // VERIFY FORM
   // =====================================================
 
   const verifyForm = useForm<VerifyEmailFormData>({
@@ -86,7 +96,9 @@ export default function LoginForm() {
   // LOGIN
   // =====================================================
 
-  const handleLogin = async (data: LoginFormData) => {
+  const handleLogin = async (
+    data: LoginFormData
+  ) => {
     setIsLoading(true);
     setError(null);
 
@@ -105,36 +117,33 @@ export default function LoginForm() {
           errorMessage.toLowerCase();
 
         /*
-         * Backend should return an error when
-         * email is not verified.
+         * Backend already blocks unverified users.
          *
-         * We detect that response here and
-         * switch the same card to Verify Email.
+         * We only detect that situation here.
+         *
+         * IMPORTANT:
+         * We DON'T immediately open OTP screen.
+         *
+         * Instead:
+         *
+         * Login form
+         *      ↓
+         * Verify Email First button
+         *      ↓
+         * User clicks it
+         *      ↓
+         * Verify screen
          */
 
         const isEmailUnverified =
-          normalizedMessage.includes("not verified") ||
-          normalizedMessage.includes("verify your email") ||
-          normalizedMessage.includes("email not verified") ||
-          normalizedMessage.includes("email is not verified");
+          normalizedMessage.includes("verify") &&
+          normalizedMessage.includes("email");
 
         if (isEmailUnverified) {
           setEmail(data.email);
 
-          verifyForm.setValue(
-            "email",
-            data.email
-          );
-
-          verifyForm.setValue(
-            "otp",
-            ""
-          );
-
-          setStep("verify");
-
           toast.error(
-            "Please verify your email first."
+            "Your email is not verified."
           );
 
           return;
@@ -156,12 +165,8 @@ export default function LoginForm() {
       const userRole =
         result.data?.user?.role;
 
-      console.log(
-        "User role:",
-        userRole
-      );
+      console.log("User role:", userRole);
 
-      // Redirect after 2 seconds
       setTimeout(() => {
         if (userRole === "ADMIN") {
           router.push("/admin");
@@ -183,6 +188,97 @@ export default function LoginForm() {
   };
 
   // =====================================================
+  // OPEN VERIFY EMAIL
+  // =====================================================
+
+  const handleOpenVerify = () => {
+    const loginEmail =
+      loginForm.getValues("email");
+
+    if (!loginEmail) {
+      toast.error(
+        "Please enter your email address first."
+      );
+
+      return;
+    }
+
+    setEmail(loginEmail);
+
+    verifyForm.reset({
+      email: loginEmail,
+      otp: "",
+    });
+
+    setShowOtp(false);
+
+    setError(null);
+
+    setStep("verify");
+  };
+
+  // =====================================================
+  // SEND VERIFICATION CODE
+  // =====================================================
+
+  const handleSendVerificationCode = async () => {
+    if (!email) {
+      toast.error(
+        "Email address is required."
+      );
+
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      /*
+       * Existing resendVerification()
+       * already sends a new OTP.
+       *
+       * We use the same backend function
+       * for the first OTP send.
+       */
+
+      const result =
+        await resendVerification(email);
+
+      if (!result?.success) {
+        toast.error(
+          result?.message ||
+            "Failed to send verification code."
+        );
+
+        return;
+      }
+
+      toast.success(
+        "Verification code sent to your email."
+      );
+
+      // =================================================
+      // ONLY AFTER OTP IS SENT
+      // SHOW OTP INPUT
+      // =================================================
+
+      setShowOtp(true);
+
+      verifyForm.setValue(
+        "otp",
+        ""
+      );
+    } catch (error: any) {
+      toast.error(
+        error?.message ||
+          "Something went wrong."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // =====================================================
   // VERIFY EMAIL
   // =====================================================
 
@@ -197,48 +293,45 @@ export default function LoginForm() {
         otp: data.otp,
       });
 
-      // =================================================
-      // VERIFY FAILED
-      // =================================================
-
       if (!result?.success) {
         toast.error(
           result?.message ||
-            "Verification failed"
+            "Verification failed."
         );
 
         return;
       }
 
       // =================================================
-      // VERIFY SUCCESS
+      // VERIFIED
       // =================================================
 
       toast.success(
         "Email verified! Please login."
       );
 
-      // Back to login step
+      // Back to login
       setStep("login");
 
+      // Hide OTP screen
+      setShowOtp(false);
+
+      // Clear error
       setError(null);
 
-      // Keep verified email
-      setEmail(data.email);
-
-      // Put verified email into login form
+      // Keep verified email in login form
       loginForm.setValue(
         "email",
         data.email
       );
 
-      // Password must be entered again
+      // Password needs to be entered again
       loginForm.setValue(
         "password",
         ""
       );
 
-      // Clear OTP
+      // Clear verify form
       verifyForm.reset({
         email: data.email,
         otp: "",
@@ -277,7 +370,6 @@ export default function LoginForm() {
           "New verification code sent!"
         );
 
-        // Clear old OTP
         verifyForm.setValue(
           "otp",
           ""
@@ -305,24 +397,18 @@ export default function LoginForm() {
   const handleBackToLogin = () => {
     setStep("login");
 
+    setShowOtp(false);
+
     setError(null);
 
-    // Keep email
     verifyForm.reset({
       email,
       otp: "",
     });
 
-    // Put email back into login form
     loginForm.setValue(
       "email",
       email
-    );
-
-    // Always clear password
-    loginForm.setValue(
-      "password",
-      ""
     );
   };
 
@@ -404,7 +490,9 @@ export default function LoginForm() {
       >
         {step === "login"
           ? "Sign in to your Petronick account"
-          : `Enter the 6-digit code sent to ${email}`}
+          : showOtp
+            ? `Enter the 6-digit code sent to ${email}`
+            : "Your email address needs to be verified"}
       </p>
 
       {/* =================================================
@@ -575,6 +663,39 @@ export default function LoginForm() {
             </div>
 
             {/* =================================================
+                VERIFY EMAIL FIRST
+                This appears when backend says
+                email is not verified.
+            ================================================= */}
+
+            {email && (
+              <button
+                type="button"
+                onClick={handleOpenVerify}
+                disabled={isLoading}
+                className="
+                  w-full
+                  rounded-xl
+                  border
+                  border-blue-400/30
+                  bg-blue-500/10
+                  px-4
+                  py-2.5
+                  text-xs
+                  font-medium
+                  text-blue-300
+                  transition-all
+                  hover:border-blue-400/50
+                  hover:bg-blue-500/20
+                  hover:text-blue-200
+                  disabled:opacity-50
+                "
+              >
+                Verify Email First
+              </button>
+            )}
+
+            {/* =================================================
                 LOGIN BUTTON
             ================================================= */}
 
@@ -629,6 +750,7 @@ export default function LoginForm() {
                     <Input
                       {...field}
                       type="email"
+                      readOnly
                       placeholder="Email Address"
                       className="
                         h-12
@@ -653,142 +775,200 @@ export default function LoginForm() {
             />
 
             {/* =================================================
-                OTP
-                Native input — NOT Shadcn Input
+                SEND CODE STEP
             ================================================= */}
 
-            <div className="space-y-1.5">
-              <div className="relative">
-                <KeyRound
-                  className="
-                    pointer-events-none
-                    absolute
-                    left-4
-                    top-1/2
-                    z-10
-                    h-4
-                    w-4
-                    -translate-y-1/2
-                    text-white/40
-                  "
-                />
-
-                <input
-                  {...verifyForm.register("otp")}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={6}
-                  autoComplete="one-time-code"
-                  placeholder="6-digit code"
+            {!showOtp ? (
+              <>
+                <Button
+                  type="button"
+                  onClick={
+                    handleSendVerificationCode
+                  }
+                  disabled={isLoading}
                   className="
                     h-12
                     w-full
-                    rounded-xl
-                    border
-                    border-white/20
-                    bg-white/5
-                    pl-11
-                    pr-4
-                    text-center
-                    text-base
-                    font-medium
-                    text-white
-                    caret-white
-                    placeholder:text-white/50
-                    outline-none
-                    transition-all
-                    duration-200
-                    focus:border-white/40
-                    focus:ring-2
-                    focus:ring-white/20
+                    rounded-2xl
+                    bg-white
+                    font-semibold
+                    text-black
+                    hover:bg-white/90
                   "
-                />
-              </div>
+                >
+                  {isLoading
+                    ? "Sending Code..."
+                    : "Send Verification Code"}
+                </Button>
 
-              {verifyForm.formState.errors.otp && (
-                <p className="text-xs text-red-400">
-                  {
-                    verifyForm.formState.errors
-                      .otp.message
+                {/* BACK TO LOGIN */}
+
+                <button
+                  type="button"
+                  onClick={
+                    handleBackToLogin
                   }
-                </p>
-              )}
-            </div>
+                  disabled={isLoading}
+                  className="
+                    w-full
+                    text-center
+                    text-xs
+                    text-white/50
+                    transition-colors
+                    hover:text-white
+                    disabled:opacity-50
+                  "
+                >
+                  Back to Login
+                </button>
+              </>
+            ) : (
+              <>
+                {/* =================================================
+                    OTP
+                    NATIVE INPUT
+                    NOT SHADCN INPUT
+                ================================================= */}
 
-            {/* =================================================
-                VERIFY BUTTON
-            ================================================= */}
+                <div className="space-y-1.5">
+                  <div className="relative">
+                    <KeyRound
+                      className="
+                        pointer-events-none
+                        absolute
+                        left-4
+                        top-1/2
+                        z-10
+                        h-4
+                        w-4
+                        -translate-y-1/2
+                        text-white/40
+                      "
+                    />
 
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="
-                h-12
-                w-full
-                rounded-2xl
-                bg-white
-                font-semibold
-                text-black
-                hover:bg-white/90
-              "
-            >
-              {isLoading
-                ? "Verifying..."
-                : "Verify Email"}
-            </Button>
+                    <input
+                      {...verifyForm.register(
+                        "otp"
+                      )}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      autoComplete="one-time-code"
+                      placeholder="6-digit code"
+                      className="
+                        h-12
+                        w-full
+                        rounded-xl
+                        border
+                        border-white/20
+                        bg-white/5
+                        pl-11
+                        pr-4
+                        text-center
+                        text-base
+                        font-medium
+                        text-white
+                        caret-white
+                        placeholder:text-white/50
+                        outline-none
+                        transition-all
+                        duration-200
+                        focus:border-white/40
+                        focus:ring-2
+                        focus:ring-white/20
+                      "
+                    />
+                  </div>
 
-            {/* =================================================
-                RESEND OTP
-            ================================================= */}
+                  {verifyForm.formState.errors.otp && (
+                    <p className="text-xs text-red-400">
+                      {
+                        verifyForm
+                          .formState
+                          .errors
+                          .otp
+                          .message
+                      }
+                    </p>
+                  )}
+                </div>
 
-            <button
-              type="button"
-              onClick={handleResend}
-              disabled={
-                isLoading || !email
-              }
-              className="
-                w-full
-                text-center
-                text-xs
-                text-white/50
-                transition-colors
-                hover:text-white
-                disabled:opacity-50
-              "
-            >
-              Didn&apos;t get the code?{" "}
-              <span
-                className="
-                  font-medium
-                  underline
-                  underline-offset-2
-                "
-              >
-                Resend
-              </span>
-            </button>
+                {/* =================================================
+                    VERIFY BUTTON
+                ================================================= */}
 
-            {/* =================================================
-                BACK TO LOGIN
-            ================================================= */}
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="
+                    h-12
+                    w-full
+                    rounded-2xl
+                    bg-white
+                    font-semibold
+                    text-black
+                    hover:bg-white/90
+                  "
+                >
+                  {isLoading
+                    ? "Verifying..."
+                    : "Verify Email"}
+                </Button>
 
-            <button
-              type="button"
-              onClick={handleBackToLogin}
-              disabled={isLoading}
-              className="
-                w-full
-                text-center
-                text-xs
-                text-white/50
-                transition-colors
-                hover:text-white
-                disabled:opacity-50
-              "
-            >
-              Back to Login
-            </button>
+                {/* =================================================
+                    RESEND
+                ================================================= */}
+
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={isLoading}
+                  className="
+                    w-full
+                    text-center
+                    text-xs
+                    text-white/50
+                    transition-colors
+                    hover:text-white
+                    disabled:opacity-50
+                  "
+                >
+                  Didn&apos;t get the code?{" "}
+                  <span
+                    className="
+                      font-medium
+                      underline
+                      underline-offset-2
+                    "
+                  >
+                    Resend
+                  </span>
+                </button>
+
+                {/* =================================================
+                    BACK TO LOGIN
+                ================================================= */}
+
+                <button
+                  type="button"
+                  onClick={
+                    handleBackToLogin
+                  }
+                  disabled={isLoading}
+                  className="
+                    w-full
+                    text-center
+                    text-xs
+                    text-white/50
+                    transition-colors
+                    hover:text-white
+                    disabled:opacity-50
+                  "
+                >
+                  Back to Login
+                </button>
+              </>
+            )}
           </form>
         </Form>
       )}
@@ -806,6 +986,7 @@ export default function LoginForm() {
             "
           >
             Don&apos;t have an account?{" "}
+
             <Link
               href="/register"
               className="
