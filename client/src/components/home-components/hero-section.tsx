@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
-import AnimatedHeadline from "./AnimatedHeadline";
 
 interface HeroContent {
   headline?: string;
@@ -63,12 +62,12 @@ export default function HeroSection({
         className="relative z-10 mx-auto max-w-4xl px-6 text-center"
       >
        // AFTER
-       <motion.h1
-  variants={fadeUp(0, 1)}
-  className="mb-4 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
->
-  <AnimatedHeadline text={headline} />
-</motion.h1>
+        <motion.h1
+          variants={fadeUp(0, 1)}
+          className="mb-4 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+        >
+          {headline}
+        </motion.h1>
 
         <motion.div
           variants={fadeUp(0.05, 0.8)}
