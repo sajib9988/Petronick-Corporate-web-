@@ -1,4 +1,3 @@
-"use client";
 
 import { getAllCompanies } from "@/service/company";
 import {
