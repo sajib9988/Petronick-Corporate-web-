@@ -5,12 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  Eye,
-  EyeOff,
-  Mail,
-  KeyRound,
-} from "lucide-react";
+import { Eye, EyeOff, Mail, KeyRound } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
@@ -31,10 +26,7 @@ import {
   ResetPasswordFormData,
 } from "@/lib/validation";
 
-import {
-  forgetPassword,
-  resetPassword,
-} from "@/service/auth";
+import { forgetPassword, resetPassword } from "@/service/auth";
 
 import Turnstile from "@/components/ui/turnstile";
 
@@ -94,14 +86,12 @@ export default function ForgotPasswordPage() {
         return;
       }
 
-      toast.success(
-        "Reset code sent to your email"
-      );
+      toast.success("Reset code sent to your email");
 
       setEmail(data.email);
       setStep("reset");
 
-      // Reset Turnstile token
+      // Reset Turnstile
       setTurnstileToken("");
 
       emailForm.setValue(
@@ -131,8 +121,7 @@ export default function ForgotPasswordPage() {
 
       if (!res?.success) {
         toast.error(
-          res?.message ||
-            "Failed to reset password"
+          res?.message || "Failed to reset password"
         );
         return;
       }
@@ -149,7 +138,6 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="mx-auto w-full max-w-md px-4">
-
       {/* =================================================
           MAIN CARD
       ================================================= */}
@@ -170,7 +158,6 @@ export default function ForgotPasswordPage() {
           sm:py-10
         "
       >
-
         {/* =================================================
             ICON
         ================================================= */}
@@ -248,7 +235,6 @@ export default function ForgotPasswordPage() {
               )}
               className="mt-8 space-y-5"
             >
-
               {/* EMAIL */}
 
               <FormField
@@ -258,12 +244,13 @@ export default function ForgotPasswordPage() {
                   <FormItem>
                     <FormControl>
                       <div className="relative">
-
                         <Mail
                           className="
+                            pointer-events-none
                             absolute
                             left-4
                             top-1/2
+                            z-10
                             h-4
                             w-4
                             -translate-y-1/2
@@ -272,10 +259,10 @@ export default function ForgotPasswordPage() {
                         />
 
                         <Input
+                          {...field}
                           type="email"
                           autoComplete="email"
                           placeholder="Enter your email"
-                          {...field}
                           className="
                             h-12
                             rounded-xl
@@ -290,15 +277,12 @@ export default function ForgotPasswordPage() {
                             shadow-sm
                             transition-all
                             duration-200
-
                             hover:border-black/20
-
                             focus-visible:border-black/30
                             focus-visible:ring-2
                             focus-visible:ring-black/10
                           "
                         />
-
                       </div>
                     </FormControl>
 
@@ -365,10 +349,8 @@ export default function ForgotPasswordPage() {
                   shadow-[0_8px_25px_rgba(0,0,0,0.15)]
                   transition-all
                   duration-200
-
                   hover:bg-black/90
                   hover:shadow-[0_10px_30px_rgba(0,0,0,0.20)]
-
                   disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -380,7 +362,6 @@ export default function ForgotPasswordPage() {
             </form>
           </Form>
         ) : (
-
           /* =================================================
              RESET PASSWORD STEP
           ================================================= */
@@ -392,33 +373,51 @@ export default function ForgotPasswordPage() {
               )}
               className="mt-8 space-y-4"
             >
-
               {/* =================================================
                   OTP
               ================================================= */}
 
-<FormField
-  control={resetForm.control}
-  name="otp"
-  render={({ field }) => (
-    <FormItem>
-      <FormControl>
-        <Input
-          {...field}
-          type="text"
-          inputMode="numeric"
-          // autoComplete="one-time-code"
-          maxLength={6}
-          placeholder="6-digit code"
-          className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-center text-base font-medium text-black caret-black"
-        />
-      </FormControl>
+              <FormField
+                control={resetForm.control}
+                name="otp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        placeholder="6-digit code"
+                        className="
+                          h-12
+                          w-full
+                          rounded-xl
+                          border
+                          border-black/10
+                          bg-white
+                          px-4
+                          text-center
+                          text-base
+                          font-medium
+                          !text-black
+                          caret-black
+                          placeholder:text-black/40
+                          shadow-sm
+                          transition-all
+                          duration-200
+                          hover:border-black/20
+                          focus-visible:border-black/30
+                          focus-visible:ring-2
+                          focus-visible:ring-black/10
+                        "
+                      />
+                    </FormControl>
 
-      <FormMessage className="px-1 text-xs text-red-500" />
-    </FormItem>
-  )}
-/>
-
+                    <FormMessage className="px-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
 
               {/* =================================================
                   NEW PASSWORD
@@ -431,7 +430,6 @@ export default function ForgotPasswordPage() {
                   <FormItem>
                     <FormControl>
                       <div className="relative">
-
                         <Input
                           type={
                             showPassword
@@ -452,13 +450,10 @@ export default function ForgotPasswordPage() {
                             text-sm
                             !text-black
                             placeholder:text-black/40
-
                             shadow-sm
                             transition-all
                             duration-200
-
                             hover:border-black/20
-
                             focus-visible:border-black/30
                             focus-visible:ring-2
                             focus-visible:ring-black/10
@@ -492,7 +487,6 @@ export default function ForgotPasswordPage() {
                             rounded-lg
                             text-black/40
                             transition-all
-
                             hover:bg-black/5
                             hover:text-black/80
                           "
@@ -503,7 +497,6 @@ export default function ForgotPasswordPage() {
                             <Eye className="h-4 w-4" />
                           )}
                         </button>
-
                       </div>
                     </FormControl>
 
@@ -522,7 +515,6 @@ export default function ForgotPasswordPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-
                       <Input
                         type={
                           showPassword
@@ -542,19 +534,15 @@ export default function ForgotPasswordPage() {
                           text-sm
                           !text-black
                           placeholder:text-black/40
-
                           shadow-sm
                           transition-all
                           duration-200
-
                           hover:border-black/20
-
                           focus-visible:border-black/30
                           focus-visible:ring-2
                           focus-visible:ring-black/10
                         "
                       />
-
                     </FormControl>
 
                     <FormMessage className="px-1 text-xs text-red-500" />
@@ -581,10 +569,8 @@ export default function ForgotPasswordPage() {
                   shadow-[0_8px_25px_rgba(0,0,0,0.15)]
                   transition-all
                   duration-200
-
                   hover:bg-black/90
                   hover:shadow-[0_10px_30px_rgba(0,0,0,0.20)]
-
                   disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -651,7 +637,6 @@ export default function ForgotPasswordPage() {
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );
