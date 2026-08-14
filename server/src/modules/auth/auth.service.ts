@@ -45,7 +45,7 @@ const registerUser = async (payload: IRegisterUserPayload) => {
       email,
       password: hashedPassword,
       role,
-      emailVerified: false, // ❌ was true
+      emailVerified: false,
       otpCode: otp,
       otpExpiresAt,
     },
@@ -105,10 +105,16 @@ const loginUser = async (payload: ILoginUserPayload) => {
   if (user.status === "BLOCKED") {
     throw new AppError(status.FORBIDDEN, "User is blocked");
   }
-
-  if (user.isDeleted || user.status === "DELETED") {
+if (user.isDeleted || user.status === "DELETED") {
     throw new AppError(status.NOT_FOUND, "User not found");
   }
+  
+ if (!user.emailVerified) {
+  throw new AppError(
+    status.FORBIDDEN,
+    "Please verify your email first"
+  );
+}
 
   // password check
   const isPasswordValid = await bcrypt.compare(
