@@ -1,4 +1,5 @@
 import PromotionAgentForm from "@/components/admin/form/Promotion-form";
+import { Container } from "@/components/Container";
 import { CheckCircle2, TrendingUp, Users, Zap } from "lucide-react";
 
 export default function PromotionAgentPage() {
@@ -40,9 +41,7 @@ export default function PromotionAgentPage() {
           </p>
         </div>
       </section>
-
-      {/* Perks */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+<Container> <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {perks.map((p) => (
             <div
@@ -98,6 +97,11 @@ export default function PromotionAgentPage() {
           </div>
         </div>
       </section>
+      
+      
+      </Container>
+      {/* Perks */}
+     
     </main>
   );
 }
