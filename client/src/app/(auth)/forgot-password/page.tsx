@@ -322,13 +322,13 @@ export default function ForgotPasswordPage() {
 
               {emailForm.formState.errors
                 .turnstileToken && (
-                <p className="text-center text-xs text-red-500">
-                  {
-                    emailForm.formState.errors
-                      .turnstileToken.message
-                  }
-                </p>
-              )}
+                  <p className="text-center text-xs text-red-500">
+                    {
+                      emailForm.formState.errors
+                        .turnstileToken.message
+                    }
+                  </p>
+                )}
 
               {/* SEND BUTTON */}
 
@@ -377,47 +377,22 @@ export default function ForgotPasswordPage() {
                   OTP
               ================================================= */}
 
-              <FormField
-                control={resetForm.control}
-                name="otp"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={6}
-                        placeholder="6-digit code"
-                        className="
-                          h-12
-                          w-full
-                          rounded-xl
-                          border
-                          border-black/10
-                          bg-white
-                          px-4
-                          text-center
-                          text-base
-                          font-medium
-                          !text-black
-                          caret-black
-                          placeholder:text-black/40
-                          shadow-sm
-                          transition-all
-                          duration-200
-                          hover:border-black/20
-                          focus-visible:border-black/30
-                          focus-visible:ring-2
-                          focus-visible:ring-black/10
-                        "
-                      />
-                    </FormControl>
-
-                    <FormMessage className="px-1 text-xs text-red-500" />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-1.5">
+  <input
+    {...resetForm.register("otp")}
+    type="text"
+    inputMode="numeric"
+    autoComplete="one-time-code"
+    maxLength={6}
+    placeholder="6-digit code"
+    className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-center text-base font-medium text-black caret-black placeholder:text-black/40 shadow-sm transition-all duration-200 hover:border-black/20 focus-visible:border-black/30 focus-visible:ring-2 focus-visible:ring-black/10 focus:outline-none"
+  />
+  {resetForm.formState.errors.otp && (
+    <p className="px-1 text-xs text-red-500">
+      {resetForm.formState.errors.otp.message}
+    </p>
+  )}
+</div>
 
               {/* =================================================
                   NEW PASSWORD
