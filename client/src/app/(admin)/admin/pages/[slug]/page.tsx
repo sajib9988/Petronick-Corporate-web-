@@ -99,10 +99,10 @@ const handleCreate = async (
       toast.error("Failed to create section ❌");
     }
 
-  } catch {                                              // ✅ try এর বাইরে
+  } catch {
     setCreateError("Error creating section.");
     toast.error("Error creating section ❌");
-  } finally {                                            // ✅ try এর বাইরে
+  } finally {
     setIsCreating(false);
   }
 };
@@ -136,42 +136,13 @@ const handleEditSection = async (
       toast.error("Failed to update section ❌");
     }
 
-  } catch {                                              // ✅ try এর বাইরে
+  } catch {
     setEditError("Error updating section.");
     toast.error("Error updating section ❌");
-  } finally {                                            // ✅ try এর বাইরে
+  } finally {
     setIsEditing(false);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // 🔹 Create new section
   const handleCreateSection = async (values: SectionFormValues, imageFile: File | null) => {
@@ -225,14 +196,6 @@ const handleDelete =async () =>{
     toast.error("Failed to delete section ❌");
   }
 }
-
-
-
-
-
-
-
-
 
   if (!page) return <p>Loading page...</p>;
 return (
@@ -352,6 +315,7 @@ return (
             </DialogDescription>
           </DialogHeader>
           <SectionForm
+            variant="modal"
             onSubmit={handleCreate}
             onCancel={() => {
               setShowCreate(false);
@@ -376,6 +340,7 @@ return (
           </DialogHeader>
           {editSection && (
             <SectionForm
+              variant="modal"
               defaultValues={{
                 type: editSection.sectionType as SectionFormValues["type"],
                 content: editSection.content as Record<string, string>,

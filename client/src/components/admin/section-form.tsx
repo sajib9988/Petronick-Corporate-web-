@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { Loader2, X, Upload, ImageIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +48,7 @@ interface SectionFormProps {
   submitLabel?: string;
   isLoading?: boolean;
   error?: string;
+  variant?: "standalone" | "modal";
 }
 
 export default function SectionForm({
@@ -58,6 +60,7 @@ export default function SectionForm({
   submitLabel = "Update",
   isLoading = false,
   error,
+  variant = "standalone",
 }: SectionFormProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
@@ -85,20 +88,27 @@ export default function SectionForm({
   };
 
   return (
-    <div className="relative bg-white rounded-xl shadow-xl w-full max-w-5xl mx-auto">
-      {/* Header with Close Icon */}
-      <div className="flex items-center justify-between border-b px-6 py-4">
-        <h2 className="text-xl font-semibold text-gray-900">Edit Section</h2>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close"
-          >
-            <X size={20} />
-          </button>
-        )}
-      </div>
+    <div className={cn(
+      "relative bg-white w-full mx-auto",
+      variant === "standalone" 
+        ? "rounded-xl shadow-xl max-w-5xl" 
+        : "rounded-none shadow-none max-w-none"
+    )}>
+      {/* Header — shudhu standalone e dekhabe */}
+      {variant === "standalone" && (
+        <div className="flex items-center justify-between border-b px-6 py-4">
+          <h2 className="text-xl font-semibold text-gray-900">Edit Section</h2>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+          )}
+        </div>
+      )}
 
       <Form {...form}>
         <form
