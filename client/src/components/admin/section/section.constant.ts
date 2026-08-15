@@ -219,8 +219,7 @@ export const FIELDS: Record<
 
     {
       key: "description",
-      label:
-        "Description (Companies DB থেকে আসবে)",
+      label:"Description",
       multiline: true,
     },
   ],
