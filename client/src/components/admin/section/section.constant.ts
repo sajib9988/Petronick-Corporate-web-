@@ -9,6 +9,10 @@ export type SectionType =
   | "FEATURE"
   | "SNAPSHOT"
   | "VALUES"
+  | "BENEFITS"
+  | "PROCESS"
+  | "STATS"
+  | "APPLICATION"
   | "TESTIMONIALS"
   | "GALLERY"
   | "CONTACT"
@@ -27,9 +31,16 @@ export const SECTION_TYPES: SectionType[] = [
   "ECOSYSTEM",
   "REVENUE",
   "CLOSING",
+
   "ABOUT",
   "SNAPSHOT",
   "VALUES",
+
+  "BENEFITS",
+  "PROCESS",
+  "STATS",
+  "APPLICATION",
+
   "FEATURE",
   "CTA",
   "TESTIMONIALS",
@@ -41,7 +52,10 @@ export const SECTION_TYPES: SectionType[] = [
 // SECTION TYPE LABELS
 // ============================================================
 
-export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
+export const SECTION_TYPE_LABELS: Record<
+  SectionType,
+  string
+> = {
   HERO: "Hero / Banner",
 
   WHO_WE_ARE: "Who We Are",
@@ -58,6 +72,15 @@ export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
 
   VALUES: "Our Values",
 
+  BENEFITS: "Benefits / Why Join",
+
+  PROCESS: "Process / How It Works",
+
+  STATS: "Stats Bar",
+
+  APPLICATION:
+    "Application Panel (Left Side + Form Header)",
+
   FEATURE: "Feature",
 
   CTA: "Call to Action",
@@ -70,16 +93,22 @@ export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
 };
 
 // ============================================================
+// FIELD TYPE
+// ============================================================
+
+export type SectionField = {
+  key: string;
+  label: string;
+  multiline?: boolean;
+};
+
+// ============================================================
 // DYNAMIC FIELDS
 // ============================================================
 
 export const FIELDS: Record<
   SectionType,
-  {
-    key: string;
-    label: string;
-    multiline?: boolean;
-  }[]
+  SectionField[]
 > = {
   // ==========================================================
   // HERO
@@ -93,7 +122,20 @@ export const FIELDS: Record<
 
     {
       key: "headline",
-      label: "Headline",
+      label:
+        "Headline (fallback, other pages use this)",
+    },
+
+    {
+      key: "headlinePrefix",
+      label:
+        "Headline Prefix (e.g. 'Become')",
+    },
+
+    {
+      key: "headlineAccent",
+      label:
+        "Headline Accent / Gradient Part",
     },
 
     {
@@ -177,7 +219,8 @@ export const FIELDS: Record<
 
     {
       key: "description",
-      label: "Description (Companies DB থেকে আসবে)",
+      label:
+        "Description (Companies DB থেকে আসবে)",
       multiline: true,
     },
   ],
@@ -328,56 +371,382 @@ export const FIELDS: Record<
   // VALUES
   // ==========================================================
 
-VALUES: [
-  {
-    key: "label",
-    label: "Section Label",
-  },
-  {
-    key: "title",
-    label: "Section Title",
-  },
+  VALUES: [
+    {
+      key: "label",
+      label: "Section Label",
+    },
 
-  {
-    key: "value1Title",
-    label: "Value 1 Title",
-  },
-  {
-    key: "value1Description",
-    label: "Value 1 Description",
-    multiline: true,
-  },
+    {
+      key: "title",
+      label: "Section Title",
+    },
 
-  {
-    key: "value2Title",
-    label: "Value 2 Title",
-  },
-  {
-    key: "value2Description",
-    label: "Value 2 Description",
-    multiline: true,
-  },
+    {
+      key: "value1Title",
+      label: "Value 1 Title",
+    },
 
-  {
-    key: "value3Title",
-    label: "Value 3 Title",
-  },
-  {
-    key: "value3Description",
-    label: "Value 3 Description",
-    multiline: true,
-  },
+    {
+      key: "value1Description",
+      label: "Value 1 Description",
+      multiline: true,
+    },
 
-  {
-    key: "value4Title",
-    label: "Value 4 Title",
-  },
-  {
-    key: "value4Description",
-    label: "Value 4 Description",
-    multiline: true,
-  },
-],
+    {
+      key: "value2Title",
+      label: "Value 2 Title",
+    },
+
+    {
+      key: "value2Description",
+      label: "Value 2 Description",
+      multiline: true,
+    },
+
+    {
+      key: "value3Title",
+      label: "Value 3 Title",
+    },
+
+    {
+      key: "value3Description",
+      label: "Value 3 Description",
+      multiline: true,
+    },
+
+    {
+      key: "value4Title",
+      label: "Value 4 Title",
+    },
+
+    {
+      key: "value4Description",
+      label: "Value 4 Description",
+      multiline: true,
+    },
+  ],
+
+  // ==========================================================
+  // BENEFITS
+  // ==========================================================
+
+  BENEFITS: [
+    {
+      key: "badge",
+      label: "Badge",
+    },
+
+    {
+      key: "title",
+      label: "Section Title",
+    },
+
+    {
+      key: "subtitle",
+      label: "Subtitle",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // BENEFIT 1
+    // --------------------------------------------------------
+
+    {
+      key: "benefit1Icon",
+      label:
+        "Benefit 1 Icon (TrendingUp/Users/Zap...)",
+    },
+
+    {
+      key: "benefit1Title",
+      label: "Benefit 1 Title",
+    },
+
+    {
+      key: "benefit1Description",
+      label: "Benefit 1 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // BENEFIT 2
+    // --------------------------------------------------------
+
+    {
+      key: "benefit2Icon",
+      label:
+        "Benefit 2 Icon (TrendingUp/Users/Zap...)",
+    },
+
+    {
+      key: "benefit2Title",
+      label: "Benefit 2 Title",
+    },
+
+    {
+      key: "benefit2Description",
+      label: "Benefit 2 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // BENEFIT 3
+    // --------------------------------------------------------
+
+    {
+      key: "benefit3Icon",
+      label:
+        "Benefit 3 Icon (TrendingUp/Users/Zap...)",
+    },
+
+    {
+      key: "benefit3Title",
+      label: "Benefit 3 Title",
+    },
+
+    {
+      key: "benefit3Description",
+      label: "Benefit 3 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // STATS INSIDE BENEFITS
+    // --------------------------------------------------------
+
+    {
+      key: "statValue1",
+      label: "Stat 1 Value",
+    },
+
+    {
+      key: "statLabel1",
+      label: "Stat 1 Label",
+    },
+
+    {
+      key: "statValue2",
+      label: "Stat 2 Value",
+    },
+
+    {
+      key: "statLabel2",
+      label: "Stat 2 Label",
+    },
+
+    {
+      key: "statValue3",
+      label: "Stat 3 Value",
+    },
+
+    {
+      key: "statLabel3",
+      label: "Stat 3 Label",
+    },
+  ],
+
+  // ==========================================================
+  // PROCESS
+  // ==========================================================
+
+  PROCESS: [
+    {
+      key: "badge",
+      label: "Badge Label",
+    },
+
+    {
+      key: "title",
+      label: "Section Title",
+    },
+
+    {
+      key: "subtitle",
+      label: "Subtitle",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // STEP 1
+    // --------------------------------------------------------
+
+    {
+      key: "step1Icon",
+      label:
+        "Step 1 Icon (FileText/Users/Handshake/Rocket...)",
+    },
+
+    {
+      key: "step1Title",
+      label: "Step 1 Title",
+    },
+
+    {
+      key: "step1Description",
+      label: "Step 1 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // STEP 2
+    // --------------------------------------------------------
+
+    {
+      key: "step2Icon",
+      label: "Step 2 Icon",
+    },
+
+    {
+      key: "step2Title",
+      label: "Step 2 Title",
+    },
+
+    {
+      key: "step2Description",
+      label: "Step 2 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // STEP 3
+    // --------------------------------------------------------
+
+    {
+      key: "step3Icon",
+      label: "Step 3 Icon",
+    },
+
+    {
+      key: "step3Title",
+      label: "Step 3 Title",
+    },
+
+    {
+      key: "step3Description",
+      label: "Step 3 Description",
+      multiline: true,
+    },
+
+    // --------------------------------------------------------
+    // STEP 4
+    // --------------------------------------------------------
+
+    {
+      key: "step4Icon",
+      label: "Step 4 Icon",
+    },
+
+    {
+      key: "step4Title",
+      label: "Step 4 Title",
+    },
+
+    {
+      key: "step4Description",
+      label: "Step 4 Description",
+      multiline: true,
+    },
+  ],
+
+  // ==========================================================
+  // STATS
+  // ==========================================================
+
+  STATS: [
+    {
+      key: "statValue1",
+      label: "Stat 1 Value",
+    },
+
+    {
+      key: "statLabel1",
+      label: "Stat 1 Label",
+    },
+
+    {
+      key: "statValue2",
+      label: "Stat 2 Value",
+    },
+
+    {
+      key: "statLabel2",
+      label: "Stat 2 Label",
+    },
+
+    {
+      key: "statValue3",
+      label: "Stat 3 Value",
+    },
+
+    {
+      key: "statLabel3",
+      label: "Stat 3 Label",
+    },
+  ],
+
+  // ==========================================================
+  // APPLICATION
+  // ==========================================================
+
+  APPLICATION: [
+    {
+      key: "badge",
+      label: "Eyebrow / Badge",
+    },
+
+    {
+      key: "title",
+      label: "Left Panel Title",
+    },
+
+    {
+      key: "description",
+      label: "Left Panel Description",
+      multiline: true,
+    },
+
+    {
+      key: "checklist1",
+      label: "Checklist Item 1",
+    },
+
+    {
+      key: "checklist2",
+      label: "Checklist Item 2",
+    },
+
+    {
+      key: "checklist3",
+      label: "Checklist Item 3",
+    },
+
+    {
+      key: "checklist4",
+      label: "Checklist Item 4",
+    },
+
+    {
+      key: "formPanelTitle",
+      label: "Form Panel Title",
+    },
+
+    {
+      key: "formPanelDescription",
+      label: "Form Panel Subtitle",
+    },
+
+    {
+      key: "noteTitle",
+      label: "Note Box Title",
+    },
+
+    {
+      key: "noteDescription",
+      label: "Note Box Description",
+      multiline: true,
+    },
+  ],
 
   // ==========================================================
   // FEATURE
@@ -406,6 +775,11 @@ VALUES: [
   // ==========================================================
 
   CTA: [
+    {
+      key: "eyebrow",
+      label: "Eyebrow / Small Label",
+    },
+
     {
       key: "title",
       label: "Title",
