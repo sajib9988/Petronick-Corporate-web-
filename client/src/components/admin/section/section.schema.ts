@@ -3,18 +3,24 @@ import { z } from "zod";
 export const sectionSchema = z.object({
   type: z.enum([
     "HERO",
+
     "WHO_WE_ARE",
     "ECOSYSTEM",
     "REVENUE",
     "CLOSING",
-    "ABOUT",
 
-    // ✅ New sections
+    "ABOUT",
     "SNAPSHOT",
     "VALUES",
 
-    "CTA",
+    // Promotion Agent
+    "BENEFITS",
+    "PROCESS",
+    "STATS",
+    "APPLICATION",
+
     "FEATURE",
+    "CTA",
     "TESTIMONIALS",
     "GALLERY",
     "CONTACT",
