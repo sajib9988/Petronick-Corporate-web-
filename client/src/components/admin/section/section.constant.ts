@@ -52,10 +52,7 @@ export const SECTION_TYPES: SectionType[] = [
 // SECTION TYPE LABELS
 // ============================================================
 
-export const SECTION_TYPE_LABELS: Record<
-  SectionType,
-  string
-> = {
+export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
   HERO: "Hero / Banner",
 
   WHO_WE_ARE: "Who We Are",
@@ -78,8 +75,7 @@ export const SECTION_TYPE_LABELS: Record<
 
   STATS: "Stats Bar",
 
-  APPLICATION:
-    "Application Panel (Left Side + Form Header)",
+  APPLICATION: "Application Panel",
 
   FEATURE: "Feature",
 
@@ -106,10 +102,7 @@ export type SectionField = {
 // DYNAMIC FIELDS
 // ============================================================
 
-export const FIELDS: Record<
-  SectionType,
-  SectionField[]
-> = {
+export const FIELDS: Record<SectionType, SectionField[]> = {
   // ==========================================================
   // HERO
   // ==========================================================
@@ -122,20 +115,17 @@ export const FIELDS: Record<
 
     {
       key: "headline",
-      label:
-        "Headline (fallback, other pages use this)",
+      label: "Headline (Fallback)",
     },
 
     {
       key: "headlinePrefix",
-      label:
-        "Headline Prefix (e.g. 'Become')",
+      label: "Headline Prefix",
     },
 
     {
       key: "headlineAccent",
-      label:
-        "Headline Accent / Gradient Part",
+      label: "Headline Accent / Gradient Part",
     },
 
     {
@@ -219,7 +209,7 @@ export const FIELDS: Record<
 
     {
       key: "description",
-      label:"Description",
+      label: "Description",
       multiline: true,
     },
   ],
@@ -431,6 +421,10 @@ export const FIELDS: Record<
   // ==========================================================
 
   BENEFITS: [
+    // --------------------------------------------------------
+    // HEADER
+    // --------------------------------------------------------
+
     {
       key: "badge",
       label: "Badge",
@@ -439,6 +433,7 @@ export const FIELDS: Record<
     {
       key: "title",
       label: "Section Title",
+      multiline: true,
     },
 
     {
@@ -453,8 +448,7 @@ export const FIELDS: Record<
 
     {
       key: "benefit1Icon",
-      label:
-        "Benefit 1 Icon (TrendingUp/Users/Zap...)",
+      label: "Benefit 1 Icon",
     },
 
     {
@@ -474,8 +468,7 @@ export const FIELDS: Record<
 
     {
       key: "benefit2Icon",
-      label:
-        "Benefit 2 Icon (TrendingUp/Users/Zap...)",
+      label: "Benefit 2 Icon",
     },
 
     {
@@ -495,8 +488,7 @@ export const FIELDS: Record<
 
     {
       key: "benefit3Icon",
-      label:
-        "Benefit 3 Icon (TrendingUp/Users/Zap...)",
+      label: "Benefit 3 Icon",
     },
 
     {
@@ -511,7 +503,7 @@ export const FIELDS: Record<
     },
 
     // --------------------------------------------------------
-    // STATS INSIDE BENEFITS
+    // STATS
     // --------------------------------------------------------
 
     {
@@ -550,6 +542,10 @@ export const FIELDS: Record<
   // ==========================================================
 
   PROCESS: [
+    // --------------------------------------------------------
+    // HEADER
+    // --------------------------------------------------------
+
     {
       key: "badge",
       label: "Badge Label",
@@ -572,8 +568,7 @@ export const FIELDS: Record<
 
     {
       key: "step1Icon",
-      label:
-        "Step 1 Icon (FileText/Users/Handshake/Rocket...)",
+      label: "Step 1 Icon",
     },
 
     {
@@ -689,6 +684,10 @@ export const FIELDS: Record<
   // ==========================================================
 
   APPLICATION: [
+    // --------------------------------------------------------
+    // LEFT PANEL
+    // --------------------------------------------------------
+
     {
       key: "badge",
       label: "Eyebrow / Badge",
@@ -704,6 +703,10 @@ export const FIELDS: Record<
       label: "Left Panel Description",
       multiline: true,
     },
+
+    // --------------------------------------------------------
+    // CHECKLIST
+    // --------------------------------------------------------
 
     {
       key: "checklist1",
@@ -725,6 +728,10 @@ export const FIELDS: Record<
       label: "Checklist Item 4",
     },
 
+    // --------------------------------------------------------
+    // FORM PANEL
+    // --------------------------------------------------------
+
     {
       key: "formPanelTitle",
       label: "Form Panel Title",
@@ -733,7 +740,12 @@ export const FIELDS: Record<
     {
       key: "formPanelDescription",
       label: "Form Panel Subtitle",
+      multiline: true,
     },
+
+    // --------------------------------------------------------
+    // NOTE BOX
+    // --------------------------------------------------------
 
     {
       key: "noteTitle",
@@ -765,7 +777,7 @@ export const FIELDS: Record<
 
     {
       key: "icon",
-      label: "Icon (optional)",
+      label: "Icon",
     },
   ],
 
@@ -850,7 +862,8 @@ export const FIELDS: Record<
 
     {
       key: "caption",
-      label: "Caption (optional)",
+      label: "Caption",
+      multiline: true,
     },
   ],
 
