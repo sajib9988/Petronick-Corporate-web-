@@ -24,7 +24,9 @@ const createContact = async (payload: ICreateContact) => {
       subject: payload.subject ?? "General Inquiry",
       appName: "Petronick Corporate Holdings",
     },
-  });
+  }).catch((err) =>
+    console.error("❌ Contact confirmation email failed:", err.message || err)
+  );
 
   sendEmail({
     to: envVars.SUPER_ADMIN_EMAIL,
@@ -38,7 +40,10 @@ const createContact = async (payload: ICreateContact) => {
       message: payload.message,
       appName: "Petronick Corporate Holdings",
     },
-  });
+  }).catch((err) =>
+    console.error("❌ Contact admin email failed:", err.message || err)
+  );
+
 
   return contact;
 };

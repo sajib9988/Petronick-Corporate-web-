@@ -8,6 +8,7 @@ interface EnvConfig {
   APP_URL: string;
   DATABASE_URL: string;
   FRONTEND_URL: string;
+  POSTGRES_PASSWORD: string;
 
   ACCESS_TOKEN_SECRET: string;
   ACCESS_TOKEN_EXPIRES_IN: string;
@@ -69,6 +70,7 @@ const loadEnvVars = (): EnvConfig => {
     "ADMIN_NOTIFICATION_EMAILS",
     "NODE_ENV",
     "PORT",
+    "POSTGRES_PASSWORD",
     "CLOUDINARY_CLOUD_NAME",
     "CLOUDINARY_API_KEY",
     "CLOUDINARY_API_SECRET",
@@ -89,6 +91,7 @@ const loadEnvVars = (): EnvConfig => {
     APP_URL: process.env.APP_URL!,
     DATABASE_URL: process.env.DATABASE_URL!,
     FRONTEND_URL: process.env.FRONTEND_URL!,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD!,
 
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET!,
     ACCESS_TOKEN_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRES_IN!,

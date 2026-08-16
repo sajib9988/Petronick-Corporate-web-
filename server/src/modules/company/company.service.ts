@@ -94,13 +94,13 @@ const updateCompany = async (id: string, payload: IupdateCompany) => {
   return await prisma.company.update({
     where: { id },
     data: {
-      ...(payload.name && { name: payload.name }),
-      ...(payload.description && { description: payload.description }),
-      ...(payload.logo && { logo: payload.logo }),
-      website: payload.website ?? null,
-      order: payload.order,
-      isVisible: payload.isVisible,
-      revenueStage: payload.revenueStage ?? null,
+      ...(payload.name !== undefined && { name: payload.name }),
+      ...(payload.description !== undefined && { description: payload.description }),
+      ...(payload.logo !== undefined && { logo: payload.logo }),
+      ...(payload.website !== undefined && { website: payload.website }),
+      ...(payload.order !== undefined && { order: payload.order }),
+      ...(payload.isVisible !== undefined && { isVisible: payload.isVisible }),
+      ...(payload.revenueStage !== undefined && { revenueStage: payload.revenueStage }),
     },
   });
 };
