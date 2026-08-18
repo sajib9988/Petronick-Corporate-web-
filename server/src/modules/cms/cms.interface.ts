@@ -21,8 +21,7 @@ export interface IUpdateSection {
   content?: Prisma.InputJsonValue;
   image?: string;
   order?: number;
-  isVisible?: boolean;
-}
+  isVisible?: boolean; }
 
 export interface IUpdatePage {
   title?: string;

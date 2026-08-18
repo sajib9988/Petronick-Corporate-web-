@@ -1,27 +1,15 @@
 import { z } from "zod";
+import { SectionType } from "../../../generated/prisma-client/index.js";
 
-const SECTION_TYPES = [
-  "HERO",
-  "ABOUT",
-  "SNAPSHOT",
-  "VALUES",
-  "BENEFITS",
-  "PROCESS",
-  "STATS",
-  "APPLICATION",
-  "CTA",
-  "FEATURE",
-  "TESTIMONIALS",
-  "GALLERY",
-  "CONTACT",
-  "WHO_WE_ARE",
-  "ECOSYSTEM",
-  "REVENUE",
-  "CLOSING",
-] as const;
+// Prisma SectionType হবে single source of truth
+const SECTION_TYPES = Object.values(SectionType) as [
+  SectionType,
+  ...SectionType[],
+];
 
 const createPage = z.object({
   slug: z.string({ error: "Slug is required" }).min(1),
+
   title: z.string({ error: "Title is required" }).min(1),
 });
 
