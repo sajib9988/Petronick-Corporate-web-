@@ -57,7 +57,7 @@ export default async function CompaniesPage() {
 
   return (
     <main className="bg-[#4dd0e1] min-h-screen">
-      {/* ── HERO — full width, NOT inside shared Container ── */}
+      {/* ── HERO — full width, NOT inside Container ── */}
       <section className="relative overflow-hidden border-b border-gray-100 bg-gray-950 text-white">
         <div
           className="absolute inset-0 opacity-5"
@@ -76,7 +76,7 @@ export default async function CompaniesPage() {
         </div>
       </section>
 
-      {/* ── Everything below sits inside the shared Container ── */}
+      {/* ── Everything below sits inside the shared Container, taking its full width ── */}
       <Container>
         {/* Stats Bar */}
         <section className="border-b border-gray-100 bg-gray-50 rounded-b-2xl">
