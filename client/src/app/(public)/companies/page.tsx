@@ -1,7 +1,12 @@
 import { getAllCompanies } from "@/service/company";
 import { getPageBySlug } from "@/service/cms";
 import { Container } from "@/components/Container";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import {
+  ExternalLink,
+  ArrowRight,
+  Building2,
+  Globe2,
+} from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -52,9 +57,9 @@ export default async function CompaniesPage() {
 
   const companies: any[] = companiesRes?.data ?? [];
 
-  // --------------------------------------------------
-  // HERO CONTENT
-  // --------------------------------------------------
+  // =========================
+  // HERO
+  // =========================
 
   const badge =
     heroContent.badge ?? "PORTFOLIO OVERVIEW";
@@ -66,90 +71,94 @@ export default async function CompaniesPage() {
     heroContent.subheadline ??
     "Petronick Corporate Holdings operates multiple specialized business units, each built to create independent revenue while contributing to a stronger and more collaborative business ecosystem.";
 
-  // --------------------------------------------------
-  // STATS CONTENT
-  // --------------------------------------------------
+  // =========================
+  // STATS
+  // =========================
 
   const stats = [
     {
       value: statsContent.statValue1 ?? "7+",
-      label:
-        statsContent.statLabel1 ?? "Business Units",
+      label: statsContent.statLabel1 ?? "Business Units",
     },
     {
       value: statsContent.statValue2 ?? "100%",
-      label:
-        statsContent.statLabel2 ?? "Revenue Ready",
+      label: statsContent.statLabel2 ?? "Revenue Ready",
     },
     {
       value: statsContent.statValue3 ?? "Multi",
-      label:
-        statsContent.statLabel3 ?? "Market Reach",
+      label: statsContent.statLabel3 ?? "Market Reach",
     },
   ];
 
-  // --------------------------------------------------
-  // CTA CONTENT
-  // --------------------------------------------------
+  // =========================
+  // CTA
+  // =========================
 
   const ctaEyebrow =
-    ctaContent.eyebrow ??
-    "PARTNERSHIP OPPORTUNITY";
+    ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
 
   const ctaTitle =
-    ctaContent.title ??
-    "Represent Our Business Units";
+    ctaContent.title ?? "Represent Our Business Units";
 
   const ctaDescription =
     ctaContent.description ??
     "Qualified Promotion Agents can represent one or multiple Petronick business units depending on their experience and focus area.";
 
   const ctaBtnText =
-    ctaContent.btnText ??
-    "Apply as Promotion Agent";
+    ctaContent.btnText ?? "Apply as Promotion Agent";
 
   const ctaBtnLink =
-    ctaContent.btnLink ??
-    "/promotion-agent";
+    ctaContent.btnLink ?? "/promotion-agent";
 
   const ctaSecondaryText =
-    ctaContent.secondaryBtnText ??
-    "Contact Us";
+    ctaContent.secondaryBtnText ?? "Contact Us";
 
   const ctaSecondaryLink =
-    ctaContent.secondaryBtnLink ??
-    "/contact";
+    ctaContent.secondaryBtnLink ?? "/contact";
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#F7F9FC]">
 
       {/* ==================================================
           HERO
       ================================================== */}
 
-      <section className="relative overflow-hidden border-b border-gray-800 bg-gray-950 text-white">
+      <section className="relative overflow-hidden bg-[#0B1220] text-white">
 
-        {/* Background Grid */}
+        {/* Background grid */}
+
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.035]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
 
-        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 lg:py-28 text-center">
+        <div className="relative mx-auto max-w-7xl px-5 py-24 text-center sm:px-6 lg:px-8">
 
-          <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-emerald-400 mb-5">
-            {badge}
-          </p>
+          {/* Badge */}
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2">
+
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+
+            <span className="text-[11px] font-bold tracking-[0.22em] text-emerald-300">
+              {badge}
+            </span>
+
+          </div>
+
+          {/* Heading */}
+
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
             {headline}
           </h1>
 
-          <p className="mt-6 text-gray-400 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+          {/* Description */}
+
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
             {subheadline}
           </p>
 
@@ -158,7 +167,7 @@ export default async function CompaniesPage() {
 
 
       {/* ==================================================
-          MAIN CONTENT CONTAINER
+          CONTENT
       ================================================== */}
 
       <Container>
@@ -167,25 +176,34 @@ export default async function CompaniesPage() {
             STATS
         ================================================== */}
 
-        <section className="bg-gray-50 border-x border-b border-gray-100 rounded-b-2xl">
+        <section className="relative -mt-8 rounded-2xl border border-gray-200 bg-white shadow-sm">
 
-          <div className="grid grid-cols-3 divide-x divide-gray-200">
+          <div className="grid grid-cols-3">
 
-            {stats.map((stat) => (
+            {stats.map((stat, index) => (
+
               <div
                 key={stat.label}
-                className="py-6 sm:py-7 px-3 sm:px-6 text-center"
+                className={`
+                  px-3 py-6 text-center sm:px-6 sm:py-7
+                  ${
+                    index !== stats.length - 1
+                      ? "border-r border-gray-100"
+                      : ""
+                  }
+                `}
               >
 
-                <div className="text-xl sm:text-2xl font-bold text-gray-900">
+                <div className="text-xl font-bold text-[#111827] sm:text-2xl">
                   {stat.value}
                 </div>
 
-                <div className="text-[11px] sm:text-xs text-gray-500 mt-1">
+                <div className="mt-1 text-[11px] font-medium text-[#64748B] sm:text-xs">
                   {stat.label}
                 </div>
 
               </div>
+
             ))}
 
           </div>
@@ -197,33 +215,60 @@ export default async function CompaniesPage() {
             COMPANIES
         ================================================== */}
 
-        <section className="py-14 sm:py-16 lg:py-20">
+        <section className="py-20">
 
           {/* Section Header */}
 
           <div className="mb-10">
 
-            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-emerald-600 mb-2">
-              Our Portfolio
-            </p>
+            <div className="mb-3 flex items-center gap-2">
 
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
-              Business Units
-            </h2>
+              <span className="h-1 w-6 rounded-full bg-emerald-500" />
 
-            <p className="mt-3 text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed">
-              Explore the businesses operating under Petronick
-              Corporate Holdings and their respective market focus.
-            </p>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
+                Our Portfolio
+              </span>
+
+            </div>
+
+            <div className="flex items-end justify-between gap-6">
+
+              <div>
+
+                <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
+                  Business Units
+                </h2>
+
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base">
+                  Explore the businesses operating under
+                  Petronick Corporate Holdings and their
+                  respective market focus.
+                </p>
+
+              </div>
+
+              <div className="hidden items-center gap-2 text-sm font-medium text-slate-400 sm:flex">
+
+                <Building2 size={17} />
+
+                <span>
+                  {companies.length} Companies
+                </span>
+
+              </div>
+
+            </div>
 
           </div>
 
 
-          {/* Companies Grid */}
+          {/* ==================================================
+              COMPANY GRID
+          ================================================== */}
 
           {companies.length > 0 ? (
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 
               {companies.map((company: any) => {
 
@@ -231,13 +276,10 @@ export default async function CompaniesPage() {
                   company.initial ??
                   company.name
                     ?.split(" ")
-                    .map((word: string) => word[0])
+                    .map((w: string) => w[0])
                     .join("")
                     .slice(0, 2)
                     .toUpperCase();
-
-                const color =
-                  company.color ?? "bg-gray-700";
 
                 return (
 
@@ -245,58 +287,57 @@ export default async function CompaniesPage() {
                     key={company.id}
                     className="
                       group
-                      bg-white
-                      border border-gray-200
-                      rounded-2xl
-                      overflow-hidden
-                      flex flex-col
+                      flex
                       h-full
+                      flex-col
+                      overflow-hidden
+                      rounded-2xl
+                      border
+                      border-gray-200
+                      bg-white
+                      shadow-[0_2px_8px_rgba(15,23,42,0.04)]
                       transition-all
                       duration-300
                       hover:-translate-y-1
                       hover:border-gray-300
-                      hover:shadow-lg
+                      hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)]
                     "
                   >
 
-                    {/* ----------------------------------
-                        CARD HEADER
-                    ---------------------------------- */}
+                    {/* --------------------------------------
+                        TOP COLOR STRIP
+                    -------------------------------------- */}
 
-                    <div className="p-6 sm:p-7 flex items-start gap-4">
+                    <div className="h-1 w-full bg-gradient-to-r from-emerald-500 to-teal-400" />
 
-                      {/* Logo */}
 
-                      <div className="flex-shrink-0">
+                    {/* --------------------------------------
+                        HEADER
+                    -------------------------------------- */}
+
+                    <div className="p-7 pb-5">
+
+                      <div className="flex items-start gap-4">
+
+                        {/* Logo */}
 
                         {company.logo ? (
 
-                          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+                          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-[#F8FAFC]">
 
                             <img
                               src={company.logo}
                               alt={company.name}
-                              className="w-full h-full object-contain p-2"
+                              className="h-full w-full object-contain p-2.5"
                             />
 
                           </div>
 
                         ) : (
 
-                          <div
-                            className={`
-                              w-14 h-14
-                              sm:w-16 sm:h-16
-                              rounded-xl
-                              ${color}
-                              flex
-                              items-center
-                              justify-center
-                              shadow-sm
-                            `}
-                          >
+                          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl bg-[#111827]">
 
-                            <span className="text-white font-bold text-xl sm:text-2xl">
+                            <span className="text-xl font-bold text-white">
                               {initial}
                             </span>
 
@@ -304,65 +345,65 @@ export default async function CompaniesPage() {
 
                         )}
 
-                      </div>
 
+                        {/* Name */}
 
-                      {/* Company Info */}
+                        <div className="min-w-0 flex-1 pt-1">
 
-                      <div className="flex-1 min-w-0 pt-1">
+                          <h3 className="text-[17px] font-bold leading-tight text-[#111827]">
+                            {company.name}
+                          </h3>
 
-                        <h2 className="font-bold text-gray-900 text-base sm:text-[17px] leading-tight tracking-tight">
-                          {company.name}
-                        </h2>
+                          {company.revenueStage && (
 
+                            <span
+                              className={`
+                                mt-2
+                                inline-flex
+                                items-center
+                                rounded-full
+                                px-2.5
+                                py-1
+                                text-[10px]
+                                font-bold
+                                ${
+                                  stageColors[
+                                    company.revenueStage
+                                  ] ??
+                                  "border border-gray-200 bg-gray-50 text-gray-600"
+                                }
+                              `}
+                            >
+                              {company.revenueStage}
+                            </span>
 
-                        {company.revenueStage && (
+                          )}
 
-                          <span
-                            className={`
-                              inline-block
-                              mt-2
-                              text-[10px]
-                              font-semibold
-                              px-2.5
-                              py-1
-                              rounded-full
-                              ${
-                                stageColors[
-                                  company.revenueStage
-                                ] ??
-                                "bg-gray-100 text-gray-600"
-                              }
-                            `}
-                          >
-                            {company.revenueStage}
-                          </span>
-
-                        )}
+                        </div>
 
                       </div>
 
                     </div>
 
 
-                    {/* ----------------------------------
+                    {/* --------------------------------------
                         DESCRIPTION
-                    ---------------------------------- */}
+                    -------------------------------------- */}
 
-                    <div className="px-6 sm:px-7 pb-7 flex-1">
+                    <div className="flex-1 px-7 pb-7">
 
-                      <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed">
+                      <p className="text-sm leading-7 text-[#64748B]">
                         {company.description}
                       </p>
 
                     </div>
 
 
-                    {/* ----------------------------------
-                        CARD FOOTER
-                    ---------------------------------- */}
+                    {/* --------------------------------------
+                        FOOTER
+                    -------------------------------------- */}
 
-                    <div className="mt-auto px-6 sm:px-7 py-5 border-t border-gray-100 bg-gray-50/70">
+                    <div className="border-t border-gray-100 bg-[#F8FAFC] px-7 py-5">
 
                       {company.website ? (
 
@@ -376,27 +417,23 @@ export default async function CompaniesPage() {
                             gap-2
                             text-sm
                             font-semibold
-                            text-gray-700
-                            hover:text-emerald-600
+                            text-[#475569]
                             transition-colors
+                            hover:text-emerald-600
                           "
                         >
 
+                          <Globe2 size={15} />
+
                           Visit Website
 
-                          <ExternalLink
-                            size={15}
-                            className="
-                              transition-transform
-                              group-hover:translate-x-0.5
-                            "
-                          />
+                          <ExternalLink size={14} />
 
                         </a>
 
                       ) : (
 
-                        <span className="text-xs text-gray-400 italic">
+                        <span className="text-xs italic text-gray-400">
                           Website coming soon
                         </span>
 
@@ -414,11 +451,14 @@ export default async function CompaniesPage() {
 
           ) : (
 
-            /* Empty State */
+            <div className="rounded-2xl border border-dashed border-gray-300 bg-white py-20 text-center">
 
-            <div className="border border-dashed border-gray-200 rounded-2xl py-16 text-center">
+              <Building2
+                size={32}
+                className="mx-auto text-gray-300"
+              />
 
-              <p className="text-sm font-medium text-gray-500">
+              <p className="mt-4 text-sm font-medium text-gray-500">
                 No companies available at the moment.
               </p>
 
@@ -433,28 +473,25 @@ export default async function CompaniesPage() {
             CTA
         ================================================== */}
 
-        <section className="pb-16 sm:pb-20 lg:pb-24">
+        <section className="pb-20">
 
-          <div className="bg-gray-900 text-white rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div className="overflow-hidden rounded-3xl bg-[#0B1220]">
 
-            <div className="px-6 py-14 sm:px-10 sm:py-16 md:px-16 md:py-20 text-center">
+            <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
 
-              <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-emerald-400 uppercase mb-4">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
                 {ctaEyebrow}
               </p>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+              <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 {ctaTitle}
               </h2>
 
-              <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
                 {ctaDescription}
               </p>
 
-
-              {/* Buttons */}
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
 
                 <Link
                   href={ctaBtnLink}
@@ -463,22 +500,22 @@ export default async function CompaniesPage() {
                     items-center
                     justify-center
                     gap-2
-                    bg-white
-                    text-gray-900
-                    font-semibold
-                    text-sm
+                    rounded-lg
+                    bg-emerald-500
                     px-6
                     py-3
-                    rounded-lg
-                    hover:bg-gray-100
+                    text-sm
+                    font-bold
+                    text-white
                     transition-colors
+                    hover:bg-emerald-600
                   "
                 >
                   {ctaBtnText}
 
                   <ArrowRight size={16} />
-                </Link>
 
+                </Link>
 
                 <Link
                   href={ctaSecondaryLink}
@@ -487,16 +524,17 @@ export default async function CompaniesPage() {
                     items-center
                     justify-center
                     gap-2
+                    rounded-lg
                     border
-                    border-white/20
-                    text-white
-                    font-semibold
-                    text-sm
+                    border-white/15
+                    bg-white/5
                     px-6
                     py-3
-                    rounded-lg
-                    hover:bg-white/10
+                    text-sm
+                    font-semibold
+                    text-white
                     transition-colors
+                    hover:bg-white/10
                   "
                 >
                   {ctaSecondaryText}
