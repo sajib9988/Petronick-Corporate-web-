@@ -7,22 +7,44 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 const stageColors: Record<string, string> = {
-  Active: "bg-emerald-50 text-emerald-700 border border-emerald-200",
-  Launching: "bg-blue-50 text-blue-700 border border-blue-200",
-  "Pre-launch": "bg-amber-50 text-amber-700 border border-amber-200",
-  "Re-launching": "bg-purple-50 text-purple-700 border border-purple-200",
+  Active:
+    "bg-emerald-50 text-emerald-700 border border-emerald-200",
+
+  Launching:
+    "bg-blue-50 text-blue-700 border border-blue-200",
+
+  "Pre-launch":
+    "bg-amber-50 text-amber-700 border border-amber-200",
+
+  "Re-launching":
+    "bg-purple-50 text-purple-700 border border-purple-200",
 };
 
 export default async function CompaniesPage() {
   const [pageRes, companiesRes] = await Promise.all([
     getPageBySlug("company-page"),
-    getAllCompanies({ isVisible: true, limit: 50 }).catch(() => ({ data: [] })),
+
+    getAllCompanies({
+      isVisible: true,
+      limit: 50,
+    }).catch(() => ({
+      data: [],
+    })),
   ]);
 
   const sections = pageRes?.data?.sections ?? [];
-  const heroSection = sections.find((s: any) => s.sectionType === "HERO");
-  const statsSection = sections.find((s: any) => s.sectionType === "STATS");
-  const ctaSection = sections.find((s: any) => s.sectionType === "CTA");
+
+  const heroSection = sections.find(
+    (s: any) => s.sectionType === "HERO"
+  );
+
+  const statsSection = sections.find(
+    (s: any) => s.sectionType === "STATS"
+  );
+
+  const ctaSection = sections.find(
+    (s: any) => s.sectionType === "CTA"
+  );
 
   const heroContent = heroSection?.content ?? {};
   const statsContent = statsSection?.content ?? {};
@@ -30,178 +52,466 @@ export default async function CompaniesPage() {
 
   const companies: any[] = companiesRes?.data ?? [];
 
-  // ── Hero fallbacks ──
-  const badge = heroContent.badge ?? "PORTFOLIO OVERVIEW";
-  const headline = heroContent.headline ?? "Our Companies";
+  // --------------------------------------------------
+  // HERO CONTENT
+  // --------------------------------------------------
+
+  const badge =
+    heroContent.badge ?? "PORTFOLIO OVERVIEW";
+
+  const headline =
+    heroContent.headline ?? "Our Companies";
+
   const subheadline =
     heroContent.subheadline ??
-    "Petronick Corporate Holdings operates multiple specialized business units — each designed to generate revenue independently while contributing to a larger, collaborative ecosystem.";
+    "Petronick Corporate Holdings operates multiple specialized business units, each built to create independent revenue while contributing to a stronger and more collaborative business ecosystem.";
 
-  // ── Stats fallbacks ──
+  // --------------------------------------------------
+  // STATS CONTENT
+  // --------------------------------------------------
+
   const stats = [
-    { value: statsContent.statValue1 ?? "7+", label: statsContent.statLabel1 ?? "Business Units" },
-    { value: statsContent.statValue2 ?? "100%", label: statsContent.statLabel2 ?? "Revenue Ready" },
-    { value: statsContent.statValue3 ?? "Multi", label: statsContent.statLabel3 ?? "Market Reach" },
+    {
+      value: statsContent.statValue1 ?? "7+",
+      label:
+        statsContent.statLabel1 ?? "Business Units",
+    },
+    {
+      value: statsContent.statValue2 ?? "100%",
+      label:
+        statsContent.statLabel2 ?? "Revenue Ready",
+    },
+    {
+      value: statsContent.statValue3 ?? "Multi",
+      label:
+        statsContent.statLabel3 ?? "Market Reach",
+    },
   ];
 
-  // ── CTA fallbacks ──
-  const ctaEyebrow = ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
-  const ctaTitle = ctaContent.title ?? "Represent Our Business Units";
+  // --------------------------------------------------
+  // CTA CONTENT
+  // --------------------------------------------------
+
+  const ctaEyebrow =
+    ctaContent.eyebrow ??
+    "PARTNERSHIP OPPORTUNITY";
+
+  const ctaTitle =
+    ctaContent.title ??
+    "Represent Our Business Units";
+
   const ctaDescription =
     ctaContent.description ??
     "Qualified Promotion Agents can represent one or multiple Petronick business units depending on their experience and focus area.";
-  const ctaBtnText = ctaContent.btnText ?? "Apply as Promotion Agent";
-  const ctaBtnLink = ctaContent.btnLink ?? "/promotion-agent";
-  const ctaSecondaryText = ctaContent.secondaryBtnText ?? "Contact Us";
-  const ctaSecondaryLink = ctaContent.secondaryBtnLink ?? "/contact";
+
+  const ctaBtnText =
+    ctaContent.btnText ??
+    "Apply as Promotion Agent";
+
+  const ctaBtnLink =
+    ctaContent.btnLink ??
+    "/promotion-agent";
+
+  const ctaSecondaryText =
+    ctaContent.secondaryBtnText ??
+    "Contact Us";
+
+  const ctaSecondaryLink =
+    ctaContent.secondaryBtnLink ??
+    "/contact";
 
   return (
-    <main className="bg-[#4dd0e1] min-h-screen">
-      {/* ── HERO — full width, NOT inside Container ── */}
-      <section className="relative overflow-hidden border-b border-gray-100 bg-gray-950 text-white">
+    <main className="min-h-screen bg-white">
+
+      {/* ==================================================
+          HERO
+      ================================================== */}
+
+      <section className="relative overflow-hidden border-b border-gray-800 bg-gray-950 text-white">
+
+        {/* Background Grid */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
-        <div className="relative max-w-7xl mx-auto px-4 py-24 text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-emerald-400 mb-4">
+
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 lg:py-28 text-center">
+
+          <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-emerald-400 mb-5">
             {badge}
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">{headline}</h1>
-          <p className="mt-6 text-gray-400 max-w-2xl mx-auto leading-relaxed">{subheadline}</p>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+            {headline}
+          </h1>
+
+          <p className="mt-6 text-gray-400 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+            {subheadline}
+          </p>
+
         </div>
       </section>
 
-      {/* ── Everything below sits inside the shared Container, taking its full width ── */}
+
+      {/* ==================================================
+          MAIN CONTENT CONTAINER
+      ================================================== */}
+
       <Container>
-        {/* Stats Bar */}
-        <section className="border-b border-gray-100 bg-gray-50 rounded-b-2xl">
-          <div className="py-6 grid grid-cols-3 divide-x divide-gray-200">
-            {stats.map((s) => (
-              <div key={s.label} className="px-6 text-center first:pl-0 last:pr-0">
-                <div className="text-2xl font-bold text-gray-900">{s.value}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
+
+        {/* ==================================================
+            STATS
+        ================================================== */}
+
+        <section className="bg-gray-50 border-x border-b border-gray-100 rounded-b-2xl">
+
+          <div className="grid grid-cols-3 divide-x divide-gray-200">
+
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="py-6 sm:py-7 px-3 sm:px-6 text-center"
+              >
+
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">
+                  {stat.value}
+                </div>
+
+                <div className="text-[11px] sm:text-xs text-gray-500 mt-1">
+                  {stat.label}
+                </div>
+
               </div>
             ))}
+
           </div>
+
         </section>
 
-        {/* Companies Grid */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {companies.map((company: any) => {
-              const initial =
-                company.initial ??
-                company.name
-                  .split(" ")
-                  .map((w: string) => w[0])
-                  .join("")
-                  .slice(0, 2)
-                  .toUpperCase();
 
-              const color = company.color ?? "bg-gray-700";
+        {/* ==================================================
+            COMPANIES
+        ================================================== */}
 
-              return (
-                <div
-                  key={company.id}
-                  className="group bg-white border border-gray-100 rounded-3xl overflow-hidden 
-                             hover:shadow-xl hover:border-gray-200 hover:-translate-y-1 
-                             transition-all duration-300 flex flex-col h-full"
-                >
-                  <div className="p-8 pb-5 flex items-start gap-5">
-                    <div className="flex-shrink-0">
-                      {company.logo ? (
-                        <div className="w-16 h-16 rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
-                          <img
-                            src={company.logo}
-                            alt={company.name}
-                            className="w-full h-full object-contain p-2"
+        <section className="py-14 sm:py-16 lg:py-20">
+
+          {/* Section Header */}
+
+          <div className="mb-10">
+
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-emerald-600 mb-2">
+              Our Portfolio
+            </p>
+
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
+              Business Units
+            </h2>
+
+            <p className="mt-3 text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed">
+              Explore the businesses operating under Petronick
+              Corporate Holdings and their respective market focus.
+            </p>
+
+          </div>
+
+
+          {/* Companies Grid */}
+
+          {companies.length > 0 ? (
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+              {companies.map((company: any) => {
+
+                const initial =
+                  company.initial ??
+                  company.name
+                    ?.split(" ")
+                    .map((word: string) => word[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase();
+
+                const color =
+                  company.color ?? "bg-gray-700";
+
+                return (
+
+                  <article
+                    key={company.id}
+                    className="
+                      group
+                      bg-white
+                      border border-gray-200
+                      rounded-2xl
+                      overflow-hidden
+                      flex flex-col
+                      h-full
+                      transition-all
+                      duration-300
+                      hover:-translate-y-1
+                      hover:border-gray-300
+                      hover:shadow-lg
+                    "
+                  >
+
+                    {/* ----------------------------------
+                        CARD HEADER
+                    ---------------------------------- */}
+
+                    <div className="p-6 sm:p-7 flex items-start gap-4">
+
+                      {/* Logo */}
+
+                      <div className="flex-shrink-0">
+
+                        {company.logo ? (
+
+                          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
+
+                            <img
+                              src={company.logo}
+                              alt={company.name}
+                              className="w-full h-full object-contain p-2"
+                            />
+
+                          </div>
+
+                        ) : (
+
+                          <div
+                            className={`
+                              w-14 h-14
+                              sm:w-16 sm:h-16
+                              rounded-xl
+                              ${color}
+                              flex
+                              items-center
+                              justify-center
+                              shadow-sm
+                            `}
+                          >
+
+                            <span className="text-white font-bold text-xl sm:text-2xl">
+                              {initial}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                      </div>
+
+
+                      {/* Company Info */}
+
+                      <div className="flex-1 min-w-0 pt-1">
+
+                        <h2 className="font-bold text-gray-900 text-base sm:text-[17px] leading-tight tracking-tight">
+                          {company.name}
+                        </h2>
+
+
+                        {company.revenueStage && (
+
+                          <span
+                            className={`
+                              inline-block
+                              mt-2
+                              text-[10px]
+                              font-semibold
+                              px-2.5
+                              py-1
+                              rounded-full
+                              ${
+                                stageColors[
+                                  company.revenueStage
+                                ] ??
+                                "bg-gray-100 text-gray-600"
+                              }
+                            `}
+                          >
+                            {company.revenueStage}
+                          </span>
+
+                        )}
+
+                      </div>
+
+                    </div>
+
+
+                    {/* ----------------------------------
+                        DESCRIPTION
+                    ---------------------------------- */}
+
+                    <div className="px-6 sm:px-7 pb-7 flex-1">
+
+                      <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed">
+                        {company.description}
+                      </p>
+
+                    </div>
+
+
+                    {/* ----------------------------------
+                        CARD FOOTER
+                    ---------------------------------- */}
+
+                    <div className="mt-auto px-6 sm:px-7 py-5 border-t border-gray-100 bg-gray-50/70">
+
+                      {company.website ? (
+
+                        <a
+                          href={company.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            text-sm
+                            font-semibold
+                            text-gray-700
+                            hover:text-emerald-600
+                            transition-colors
+                          "
+                        >
+
+                          Visit Website
+
+                          <ExternalLink
+                            size={15}
+                            className="
+                              transition-transform
+                              group-hover:translate-x-0.5
+                            "
                           />
-                        </div>
+
+                        </a>
+
                       ) : (
-                        <div
-                          className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center shadow-sm`}
-                        >
-                          <span className="text-white font-bold text-2xl">{initial}</span>
-                        </div>
-                      )}
-                    </div>
 
-                    <div className="flex-1 min-w-0 pt-1">
-                      <h2 className="font-bold text-gray-900 text-[17px] leading-tight tracking-tight">
-                        {company.name}
-                      </h2>
-                      {company.revenueStage && (
-                        <span
-                          className={`inline-block mt-2 text-[10px] font-semibold px-3 py-1 rounded-full 
-                            ${stageColors[company.revenueStage] ?? "bg-gray-100 text-gray-600"}`}
-                        >
-                          {company.revenueStage}
+                        <span className="text-xs text-gray-400 italic">
+                          Website coming soon
                         </span>
+
                       )}
+
                     </div>
-                  </div>
 
-                  <div className="px-8 pb-8 flex-1">
-                    <p className="text-[15px] text-gray-600 leading-relaxed">{company.description}</p>
-                  </div>
+                  </article>
 
-                  <div className="mt-auto px-8 py-6 border-t border-gray-100 bg-gray-50/70">
-                    {company.website ? (
-                      <a
-                        href={company.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 
-                                   hover:text-emerald-600 group-hover:text-emerald-600 transition-colors"
-                      >
-                        Visit Website
-                        <ExternalLink size={15} className="group-hover:translate-x-0.5 transition-transform" />
-                      </a>
-                    ) : (
-                      <span className="text-xs text-gray-400 italic">Website coming soon</span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+
+              })}
+
+            </div>
+
+          ) : (
+
+            /* Empty State */
+
+            <div className="border border-dashed border-gray-200 rounded-2xl py-16 text-center">
+
+              <p className="text-sm font-medium text-gray-500">
+                No companies available at the moment.
+              </p>
+
+            </div>
+
+          )}
+
         </section>
 
-        {/* Partnership CTA */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16">
-          <div className="bg-gray-900 text-white py-16 px-8 md:px-16 rounded-3xl">
-            <div className="text-center">
-              <p className="text-base font-semibold tracking-widest text-emerald-400 uppercase mb-3">
+
+        {/* ==================================================
+            CTA
+        ================================================== */}
+
+        <section className="pb-16 sm:pb-20 lg:pb-24">
+
+          <div className="bg-gray-900 text-white rounded-2xl sm:rounded-3xl overflow-hidden">
+
+            <div className="px-6 py-14 sm:px-10 sm:py-16 md:px-16 md:py-20 text-center">
+
+              <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-emerald-400 uppercase mb-4">
                 {ctaEyebrow}
               </p>
-              <h2 className="text-3xl font-bold mb-4">{ctaTitle}</h2>
-              <p className="text-gray-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+                {ctaTitle}
+              </h2>
+
+              <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
                 {ctaDescription}
               </p>
+
+
+              {/* Buttons */}
+
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
+
                 <Link
                   href={ctaBtnLink}
-                  className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="
+                    inline-flex
+                    items-center
+                    justify-center
+                    gap-2
+                    bg-white
+                    text-gray-900
+                    font-semibold
+                    text-sm
+                    px-6
+                    py-3
+                    rounded-lg
+                    hover:bg-gray-100
+                    transition-colors
+                  "
                 >
                   {ctaBtnText}
+
                   <ArrowRight size={16} />
                 </Link>
+
+
                 <Link
                   href={ctaSecondaryLink}
-                  className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-white/10 transition-colors"
+                  className="
+                    inline-flex
+                    items-center
+                    justify-center
+                    gap-2
+                    border
+                    border-white/20
+                    text-white
+                    font-semibold
+                    text-sm
+                    px-6
+                    py-3
+                    rounded-lg
+                    hover:bg-white/10
+                    transition-colors
+                  "
                 >
                   {ctaSecondaryText}
                 </Link>
+
               </div>
+
             </div>
+
           </div>
+
         </section>
+
       </Container>
+
     </main>
   );
 }
