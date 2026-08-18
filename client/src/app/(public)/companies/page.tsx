@@ -15,7 +15,7 @@ const stageColors: Record<string, string> = {
 
 export default async function CompaniesPage() {
   const [pageRes, companiesRes] = await Promise.all([
-    getPageBySlug("companies-page"),
+    getPageBySlug("company-page"),
     getAllCompanies({ isVisible: true, limit: 50 }).catch(() => ({ data: [] })),
   ]);
 
