@@ -38,58 +38,60 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.25 } }}
-      className="group relative"
+      whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+      className="group relative h-full"
     >
-      {/* 🔥 Back Glow - Orange + Amber */}
+      {/* Back Glow */}
       <div
         className="
           pointer-events-none
           absolute
-          -inset-[3px]
+          -inset-[2px]
           -z-10
-          rounded-[26px]
+          rounded-[22px]
           opacity-0
           transition-all
-          duration-500
+          duration-400
           group-hover:opacity-100
           bg-gradient-to-r
           from-[#F97316]
           via-[#FB923C]
           to-[#FBBF24]
-          blur-xl
-          group-hover:blur-2xl
+          blur-lg
+          group-hover:blur-xl
         "
       />
 
       {/* Card */}
       <div
-        className={`relative flex flex-col overflow-hidden rounded-3xl border bg-gray-50 p-7 transition-all duration-300
+        className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-5 transition-all duration-300
           ${
             company.isVisible
-              ? "border-gray-200 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,.45),0_0_50px_rgba(251,146,60,.30)]"
+              ? "border-gray-200 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,.4),0_0_40px_rgba(251,146,60,.25)]"
               : "border-gray-200 opacity-50 grayscale"
           }`}
       >
-        {/* Top */}
-        <div className="relative flex items-start justify-between">
-<div className="flex h-38 w-38 items-center justify-center overflow-hidden">
-  {company.logo ? (
-    <img
-      src={company.logo}
-      alt={company.name}
-      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
-    />
-  ) : (
-    <span className="text-lg font-bold text-gray-400">
-      {company.name.charAt(0)}
-    </span>
-  )}
-</div>
-          <div className="flex items-center gap-2">
+        {/* Top Row: Logo + Badges */}
+        <div className="flex items-start justify-between gap-3">
+          {/* ✅ Compact logo — no extra space */}
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-50 ring-1 ring-gray-100">
+            {company.logo ? (
+              <img
+                src={company.logo}
+                alt={company.name}
+                className="h-7 w-7 object-contain"
+              />
+            ) : (
+              <span className="text-sm font-bold text-gray-400">
+                {company.name.charAt(0)}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5">
             {company.revenueStage && (
               <span
-                className={`rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide ${
+                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide ${
                   stageColors[company.revenueStage] ??
                   "border border-gray-200 bg-gray-50 text-gray-600"
                 }`}
@@ -98,36 +100,36 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
               </span>
             )}
 
-            <div className="rounded-full border border-gray-100 bg-white p-1.5 shadow-sm">
+            <div className="rounded-full border border-gray-100 bg-white p-1 shadow-sm">
               {company.isVisible ? (
-                <Eye size={14} className="text-emerald-500" />
+                <Eye size={12} className="text-emerald-500" />
               ) : (
-                <EyeOff size={14} className="text-gray-300" />
+                <EyeOff size={12} className="text-gray-300" />
               )}
             </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="relative mt-7 flex-1">
-          <h3 className="text-xl font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
+        {/* Content — NO flex-1, NO min-h */}
+        <div className="mt-3">
+          <h3 className="text-base font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
             {company.name}
           </h3>
 
-          <p className="mt-3 min-h-[52px] text-sm leading-relaxed text-gray-500 line-clamp-2">
+          <p className="mt-1 text-[13px] leading-relaxed text-gray-500 line-clamp-2">
             {company.description}
           </p>
         </div>
 
-        {/* Footer */}
-        <div className="relative mt-8 flex items-center justify-between border-t border-gray-200 pt-5">
+        {/* Footer — mt-auto pushes to bottom, but content doesn't stretch */}
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3">
           <Link
             href={`/companies/${company.id}`}
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 transition-all hover:text-orange-600"
+            className="inline-flex items-center gap-1 text-[13px] font-medium text-gray-700 transition-all hover:text-orange-600"
           >
             View Details
             <ArrowRight
-              size={15}
+              size={13}
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
           </Link>
@@ -137,10 +139,10 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
               href={company.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-orange-600"
+              className="inline-flex items-center gap-1 text-[13px] text-gray-500 transition-colors hover:text-orange-600"
             >
               Website
-              <ExternalLink size={14} />
+              <ExternalLink size={12} />
             </a>
           )}
         </div>
