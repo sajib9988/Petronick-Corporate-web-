@@ -8,6 +8,7 @@ import {
   Globe2,
 } from "lucide-react";
 import Link from "next/link";
+import CompanyCard from "@/components/admin/card/CompanyCard";
 
 export const dynamic = "force-dynamic";
 
@@ -268,186 +269,15 @@ export default async function CompaniesPage() {
 
           {companies.length > 0 ? (
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-              {companies.map((company: any) => {
-
-                const initial =
-                  company.initial ??
-                  company.name
-                    ?.split(" ")
-                    .map((w: string) => w[0])
-                    .join("")
-                    .slice(0, 2)
-                    .toUpperCase();
-
-                return (
-
-                  <article
-                    key={company.id}
-                    className="
-                      group
-                      flex
-                      h-full
-                      flex-col
-                      overflow-hidden
-                      rounded-2xl
-                      border
-                      border-gray-200
-                      bg-white
-                      shadow-[0_2px_8px_rgba(15,23,42,0.04)]
-                      transition-all
-                      duration-300
-                      hover:-translate-y-1
-                      hover:border-gray-300
-                      hover:shadow-[0_12px_30px_rgba(15,23,42,0.08)]
-                    "
-                  >
-
-                    {/* --------------------------------------
-                        TOP COLOR STRIP
-                    -------------------------------------- */}
-
-                    <div className="h-1 w-full bg-gradient-to-r from-emerald-500 to-teal-400" />
-
-
-                    {/* --------------------------------------
-                        HEADER
-                    -------------------------------------- */}
-
-                    <div className="p-7 pb-5">
-
-                      <div className="flex items-start gap-4">
-
-                        {/* Logo */}
-
-                        {company.logo ? (
-
-                          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-[#F8FAFC]">
-
-                            <img
-                              src={company.logo}
-                              alt={company.name}
-                              className="h-full w-full object-contain p-2.5"
-                            />
-
-                          </div>
-
-                        ) : (
-
-                          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl bg-[#111827]">
-
-                            <span className="text-xl font-bold text-white">
-                              {initial}
-                            </span>
-
-                          </div>
-
-                        )}
-
-
-                        {/* Name */}
-
-                        <div className="min-w-0 flex-1 pt-1">
-
-                          <h3 className="text-[17px] font-bold leading-tight text-[#111827]">
-                            {company.name}
-                          </h3>
-
-                          {company.revenueStage && (
-
-                            <span
-                              className={`
-                                mt-2
-                                inline-flex
-                                items-center
-                                rounded-full
-                                px-2.5
-                                py-1
-                                text-[10px]
-                                font-bold
-                                ${
-                                  stageColors[
-                                    company.revenueStage
-                                  ] ??
-                                  "border border-gray-200 bg-gray-50 text-gray-600"
-                                }
-                              `}
-                            >
-                              {company.revenueStage}
-                            </span>
-
-                          )}
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-                    {/* --------------------------------------
-                        DESCRIPTION
-                    -------------------------------------- */}
-
-                    <div className="flex-1 px-7 pb-7">
-
-                      <p className="text-sm leading-7 text-[#64748B]">
-                        {company.description}
-                      </p>
-
-                    </div>
-
-
-                    {/* --------------------------------------
-                        FOOTER
-                    -------------------------------------- */}
-
-                    <div className="border-t border-gray-100 bg-[#F8FAFC] px-7 py-5">
-
-                      {company.website ? (
-
-                        <a
-                          href={company.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            text-sm
-                            font-semibold
-                            text-[#475569]
-                            transition-colors
-                            hover:text-emerald-600
-                          "
-                        >
-
-                          <Globe2 size={15} />
-
-                          Visit Website
-
-                          <ExternalLink size={14} />
-
-                        </a>
-
-                      ) : (
-
-                        <span className="text-xs italic text-gray-400">
-                          Website coming soon
-                        </span>
-
-                      )}
-
-                    </div>
-
-                  </article>
-
-                );
-
-              })}
-
-            </div>
+         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+    {companies.map((company: any, idx: number) => (
+      <CompanyCard 
+        key={company.id} 
+        company={company} 
+        index={idx}  // ✅ Animation stagger er jonno
+      />
+    ))}
+  </div>
 
           ) : (
 
