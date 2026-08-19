@@ -74,7 +74,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         {/* Top Row: Logo + Badges */}
         <div className="flex items-start justify-between gap-3">
           {/* ✅ Logo: Bigger container + image fills it */}
-          <div className="flex h-35 w-35 shrink-0 items-center justify-center overflow-hidden rounded-xl  ring-1 ">
+          <div className="flex h-35 w-35 shrink-0 items-center justify-center overflow-hidden rounded-xl">
             {company.logo ? (
               <img
                 src={company.logo}
