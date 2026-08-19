@@ -73,7 +73,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       >
         {/* Top */}
         <div className="relative flex items-start justify-between">
-         <div className="flex h-28 w-28 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+         <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
   {company.logo ? (
     <img
       src={company.logo}
