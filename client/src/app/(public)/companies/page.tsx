@@ -274,7 +274,7 @@ export default async function CompaniesPage() {
       <CompanyCard 
         key={company.id} 
         company={company} 
-        index={idx}  // ✅ Animation stagger er jonno
+        index={idx}  
       />
     ))}
   </div>
