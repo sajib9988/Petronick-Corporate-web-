@@ -73,19 +73,19 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       >
         {/* Top */}
         <div className="relative flex items-start justify-between">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm">
-            {company.logo ? (
-              <img
-                src={company.logo}
-                alt={company.name}
-                className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
-              />
-            ) : (
-              <span className="text-lg font-bold text-gray-400">
-                {company.name.charAt(0)}
-              </span>
-            )}
-          </div>
+         <div className="flex h-28 w-28 items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+  {company.logo ? (
+    <img
+      src={company.logo}
+      alt={company.name}
+      className="h-[90%] w-[90%] object-contain transition-transform duration-300 group-hover:scale-110"
+    />
+  ) : (
+    <span className="text-lg font-bold text-gray-400">
+      {company.name.charAt(0)}
+    </span>
+  )}
+</div>
 
           <div className="flex items-center gap-2">
             {company.revenueStage && (
