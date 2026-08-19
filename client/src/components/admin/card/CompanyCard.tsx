@@ -64,16 +64,15 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
       {/* Card */}
       <div
-        className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-6 transition-all duration-300
+        className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-5 transition-all duration-300
           ${
             company.isVisible
               ? "border-gray-200 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,.4),0_0_40px_rgba(251,146,60,.25)]"
               : "border-gray-200 opacity-50 grayscale"
           }`}
       >
-        {/* Top Row: Logo + Badges */}
+        {/* Top Row: Logo (h-35 w-35) + Badges */}
         <div className="flex items-start justify-between gap-3">
-          {/* ✅ Logo: Bigger container + image fills it */}
           <div className="flex h-35 w-35 shrink-0 items-center justify-center overflow-hidden rounded-xl">
             {company.logo ? (
               <img
@@ -110,20 +109,19 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="mt-4">
+        {/* Content — tight spacing */}
+        <div className="mt-2">
           <h3 className="text-base font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
             {company.name}
           </h3>
 
-          {/* ✅ Fixed height for description so all cards align */}
-          <p className="mt-2 text-[13px] leading-relaxed text-gray-500 line-clamp-2 min-h-[38px]">
+          <p className="mt-1.5 text-[13px] leading-relaxed text-gray-500 line-clamp-2">
             {company.description}
           </p>
         </div>
 
-        {/* Footer */}
-        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
+        {/* Footer — compact */}
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3">
           <Link
             href={`/companies/${company.id}`}
             className="inline-flex items-center gap-1 text-[13px] font-medium text-gray-700 transition-all hover:text-orange-600"
