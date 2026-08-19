@@ -64,7 +64,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
       {/* Card */}
       <div
-        className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-5 transition-all duration-300
+        className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white p-6 transition-all duration-300
           ${
             company.isVisible
               ? "border-gray-200 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,.4),0_0_40px_rgba(251,146,60,.25)]"
@@ -73,16 +73,16 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       >
         {/* Top Row: Logo + Badges */}
         <div className="flex items-start justify-between gap-3">
-          {/* ✅ Compact logo — no extra space */}
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-50 ring-1 ring-gray-100">
+          {/* ✅ Logo: Bigger container + image fills it */}
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gray-50 ring-1 ring-gray-100">
             {company.logo ? (
               <img
                 src={company.logo}
                 alt={company.name}
-                className="h-7 w-7 object-contain"
+                className="h-full w-full object-contain p-1.5"
               />
             ) : (
-              <span className="text-sm font-bold text-gray-400">
+              <span className="text-base font-bold text-gray-400">
                 {company.name.charAt(0)}
               </span>
             )}
@@ -110,19 +110,20 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </div>
         </div>
 
-        {/* Content — NO flex-1, NO min-h */}
-        <div className="mt-3">
+        {/* Content */}
+        <div className="mt-4">
           <h3 className="text-base font-bold tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
             {company.name}
           </h3>
 
-          <p className="mt-1 text-[13px] leading-relaxed text-gray-500 line-clamp-2">
+          {/* ✅ Fixed height for description so all cards align */}
+          <p className="mt-2 text-[13px] leading-relaxed text-gray-500 line-clamp-2 min-h-[38px]">
             {company.description}
           </p>
         </div>
 
-        {/* Footer — mt-auto pushes to bottom, but content doesn't stretch */}
-        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3">
+        {/* Footer */}
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
           <Link
             href={`/companies/${company.id}`}
             className="inline-flex items-center gap-1 text-[13px] font-medium text-gray-700 transition-all hover:text-orange-600"
