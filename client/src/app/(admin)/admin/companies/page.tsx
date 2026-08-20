@@ -65,7 +65,7 @@ export default function CompaniesPage() {
   const fetchCompanies = useCallback(async () => {
     setIsLoading(true);
     try {
-      const result = await getAllCompanies({ search, limit: 100 });
+      const result = await getAllCompanies({ search, limit: 100, revalidate: false });
       setCompanies(result?.data ?? []);
     } catch {
       setCompanies([]);

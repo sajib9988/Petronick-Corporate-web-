@@ -15,7 +15,7 @@ import { getAllContacts } from "@/service/contact";
 
 export default async function AdminDashboardPage() {
   const [companies, contacts, agents] = await Promise.all([
-    getAllCompanies(),
+    getAllCompanies({ revalidate: false }),
     getAllContacts(),
     getAllAgents(),
   ]);

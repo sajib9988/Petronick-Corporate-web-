@@ -1,7 +1,7 @@
-
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL 
 
@@ -32,6 +32,10 @@ export const getAllCompanies = async (params?: {
   limit?: number;
   search?: string;
   isVisible?: boolean;
+  // pass `revalidate: false` for admin/dashboard views that need fresh data
+  // (skips the Data Cache entirely). Public pages should omit this and keep
+  // the default 60s ISR caching.
+  revalidate?: number | false;
 }) => {
   try {
     const query = new URLSearchParams();
@@ -40,9 +44,12 @@ export const getAllCompanies = async (params?: {
     if (params?.search) query.set("search", params.search);
     if (params?.isVisible !== undefined) query.set("isVisible", String(params.isVisible));
 
-    const res = await fetch(`${BASE_URL}/company?${query}`, {
-      next: { revalidate: 60 }, 
-    });
+    const fetchOptions: RequestInit =
+      params?.revalidate === false
+        ? { cache: "no-store" }
+        : { next: { revalidate: params?.revalidate ?? 60 } };
+
+    const res = await fetch(`${BASE_URL}/company?${query}`, fetchOptions);
 
     return await safeJson(res);
   } catch (err) {
@@ -51,11 +58,17 @@ export const getAllCompanies = async (params?: {
   }
 };
 
-export const getCompanyById = async (id: string) => {
+export const getCompanyById = async (
+  id: string,
+  options?: { revalidate?: number | false },
+) => {
   try {
-    const res = await fetch(`${BASE_URL}/company/${id}`, {
-      next: { revalidate: 60 }, 
-    });
+    const fetchOptions: RequestInit =
+      options?.revalidate === false
+        ? { cache: "no-store" }
+        : { next: { revalidate: options?.revalidate ?? 60 } };
+
+    const res = await fetch(`${BASE_URL}/company/${id}`, fetchOptions);
 
     return await safeJson(res);
   } catch (err) {
@@ -71,7 +84,16 @@ export const createCompany = async (formData: FormData) => {
       headers: await getAuthHeaders(),
       body: formData, 
     });
-    return await safeJson(res);
+    const result = await safeJson(res);
+
+    if (result?.success) {
+      // Bust the ISR cache so public pages show the new company immediately
+      // instead of waiting up to 60s.
+      revalidatePath("/companies");
+      revalidatePath("/");
+    }
+
+    return result;
   } catch (err) {
     console.error("Error creating company:", err);
     return { success: false, message: "Failed to create company" };
@@ -86,7 +108,17 @@ export const updateCompany = async (id: string, formData: FormData) => {
       headers: await getAuthHeaders(),
       body: formData,
     });
-    return await safeJson(res);
+    const result = await safeJson(res);
+
+    if (result?.success) {
+      // Bust cache for the list, the home page grid, and this company's own
+      // detail page so a logo/description change shows up right away.
+      revalidatePath("/companies");
+      revalidatePath(`/companies/${id}`);
+      revalidatePath("/");
+    }
+
+    return result;
   } catch (err) {
     console.error("Error updating company:", err);
     return { success: false, message: "Failed to update company" };
@@ -100,7 +132,15 @@ export const deleteCompany = async (id: string) => {
       headers: await getAuthHeaders(),
       
     });
-    return await safeJson(res);
+    const result = await safeJson(res);
+
+    if (result?.success) {
+      revalidatePath("/companies");
+      revalidatePath(`/companies/${id}`);
+      revalidatePath("/");
+    }
+
+    return result;
   } catch (err) {
     console.error("Error deleting company:", err);
     return { success: false, message: "Failed to delete company" };
