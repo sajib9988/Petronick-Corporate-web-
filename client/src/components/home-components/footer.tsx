@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
@@ -8,6 +10,7 @@ import {
   FaYoutube,
   FaXTwitter,
 } from "react-icons/fa6";
+import { motion, type Variants } from "framer-motion";
 
 import { Container } from "../Container";
 
@@ -67,6 +70,66 @@ const socialLinks = [
   },
 ];
 
+/* =========================================================
+   Animation Variants
+========================================================= */
+
+const fadeUp: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+const linkColumn: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 25,
+  },
+
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      delay,
+      ease: "easeOut",
+    },
+  }),
+};
+
+const socialItem: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 15,
+    scale: 0.9,
+  },
+
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.4,
+      delay: index * 0.08,
+      ease: "easeOut",
+    },
+  }),
+};
+
+/* =========================================================
+   Footer
+========================================================= */
+
 export default function Footer() {
   return (
     <footer
@@ -81,25 +144,53 @@ export default function Footer() {
         )`,
       }}
     >
-      {/* ================= Main Footer ================= */}
+      {/* =====================================================
+          Main Footer
+      ===================================================== */}
+
       <Container>
         <div className="py-8">
+          {/* =================================================
+              Main Content
+          ================================================= */}
 
-          {/* ================= Main Content ================= */}
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1.4fr_1fr]">
+            {/* =================================================
+                Brand
+            ================================================= */}
 
-            {/* ================= Brand ================= */}
-            <div>
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+            >
+              {/* Logo */}
+
               <Link href="/" className="inline-block">
-                <Image
-                  src="/Word Mark.png"
-                  alt="Petronick Logo"
-                  width={105}
-                  height={105}
-                  priority
-                  className="h-auto w-[105px] object-contain"
-                />
+                <motion.div
+                  whileHover={{
+                    scale: 1.04,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                >
+                  <Image
+                    src="/Word Mark.png"
+                    alt="Petronick Logo"
+                    width={105}
+                    height={105}
+                    priority
+                    className="h-auto w-[105px] object-contain"
+                  />
+                </motion.div>
               </Link>
+
+              {/* Description */}
 
               <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 text-[#526174]">
                 A vertically integrated holding company operating multiple
@@ -108,6 +199,7 @@ export default function Footer() {
               </p>
 
               {/* Apply as Agent */}
+
               <Link
                 href="/promotion-agent"
                 className="
@@ -138,10 +230,22 @@ export default function Footer() {
                   "
                 />
               </Link>
-            </div>
+            </motion.div>
 
-            {/* ================= Company ================= */}
-            <div>
+            {/* =================================================
+                Company
+            ================================================= */}
+
+            <motion.div
+              variants={linkColumn}
+              custom={0.1}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+            >
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
                 Company
               </h3>
@@ -165,10 +269,22 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
 
-            {/* ================= Opportunities ================= */}
-            <div>
+            {/* =================================================
+                Opportunities
+            ================================================= */}
+
+            <motion.div
+              variants={linkColumn}
+              custom={0.2}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+            >
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
                 Opportunities
               </h3>
@@ -192,10 +308,22 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
 
-            {/* ================= Legal ================= */}
-            <div>
+            {/* =================================================
+                Legal
+            ================================================= */}
+
+            <motion.div
+              variants={linkColumn}
+              custom={0.3}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+            >
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
                 Legal
               </h3>
@@ -219,70 +347,128 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
 
-          {/* ================= Center Social Links ================= */}
-          <div className="mt-7 flex flex-col items-center justify-center">
+          {/* =================================================
+              Social Links
+          ================================================= */}
+
+          <motion.div
+            className="mt-7 flex flex-col items-center justify-center"
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.35,
+              ease: "easeOut",
+            }}
+          >
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#526174]">
               Follow Us
             </p>
 
             <div className="flex items-center justify-center gap-2.5">
-              {socialLinks.map((social) => {
+              {socialLinks.map((social, index) => {
                 const Icon = social.icon;
 
                 return (
-                  <Link
+                  <motion.div
                     key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="
-                      group
-                      flex h-10 w-10 items-center justify-center
-                      rounded-full
-                      border border-white/40
-                      bg-white/20
-                      text-[#40556B]
-                      backdrop-blur-sm
-                      shadow-sm
-                      transition-all duration-300
-                      hover:-translate-y-1
-                      hover:border-white/60
-                      hover:bg-white/40
-                      hover:text-[#172B42]
-                      hover:shadow-md
-                    "
+                    variants={socialItem}
+                    custom={index}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{
+                      once: true,
+                    }}
+                    whileHover={{
+                      y: -5,
+                      scale: 1.08,
+                    }}
+                    transition={{
+                      duration: 0.25,
+                    }}
                   >
-                    <Icon
-                      size={17}
+                    <Link
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
                       className="
-                        transition-transform duration-300
-                        group-hover:scale-110
+                        group
+                        flex h-10 w-10 items-center justify-center
+                        rounded-full
+                        border border-white/40
+                        bg-white/20
+                        text-[#40556B]
+                        backdrop-blur-sm
+                        shadow-sm
+                        transition-all duration-300
+                        hover:border-white/60
+                        hover:bg-white/40
+                        hover:text-[#172B42]
+                        hover:shadow-md
                       "
-                    />
-                  </Link>
+                    >
+                      <Icon
+                        size={17}
+                        className="
+                          transition-transform duration-300
+                          group-hover:scale-110
+                        "
+                      />
+                    </Link>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
 
-      {/* ================= Bottom Bar ================= */}
-      <div className="border-t border-white/20">
+      {/* =====================================================
+          Bottom Bar
+      ===================================================== */}
+
+      <motion.div
+        className="border-t border-white/20"
+        initial={{
+          opacity: 0,
+        }}
+        whileInView={{
+          opacity: 1,
+        }}
+        viewport={{
+          once: true,
+          amount: 0.2,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.2,
+        }}
+      >
         <Container>
           <div className="flex flex-col items-center justify-between gap-3 py-4 sm:flex-row">
-
             {/* Copyright */}
+
             <p className="text-sm font-normal text-[#64748B]">
               © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
               All rights reserved.
             </p>
 
             {/* Legal Links */}
+
             <div className="flex items-center gap-4 text-sm text-white/65">
               <Link
                 href="/privacy"
@@ -300,10 +486,9 @@ export default function Footer() {
                 Terms of Use
               </Link>
             </div>
-
           </div>
         </Container>
-      </div>
+      </motion.div>
     </footer>
   );
 }
