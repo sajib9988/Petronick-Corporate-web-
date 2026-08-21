@@ -192,7 +192,7 @@ export default function Footer() {
 
               {/* Description */}
 
-              <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 text-[#526174]">
+              <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 text-[#405268]">
                 A vertically integrated holding company operating multiple
                 revenue-generating business units across digital, fulfillment,
                 advisory, and e-commerce sectors.
@@ -204,16 +204,21 @@ export default function Footer() {
                 href="/promotion-agent"
                 className="
                   group
-                  inline-flex items-center gap-2
+                  inline-flex
+                  items-center
+                  gap-2
                   rounded-full
-                  border border-amber-300/50
+                  border
+                  border-amber-300/50
                   bg-amber-400
-                  px-5 py-2.5
+                  px-5
+                  py-2.5
                   text-[14px]
                   font-semibold
                   text-slate-900
                   shadow-sm
-                  transition-all duration-300
+                  transition-all
+                  duration-300
                   hover:-translate-y-0.5
                   hover:bg-amber-300
                   hover:shadow-lg
@@ -225,7 +230,8 @@ export default function Footer() {
                 <ArrowRight
                   size={15}
                   className="
-                    transition-transform duration-300
+                    transition-transform
+                    duration-300
                     group-hover:translate-x-1
                   "
                 />
@@ -256,15 +262,38 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="
+                        group
+                        relative
+                        inline-block
                         text-[15px]
                         font-normal
-                        text-[#526174]
+                        text-[#405268]
                         transition-colors
                         duration-300
                         hover:text-[#26364A]
                       "
                     >
                       {link.label}
+
+                      {/* Animated Underline */}
+
+                      <span
+                        className="
+                          absolute
+                          -bottom-1
+                          left-0
+                          h-[2px]
+                          w-full
+                          origin-left
+                          scale-x-0
+                          rounded-full
+                          bg-[#26364A]
+                          transition-transform
+                          duration-300
+                          ease-out
+                          group-hover:scale-x-100
+                        "
+                      />
                     </Link>
                   </li>
                 ))}
@@ -295,15 +324,38 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="
+                        group
+                        relative
+                        inline-block
                         text-[15px]
                         font-normal
-                        text-[#526174]
+                        text-[#405268]
                         transition-colors
                         duration-300
                         hover:text-[#26364A]
                       "
                     >
                       {link.label}
+
+                      {/* Animated Underline */}
+
+                      <span
+                        className="
+                          absolute
+                          -bottom-1
+                          left-0
+                          h-[2px]
+                          w-full
+                          origin-left
+                          scale-x-0
+                          rounded-full
+                          bg-[#26364A]
+                          transition-transform
+                          duration-300
+                          ease-out
+                          group-hover:scale-x-100
+                        "
+                      />
                     </Link>
                   </li>
                 ))}
@@ -324,7 +376,7 @@ export default function Footer() {
                 amount: 0.2,
               }}
             >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-white/80">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-white/90">
                 Legal
               </h3>
 
@@ -334,15 +386,38 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="
+                        group
+                        relative
+                        inline-block
                         text-[15px]
                         font-normal
-                        text-white/65
+                        text-white/75
                         transition-colors
                         duration-300
-                        hover:text-white/90
+                        hover:text-white
                       "
                     >
                       {link.label}
+
+                      {/* Animated Underline */}
+
+                      <span
+                        className="
+                          absolute
+                          -bottom-1
+                          left-0
+                          h-[2px]
+                          w-full
+                          origin-left
+                          scale-x-0
+                          rounded-full
+                          bg-white
+                          transition-transform
+                          duration-300
+                          ease-out
+                          group-hover:scale-x-100
+                        "
+                      />
                     </Link>
                   </li>
                 ))}
@@ -374,7 +449,7 @@ export default function Footer() {
               ease: "easeOut",
             }}
           >
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#526174]">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#405268]">
               Follow Us
             </p>
 
@@ -407,14 +482,20 @@ export default function Footer() {
                       aria-label={social.label}
                       className="
                         group
-                        flex h-10 w-10 items-center justify-center
+                        flex
+                        h-10
+                        w-10
+                        items-center
+                        justify-center
                         rounded-full
-                        border border-white/40
+                        border
+                        border-white/40
                         bg-white/20
                         text-[#40556B]
                         backdrop-blur-sm
                         shadow-sm
-                        transition-all duration-300
+                        transition-all
+                        duration-300
                         hover:border-white/60
                         hover:bg-white/40
                         hover:text-[#172B42]
@@ -424,7 +505,8 @@ export default function Footer() {
                       <Icon
                         size={17}
                         className="
-                          transition-transform duration-300
+                          transition-transform
+                          duration-300
                           group-hover:scale-110
                         "
                       />
@@ -462,28 +544,74 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-between gap-3 py-4 sm:flex-row">
             {/* Copyright */}
 
-            <p className="text-sm font-normal text-[#64748B]">
+            <p className="text-sm font-normal text-white/70">
               © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
               All rights reserved.
             </p>
 
             {/* Legal Links */}
 
-            <div className="flex items-center gap-4 text-sm text-white/65">
+            <div className="flex items-center gap-4 text-sm text-white/70">
               <Link
                 href="/privacy"
-                className="transition-colors duration-300 hover:text-white/90"
+                className="
+                  group
+                  relative
+                  transition-colors
+                  duration-300
+                  hover:text-white
+                "
               >
                 Privacy Policy
+
+                <span
+                  className="
+                    absolute
+                    -bottom-1
+                    left-0
+                    h-[1px]
+                    w-full
+                    origin-left
+                    scale-x-0
+                    bg-white
+                    transition-transform
+                    duration-300
+                    ease-out
+                    group-hover:scale-x-100
+                  "
+                />
               </Link>
 
               <span className="text-white/40">·</span>
 
               <Link
                 href="/terms"
-                className="transition-colors duration-300 hover:text-white/90"
+                className="
+                  group
+                  relative
+                  transition-colors
+                  duration-300
+                  hover:text-white
+                "
               >
                 Terms of Use
+
+                <span
+                  className="
+                    absolute
+                    -bottom-1
+                    left-0
+                    h-[1px]
+                    w-full
+                    origin-left
+                    scale-x-0
+                    bg-white
+                    transition-transform
+                    duration-300
+                    ease-out
+                    group-hover:scale-x-100
+                  "
+                />
               </Link>
             </div>
           </div>
