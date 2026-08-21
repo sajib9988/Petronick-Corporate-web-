@@ -192,7 +192,7 @@ export default function Footer() {
 
               {/* Description */}
 
-              <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 text-[#405268]">
+              <p className="mt-1 mb-5 max-w-sm text-[15px] leading-7 font-medium text-[#1A2A4F]/85">
                 A vertically integrated holding company operating multiple
                 revenue-generating business units across digital, fulfillment,
                 advisory, and e-commerce sectors.
@@ -252,7 +252,7 @@ export default function Footer() {
                 amount: 0.2,
               }}
             >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.15em] text-[#1A2A4F]">
                 Company
               </h3>
 
@@ -266,16 +266,16 @@ export default function Footer() {
                         relative
                         inline-block
                         text-[15px]
-                        font-normal
-                        text-[#405268]
+                        font-medium
+                        text-[#1A2A4F]/80
                         transition-colors
                         duration-300
-                        hover:text-[#26364A]
+                        hover:text-[#1A2A4F]
                       "
                     >
                       {link.label}
 
-                      {/* Animated Underline */}
+                      {/* Animated Underline — left to right */}
 
                       <span
                         className="
@@ -283,15 +283,13 @@ export default function Footer() {
                           -bottom-1
                           left-0
                           h-[2px]
-                          w-full
-                          origin-left
-                          scale-x-0
+                          w-0
                           rounded-full
-                          bg-[#26364A]
-                          transition-transform
+                          bg-current
+                          transition-all
                           duration-300
                           ease-out
-                          group-hover:scale-x-100
+                          group-hover:w-full
                         "
                       />
                     </Link>
@@ -314,7 +312,7 @@ export default function Footer() {
                 amount: 0.2,
               }}
             >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#26364A]">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.15em] text-[#1A2A4F]">
                 Opportunities
               </h3>
 
@@ -328,16 +326,16 @@ export default function Footer() {
                         relative
                         inline-block
                         text-[15px]
-                        font-normal
-                        text-[#405268]
+                        font-medium
+                        text-[#1A2A4F]/80
                         transition-colors
                         duration-300
-                        hover:text-[#26364A]
+                        hover:text-[#1A2A4F]
                       "
                     >
                       {link.label}
 
-                      {/* Animated Underline */}
+                      {/* Animated Underline — left to right */}
 
                       <span
                         className="
@@ -345,15 +343,13 @@ export default function Footer() {
                           -bottom-1
                           left-0
                           h-[2px]
-                          w-full
-                          origin-left
-                          scale-x-0
+                          w-0
                           rounded-full
-                          bg-[#26364A]
-                          transition-transform
+                          bg-current
+                          transition-all
                           duration-300
                           ease-out
-                          group-hover:scale-x-100
+                          group-hover:w-full
                         "
                       />
                     </Link>
@@ -376,7 +372,7 @@ export default function Footer() {
                 amount: 0.2,
               }}
             >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-white/90">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.15em] text-white">
                 Legal
               </h3>
 
@@ -390,8 +386,8 @@ export default function Footer() {
                         relative
                         inline-block
                         text-[15px]
-                        font-normal
-                        text-white/75
+                        font-medium
+                        text-white/80
                         transition-colors
                         duration-300
                         hover:text-white
@@ -399,7 +395,7 @@ export default function Footer() {
                     >
                       {link.label}
 
-                      {/* Animated Underline */}
+                      {/* Animated Underline — left to right */}
 
                       <span
                         className="
@@ -407,15 +403,13 @@ export default function Footer() {
                           -bottom-1
                           left-0
                           h-[2px]
-                          w-full
-                          origin-left
-                          scale-x-0
+                          w-0
                           rounded-full
-                          bg-white
-                          transition-transform
+                          bg-current
+                          transition-all
                           duration-300
                           ease-out
-                          group-hover:scale-x-100
+                          group-hover:w-full
                         "
                       />
                     </Link>
@@ -449,7 +443,7 @@ export default function Footer() {
               ease: "easeOut",
             }}
           >
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#405268]">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#1A2A4F]">
               Follow Us
             </p>
 
@@ -491,14 +485,14 @@ export default function Footer() {
                         border
                         border-white/40
                         bg-white/20
-                        text-[#40556B]
+                        text-[#1A2A4F]
                         backdrop-blur-sm
                         shadow-sm
                         transition-all
                         duration-300
                         hover:border-white/60
                         hover:bg-white/40
-                        hover:text-[#172B42]
+                        hover:text-[#0F1A30]
                         hover:shadow-md
                       "
                     >
@@ -544,14 +538,14 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-between gap-3 py-4 sm:flex-row">
             {/* Copyright */}
 
-            <p className="text-sm font-normal text-white/70">
+            <p className="text-sm font-medium text-white/80">
               © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
               All rights reserved.
             </p>
 
             {/* Legal Links */}
 
-            <div className="flex items-center gap-4 text-sm text-white/70">
+            <div className="flex items-center gap-4 text-sm font-medium text-white/80">
               <Link
                 href="/privacy"
                 className="
@@ -570,14 +564,12 @@ export default function Footer() {
                     -bottom-1
                     left-0
                     h-[1px]
-                    w-full
-                    origin-left
-                    scale-x-0
-                    bg-white
-                    transition-transform
+                    w-0
+                    bg-current
+                    transition-all
                     duration-300
                     ease-out
-                    group-hover:scale-x-100
+                    group-hover:w-full
                   "
                 />
               </Link>
@@ -602,14 +594,12 @@ export default function Footer() {
                     -bottom-1
                     left-0
                     h-[1px]
-                    w-full
-                    origin-left
-                    scale-x-0
-                    bg-white
-                    transition-transform
+                    w-0
+                    bg-current
+                    transition-all
                     duration-300
                     ease-out
-                    group-hover:scale-x-100
+                    group-hover:w-full
                   "
                 />
               </Link>
