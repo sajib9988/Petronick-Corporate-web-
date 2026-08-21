@@ -203,9 +203,13 @@ export default function CompaniesPage() {
             >
               {/* Top Banner/Action Row */}
               <div className="flex items-center justify-between p-5 pb-0">
-                <div className="w-14 h-14 rounded-xl border bg-white p-2 shadow-sm flex items-center justify-center overflow-hidden transition-transform group-hover:scale-110">
-                  <img src={company.logo} alt={company.name} className="w-full h-full object-contain" />
-                </div>
+              <div className="w-20 h-16 flex items-start justify-start overflow-hidden transition-transform group-hover:scale-110">
+  <img
+    src={company.logo}
+    alt={company.name}
+    className="w-full h-full object-contain object-left-top"
+  />
+</div>
                 
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {company.website && (
