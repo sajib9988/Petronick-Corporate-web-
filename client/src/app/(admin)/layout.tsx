@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { TooltipProvider } from "@/components/ui/tooltip"; // ✅ add this
+import { TooltipProvider } from "@/components/ui/tooltip";
 import AdminSidebar from "@/components/admin/admin-sidebar";
 import AdminHeader from "@/components/admin/admin-header";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function AdminLayout({
   children,
@@ -9,7 +17,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <TooltipProvider> {/* ✅ wrap here */}
+    <TooltipProvider>
       <SidebarProvider>
         <AdminSidebar />
         <SidebarInset>
