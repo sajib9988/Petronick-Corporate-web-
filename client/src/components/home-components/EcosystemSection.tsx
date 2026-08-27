@@ -23,6 +23,18 @@ type Company = {
   isVisible: boolean;
 };
 
+// Per-company name color rotation (readable on the dark directory-list cards)
+const NAME_COLORS = [
+  "text-amber-400",
+  "text-emerald-400",
+  "text-teal-400",
+  "text-orange-400",
+  "text-rose-400",
+  "text-violet-400",
+  "text-cyan-400",
+  "text-sky-400",
+];
+
 export default function EcosystemSection({ companies }: { companies: Company[] }) {
   const isMobile = useIsMobile();
   const [activeId, setActiveId] = useState<string | null>(companies[0]?.id ?? null);
@@ -106,7 +118,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
           </div>
         ) : (
           <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[480px] sm:h-[620px] overflow-y-auto">
-            {companies.map((company) => (
+            {companies.map((company, index) => (
               <button
                 key={company.id}
                 onClick={() => setActiveId(company.id)}
@@ -118,20 +130,24 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               >
                 <div className="flex items-center gap-4 min-w-0">
                   {company.logo ? (
-                    <div className="h-12 w-20 flex-shrink-0 flex items-center overflow-hidden">
+                    <div className="h-14 w-24 flex-shrink-0 flex items-center justify-center rounded-lg bg-white p-1.5 overflow-hidden">
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="h-full w-full object-contain object-left"
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
                   ) : (
-                    <span className="w-20 flex-shrink-0 text-lg font-bold text-slate-500">
+                    <div className="h-14 w-24 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-lg font-bold">
                       {company.name.charAt(0)}
-                    </span>
+                    </div>
                   )}
                   <div className="min-w-0">
-                    <p className="text-base font-semibold text-white truncate">
+                    <p
+                      className={`text-base font-semibold truncate ${
+                        NAME_COLORS[index % NAME_COLORS.length]
+                      }`}
+                    >
                       {company.name}
                     </p>
                     <p className="text-sm text-slate-400 leading-6 truncate mt-1">
@@ -159,15 +175,15 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
 
               <div className="flex items-center gap-3 mb-5">
                 {activeCompany.logo ? (
-                  <div className="h-14 w-24 flex-shrink-0 flex items-center overflow-hidden">
+                  <div className="h-16 w-28 flex-shrink-0 flex items-center justify-center rounded-xl bg-white p-2 overflow-hidden">
                     <img
                       src={activeCompany.logo}
                       alt={activeCompany.name}
-                      className="h-full w-full object-contain object-left"
+                      className="max-h-full max-w-full object-contain"
                     />
                   </div>
                 ) : (
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+                  <div className="h-16 w-28 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
                     {activeCompany.name.charAt(0)}
                   </div>
                 )}
