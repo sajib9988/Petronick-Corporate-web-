@@ -48,6 +48,18 @@ const COLOR_POOL = [
   "from-amber-400 to-amber-600",
 ];
 
+// Per-company name text color (readable on the white node card)
+const NAME_COLOR_POOL = [
+  "text-amber-700",
+  "text-emerald-700",
+  "text-teal-700",
+  "text-orange-700",
+  "text-rose-700",
+  "text-violet-700",
+  "text-cyan-700",
+  "text-slate-800",
+];
+
 function CenterNode({ data }: any) {
   const compact = !!data?.compact;
 
@@ -97,17 +109,17 @@ function SubsidiaryNode({ data }: any) {
   return (
     <div
       onClick={() => data.onClick(data.id)}
-      className={`rounded-xl border cursor-pointer transition-all duration-300 flex items-center bg-slate-900 ${
+      className={`rounded-xl border cursor-pointer transition-all duration-300 flex items-center bg-white ${
         compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3 w-64"
       } ${
         isSelected
-          ? "border-amber-400 ring-2 ring-amber-500/20 shadow-lg shadow-amber-500/10 scale-[1.03]"
-          : "border-slate-800 hover:border-slate-700 hover:bg-slate-800/80"
+          ? "border-amber-500 ring-2 ring-amber-500/30 shadow-lg shadow-amber-500/10 scale-[1.03]"
+          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
       }`}
     >
       {data.logo ? (
         <div
-          className={`rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden ${
+          className={`rounded-full bg-white border border-slate-200 shrink-0 flex items-center justify-center overflow-hidden ${
             compact ? "w-10 h-10 p-1" : "w-14 h-14 p-1"
           }`}
         >
@@ -127,11 +139,15 @@ function SubsidiaryNode({ data }: any) {
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <div className={`font-bold text-white truncate ${compact ? "text-sm" : "text-lg"}`}>
+        <div
+          className={`font-bold truncate ${data.nameColor || "text-slate-800"} ${
+            compact ? "text-sm" : "text-lg"
+          }`}
+        >
           {data.name}
         </div>
         {!compact && (
-          <div className="mt-0.5 text-sm text-slate-400 truncate leading-5">
+          <div className={`mt-0.5 text-sm truncate leading-5 opacity-70 ${data.nameColor || "text-slate-500"}`}>
             {data.sector}
           </div>
         )}
@@ -211,6 +227,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
           logo: company.logo || null,
           sector: company.revenueStage || "Business Unit",
           color: COLOR_POOL[index % COLOR_POOL.length],
+          nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
           icon: ICON_POOL[index % ICON_POOL.length],
           isActive: company.id === activeNodeId,
           onClick: onSelectNode,
