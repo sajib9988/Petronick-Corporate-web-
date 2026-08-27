@@ -59,16 +59,16 @@ function CenterNode({ data }: any) {
     >
       <div
         className={`mx-auto rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-md ${
-          compact ? "w-7 h-7 mb-1.5" : "w-11 h-11 mb-3"
+          compact ? "w-8 h-8 mb-1.5" : "w-16 h-16 mb-3"
         }`}
       >
-        <Building2 className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
+        <Building2 className={compact ? "w-4 h-4" : "w-8 h-8"} />
       </div>
       <div
         className={
           compact
-            ? "text-xs font-bold tracking-tight leading-tight"
-            : "text-2xl font-bold tracking-tight"
+            ? "text-sm font-bold tracking-tight leading-tight"
+            : "text-3xl font-bold tracking-tight"
         }
       >
         PETRONICK HOLDINGS
@@ -107,14 +107,14 @@ function SubsidiaryNode({ data }: any) {
     >
       {data.logo ? (
         <div
-          className={`rounded-lg bg-white shrink-0 flex items-center justify-center overflow-hidden ${
+          className={`shrink-0 flex items-center justify-center ${
             compact ? "w-6 h-6" : "w-11 h-11"
           }`}
         >
           <img
             src={data.logo}
             alt={data.name}
-            className="w-full h-full object-contain p-1"
+            className="w-full h-full object-contain"
           />
         </div>
       ) : (
@@ -244,9 +244,9 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         targetHandle,
         animated: isSelected,
         style: {
-          stroke: isSelected ? "#f59e0b" : "#334155",
-          strokeWidth: isSelected ? 3 : 1.5,
-          opacity: isSelected ? 1 : 0.6,
+          stroke: "#f59e0b",
+          strokeWidth: isSelected ? 3 : 1.75,
+          opacity: isSelected ? 1 : 0.55,
         },
       };
       return edge;
@@ -308,7 +308,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
           <span>Active Connected Synergy</span>
         </div>
         <div className="flex items-center gap-2 text-slate-400">
-          <span className="w-2 h-0.5 bg-slate-700 flex-shrink-0" />
+          <span className="w-2 h-0.5 bg-amber-500/50 flex-shrink-0" />
           <span>General Corporate Linkage</span>
         </div>
       </div>

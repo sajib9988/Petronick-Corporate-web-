@@ -144,11 +144,11 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
 
               <div className="flex items-center gap-3 mb-5">
                 {activeCompany.logo ? (
-                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
                     <img
                       src={activeCompany.logo}
                       alt={activeCompany.name}
-                      className="w-full h-full object-contain p-1.5"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ) : (
