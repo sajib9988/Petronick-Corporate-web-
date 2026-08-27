@@ -105,13 +105,27 @@ function SubsidiaryNode({ data }: any) {
           : "border-slate-800 hover:border-slate-700 hover:bg-slate-800/80"
       }`}
     >
-      <div
-        className={`rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-          compact ? "p-1.5" : "p-3"
-        }`}
-      >
-        <IconComponent className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
-      </div>
+      {data.logo ? (
+        <div
+          className={`rounded-lg bg-white shrink-0 flex items-center justify-center overflow-hidden ${
+            compact ? "w-6 h-6" : "w-11 h-11"
+          }`}
+        >
+          <img
+            src={data.logo}
+            alt={data.name}
+            className="w-full h-full object-contain p-1"
+          />
+        </div>
+      ) : (
+        <div
+          className={`rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
+            compact ? "p-1.5" : "p-3"
+          }`}
+        >
+          <IconComponent className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
+        </div>
+      )}
       <div className="min-w-0 flex-1">
         <div className={`font-semibold text-white truncate ${compact ? "text-[11px]" : "text-sm"}`}>
           {data.name}
@@ -194,6 +208,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         data: {
           id: company.id,
           name: company.name,
+          logo: company.logo || null,
           sector: company.revenueStage || "Business Unit",
           color: COLOR_POOL[index % COLOR_POOL.length],
           icon: ICON_POOL[index % ICON_POOL.length],

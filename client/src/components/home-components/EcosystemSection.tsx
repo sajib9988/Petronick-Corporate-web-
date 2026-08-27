@@ -143,9 +143,19 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               </p>
 
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
-                  {activeCompany.name.charAt(0)}
-                </div>
+                {activeCompany.logo ? (
+                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <img
+                      src={activeCompany.logo}
+                      alt={activeCompany.name}
+                      className="w-full h-full object-contain p-1.5"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                    {activeCompany.name.charAt(0)}
+                  </div>
+                )}
                 <div className="min-w-0">
                   <h3 className="text-2xl font-bold text-white truncate">
                     {activeCompany.name}
