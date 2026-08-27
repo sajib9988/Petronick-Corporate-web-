@@ -98,7 +98,7 @@ function SubsidiaryNode({ data }: any) {
     <div
       onClick={() => data.onClick(data.id)}
       className={`rounded-xl border cursor-pointer transition-all duration-300 flex items-center bg-slate-900 ${
-        compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3.5 w-72"
+        compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3 w-64"
       } ${
         isSelected
           ? "border-amber-400 ring-2 ring-amber-500/20 shadow-lg shadow-amber-500/10 scale-[1.03]"
@@ -108,7 +108,7 @@ function SubsidiaryNode({ data }: any) {
       {data.logo ? (
         <div
           className={`rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden ${
-            compact ? "w-10 h-10 p-1" : "w-16 h-16 p-1"
+            compact ? "w-10 h-10 p-1" : "w-14 h-14 p-1"
           }`}
         >
           <img
@@ -120,10 +120,10 @@ function SubsidiaryNode({ data }: any) {
       ) : (
         <div
           className={`rounded-full bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-            compact ? "w-10 h-10" : "w-16 h-16"
+            compact ? "w-10 h-10" : "w-14 h-14"
           }`}
         >
-          <IconComponent className={compact ? "w-4 h-4" : "w-7 h-7"} />
+          <IconComponent className={compact ? "w-4 h-4" : "w-6 h-6"} />
         </div>
       )}
       <div className="min-w-0 flex-1">
@@ -184,7 +184,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         centerY: 220,
       };
     }
-    return { radiusX: 450, radiusY: 300, centerX: 340, centerY: 300 };
+    return { radiusX: 470, radiusY: 300, centerX: 350, centerY: 300 };
   }, [containerWidth, compact]);
 
   const initialNodes = useMemo(() => {

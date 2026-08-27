@@ -105,48 +105,51 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             />
           </div>
         ) : (
-          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[480px] sm:h-[620px] overflow-y-auto">
-            {companies.map((company) => (
-              <button
-                key={company.id}
-                onClick={() => setActiveId(company.id)}
-                className={`w-full text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
-                  company.id === activeId
-                    ? "bg-slate-800 border-amber-500"
-                    : "bg-slate-900/40 border-slate-800 hover:border-slate-700"
-                }`}
-              >
-                <div className="flex items-center gap-4 min-w-0">
-                  {company.logo ? (
-                    <div className="w-14 h-14 rounded-full bg-white p-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      <img
-                        src={company.logo}
-                        alt={company.name}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
-                      {company.name.charAt(0)}
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <p className="text-base font-semibold text-white truncate">
-                      {company.name}
-                    </p>
-                    <p className="text-sm text-slate-400 leading-6 truncate mt-1">
-                      {company.description}
-                    </p>
-                  </div>
-                </div>
-                {company.revenueStage && (
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 flex-shrink-0">
-                    {company.revenueStage}
-                  </span>
-                )}
-              </button>
-            ))}
+       <div className="lg:col-span-7 xl:col-span-8 bg-white border border-slate-200 rounded-2xl p-5 space-y-2 h-[480px] sm:h-[620px] overflow-y-auto">
+  {companies.map((company) => (
+    <button
+      key={company.id}
+      onClick={() => setActiveId(company.id)}
+      className={`w-full text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between gap-3 ${
+        company.id === activeId
+          ? "bg-amber-50 border-amber-500 shadow-sm"
+          : "bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+      }`}
+    >
+      <div className="flex items-center gap-4 min-w-0">
+        {company.logo ? (
+          <div className="w-14 h-14 rounded-full bg-white border border-slate-200 p-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
+            <img
+              src={company.logo}
+              alt={company.name}
+              className="w-full h-full object-contain"
+            />
           </div>
+        ) : (
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+            {company.name.charAt(0)}
+          </div>
+        )}
+
+        <div className="min-w-0">
+          <p className="text-base font-semibold text-slate-900 truncate">
+            {company.name}
+          </p>
+
+          <p className="text-sm text-slate-500 leading-6 truncate mt-1">
+            {company.description}
+          </p>
+        </div>
+      </div>
+
+      {company.revenueStage && (
+        <span className="text-xs font-medium px-3 py-1 rounded-full bg-amber-100 text-amber-700 flex-shrink-0">
+          {company.revenueStage}
+        </span>
+      )}
+    </button>
+  ))}
+</div>
         )}
 
         {/* Right: Detail panel */}
@@ -167,12 +170,12 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                     />
                   </div>
                 ) : (
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
                     {activeCompany.name.charAt(0)}
                   </div>
                 )}
                 <div className="min-w-0">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white truncate">
+                  <h3 className="text-3xl font-bold text-white truncate">
                     {activeCompany.name}
                   </h3>
                   <p className="text-sm text-slate-400">
