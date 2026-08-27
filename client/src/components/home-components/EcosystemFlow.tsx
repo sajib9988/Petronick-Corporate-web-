@@ -98,7 +98,7 @@ function SubsidiaryNode({ data }: any) {
     <div
       onClick={() => data.onClick(data.id)}
       className={`rounded-xl border cursor-pointer transition-all duration-300 flex items-center bg-slate-900 ${
-        compact ? "p-2.5 gap-2 w-36" : "p-5 gap-3 w-64"
+        compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3.5 w-72"
       } ${
         isSelected
           ? "border-amber-400 ring-2 ring-amber-500/20 shadow-lg shadow-amber-500/10 scale-[1.03]"
@@ -108,7 +108,7 @@ function SubsidiaryNode({ data }: any) {
       {data.logo ? (
         <div
           className={`rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden ${
-            compact ? "w-9 h-9 p-1" : "w-14 h-14 p-1.5"
+            compact ? "w-10 h-10 p-1" : "w-16 h-16 p-1"
           }`}
         >
           <img
@@ -120,18 +120,18 @@ function SubsidiaryNode({ data }: any) {
       ) : (
         <div
           className={`rounded-full bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-            compact ? "w-9 h-9" : "w-14 h-14"
+            compact ? "w-10 h-10" : "w-16 h-16"
           }`}
         >
-          <IconComponent className={compact ? "w-4 h-4" : "w-6 h-6"} />
+          <IconComponent className={compact ? "w-4 h-4" : "w-7 h-7"} />
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <div className={`font-semibold text-white truncate ${compact ? "text-xs" : "text-base"}`}>
+        <div className={`font-bold text-white truncate ${compact ? "text-sm" : "text-lg"}`}>
           {data.name}
         </div>
         {!compact && (
-          <div className="mt-1 text-xs text-slate-400 truncate leading-5">
+          <div className="mt-0.5 text-sm text-slate-400 truncate leading-5">
             {data.sector}
           </div>
         )}
@@ -184,7 +184,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         centerY: 220,
       };
     }
-    return { radiusX: 360, radiusY: 220, centerX: 300, centerY: 220 };
+    return { radiusX: 450, radiusY: 300, centerX: 340, centerY: 300 };
   }, [containerWidth, compact]);
 
   const initialNodes = useMemo(() => {
@@ -265,7 +265,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
   // Re-fit ONLY on layout change (compact toggle / company count) — not on every click
   useEffect(() => {
     const t = setTimeout(() => {
-      fitView({ padding: compact ? 0.35 : 0.25, duration: 200 });
+      fitView({ padding: compact ? 0.3 : 0.12, duration: 200 });
     }, 60);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -274,7 +274,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
   return (
     <div
       ref={containerRef}
-      className="w-full h-[420px] sm:h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 relative overflow-hidden"
+      className="w-full h-[480px] sm:h-[620px] bg-slate-950/80 rounded-2xl border border-slate-800/80 relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
 
@@ -283,7 +283,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         edges={edges}
         nodeTypes={nodeTypes}
         fitView
-        fitViewOptions={{ padding: compact ? 0.35 : 0.25 }}
+        fitViewOptions={{ padding: compact ? 0.3 : 0.12 }}
         minZoom={0.3}
         maxZoom={1.2}
         zoomOnScroll={false}

@@ -8,7 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[420px] sm:h-[520px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
+    <div className="w-full h-[480px] sm:h-[620px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
   ),
 });
 
@@ -105,7 +105,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             />
           </div>
         ) : (
-          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[420px] sm:h-[520px] overflow-y-auto">
+          <div className="lg:col-span-7 xl:col-span-8 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 space-y-2 h-[480px] sm:h-[620px] overflow-y-auto">
             {companies.map((company) => (
               <button
                 key={company.id}
@@ -118,7 +118,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               >
                 <div className="flex items-center gap-4 min-w-0">
                   {company.logo ? (
-                    <div className="w-12 h-12 rounded-full bg-white p-1.5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <div className="w-14 h-14 rounded-full bg-white p-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
                       <img
                         src={company.logo}
                         alt={company.name}
@@ -126,7 +126,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                       />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
                       {company.name.charAt(0)}
                     </div>
                   )}
