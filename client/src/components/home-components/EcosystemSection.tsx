@@ -118,17 +118,17 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               >
                 <div className="flex items-center gap-4 min-w-0">
                   {company.logo ? (
-                    <div className="w-12 h-12 rounded-full bg-white p-1.5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <div className="h-12 w-20 flex-shrink-0 flex items-center overflow-hidden">
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="w-full h-full object-contain"
+                        className="h-full w-full object-contain object-left"
                       />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <span className="w-20 flex-shrink-0 text-lg font-bold text-slate-500">
                       {company.name.charAt(0)}
-                    </div>
+                    </span>
                   )}
                   <div className="min-w-0">
                     <p className="text-base font-semibold text-white truncate">
@@ -159,15 +159,15 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
 
               <div className="flex items-center gap-3 mb-5">
                 {activeCompany.logo ? (
-                  <div className="w-14 h-14 rounded-full bg-white p-2 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <div className="h-14 w-24 flex-shrink-0 flex items-center overflow-hidden">
                     <img
                       src={activeCompany.logo}
                       alt={activeCompany.name}
-                      className="w-full h-full object-contain"
+                      className="h-full w-full object-contain object-left"
                     />
                   </div>
                 ) : (
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
                     {activeCompany.name.charAt(0)}
                   </div>
                 )}

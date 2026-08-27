@@ -119,20 +119,20 @@ function SubsidiaryNode({ data }: any) {
     >
       {data.logo ? (
         <div
-          className={`rounded-full bg-white border border-slate-200 shrink-0 flex items-center justify-center overflow-hidden ${
-            compact ? "w-10 h-10 p-1" : "w-14 h-14 p-1"
+          className={`shrink-0 flex items-center overflow-hidden ${
+            compact ? "h-9 w-12" : "h-12 w-16"
           }`}
         >
           <img
             src={data.logo}
             alt={data.name}
-            className="w-full h-full object-contain"
+            className="h-full w-full object-contain object-left"
           />
         </div>
       ) : (
         <div
-          className={`rounded-full bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-            compact ? "w-10 h-10" : "w-14 h-14"
+          className={`rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
+            compact ? "w-9 h-9" : "w-12 h-12"
           }`}
         >
           <IconComponent className={compact ? "w-4 h-4" : "w-6 h-6"} />
