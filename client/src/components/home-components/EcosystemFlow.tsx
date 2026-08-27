@@ -107,8 +107,8 @@ function SubsidiaryNode({ data }: any) {
     >
       {data.logo ? (
         <div
-          className={`shrink-0 flex items-center justify-center ${
-            compact ? "w-6 h-6" : "w-11 h-11"
+          className={`rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden ${
+            compact ? "w-9 h-9 p-1" : "w-14 h-14 p-1.5"
           }`}
         >
           <img
@@ -119,15 +119,15 @@ function SubsidiaryNode({ data }: any) {
         </div>
       ) : (
         <div
-          className={`rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-            compact ? "p-1.5" : "p-3"
+          className={`rounded-full bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
+            compact ? "w-9 h-9" : "w-14 h-14"
           }`}
         >
-          <IconComponent className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
+          <IconComponent className={compact ? "w-4 h-4" : "w-6 h-6"} />
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <div className={`font-semibold text-white truncate ${compact ? "text-[11px]" : "text-sm"}`}>
+        <div className={`font-semibold text-white truncate ${compact ? "text-xs" : "text-base"}`}>
           {data.name}
         </div>
         {!compact && (
@@ -242,11 +242,11 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         target: company.id,
         sourceHandle,
         targetHandle,
-        animated: isSelected,
+        animated: true,
         style: {
           stroke: "#f59e0b",
-          strokeWidth: isSelected ? 3 : 1.75,
-          opacity: isSelected ? 1 : 0.55,
+          strokeWidth: isSelected ? 3.5 : 2,
+          opacity: isSelected ? 1 : 0.85,
         },
       };
       return edge;

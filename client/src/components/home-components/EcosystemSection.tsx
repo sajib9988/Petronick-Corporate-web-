@@ -116,13 +116,28 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                     : "bg-slate-900/40 border-slate-800 hover:border-slate-700"
                 }`}
               >
-                <div className="min-w-0">
-                  <p className="text-base font-semibold text-white truncate">
-                    {company.name}
-                  </p>
-                  <p className="text-sm text-slate-400 leading-6 truncate mt-1">
-                    {company.description}
-                  </p>
+                <div className="flex items-center gap-4 min-w-0">
+                  {company.logo ? (
+                    <div className="w-12 h-12 rounded-full bg-white p-1.5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                      {company.name.charAt(0)}
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-base font-semibold text-white truncate">
+                      {company.name}
+                    </p>
+                    <p className="text-sm text-slate-400 leading-6 truncate mt-1">
+                      {company.description}
+                    </p>
+                  </div>
                 </div>
                 {company.revenueStage && (
                   <span className="text-xs font-medium px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 flex-shrink-0">
@@ -144,7 +159,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
 
               <div className="flex items-center gap-3 mb-5">
                 {activeCompany.logo ? (
-                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 rounded-full bg-white p-2 flex items-center justify-center flex-shrink-0 overflow-hidden">
                     <img
                       src={activeCompany.logo}
                       alt={activeCompany.name}
@@ -152,12 +167,12 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                     />
                   </div>
                 ) : (
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold flex-shrink-0">
                     {activeCompany.name.charAt(0)}
                   </div>
                 )}
                 <div className="min-w-0">
-                  <h3 className="text-2xl font-bold text-white truncate">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white truncate">
                     {activeCompany.name}
                   </h3>
                   <p className="text-sm text-slate-400">
