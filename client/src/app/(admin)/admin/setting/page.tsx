@@ -68,7 +68,7 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-100 p-6">
+      <div className="bg-gray-200 rounded-xl border border-green-100 p-6">
         <div className="flex items-center gap-2 mb-1">
           <KeyRound size={16} className="text-amber-600" />
           <h3 className="text-sm font-semibold text-gray-900">Change Password</h3>
