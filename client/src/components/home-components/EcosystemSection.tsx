@@ -130,17 +130,19 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                 }`}
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="h-14 w-14 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-lg font-bold overflow-hidden">
-                    {company.icon ? (
+                  {company.icon ? (
+                    <div className="h-14 w-14 flex-shrink-0 flex items-center justify-center rounded-lg bg-white overflow-hidden">
                       <img
                         src={company.icon}
                         alt={company.name}
                         className="h-full w-full object-contain p-1.5"
                       />
-                    ) : (
-                      company.name.charAt(0)
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="h-14 w-14 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-lg font-bold">
+                      {company.name.charAt(0)}
+                    </div>
+                  )}
                   <div className="min-w-0">
                     <p
                       className={`text-base font-semibold truncate ${
@@ -173,17 +175,19 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               </p>
 
               <div className="flex items-center gap-3 mb-5">
-                <div className="h-16 w-16 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-xl font-bold overflow-hidden">
-                  {activeCompany.icon ? (
+                {activeCompany.icon ? (
+                  <div className="h-16 w-16 flex-shrink-0 flex items-center justify-center rounded-xl bg-white overflow-hidden">
                     <img
                       src={activeCompany.icon}
                       alt={activeCompany.name}
                       className="h-full w-full object-contain p-2"
                     />
-                  ) : (
-                    activeCompany.name.charAt(0)
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div className="h-16 w-16 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-xl font-bold">
+                    {activeCompany.name.charAt(0)}
+                  </div>
+                )}
                 <div className="min-w-0">
                   <h3 className="text-2xl md:text-3xl font-bold text-white truncate">
                     {activeCompany.name}
