@@ -3,6 +3,7 @@ import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import { getPageBySlug } from "@/service/cms";
 import { Container } from "@/components/Container";
+import Reveal from "@/components/ui/motion/Reveal";
 
 export const dynamic = "force-dynamic";
 
@@ -97,39 +98,41 @@ export default async function ContactPage() {
 
       <Container className="pt-8 sm:pt-10">
 
-        <section className="relative h-[280px] overflow-hidden rounded-3xl sm:h-[360px] lg:h-[420px]">
+        <Reveal>
+          <section className="relative h-[280px] overflow-hidden rounded-3xl sm:h-[360px] lg:h-[420px]">
 
-          <Image
-            src={heroImage}
-            alt={heroTitle}
-            fill
-            priority
-            className="object-cover"
-          />
+            <Image
+              src={heroImage}
+              alt={heroTitle}
+              fill
+              priority
+              className="object-cover"
+            />
 
-          {/* Overlay */}
+            {/* Overlay */}
 
-          <div className="absolute inset-0 bg-[#0B1220]/65" />
+            <div className="absolute inset-0 bg-[#0B1220]/65" />
 
-          {/* Content */}
+            {/* Content */}
 
-          <div className="relative flex h-full flex-col items-center justify-center px-5 text-center">
+            <div className="relative flex h-full flex-col items-center justify-center px-5 text-center">
 
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">
-              {badge}
-            </p>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">
+                {badge}
+              </p>
 
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-              {heroTitle}
-            </h1>
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                {heroTitle}
+              </h1>
 
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              {heroSubtitle}
-            </p>
+              <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                {heroSubtitle}
+              </p>
 
-          </div>
+            </div>
 
-        </section>
+          </section>
+        </Reveal>
 
       </Container>
 
@@ -148,64 +151,65 @@ export default async function ContactPage() {
 
           <div className="space-y-4">
 
-            {contactInfo.map((item) => {
+            {contactInfo.map((item, index) => {
 
               const Icon = item.icon;
 
               return (
-                <div
-                  key={item.label}
-                  className="
-                    flex
-                    items-start
-                    gap-4
-                    rounded-2xl
-                    border
-                    border-gray-200
-                    bg-white
-                    p-5
-                    shadow-[0_2px_8px_rgba(15,23,42,0.03)]
-                    transition-shadow
-                    hover:shadow-md
-                  "
-                >
-
-                  {/* Icon */}
-
+                <Reveal key={item.label} delay={index * 0.08}>
                   <div
-                    className={`
+                    className="
                       flex
-                      h-11
-                      w-11
-                      flex-shrink-0
-                      items-center
-                      justify-center
-                      rounded-xl
-                      ${item.bgClass}
-                    `}
+                      items-start
+                      gap-4
+                      rounded-2xl
+                      border
+                      border-gray-200
+                      bg-white
+                      p-5
+                      shadow-[0_2px_8px_rgba(15,23,42,0.03)]
+                      transition-shadow
+                      hover:shadow-md
+                    "
                   >
-                    <Icon
-                      size={18}
-                      className={item.iconClass}
-                    />
+
+                    {/* Icon */}
+
+                    <div
+                      className={`
+                        flex
+                        h-11
+                        w-11
+                        flex-shrink-0
+                        items-center
+                        justify-center
+                        rounded-xl
+                        ${item.bgClass}
+                      `}
+                    >
+                      <Icon
+                        size={18}
+                        className={item.iconClass}
+                      />
+                    </div>
+
+
+                    {/* Text */}
+
+                    <div className="min-w-0">
+
+                      <p className="text-xs font-medium text-slate-400">
+                        {item.label}
+                      </p>
+
+                      <p className="mt-1 break-words text-sm font-semibold text-[#111827]">
+                        {item.value}
+                      </p>
+
+                    </div>
+
                   </div>
-
-
-                  {/* Text */}
-
-                  <div className="min-w-0">
-
-                    <p className="text-xs font-medium text-slate-400">
-                      {item.label}
-                    </p>
-
-                    <p className="mt-1 break-words text-sm font-semibold text-[#111827]">
-                      {item.value}
-                    </p>
-
-                  </div>
-
-                </div>
+                </Reveal>
               );
             })}
 
@@ -214,17 +218,19 @@ export default async function ContactPage() {
                 ABOUT PETRONICK
             ========================================== */}
 
-            <div className="rounded-2xl bg-[#0B1220] p-6">
+            <Reveal delay={contactInfo.length * 0.08}>
+              <div className="rounded-2xl bg-[#0B1220] p-6">
 
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">
-                {aboutTitle}
-              </p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">
+                  {aboutTitle}
+                </p>
 
-              <p className="mt-3 text-sm leading-7 text-slate-400">
-                {aboutDescription}
-              </p>
+                <p className="mt-3 text-sm leading-7 text-slate-400">
+                  {aboutDescription}
+                </p>
 
-            </div>
+              </div>
+            </Reveal>
 
           </div>
 
@@ -233,27 +239,29 @@ export default async function ContactPage() {
               CONTACT FORM
           ============================================== */}
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_8px_rgba(15,23,42,0.03)] sm:p-8 lg:col-span-2">
+          <Reveal delay={0.12} className="lg:col-span-2">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_2px_8px_rgba(15,23,42,0.03)] sm:p-8">
 
-            <div className="mb-7">
+              <div className="mb-7">
 
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
-                Send a Message
-              </p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
+                  Send a Message
+                </p>
 
-              <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#111827]">
-                Let&apos;s Talk
-              </h2>
+                <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#111827]">
+                  Let&apos;s Talk
+                </h2>
 
-              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-                Fill out the form below and we&apos;ll get back to you as soon as possible.
-              </p>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+                  Fill out the form below and we&apos;ll get back to you as soon as possible.
+                </p>
+
+              </div>
+
+              <ContactForm />
 
             </div>
-
-            <ContactForm />
-
-          </div>
+          </Reveal>
 
         </section>
 
