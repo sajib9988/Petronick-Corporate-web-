@@ -5,6 +5,7 @@ import { z } from "zod";
 const createCompany = z.object({
   name: z.string({ error: "Name is required" }).min(1),
   description: z.string({ error: "Description is required" }).min(1),
+  icon: z.string().optional(),
   website: z.string().optional(),
   order:  z.number().int(),
   isVisible:  z.boolean().optional(),
@@ -14,6 +15,7 @@ const createCompany = z.object({
 const updateCompany = z.object({
   name: z.string().min(1).optional(),
   description: z.string().min(1).optional(),
+  icon: z.string().optional(),
   website: z.string().optional(),
   order: z.coerce.number().int().optional(),
   isVisible: z.coerce.boolean().optional(),

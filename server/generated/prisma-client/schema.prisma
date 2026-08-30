@@ -50,6 +50,11 @@ enum SectionType {
   SNAPSHOT
   VALUES
 
+  BENEFITS
+  PROCESS
+  STATS
+  APPLICATION
+
   CTA
   FEATURE
   TESTIMONIALS
@@ -116,6 +121,7 @@ model Company {
   name         String   @unique
   description  String
   logo         String
+  icon         String?
   website      String?
   order        Int      @default(0)
   isVisible    Boolean  @default(true)

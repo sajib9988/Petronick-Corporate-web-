@@ -11,17 +11,27 @@ import httpStatus from "http-status";
 
 
 const createCompany = catchAsync(async (req: Request, res: Response) => {
-  if (!req.file) {
+  const files = req.files as
+    | { [field: string]: Express.Multer.File[] }
+    | undefined;
+  const logoFile = files?.["logo"]?.[0];
+  const iconFile = files?.["icon"]?.[0];
+
+  if (!logoFile) {
     throw new AppError(httpStatus.BAD_REQUEST, "Logo image is required");
   }
 
   const body = req.body.data ? JSON.parse(req.body.data) : req.body;
-  const uploaded = await uploadToCloudinary(req.file.buffer, "logos");
+  const uploaded = await uploadToCloudinary(logoFile.buffer, "logos");
+  const iconUploaded = iconFile
+    ? await uploadToCloudinary(iconFile.buffer, "icons")
+    : null;
   const parsed = companyValidation.createCompany.parse(body);
 
   const result = await companyService.createCompany({
     ...parsed,
     logo: uploaded.secure_url,
+    ...(iconUploaded && { icon: iconUploaded.secure_url }),
   });
 
   sendResponse(res, {
@@ -62,15 +72,28 @@ const updateCompany = catchAsync(async (req: Request, res: Response) => {
   const body = req.body.data ? JSON.parse(req.body.data) : req.body;
   const parsed = companyValidation.updateCompany.parse(body);
 
+  const files = req.files as
+    | { [field: string]: Express.Multer.File[] }
+    | undefined;
+  const logoFile = files?.["logo"]?.[0];
+  const iconFile = files?.["icon"]?.[0];
+
   let logo: string | undefined;
-  if (req.file) {
-    const uploaded = await uploadToCloudinary(req.file.buffer, "logos");
+  if (logoFile) {
+    const uploaded = await uploadToCloudinary(logoFile.buffer, "logos");
     logo = uploaded.secure_url;
+  }
+
+  let icon: string | undefined;
+  if (iconFile) {
+    const uploaded = await uploadToCloudinary(iconFile.buffer, "icons");
+    icon = uploaded.secure_url;
   }
  const id = req.params.id as string;
   const result = await companyService.updateCompany(id, {
     ...parsed,
     ...(logo && { logo }),
+    ...(icon && { icon }),
   });
 
   sendResponse(res, {

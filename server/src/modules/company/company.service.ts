@@ -20,6 +20,7 @@ const createCompany = async (payload: IcreateCompany) => {
       name: payload.name,
       description: payload.description,
       logo: payload.logo,
+      icon: payload.icon ?? null,
       website: payload.website ?? null,
       order: payload.order ?? 0,
       isVisible: payload.isVisible ?? true,
@@ -91,12 +92,17 @@ const updateCompany = async (id: string, payload: IupdateCompany) => {
     await destroyImage(existing.logo);
   }
 
+  if (payload.icon && existing.icon) {
+    await destroyImage(existing.icon);
+  }
+
   return await prisma.company.update({
     where: { id },
     data: {
       ...(payload.name !== undefined && { name: payload.name }),
       ...(payload.description !== undefined && { description: payload.description }),
       ...(payload.logo !== undefined && { logo: payload.logo }),
+      ...(payload.icon !== undefined && { icon: payload.icon }),
       ...(payload.website !== undefined && { website: payload.website }),
       ...(payload.order !== undefined && { order: payload.order }),
       ...(payload.isVisible !== undefined && { isVisible: payload.isVisible }),

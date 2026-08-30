@@ -39,6 +39,7 @@ type Company = {
   name: string;
   description: string;
   logo: string;
+  icon: string | null;
   website: string | null;
   order: number;
   isVisible: boolean;
@@ -79,7 +80,11 @@ export default function CompaniesPage() {
     return () => clearTimeout(timer);
   }, [fetchCompanies]);
 
-  const handleCreate = async (values: CompanyFormValues, logoFile: File | null) => {
+  const handleCreate = async (
+    values: CompanyFormValues,
+    logoFile: File | null,
+    iconFile: File | null,
+  ) => {
     if (!logoFile) {
       setCreateError("Logo is required");
       return;
@@ -89,6 +94,7 @@ export default function CompaniesPage() {
     try {
       const fd = new FormData();
       fd.append("logo", logoFile);
+      if (iconFile) fd.append("icon", iconFile);
       fd.append("data", JSON.stringify({ ...values }));
       const result = await createCompany(fd);
       if (!result?.success) {
@@ -104,13 +110,18 @@ export default function CompaniesPage() {
     }
   };
 
-  const handleEdit = async (values: CompanyFormValues, logoFile: File | null) => {
+  const handleEdit = async (
+    values: CompanyFormValues,
+    logoFile: File | null,
+    iconFile: File | null,
+  ) => {
     if (!editCompany) return;
     setIsEditing(true);
     setEditError("");
     try {
       const fd = new FormData();
       if (logoFile) fd.append("logo", logoFile);
+      if (iconFile) fd.append("icon", iconFile);
       fd.append("data", JSON.stringify({ ...values }));
       const result = await updateCompany(editCompany.id, fd);
       if (!result?.success) {
@@ -315,6 +326,7 @@ export default function CompaniesPage() {
                   revenueStage: editCompany.revenueStage ?? "",
                 }}
                 existingLogo={editCompany.logo}
+                existingIcon={editCompany.icon ?? null}
                 onSubmit={handleEdit}
                 onCancel={() => setEditCompany(null)}
                 submitLabel="Save Changes"

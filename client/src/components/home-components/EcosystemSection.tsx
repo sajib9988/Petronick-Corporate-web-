@@ -17,6 +17,7 @@ type Company = {
   name: string;
   description: string;
   logo: string;
+  icon: string | null;
   website: string | null;
   revenueStage: string | null;
   order: number;
@@ -129,19 +130,17 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
                 }`}
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  {company.logo ? (
-                    <div className="h-14 w-24 flex-shrink-0 flex items-center justify-center rounded-lg bg-white p-1.5 overflow-hidden">
+                  <div className="h-14 w-14 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-lg font-bold overflow-hidden">
+                    {company.icon ? (
                       <img
-                        src={company.logo}
+                        src={company.icon}
                         alt={company.name}
-                        className="max-h-full max-w-full object-contain"
+                        className="h-full w-full object-contain p-1.5"
                       />
-                    </div>
-                  ) : (
-                    <div className="h-14 w-24 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-lg font-bold">
-                      {company.name.charAt(0)}
-                    </div>
-                  )}
+                    ) : (
+                      company.name.charAt(0)
+                    )}
+                  </div>
                   <div className="min-w-0">
                     <p
                       className={`text-base font-semibold truncate ${
@@ -174,19 +173,17 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
               </p>
 
               <div className="flex items-center gap-3 mb-5">
-                {activeCompany.logo ? (
-                  <div className="h-16 w-28 flex-shrink-0 flex items-center justify-center rounded-xl bg-white p-2 overflow-hidden">
+                <div className="h-16 w-16 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white text-xl font-bold overflow-hidden">
+                  {activeCompany.icon ? (
                     <img
-                      src={activeCompany.logo}
+                      src={activeCompany.icon}
                       alt={activeCompany.name}
-                      className="max-h-full max-w-full object-contain"
+                      className="h-full w-full object-contain p-2"
                     />
-                  </div>
-                ) : (
-                  <div className="h-16 w-28 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
-                    {activeCompany.name.charAt(0)}
-                  </div>
-                )}
+                  ) : (
+                    activeCompany.name.charAt(0)
+                  )}
+                </div>
                 <div className="min-w-0">
                   <h3 className="text-2xl md:text-3xl font-bold text-white truncate">
                     {activeCompany.name}

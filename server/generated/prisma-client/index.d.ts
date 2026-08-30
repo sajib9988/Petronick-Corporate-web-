@@ -91,6 +91,10 @@ export const SectionType: {
   ABOUT: 'ABOUT',
   SNAPSHOT: 'SNAPSHOT',
   VALUES: 'VALUES',
+  BENEFITS: 'BENEFITS',
+  PROCESS: 'PROCESS',
+  STATS: 'STATS',
+  APPLICATION: 'APPLICATION',
   CTA: 'CTA',
   FEATURE: 'FEATURE',
   TESTIMONIALS: 'TESTIMONIALS',
@@ -5926,6 +5930,7 @@ export namespace Prisma {
     name: string | null
     description: string | null
     logo: string | null
+    icon: string | null
     website: string | null
     order: number | null
     isVisible: boolean | null
@@ -5939,6 +5944,7 @@ export namespace Prisma {
     name: string | null
     description: string | null
     logo: string | null
+    icon: string | null
     website: string | null
     order: number | null
     isVisible: boolean | null
@@ -5952,6 +5958,7 @@ export namespace Prisma {
     name: number
     description: number
     logo: number
+    icon: number
     website: number
     order: number
     isVisible: number
@@ -5975,6 +5982,7 @@ export namespace Prisma {
     name?: true
     description?: true
     logo?: true
+    icon?: true
     website?: true
     order?: true
     isVisible?: true
@@ -5988,6 +5996,7 @@ export namespace Prisma {
     name?: true
     description?: true
     logo?: true
+    icon?: true
     website?: true
     order?: true
     isVisible?: true
@@ -6001,6 +6010,7 @@ export namespace Prisma {
     name?: true
     description?: true
     logo?: true
+    icon?: true
     website?: true
     order?: true
     isVisible?: true
@@ -6101,6 +6111,7 @@ export namespace Prisma {
     name: string
     description: string
     logo: string
+    icon: string | null
     website: string | null
     order: number
     isVisible: boolean
@@ -6133,6 +6144,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     logo?: boolean
+    icon?: boolean
     website?: boolean
     order?: boolean
     isVisible?: boolean
@@ -6146,6 +6158,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     logo?: boolean
+    icon?: boolean
     website?: boolean
     order?: boolean
     isVisible?: boolean
@@ -6159,6 +6172,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     logo?: boolean
+    icon?: boolean
     website?: boolean
     order?: boolean
     isVisible?: boolean
@@ -6172,6 +6186,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     logo?: boolean
+    icon?: boolean
     website?: boolean
     order?: boolean
     isVisible?: boolean
@@ -6180,7 +6195,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "website" | "order" | "isVisible" | "revenueStage" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "icon" | "website" | "order" | "isVisible" | "revenueStage" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
 
   export type $CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Company"
@@ -6190,6 +6205,7 @@ export namespace Prisma {
       name: string
       description: string
       logo: string
+      icon: string | null
       website: string | null
       order: number
       isVisible: boolean
@@ -6623,6 +6639,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Company", 'String'>
     readonly description: FieldRef<"Company", 'String'>
     readonly logo: FieldRef<"Company", 'String'>
+    readonly icon: FieldRef<"Company", 'String'>
     readonly website: FieldRef<"Company", 'String'>
     readonly order: FieldRef<"Company", 'Int'>
     readonly isVisible: FieldRef<"Company", 'Boolean'>
@@ -9299,6 +9316,7 @@ export namespace Prisma {
     name: 'name',
     description: 'description',
     logo: 'logo',
+    icon: 'icon',
     website: 'website',
     order: 'order',
     isVisible: 'isVisible',
@@ -9833,6 +9851,7 @@ export namespace Prisma {
     name?: StringFilter<"Company"> | string
     description?: StringFilter<"Company"> | string
     logo?: StringFilter<"Company"> | string
+    icon?: StringNullableFilter<"Company"> | string | null
     website?: StringNullableFilter<"Company"> | string | null
     order?: IntFilter<"Company"> | number
     isVisible?: BoolFilter<"Company"> | boolean
@@ -9846,6 +9865,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     logo?: SortOrder
+    icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     isVisible?: SortOrder
@@ -9862,6 +9882,7 @@ export namespace Prisma {
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     description?: StringFilter<"Company"> | string
     logo?: StringFilter<"Company"> | string
+    icon?: StringNullableFilter<"Company"> | string | null
     website?: StringNullableFilter<"Company"> | string | null
     order?: IntFilter<"Company"> | number
     isVisible?: BoolFilter<"Company"> | boolean
@@ -9875,6 +9896,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     logo?: SortOrder
+    icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     isVisible?: SortOrder
@@ -9896,6 +9918,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Company"> | string
     description?: StringWithAggregatesFilter<"Company"> | string
     logo?: StringWithAggregatesFilter<"Company"> | string
+    icon?: StringNullableWithAggregatesFilter<"Company"> | string | null
     website?: StringNullableWithAggregatesFilter<"Company"> | string | null
     order?: IntWithAggregatesFilter<"Company"> | number
     isVisible?: BoolWithAggregatesFilter<"Company"> | boolean
@@ -10380,6 +10403,7 @@ export namespace Prisma {
     name: string
     description: string
     logo: string
+    icon?: string | null
     website?: string | null
     order?: number
     isVisible?: boolean
@@ -10393,6 +10417,7 @@ export namespace Prisma {
     name: string
     description: string
     logo: string
+    icon?: string | null
     website?: string | null
     order?: number
     isVisible?: boolean
@@ -10406,6 +10431,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     logo?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
@@ -10419,6 +10445,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     logo?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
@@ -10432,6 +10459,7 @@ export namespace Prisma {
     name: string
     description: string
     logo: string
+    icon?: string | null
     website?: string | null
     order?: number
     isVisible?: boolean
@@ -10445,6 +10473,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     logo?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
@@ -10458,6 +10487,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     logo?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
@@ -10986,6 +11016,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     logo?: SortOrder
+    icon?: SortOrder
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder
@@ -11003,6 +11034,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     logo?: SortOrder
+    icon?: SortOrder
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder
@@ -11016,6 +11048,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     logo?: SortOrder
+    icon?: SortOrder
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder

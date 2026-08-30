@@ -67,6 +67,7 @@ export type Company = {
   name: string;
   description: string;
   logo: string;
+  icon: string | null;
   website: string | null;
   revenueStage: string | null;
   order: number;

@@ -43,7 +43,12 @@ export const defaultCompanyValues: CompanyFormValues = {
 interface CompanyFormProps {
   defaultValues?: CompanyFormValues;
   existingLogo?: string | null;
-  onSubmit: (values: CompanyFormValues, logoFile: File | null) => Promise<void>;
+  existingIcon?: string | null;
+  onSubmit: (
+    values: CompanyFormValues,
+    logoFile: File | null,
+    iconFile: File | null,
+  ) => Promise<void>;
   onCancel: () => void;
   submitLabel?: string;
   isLoading?: boolean;
@@ -53,6 +58,7 @@ interface CompanyFormProps {
 export default function CompanyForm({
   defaultValues = defaultCompanyValues,
   existingLogo,
+  existingIcon,
   onSubmit,
   onCancel,
   submitLabel = "Save",
@@ -62,6 +68,10 @@ export default function CompanyForm({
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(existingLogo ?? null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [iconFile, setIconFile] = useState<File | null>(null);
+  const [iconPreview, setIconPreview] = useState<string | null>(existingIcon ?? null);
+  const iconInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companySchema),
@@ -75,8 +85,15 @@ export default function CompanyForm({
     setLogoPreview(URL.createObjectURL(file));
   };
 
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIconFile(file);
+    setIconPreview(URL.createObjectURL(file));
+  };
+
   const handleSubmit = async (values: CompanyFormValues) => {
-    await onSubmit(values, logoFile);
+    await onSubmit(values, logoFile, iconFile);
   };
 
   return (
@@ -170,6 +187,40 @@ export default function CompanyForm({
                 onChange={handleLogoChange}
                 aria-label="Company logo"
                 title="Company logo"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 p-4 border-2 border-dashed rounded-xl bg-gray-50/30">
+            <div className="relative w-20 h-20 rounded-lg border bg-white flex items-center justify-center overflow-hidden shadow-sm">
+              {iconPreview ? (
+                <img src={iconPreview} alt="Icon preview" className="w-full h-full object-contain p-2" />
+              ) : (
+                <ImagePlus className="w-8 h-8 text-gray-200" />
+              )}
+            </div>
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-medium">Ecosystem Icon</p>
+              <p className="text-[11px] text-muted-foreground leading-tight">
+                Shown in the ecosystem node web &amp; directory. <br/> Square PNG/SVG recommended.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="mt-2 h-8 text-xs"
+                onClick={() => iconInputRef.current?.click()}
+              >
+                {iconPreview ? "Replace Icon" : "Choose File"}
+              </Button>
+              <input
+                type="file"
+                ref={iconInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleIconChange}
+                aria-label="Ecosystem icon"
+                title="Ecosystem icon"
               />
             </div>
           </div>

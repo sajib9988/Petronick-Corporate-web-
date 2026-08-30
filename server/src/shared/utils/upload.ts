@@ -49,3 +49,9 @@ export const uploadToCloudinary = (
 
 export const uploadLogo = multerUpload.single("logo");
 export const uploadSectionImage = multerUpload.single("image");
+
+// Company branding: primary logo + optional ecosystem icon, same storage system
+export const uploadCompanyImages = multerUpload.fields([
+  { name: "logo", maxCount: 1 },
+  { name: "icon", maxCount: 1 },
+]);
