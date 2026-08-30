@@ -93,7 +93,7 @@ export default async function CompanyDetailPage({
         <div className="pointer-events-none absolute bottom-0 left-1/4 h-56 w-56 rounded-full bg-emerald-400/10 blur-[100px]" />
 
         <Container>
-          <div className="relative mx-auto max-w-6xl px-1 pt-10 pb-24 sm:pb-28">
+          <div className="relative pt-10 pb-24 sm:pb-28">
             {/* Breadcrumb */}
             <Link
               href="/companies"
@@ -151,130 +151,128 @@ export default async function CompanyDetailPage({
 
       {/* ── Body ── */}
       <Container>
-        <div className="mx-auto max-w-6xl">
-          {/* Quick facts strip (overlaps hero) */}
-          <Reveal>
-            <div className="relative -mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_10px_40px_-12px_rgba(15,23,42,0.15)] sm:grid-cols-4">
-              {quickFacts.map((fact, index) => {
-                const Icon = fact.icon;
-                return (
-                  <div
-                    key={fact.label}
-                    className={`px-5 py-5 sm:px-6 sm:py-6 ${
-                      index % 2 === 0 ? "border-r border-gray-100" : ""
-                    } ${index < 2 ? "border-b border-gray-100 sm:border-b-0" : ""} ${
-                      index < 3 ? "sm:border-r sm:border-gray-100" : ""
-                    }`}
-                  >
-                    <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-gray-400">
-                      <Icon size={12} className="text-emerald-500" />
-                      {fact.label}
-                    </div>
-                    <div className="mt-1.5 text-sm font-bold text-[#111827] sm:text-[15px]">
-                      {fact.value}
-                    </div>
+        {/* Quick facts strip (overlaps hero) */}
+        <Reveal>
+          <div className="relative -mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_10px_40px_-12px_rgba(15,23,42,0.15)] sm:grid-cols-4">
+            {quickFacts.map((fact, index) => {
+              const Icon = fact.icon;
+              return (
+                <div
+                  key={fact.label}
+                  className={`px-5 py-5 sm:px-6 sm:py-6 ${
+                    index % 2 === 0 ? "border-r border-gray-100" : ""
+                  } ${index < 2 ? "border-b border-gray-100 sm:border-b-0" : ""} ${
+                    index < 3 ? "sm:border-r sm:border-gray-100" : ""
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-gray-400">
+                    <Icon size={12} className="text-emerald-500" />
+                    {fact.label}
                   </div>
-                );
-              })}
+                  <div className="mt-1.5 text-sm font-bold text-[#111827] sm:text-[15px]">
+                    {fact.value}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        <div className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-3">
+          {/* Main content */}
+          <Reveal className="lg:col-span-2">
+            <div>
+              <div className="mb-4 flex items-center gap-2">
+                <span className="h-1 w-6 rounded-full bg-emerald-500" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
+                  Overview
+                </span>
+              </div>
+
+              <p className="text-lg leading-8 text-gray-700">
+                {company.description}
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-3">
+                {company.website && (
+                  <a
+                    href={company.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-600"
+                  >
+                    Visit Website
+                    <ExternalLink size={15} />
+                  </a>
+                )}
+                <Link
+                  href="/promotion-agent"
+                  className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
+                >
+                  Represent This Unit
+                  <ArrowRight size={15} />
+                </Link>
+              </div>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-3">
-            {/* Main content */}
-            <Reveal className="lg:col-span-2">
-              <div>
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="h-1 w-6 rounded-full bg-emerald-500" />
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
-                    Overview
+          {/* ── Sidebar: ecosystem context ── */}
+          <Reveal className="lg:col-span-1" delay={0.1}>
+            <aside className="sticky top-24 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+              <div className="border-b border-gray-100 bg-gradient-to-br from-emerald-50 to-white px-5 py-4">
+                <div className="flex items-center gap-2">
+                  <Building2 size={14} className="text-emerald-600" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+                    Inside the Ecosystem
                   </span>
                 </div>
+              </div>
 
-                <p className="text-lg leading-8 text-gray-700">
-                  {company.description}
+              <div className="space-y-4 px-5 py-5">
+                <p className="text-sm leading-6 text-gray-500">
+                  {company.name} operates independently while sharing marketing,
+                  logistics, technology, and growth support across Petronick
+                  Corporate Holdings.
                 </p>
 
-                <div className="mt-10 flex flex-wrap gap-3">
-                  {company.website && (
-                    <a
-                      href={company.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-600"
-                    >
-                      Visit Website
-                      <ExternalLink size={15} />
-                    </a>
-                  )}
-                  <Link
-                    href="/promotion-agent"
-                    className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
-                  >
-                    Represent This Unit
-                    <ArrowRight size={15} />
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* ── Sidebar: ecosystem context ── */}
-            <Reveal className="lg:col-span-1" delay={0.1}>
-              <aside className="sticky top-24 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-                <div className="border-b border-gray-100 bg-gradient-to-br from-emerald-50 to-white px-5 py-4">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={14} className="text-emerald-600" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-emerald-700">
-                      Inside the Ecosystem
-                    </span>
+                <dl className="divide-y divide-gray-100 rounded-xl border border-gray-100 bg-gray-50/60">
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <dt className="text-xs text-gray-400">Status</dt>
+                    <dd className="text-xs font-semibold text-gray-800">
+                      {company.isVisible ? "Active Listing" : "Unlisted"}
+                    </dd>
                   </div>
-                </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <dt className="text-xs text-gray-400">Stage</dt>
+                    <dd className="text-xs font-semibold text-gray-800">
+                      {company.revenueStage ?? "—"}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <dt className="text-xs text-gray-400">Unit No.</dt>
+                    <dd className="flex items-center gap-1 text-xs font-semibold text-gray-800">
+                      <Layers size={11} className="text-gray-300" />
+                      {String(company.order ?? 0).padStart(2, "0")}
+                    </dd>
+                  </div>
+                </dl>
 
-                <div className="space-y-4 px-5 py-5">
-                  <p className="text-sm leading-6 text-gray-500">
-                    {company.name} operates independently while sharing marketing,
-                    logistics, technology, and growth support across Petronick
-                    Corporate Holdings.
-                  </p>
-
-                  <dl className="divide-y divide-gray-100 rounded-xl border border-gray-100 bg-gray-50/60">
-                    <div className="flex items-center justify-between px-4 py-3">
-                      <dt className="text-xs text-gray-400">Status</dt>
-                      <dd className="text-xs font-semibold text-gray-800">
-                        {company.isVisible ? "Active Listing" : "Unlisted"}
-                      </dd>
-                    </div>
-                    <div className="flex items-center justify-between px-4 py-3">
-                      <dt className="text-xs text-gray-400">Stage</dt>
-                      <dd className="text-xs font-semibold text-gray-800">
-                        {company.revenueStage ?? "—"}
-                      </dd>
-                    </div>
-                    <div className="flex items-center justify-between px-4 py-3">
-                      <dt className="text-xs text-gray-400">Unit No.</dt>
-                      <dd className="flex items-center gap-1 text-xs font-semibold text-gray-800">
-                        <Layers size={11} className="text-gray-300" />
-                        {String(company.order ?? 0).padStart(2, "0")}
-                      </dd>
-                    </div>
-                  </dl>
-
-                  <Link
-                    href="/companies"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 transition-colors hover:text-emerald-700"
-                  >
-                    Explore all business units
-                    <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </aside>
-            </Reveal>
-          </div>
+                <Link
+                  href="/companies"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 transition-colors hover:text-emerald-700"
+                >
+                  Explore all business units
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </aside>
+          </Reveal>
         </div>
       </Container>
 
       {/* ── CTA ── */}
       <Container>
-        <div className="mx-auto max-w-6xl pb-20">
+        <div className="pb-20">
           <Reveal>
             <div className="relative overflow-hidden rounded-3xl bg-[#0B1220] px-6 py-16 text-center sm:px-12 sm:py-20">
               <div className="pointer-events-none absolute -bottom-20 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-emerald-500/15 blur-[110px]" />
