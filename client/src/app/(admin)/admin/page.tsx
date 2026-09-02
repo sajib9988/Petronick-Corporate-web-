@@ -50,7 +50,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Active Units",
-      value: 7,
+      value: 10,
       icon: <TrendingUp size={18} className="text-white" />,
       gradient: "from-amber-500 to-orange-600",
       href: "/admin/companies",
