@@ -88,7 +88,7 @@ export default function EcosystemSection({ companies }: { companies: Company[] }
             }`}
           >
             <Waypoints size={15} />
-            <span className="hidden sm:inline">Interactive Node Web</span>
+            <span className="hidden sm:inline">Interactive Flow</span>
             <span className="sm:hidden">Node Web</span>
           </button>
           <button
