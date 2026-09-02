@@ -20,6 +20,12 @@ export default async function AdminDashboardPage() {
     getAllAgents(),
   ]);
 
+  const approvedAgents =
+  agents?.data?.filter(
+    (agent: { status: string }) => agent.status === "APPROVED"
+  ).length ?? 0;
+
+
   const stats = [
     {
       label: "Total Companies",
@@ -32,7 +38,7 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Promotion Agents",
-      value: agents?.meta?.total ?? 0,
+      value: approvedAgents,
       icon: <Users size={18} className="text-white" />,
       gradient: "from-emerald-500 to-emerald-700",
       href: "/admin/agents",
