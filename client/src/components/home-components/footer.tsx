@@ -58,11 +58,7 @@ const socialLinks = [
     href: "https://linkedin.com/",
     icon: FaLinkedinIn,
   },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/",
-    icon: FaYoutube,
-  },
+  
   {
     label: "X",
     href: "https://x.com/",
