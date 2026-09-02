@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 
 const stats = [
   {
-    number: 7,
+    number: 10,
     suffix: "+",
     label: "Business Units",
     bg: "bg-gradient-to-br from-amber-500 to-amber-600 text-white",
