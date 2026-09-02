@@ -222,7 +222,7 @@ export default function PromotionAgentContent({
 
   const trustStats = [
     {
-      value: benefitsContent.statValue1 ?? "8+",
+      value: benefitsContent.statValue1 ?? "10",
       label:
         benefitsContent.statLabel1 ?? "Business Units",
     },

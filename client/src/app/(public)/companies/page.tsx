@@ -78,7 +78,7 @@ export default async function CompaniesPage() {
 
   const stats = [
     {
-      value: statsContent.statValue1 ?? "7+",
+      value: statsContent.statValue1 ?? "10",
       label: statsContent.statLabel1 ?? "Business Units",
     },
     {
