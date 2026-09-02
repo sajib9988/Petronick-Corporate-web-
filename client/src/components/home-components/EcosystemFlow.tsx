@@ -300,6 +300,7 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        nodeOrigin={[0.5, 0.5]} 
         fitView
         fitViewOptions={{ padding: compact ? 0.3 : 0.12 }}
         minZoom={0.3}
