@@ -36,65 +36,44 @@ const NAME_COLOR_POOL = [
   "text-violet-700",
 ];
 
-interface EcosystemFlowProps {
-  companies: Company[];
-}
-
 /*
 |--------------------------------------------------------------------------
-| Radial Layout
+| RADIAL POSITION
 |--------------------------------------------------------------------------
 |
-| These values control how far the company connection points
-| are positioned from the center.
-|
-| Higher value = more space between center and companies.
+| Lower value = companies closer to the center.
 |
 */
 
-const RADIUS_X = 48;
-const RADIUS_Y = 48;
+const RADIUS_X = 38;
+const RADIUS_Y = 38;
 
 /*
 |--------------------------------------------------------------------------
-| Get Card Position
+| CARD POSITION
 |--------------------------------------------------------------------------
-|
-| The `left/top` position represents the connection point.
-|
-| The company card is then positioned outward from that point
-| depending on which side of the center it belongs to.
-|
 */
 
 function getCardTransform(left: number, top: number) {
   let translateX = "-50%";
   let translateY = "-50%";
 
-  /*
-   * Right side → card hangs to the LEFT of the point (toward center)
-   */
+  // Right side
   if (left > 58) {
     translateX = "-100%";
   }
 
-  /*
-   * Left side → card hangs to the RIGHT of the point (toward center)
-   */
+  // Left side
   if (left < 42) {
     translateX = "0%";
   }
 
-  /*
-   * Bottom → card sits ABOVE the point (toward center)
-   */
+  // Bottom
   if (top > 66) {
     translateY = "-100%";
   }
 
-  /*
-   * Top → card sits BELOW the point (toward center)
-   */
+  // Top
   if (top < 34) {
     translateY = "0%";
   }
@@ -104,7 +83,7 @@ function getCardTransform(left: number, top: number) {
 
 /*
 |--------------------------------------------------------------------------
-| Company Icon
+| COMPANY ICON
 |--------------------------------------------------------------------------
 */
 
@@ -117,13 +96,21 @@ function CompanyIcon({
   bg: string;
   className: string;
 }) {
-  /*
-   * If an icon/image exists
-   */
   if (company.icon) {
     return (
       <div
-        className={`flex shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white ${className}`}
+        className={`
+          flex
+          shrink-0
+          items-center
+          justify-center
+          overflow-hidden
+          rounded-lg
+          border
+          border-slate-200
+          bg-white
+          ${className}
+        `}
       >
         <img
           src={company.icon}
@@ -134,13 +121,20 @@ function CompanyIcon({
     );
   }
 
-  /*
-   * Fallback:
-   * Use first letter of company name.
-   */
   return (
     <div
-      className={`flex shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr ${bg} font-bold text-white ${className}`}
+      className={`
+        flex
+        shrink-0
+        items-center
+        justify-center
+        rounded-lg
+        bg-gradient-to-tr
+        ${bg}
+        font-bold
+        text-white
+        ${className}
+      `}
     >
       {company.name.charAt(0).toUpperCase()}
     </div>
@@ -149,33 +143,27 @@ function CompanyIcon({
 
 /*
 |--------------------------------------------------------------------------
-| Main Component
+| MAIN COMPONENT
 |--------------------------------------------------------------------------
 */
 
 export default function EcosystemFlow({
   companies,
-}: EcosystemFlowProps) {
-  /*
-   * Calculate company positions only when companies change.
-   */
+}: {
+  companies: Company[];
+}) {
   const nodes = useMemo(() => {
     const total = companies.length || 1;
 
     return companies.map((company, index) => {
       /*
-       * Start from top (12 o'clock)
-       * and move clockwise.
+       * Start at 12 o'clock
+       * and rotate clockwise.
        */
       const angle =
-        (index * 2 * Math.PI) / total - Math.PI / 2;
+        (index * 2 * Math.PI) / total -
+        Math.PI / 2;
 
-      /*
-       * Connection point position.
-       *
-       * left/top are percentages relative to
-       * the diagram container.
-       */
       const left =
         50 + RADIUS_X * Math.cos(angle);
 
@@ -185,23 +173,17 @@ export default function EcosystemFlow({
       return {
         company,
         index,
-
-        /*
-         * Connection point
-         */
         left,
         top,
+        cardTransform: getCardTransform(
+          left,
+          top,
+        ),
 
-        /*
-         * Card position relative to connection point
-         */
-        cardTransform: getCardTransform(left, top),
-
-        /*
-         * Colors
-         */
         iconBg:
-          ICON_BG_POOL[index % ICON_BG_POOL.length],
+          ICON_BG_POOL[
+            index % ICON_BG_POOL.length
+          ],
 
         nameColor:
           NAME_COLOR_POOL[
@@ -214,41 +196,76 @@ export default function EcosystemFlow({
   return (
     <>
       {/* ================================================================== */}
-      {/* DESKTOP RADIAL ECOSYSTEM                                          */}
+      {/* DESKTOP                                                            */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[540px] w-full overflow-hidden xl:block xl:h-[580px] 2xl:h-[620px]">
+      <div
+        className="
+          relative
+          hidden
+          h-[500px]
+          w-full
+          overflow-visible
+          xl:block
+          xl:h-[540px]
+          2xl:h-[580px]
+        "
+      >
         {/* ================================================================ */}
-        {/* CONNECTION LINES                                                */}
+        {/* CONNECTION LINES                                                 */}
         {/* ================================================================ */}
 
         <svg
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            z-0
+            h-full
+            w-full
+            overflow-visible
+          "
           aria-hidden="true"
         >
-          {/* Amber arrowhead drawn where each line meets a company */}
           <defs>
+            {/* Amber Arrow */}
             <marker
               id="ecoArrow"
               viewBox="0 0 10 10"
               refX="8"
               refY="5"
-              markerWidth="7"
-              markerHeight="7"
+              markerWidth="6"
+              markerHeight="6"
               orient="auto"
+              markerUnits="strokeWidth"
             >
-              <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
+              <path
+                d="M 0 0 L 10 5 L 0 10 Z"
+                fill="#f59e0b"
+              />
             </marker>
           </defs>
 
-          {/* -------------------------------------------------------------- */}
-          {/* Center → Company Lines (arrow points at the company)          */}
-          {/* -------------------------------------------------------------- */}
+          {/* ============================================================ */}
+          {/* CENTER → COMPANY                                              */}
+          {/* ============================================================ */}
 
           {nodes.map((node) => {
-            // Stop the line short of the card so the arrowhead sits in open space.
-            const x2 = 50 + (node.left - 50) * 0.84;
-            const y2 = 50 + (node.top - 50) * 0.84;
+            /*
+             * Arrow stops shortly before the card.
+             */
+            const LINE_END_DISTANCE = 0.80;
+
+            const x2 =
+              50 +
+              (node.left - 50) *
+                LINE_END_DISTANCE;
+
+            const y2 =
+              50 +
+              (node.top - 50) *
+                LINE_END_DISTANCE;
+
             return (
               <line
                 key={`line-${node.company.id}`}
@@ -259,14 +276,19 @@ export default function EcosystemFlow({
                 stroke="#f59e0b"
                 strokeWidth="2"
                 strokeLinecap="round"
-                strokeOpacity="0.6"
+                strokeOpacity="0.65"
                 markerEnd="url(#ecoArrow)"
               />
             );
           })}
 
-          {/* Center origin dot */}
-          <circle cx="50%" cy="50%" r="3.5" fill="#f59e0b" />
+          {/* Center Dot */}
+          <circle
+            cx="50%"
+            cy="50%"
+            r="3.5"
+            fill="#f59e0b"
+          />
         </svg>
 
         {/* ================================================================ */}
@@ -279,14 +301,14 @@ export default function EcosystemFlow({
             left-1/2
             top-1/2
             z-20
-            h-36
-            w-36
+            h-32
+            w-32
             -translate-x-1/2
             -translate-y-1/2
-            xl:h-40
-            xl:w-40
-            2xl:h-44
-            2xl:w-44
+            xl:h-36
+            xl:w-36
+            2xl:h-40
+            2xl:w-40
           "
         >
           <div
@@ -299,7 +321,7 @@ export default function EcosystemFlow({
               justify-center
               rounded-full
               bg-slate-950
-              px-4
+              px-3
               text-center
               text-white
               shadow-xl
@@ -309,12 +331,13 @@ export default function EcosystemFlow({
             "
           >
             {/* P Logo */}
+
             <div
               className="
-                mb-2
+                mb-1.5
                 flex
-                h-8
-                w-8
+                h-7
+                w-7
                 items-center
                 justify-center
                 rounded-lg
@@ -322,27 +345,28 @@ export default function EcosystemFlow({
                 from-amber-400
                 to-amber-600
                 font-serif
-                text-lg
+                text-base
                 font-bold
                 text-slate-950
-                xl:h-9
-                xl:w-9
+                xl:h-8
+                xl:w-8
               "
             >
               P
             </div>
 
-            {/* Holding Company Name */}
+            {/* Company Name */}
+
             <div
               className="
-                max-w-[120px]
-                text-[9px]
+                max-w-[115px]
+                text-[8px]
                 font-bold
                 uppercase
                 leading-tight
                 tracking-wide
-                xl:max-w-[135px]
-                xl:text-[10px]
+                xl:max-w-[125px]
+                xl:text-[9px]
               "
             >
               Petronick Corporate Holdings LLC
@@ -359,6 +383,7 @@ export default function EcosystemFlow({
             <div
               className="
                 flex
+                min-w-0
                 items-center
                 gap-2
                 rounded-xl
@@ -375,7 +400,10 @@ export default function EcosystemFlow({
                 xl:p-2.5
               "
             >
-              {/* Company Icon */}
+              {/* ======================================================== */}
+              {/* ICON                                                       */}
+              {/* ======================================================== */}
+
               <CompanyIcon
                 company={node.company}
                 bg={node.iconBg}
@@ -388,32 +416,40 @@ export default function EcosystemFlow({
                 "
               />
 
-              {/* Company Information */}
+              {/* ======================================================== */}
+              {/* INFORMATION                                                */}
+              {/* ======================================================== */}
+
               <div className="min-w-0 flex-1">
                 {/* Company Name */}
+
                 <div
                   className={`
-                    truncate
-                    text-[12px]
+                    whitespace-nowrap
+                    text-[10px]
                     font-bold
                     leading-tight
+                    tracking-[-0.01em]
                     ${node.nameColor}
-                    xl:text-[13px]
+                    xl:text-[11px]
+                    2xl:text-[12px]
                   `}
                   title={node.company.name}
                 >
-                  {node.index + 1}. {node.company.name}
+                  {node.index + 1}.{" "}
+                  {node.company.name}
                 </div>
 
                 {/* Revenue Stage */}
+
                 <div
                   className="
-                    mt-0.5
-                    truncate
-                    text-[10px]
+                    mt-1
+                    whitespace-nowrap
+                    text-[9px]
                     leading-tight
                     text-slate-400
-                    xl:text-[11px]
+                    xl:text-[10px]
                   "
                   title={
                     node.company.revenueStage ||
@@ -428,9 +464,9 @@ export default function EcosystemFlow({
           );
 
           /*
-           * If company has a website,
-           * make the entire card clickable.
+           * Website available
            */
+
           if (node.company.website) {
             return (
               <a
@@ -443,14 +479,16 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-40
+                  w-[150px]
                   cursor-pointer
-                  2xl:w-44
+                  xl:w-[158px]
+                  2xl:w-[168px]
                 "
                 style={{
                   left: `${node.left}%`,
                   top: `${node.top}%`,
-                  transform: node.cardTransform,
+                  transform:
+                    node.cardTransform,
                 }}
               >
                 {content}
@@ -459,28 +497,30 @@ export default function EcosystemFlow({
           }
 
           /*
-           * Normal non-clickable card
+           * No website
            */
+
           return (
             <div
               key={node.company.id}
               className="
                 absolute
                 z-10
-                w-40
-                2xl:w-44
+                w-[150px]
+                xl:w-[158px]
+                2xl:w-[168px]
               "
               style={{
                 left: `${node.left}%`,
                 top: `${node.top}%`,
-                transform: node.cardTransform,
+                transform:
+                  node.cardTransform,
               }}
             >
               {content}
             </div>
           );
         })}
-
       </div>
 
       {/* ================================================================== */}
@@ -489,7 +529,7 @@ export default function EcosystemFlow({
 
       <div className="xl:hidden">
         {/* ================================================================ */}
-        {/* MOBILE CENTER HUB                                               */}
+        {/* MOBILE HUB                                                       */}
         {/* ================================================================ */}
 
         <div
@@ -498,6 +538,7 @@ export default function EcosystemFlow({
             mb-5
             flex
             w-fit
+            max-w-full
             flex-col
             items-center
             rounded-2xl
@@ -511,7 +552,6 @@ export default function EcosystemFlow({
             ring-amber-500/40
           "
         >
-          {/* P Logo */}
           <div
             className="
               mb-1.5
@@ -533,7 +573,6 @@ export default function EcosystemFlow({
             P
           </div>
 
-          {/* Company Name */}
           <div
             className="
               text-[10px]
@@ -554,20 +593,23 @@ export default function EcosystemFlow({
           {nodes.map((node) => {
             const content = (
               <>
-                {/* Company Icon */}
                 <CompanyIcon
                   company={node.company}
                   bg={node.iconBg}
-                  className="h-10 w-10 text-sm"
+                  className="
+                    h-10
+                    w-10
+                    text-sm
+                  "
                 />
 
-                {/* Company Information */}
                 <div className="min-w-0 flex-1">
                   <div
                     className={`
-                      truncate
-                      text-sm
+                      whitespace-nowrap
+                      text-xs
                       font-bold
+                      leading-tight
                       ${node.nameColor}
                     `}
                   >
@@ -577,9 +619,9 @@ export default function EcosystemFlow({
 
                   <div
                     className="
-                      mt-0.5
-                      truncate
-                      text-xs
+                      mt-1
+                      whitespace-nowrap
+                      text-[10px]
                       text-slate-400
                     "
                   >
@@ -588,7 +630,8 @@ export default function EcosystemFlow({
                   </div>
                 </div>
 
-                {/* Amber Connection Dot */}
+                {/* Amber Dot */}
+
                 <div
                   className="
                     h-2
@@ -603,9 +646,6 @@ export default function EcosystemFlow({
               </>
             );
 
-            /*
-             * Website available
-             */
             if (node.company.website) {
               return (
                 <a
@@ -618,6 +658,7 @@ export default function EcosystemFlow({
                     flex
                     items-center
                     gap-3
+                    overflow-hidden
                     rounded-xl
                     border
                     border-slate-200
@@ -635,9 +676,6 @@ export default function EcosystemFlow({
               );
             }
 
-            /*
-             * Normal card
-             */
             return (
               <div
                 key={node.company.id}
@@ -645,6 +683,7 @@ export default function EcosystemFlow({
                   flex
                   items-center
                   gap-3
+                  overflow-hidden
                   rounded-xl
                   border
                   border-slate-200
