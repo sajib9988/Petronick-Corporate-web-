@@ -48,8 +48,8 @@ export default function HeroSection({
 
   return (
     <section
-      className={`relative flex min-h-[60dvh] sm:min-h-[70dvh] w-full items-center justify-center bg-gray-950 pt-20 sm:pt-28 ${
-        hasTrustBar ? "pb-32 sm:pb-40" : "pb-20 sm:pb-28"
+      className={`relative flex min-h-[42dvh] sm:min-h-[52dvh] w-full items-center justify-center bg-gray-950 pt-14 sm:pt-20 ${
+        hasTrustBar ? "pb-24 sm:pb-28" : "pb-14 sm:pb-20"
       }`}
     >
       {/* Background */}

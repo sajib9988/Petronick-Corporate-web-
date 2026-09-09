@@ -58,7 +58,7 @@ export default async function HomePage() {
       />
 
       {/* ── Section 2: Who We Are ── */}
-      <section className="pt-24 pb-8 sm:pt-28 sm:pb-10">
+      <section className="pt-20 pb-8 sm:pt-24 sm:pb-10">
         <Container>
       <Reveal>
 
