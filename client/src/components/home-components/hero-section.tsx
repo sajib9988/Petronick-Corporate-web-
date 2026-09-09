@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
 import TrustBar, { type TrustBarItem } from "@/components/home-components/TrustBar";
+import { Container } from "../Container";
 
 interface HeroContent {
   headline?: string;
@@ -118,11 +119,14 @@ export default function HeroSection({
       </motion.div>
 
       {/* Trust bar — overlaps the bottom edge of the hero banner */}
-      {hasTrustBar && (
-        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-1/2 px-4 sm:px-6">
+      <Container>
+ {hasTrustBar && (
+        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-[75%] px-4 sm:px-6">
           <TrustBar items={trustItems!} />
         </div>
       )}
+      </Container>
+     
     </section>
   );
 }
