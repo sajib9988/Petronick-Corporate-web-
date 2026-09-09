@@ -52,7 +52,7 @@ interface EcosystemFlowProps {
 |
 */
 
-const RADIUS_X = 40;
+const RADIUS_X = 38;
 const RADIUS_Y = 40;
 
 /*
@@ -217,7 +217,7 @@ export default function EcosystemFlow({
       {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[520px] w-full overflow-hidden lg:block xl:h-[600px]">
+      <div className="relative hidden h-[460px] w-full overflow-hidden lg:block xl:h-[520px]">
         {/* ================================================================ */}
         {/* CONNECTION LINES                                                */}
         {/* ================================================================ */}
@@ -226,50 +226,48 @@ export default function EcosystemFlow({
           className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           aria-hidden="true"
         >
-          {/* -------------------------------------------------------------- */}
-          {/* Center → Company Lines                                         */}
-          {/* -------------------------------------------------------------- */}
-
-          {nodes.map((node) => (
-            <line
-              key={`line-${node.company.id}`}
-              x1="50%"
-              y1="50%"
-              x2={`${node.left}%`}
-              y2={`${node.top}%`}
-              stroke="#f59e0b"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              opacity="0.65"
-            />
-          ))}
+          {/* Amber arrowhead drawn where each line meets a company */}
+          <defs>
+            <marker
+              id="ecoArrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerUnits="userSpaceOnUse"
+              markerWidth="11"
+              markerHeight="11"
+              orient="auto"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
+            </marker>
+          </defs>
 
           {/* -------------------------------------------------------------- */}
-          {/* Center Connection Point                                       */}
+          {/* Center → Company Lines (arrow points at the company)          */}
           {/* -------------------------------------------------------------- */}
 
-          <circle
-            cx="50%"
-            cy="50%"
-            r="4"
-            fill="#f59e0b"
-          />
+          {nodes.map((node) => {
+            // Stop the line just short of the card so the arrowhead is visible.
+            const x2 = 50 + (node.left - 50) * 0.93;
+            const y2 = 50 + (node.top - 50) * 0.93;
+            return (
+              <line
+                key={`line-${node.company.id}`}
+                x1="50%"
+                y1="50%"
+                x2={`${x2}%`}
+                y2={`${y2}%`}
+                stroke="#f59e0b"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                opacity="0.7"
+                markerEnd="url(#ecoArrow)"
+              />
+            );
+          })}
 
-          {/* -------------------------------------------------------------- */}
-          {/* Company Connection Points                                     */}
-          {/* -------------------------------------------------------------- */}
-
-          {nodes.map((node) => (
-            <circle
-              key={`connection-${node.company.id}`}
-              cx={`${node.left}%`}
-              cy={`${node.top}%`}
-              r="3.5"
-              fill="#f59e0b"
-              stroke="#ffffff"
-              strokeWidth="1.5"
-            />
-          ))}
+          {/* Center origin dot */}
+          <circle cx="50%" cy="50%" r="3.5" fill="#f59e0b" />
         </svg>
 
         {/* ================================================================ */}
@@ -446,9 +444,9 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-48
+                  w-44
                   cursor-pointer
-                  xl:w-56
+                  xl:w-52
                 "
                 style={{
                   left: `${node.left}%`,
@@ -470,8 +468,8 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-48
-                xl:w-56
+                w-44
+                xl:w-52
               "
               style={{
                 left: `${node.left}%`,
@@ -484,38 +482,6 @@ export default function EcosystemFlow({
           );
         })}
 
-        {/* ================================================================ */}
-        {/* CONNECTION POINTS OVER CARDS                                    */}
-        {/* ================================================================ */}
-
-        {/*
-         * These points are placed above the company cards.
-         * This guarantees that the amber connection dot remains visible.
-         */}
-
-        {nodes.map((node) => (
-          <div
-            key={`point-${node.company.id}`}
-            className="
-              pointer-events-none
-              absolute
-              z-30
-              h-[7px]
-              w-[7px]
-              -translate-x-1/2
-              -translate-y-1/2
-              rounded-full
-              border
-              border-white
-              bg-amber-500
-              shadow-sm
-            "
-            style={{
-              left: `${node.left}%`,
-              top: `${node.top}%`,
-            }}
-          />
-        ))}
       </div>
 
       {/* ================================================================== */}
