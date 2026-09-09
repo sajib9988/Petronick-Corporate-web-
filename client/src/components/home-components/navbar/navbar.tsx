@@ -16,7 +16,7 @@ export default function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-[#0B1220] border-b border-white/10">
+    <header className="w-full sticky top-0 z-50 bg-[#00152D] border-b border-white/10">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-3 items-center h-20">
           {/* Logo — left */}
