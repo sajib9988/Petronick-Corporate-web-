@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 
 import { createAgent } from "@/service/agent";
+import { getAllCompanies } from "@/service/company";
 import Turnstile from "@/components/ui/turnstile";
 
 const agentSchema = z.object({
@@ -54,20 +55,7 @@ const agentSchema = z.object({
 
 type AgentFormValues = z.infer<typeof agentSchema>;
 
-/**
- * Keep this list synchronized with your backend/database.
- * Your PDF lists 8 business units, including Coffee Bean Furniture.
- */
-const COMPANIES = [
-  "Fusion DigiWeb",
-  "Germ Solutions Shop",
-  "Germ Shooters Co",
-  "Petron Fulfillment",
-  "Treaded Brands",
-  "Celebrations Kits",
-  "Profit Pioneers",
-  "Coffee Bean Furniture",
-];
+type CompanyOption = { id: string; name: string };
 
 export default function PromotionAgentForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -77,6 +65,35 @@ export default function PromotionAgentForm() {
   const [error, setError] = useState("");
 
   const [turnstileToken, setTurnstileToken] = useState("");
+
+  const [companies, setCompanies] = useState<CompanyOption[]>([]);
+
+  const [companiesLoading, setCompaniesLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    (async () => {
+      try {
+        const res = await getAllCompanies({ isVisible: true, limit: 100 });
+
+        if (active && res?.success && Array.isArray(res.data)) {
+          setCompanies(
+            (res.data as CompanyOption[]).map((c) => ({
+              id: c.id,
+              name: c.name,
+            })),
+          );
+        }
+      } finally {
+        if (active) setCompaniesLoading(false);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const form = useForm<AgentFormValues>({
     resolver: zodResolver(agentSchema),
@@ -410,38 +427,47 @@ export default function PromotionAgentForm() {
               </p>
 
               <FormControl>
-                <div className="flex flex-wrap gap-2">
-                  {COMPANIES.map((company) => {
-                    const selected =
-                      field.value.includes(company);
+                {companiesLoading ? (
+                  <div className="flex flex-wrap gap-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className="h-10 w-32 animate-pulse rounded-full bg-slate-100"
+                      />
+                    ))}
+                  </div>
+                ) : companies.length === 0 ? (
+                  <p className="text-xs text-slate-400">
+                    No business units are available right now.
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {companies.map((company) => {
+                      const selected = field.value.includes(company.name);
 
-                    return (
-                      <button
-                        key={company}
-                        type="button"
-                        onClick={() =>
-                          field.onChange(
-                            toggleUnit(
-                              company,
-                              field.value,
-                            ),
-                          )
-                        }
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-xs font-semibold transition-all ${
-                          selected
-                            ? "border-slate-950 bg-slate-950 text-white shadow-sm"
-                            : "border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-sm"
-                        }`}
-                      >
-                        {selected && (
-                          <CheckCircle2 size={14} />
-                        )}
+                      return (
+                        <button
+                          key={company.id}
+                          type="button"
+                          onClick={() =>
+                            field.onChange(
+                              toggleUnit(company.name, field.value),
+                            )
+                          }
+                          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-xs font-semibold transition-all ${
+                            selected
+                              ? "border-slate-950 bg-slate-950 text-white shadow-sm"
+                              : "border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-sm"
+                          }`}
+                        >
+                          {selected && <CheckCircle2 size={14} />}
 
-                        {company}
-                      </button>
-                    );
-                  })}
-                </div>
+                          {company.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </FormControl>
 
               <FormMessage />
