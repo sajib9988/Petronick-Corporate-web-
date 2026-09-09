@@ -547,10 +547,10 @@ export default function EcosystemFlow({
         </div>
 
         {/* ================================================================ */}
-        {/* MOBILE / TABLET COMPANY LIST                                    */}
+        {/* MOBILE COMPANY LIST                                             */}
         {/* ================================================================ */}
 
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+        <div className="space-y-2.5">
           {nodes.map((node) => {
             const content = (
               <>
