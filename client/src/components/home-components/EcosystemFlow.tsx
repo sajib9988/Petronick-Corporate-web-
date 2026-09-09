@@ -52,8 +52,8 @@ interface EcosystemFlowProps {
 |
 */
 
-const RADIUS_X = 47;
-const RADIUS_Y = 45;
+const RADIUS_X = 40;
+const RADIUS_Y = 40;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,31 +72,31 @@ function getCardTransform(left: number, top: number) {
   let translateY = "-50%";
 
   /*
-   * Right side
+   * Right side → card hangs to the LEFT of the point (toward center)
    */
   if (left > 58) {
-    translateX = "0%";
-  }
-
-  /*
-   * Left side
-   */
-  if (left < 42) {
     translateX = "-100%";
   }
 
   /*
-   * Bottom
+   * Left side → card hangs to the RIGHT of the point (toward center)
    */
-  if (top > 58) {
-    translateY = "0%";
+  if (left < 42) {
+    translateX = "0%";
   }
 
   /*
-   * Top
+   * Bottom → card sits ABOVE the point (toward center)
+   */
+  if (top > 58) {
+    translateY = "-100%";
+  }
+
+  /*
+   * Top → card sits BELOW the point (toward center)
    */
   if (top < 42) {
-    translateY = "-100%";
+    translateY = "0%";
   }
 
   return `translate(${translateX}, ${translateY})`;
@@ -217,13 +217,13 @@ export default function EcosystemFlow({
       {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
-      <div className="relative hidden aspect-[16/10] w-full overflow-visible lg:block">
+      <div className="relative hidden h-[520px] w-full overflow-hidden lg:block xl:h-[600px]">
         {/* ================================================================ */}
         {/* CONNECTION LINES                                                */}
         {/* ================================================================ */}
 
         <svg
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-visible"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           aria-hidden="true"
         >
           {/* -------------------------------------------------------------- */}
@@ -446,9 +446,9 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-40
+                  w-48
                   cursor-pointer
-                  xl:w-48
+                  xl:w-56
                 "
                 style={{
                   left: `${node.left}%`,
@@ -470,8 +470,8 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-40
-                xl:w-48
+                w-48
+                xl:w-56
               "
               style={{
                 left: `${node.left}%`,

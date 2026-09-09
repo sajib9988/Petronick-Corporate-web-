@@ -295,42 +295,17 @@ export const FIELDS: Record<SectionType, SectionField[]> = {
   // ==========================================================
 
   CLOSING: [
-    {
-      key: "headline",
-      label: "Headline",
-    },
-
-    {
-      key: "paragraph",
-      label: "Paragraph",
-      multiline: true,
-    },
-
-    {
-      key: "badge1",
-      label: "Badge 1",
-    },
-
-    {
-      key: "badge2",
-      label: "Badge 2",
-    },
-
-    {
-      key: "badge3",
-      label: "Badge 3",
-    },
-
-    {
-      key: "ctaText",
-      label: "CTA Text",
-    },
-
-    {
-      key: "ctaLink",
-      label: "CTA Link",
-    },
-  ],
+  { key: "label", label: "Eyebrow / Badge Label" },   // ← নতুন
+  { key: "headline", label: "Headline" },
+  { key: "paragraph", label: "Paragraph", multiline: true },
+  { key: "badge1", label: "Icon Item 1 (e.g. Scalable Infrastructure)" },
+  { key: "badge2", label: "Icon Item 2 (e.g. Multiple Revenue Channels)" },
+  { key: "badge3", label: "Icon Item 3 (e.g. Strategic Ownership Model)" },
+  { key: "ctaText", label: "Primary Button Text" },
+  { key: "ctaLink", label: "Primary Button Link" },
+  { key: "secondaryBtnText", label: "Secondary Button Text" },   // ← নতুন
+  { key: "secondaryBtnLink", label: "Secondary Button Link" },   // ← নতুন
+],
 
   // ==========================================================
   // ABOUT

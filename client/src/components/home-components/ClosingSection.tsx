@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Network, TrendingUp, Landmark } from "lucide-react";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 
 interface ClosingContent {
+  label?: string;
   headline?: string;
   paragraph?: string;
   badge1?: string;
@@ -13,6 +14,8 @@ interface ClosingContent {
   badge3?: string;
   ctaText?: string;
   ctaLink?: string;
+  secondaryBtnText?: string;
+  secondaryBtnLink?: string;
 }
 
 interface ClosingSectionProps {
@@ -20,112 +23,104 @@ interface ClosingSectionProps {
   content?: ClosingContent;
 }
 
-export default function ClosingSection({
-  image,
-  content,
-}: ClosingSectionProps) {
-  const headline =
-    content?.headline || "Built to Scale. Designed to Win.";
+const ICONS = [Network, TrendingUp, Landmark];
 
+export default function ClosingSection({ content }: ClosingSectionProps) {
+  const label = content?.label || "Built for Long Term Growth";
+  const headline =
+    content?.headline ||
+    "Explore the Companies Behind Petronick Corporate Holdings LLC";
   const paragraph =
     content?.paragraph ||
-    "Petronick Corporate Holdings is positioned to grow rapidly across multiple markets with infrastructure already in place.";
+    "Discover the businesses, capabilities, and opportunities within our connected portfolio.";
 
-  const ctaText = content?.ctaText || "Get in Touch";
-  const ctaLink = content?.ctaLink || "/contact";
+  const ctaText = content?.ctaText || "View Our Companies";
+  const ctaLink = content?.ctaLink || "/companies";
+  const secondaryBtnText = content?.secondaryBtnText || "Contact Us";
+  const secondaryBtnLink = content?.secondaryBtnLink || "/contact";
 
-  const badges = [
+  const items = [
     content?.badge1 || "Scalable Infrastructure",
     content?.badge2 || "Multiple Revenue Channels",
     content?.badge3 || "Strategic Ownership Model",
   ].filter(Boolean);
 
   return (
-    <section
-      className="relative py-20 px-4 sm:px-6 lg:px-8 text-center rounded-3xl overflow-hidden bg-gray-900 bg-cover bg-center"
-      style={
-        image
-          ? {
-              backgroundImage: `url("${image}")`,
-            }
-          : undefined
-      }
-    >
-      {/* Dark wash overlay when a custom image is set */}
-      {image && (
-        <div className="absolute inset-0 bg-gray-950/75 backdrop-blur-sm" />
-      )}
+    <section className="relative py-14 px-6 sm:px-10 lg:px-12 rounded-3xl border border-amber-100 bg-white overflow-hidden">
+      <div className="pointer-events-none absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-amber-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
 
-      {/* Default dark background + grid texture when no CMS image exists */}
-      {!image && (
-        <>
-          <div
-            className="absolute inset-0 opacity-[0.05]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
-            }}
-          />
-          <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-amber-600/10 blur-3xl" />
-        </>
-      )}
-
-      {/* Top amber line */}
-      <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
-
-      {/* Content */}
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{
-          once: true,
-          amount: 0.4,
-        }}
-        variants={staggerContainer(0.12, 0)}
-        className="relative z-10"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={staggerContainer(0.1, 0)}
+        className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
       >
-        {/* Badges */}
-        <motion.div
-          variants={fadeUp(0, 0.5)}
-          className="inline-flex items-center gap-3 flex-wrap justify-center mb-8"
-        >
-          {badges.map((label) => (
-            <span
-              key={label}
-              className="text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20"
-            >
-              {label}
-            </span>
-          ))}
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h2
-          variants={fadeUp(0.05, 0.6)}
-          className="text-2xl sm:text-3xl font-bold text-white mb-3"
-        >
-          {headline}
-        </motion.h2>
-
-        {/* Paragraph */}
-        <motion.p
-          variants={fadeUp(0.1, 0.6)}
-          className="text-gray-400 text-sm max-w-lg mx-auto mb-7"
-        >
-          {paragraph}
-        </motion.p>
-
-        {/* CTA */}
-        <motion.div variants={fadeUp(0.15, 0.6)}>
-          <Link
-            href={ctaLink}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-6 py-2.5 rounded-lg shadow-md shadow-amber-900/30 hover:shadow-amber-700/40 hover:scale-[1.03] transition-all"
+        {/* Left: text + buttons */}
+        <div>
+          <motion.p
+            variants={fadeUp(0, 0.5)}
+            className="text-xs font-semibold tracking-widest text-amber-600 uppercase mb-3"
           >
-            {ctaText}
-            <ArrowRight size={14} />
-          </Link>
+            {label}
+          </motion.p>
+
+          <motion.h2
+            variants={fadeUp(0.05, 0.6)}
+            className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight"
+          >
+            {headline}
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp(0.1, 0.6)}
+            className="text-gray-500 text-sm leading-relaxed max-w-md mb-7"
+          >
+            {paragraph}
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp(0.15, 0.6)}
+            className="flex flex-col sm:flex-row gap-3"
+          >
+            <Link
+              href={ctaLink}
+              className="inline-flex items-center justify-center gap-2 bg-gray-900 text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              {ctaText} <ArrowRight size={14} />
+            </Link>
+            <Link
+              href={secondaryBtnLink}
+              className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 font-semibold text-sm px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              {secondaryBtnText}
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Right: icon list */}
+        <motion.div
+          variants={staggerContainer(0.1, 0.1)}
+          className="flex flex-col gap-5"
+        >
+          {items.map((label, i) => {
+            const Icon = ICONS[i % ICONS.length];
+            return (
+              <motion.div
+                key={label}
+                variants={fadeUp(0, 0.5)}
+                className="flex items-center gap-4"
+              >
+                <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                  <Icon size={20} />
+                </div>
+                <span className="text-sm font-semibold text-gray-800">
+                  {label}
+                </span>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </motion.div>
     </section>

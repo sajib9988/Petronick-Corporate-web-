@@ -38,31 +38,29 @@ export default function EcosystemSection({ companies, content }: EcosystemSectio
 
   return (
     <section className="py-12 lg:py-16">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-        {/* Left: Text */}
-        <div className="lg:col-span-4">
-          <p className="text-sm font-semibold tracking-[0.2em] text-amber-500 uppercase mb-3">
-            {label}
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-5 leading-tight tracking-tight">
-            {title}
-          </h2>
-          <p className="text-slate-500 text-base leading-7 mb-8">
-            {description}
-          </p>
-          <Link
-            href={btnLink}
-            className="inline-flex items-center gap-2 bg-slate-900 text-white rounded-lg px-5 py-3 text-sm font-semibold hover:bg-slate-800 transition-all"
-          >
-            {btnText}
-            <ArrowRight size={15} />
-          </Link>
-        </div>
+      {/* Header */}
+      <div className="max-w-2xl">
+        <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-amber-500 uppercase mb-3">
+          {label}
+        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight tracking-tight">
+          {title}
+        </h2>
+        <p className="text-slate-500 text-[15px] sm:text-base leading-7 mb-6">
+          {description}
+        </p>
+        <Link
+          href={btnLink}
+          className="inline-flex items-center gap-2 bg-slate-900 text-white rounded-lg px-5 py-3 text-sm font-semibold hover:bg-slate-800 transition-all"
+        >
+          {btnText}
+          <ArrowRight size={15} />
+        </Link>
+      </div>
 
-        {/* Right: Diagram */}
-        <div className="lg:col-span-8">
-          <EcosystemFlow companies={companies} />
-        </div>
+      {/* Diagram — full width */}
+      <div className="mt-10 lg:mt-6">
+        <EcosystemFlow companies={companies} />
       </div>
     </section>
   );

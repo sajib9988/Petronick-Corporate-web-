@@ -85,19 +85,18 @@ export const companiesColumns = ({
     ),
   },
 
-  {
-    accessorKey: "revenueStage",
-    header: "Stage",
-    cell: ({ row }) =>
-      row.original.revenueStage ? (
-        <span className="text-[10px] bg-amber-50 text-amber-700 font-medium px-2 py-1 rounded-full">
-          {row.original.revenueStage}
-        </span>
-      ) : (
-        <span className="text-xs text-gray-300">—</span>
-      ),
-  },
-
+ {
+  accessorKey: "revenueStage",
+  header: "Category",   
+  cell: ({ row }) =>
+    row.original.revenueStage ? (
+      <span className="text-[10px] bg-amber-50 text-amber-700 font-medium px-2 py-1 rounded-full">
+        {row.original.revenueStage}
+      </span>
+    ) : (
+      <span className="text-xs text-gray-300">—</span>
+    ),
+},
   {
     accessorKey: "order",
     header: "Order",
