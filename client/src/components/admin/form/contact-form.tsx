@@ -270,7 +270,7 @@ export default function ContactForm({
 
               <FormControl>
                 <Input
-                  placeholder="+1 234 567 8900"
+                  placeholder="(234) 567-8900"
                   {...field}
                 />
               </FormControl>

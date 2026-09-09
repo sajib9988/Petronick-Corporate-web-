@@ -282,7 +282,7 @@ export default function PromotionAgentForm() {
 
                 <FormControl>
                   <Input
-                    placeholder="+1 234 567 8900"
+                    placeholder="(234) 567-8900"
                     className="mt-1 h-11 rounded-xl border-slate-200 bg-slate-50/50 px-4 transition-all focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-100"
                     {...field}
                   />
