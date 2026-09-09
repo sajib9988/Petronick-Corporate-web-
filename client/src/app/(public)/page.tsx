@@ -29,15 +29,36 @@ export default async function HomePage() {
 
   const companies: Company[] = allCompanies.data || [];
 
+  const heroContent = heroSection?.content ?? {};
+  const trustItems = [
+    {
+      value: heroContent.stat1Value?.trim() || String(companies.length),
+      label: heroContent.stat1Label?.trim() || "Core Business Units",
+    },
+    {
+      value: heroContent.stat2Value?.trim() || "1",
+      label: heroContent.stat2Label?.trim() || "Connected Ecosystem",
+    },
+    {
+      value: heroContent.stat3Value?.trim() || "B2B • B2C",
+      label: heroContent.stat3Label?.trim() || "Market Reach",
+    },
+    {
+      value: heroContent.stat4Value?.trim() || "Multi Sector",
+      label: heroContent.stat4Label?.trim() || "Portfolio Model",
+    },
+  ];
+
   return (
     <main>
       <HeroSection
         image={heroSection?.image || "/placeholder-hero.jpg"}
-        content={heroSection?.content ?? {}}
+        content={heroContent}
+        trustItems={trustItems}
       />
 
       {/* ── Section 2: Who We Are ── */}
-      <section className="py-8 sm:py-10">
+      <section className="pt-24 pb-8 sm:pt-28 sm:pb-10">
         <Container>
       <Reveal>
 

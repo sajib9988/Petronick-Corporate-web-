@@ -21,6 +21,7 @@ import {
 
 import { createContact } from "@/service/contact";
 import Turnstile from "@/components/ui/turnstile";
+import { formatUsPhone, isCompleteUsPhone } from "@/lib/phone";
 
 
 // ─────────────────────────────────────────────
@@ -32,7 +33,12 @@ const contactSchema = z.object({
 
   email: z.string().email("Invalid email address"),
 
-  phone: z.string().optional(),
+  phone: z
+    .string()
+    .optional()
+    .refine((v) => !v || isCompleteUsPhone(v), {
+      message: "Enter a valid US phone number: (XXX) XXX-XXXX",
+    }),
 
   subject: z.string().min(1, "Subject is required"),
 
@@ -270,8 +276,17 @@ export default function ContactForm({
 
               <FormControl>
                 <Input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   placeholder="(234) 567-8900"
-                  {...field}
+                  name={field.name}
+                  ref={field.ref}
+                  value={field.value ?? ""}
+                  onBlur={field.onBlur}
+                  onChange={(e) =>
+                    field.onChange(formatUsPhone(e.target.value))
+                  }
                 />
               </FormControl>
 

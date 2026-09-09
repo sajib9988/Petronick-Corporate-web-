@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
+import TrustBar, { type TrustBarItem } from "@/components/home-components/TrustBar";
 
 interface HeroContent {
   headline?: string;
@@ -20,11 +21,13 @@ interface HeroContent {
 interface HeroSectionProps {
   image?: string | null;
   content?: HeroContent;
+  trustItems?: TrustBarItem[];
 }
 
 export default function HeroSection({
   image,
   content,
+  trustItems,
 }: HeroSectionProps) {
   const headline =
     content?.headline ??
@@ -41,8 +44,14 @@ export default function HeroSection({
   const secondaryBtnLink = content?.secondaryBtnLink ?? "/promotion-agent";
   const heroImage = image || content?.image || content?.backgroundImage || null;
 
+  const hasTrustBar = !!trustItems && trustItems.length > 0;
+
   return (
-    <section className="relative flex min-h-[60dvh] sm:min-h-[70dvh] w-full items-center justify-center bg-gray-950 py-20 sm:py-28">
+    <section
+      className={`relative flex min-h-[60dvh] sm:min-h-[70dvh] w-full items-center justify-center bg-gray-950 pt-20 sm:pt-28 ${
+        hasTrustBar ? "pb-32 sm:pb-40" : "pb-20 sm:pb-28"
+      }`}
+    >
       {/* Background */}
       {heroImage && (
         <div
@@ -107,6 +116,13 @@ export default function HeroSection({
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Trust bar — overlaps the bottom edge of the hero banner */}
+      {hasTrustBar && (
+        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-1/2 px-4 sm:px-6">
+          <TrustBar items={trustItems!} />
+        </div>
+      )}
     </section>
   );
 }

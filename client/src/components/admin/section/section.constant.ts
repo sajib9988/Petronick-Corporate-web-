@@ -153,6 +153,50 @@ export const FIELDS: Record<SectionType, SectionField[]> = {
       key: "secondaryBtnLink",
       label: "Secondary Button Link",
     },
+
+    // --------------------------------------------------------
+    // TRUST BAR (4 stat cards overlapping the hero)
+    // --------------------------------------------------------
+
+    {
+      key: "stat1Value",
+      label: "Trust Stat 1 Value (blank = live company count)",
+    },
+
+    {
+      key: "stat1Label",
+      label: "Trust Stat 1 Label",
+    },
+
+    {
+      key: "stat2Value",
+      label: "Trust Stat 2 Value",
+    },
+
+    {
+      key: "stat2Label",
+      label: "Trust Stat 2 Label",
+    },
+
+    {
+      key: "stat3Value",
+      label: "Trust Stat 3 Value",
+    },
+
+    {
+      key: "stat3Label",
+      label: "Trust Stat 3 Label",
+    },
+
+    {
+      key: "stat4Value",
+      label: "Trust Stat 4 Value",
+    },
+
+    {
+      key: "stat4Label",
+      label: "Trust Stat 4 Label",
+    },
   ],
 
   // ==========================================================

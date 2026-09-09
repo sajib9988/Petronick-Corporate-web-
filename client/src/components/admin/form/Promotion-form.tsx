@@ -23,13 +23,19 @@ import {
 import { createAgent } from "@/service/agent";
 import { getAllCompanies } from "@/service/company";
 import Turnstile from "@/components/ui/turnstile";
+import { formatUsPhone, isCompleteUsPhone } from "@/lib/phone";
 
 const agentSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
 
   email: z.string().email("Invalid email address"),
 
-  phone: z.string().min(1, "Phone number is required"),
+  phone: z
+    .string()
+    .min(1, "Phone number is required")
+    .refine(isCompleteUsPhone, {
+      message: "Enter a valid US phone number: (XXX) XXX-XXXX",
+    }),
 
   location: z.string().min(1, "Location is required"),
 
@@ -282,9 +288,18 @@ export default function PromotionAgentForm() {
 
                 <FormControl>
                   <Input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     placeholder="(234) 567-8900"
                     className="mt-1 h-11 rounded-xl border-slate-200 bg-slate-50/50 px-4 transition-all focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-100"
-                    {...field}
+                    name={field.name}
+                    ref={field.ref}
+                    value={field.value ?? ""}
+                    onBlur={field.onBlur}
+                    onChange={(e) =>
+                      field.onChange(formatUsPhone(e.target.value))
+                    }
                   />
                 </FormControl>
 

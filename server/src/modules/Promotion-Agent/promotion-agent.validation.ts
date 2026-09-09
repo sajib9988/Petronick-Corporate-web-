@@ -1,10 +1,15 @@
 import {z} from 'zod';
 
+// US phone display format: (XXX) XXX-XXXX
+const US_PHONE_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/;
 
  const createAgent = z.object({
     fullName: z.string().min(1, "Full name is required"),
     email: z.string().email("Invalid email address"),
-    phone: z.string().min(1, "Phone number is required"),
+    phone: z
+      .string()
+      .min(1, "Phone number is required")
+      .regex(US_PHONE_REGEX, "Phone must be in the format (XXX) XXX-XXXX"),
     location: z.string().min(1, "Location is required"),
     experience: z.string().min(1, "Experience is required"),
     focus: z.string().min(1, "Focus is required"),
