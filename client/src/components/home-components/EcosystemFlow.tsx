@@ -40,9 +40,73 @@ interface EcosystemFlowProps {
   companies: Company[];
 }
 
-// Ellipse radii, as a percentage of the diagram box.
-const RADIUS_X = 46;
-const RADIUS_Y = 42;
+/*
+|--------------------------------------------------------------------------
+| Radial Layout
+|--------------------------------------------------------------------------
+|
+| These values control how far the company connection points
+| are positioned from the center.
+|
+| Higher value = more space between center and companies.
+|
+*/
+
+const RADIUS_X = 47;
+const RADIUS_Y = 45;
+
+/*
+|--------------------------------------------------------------------------
+| Get Card Position
+|--------------------------------------------------------------------------
+|
+| The `left/top` position represents the connection point.
+|
+| The company card is then positioned outward from that point
+| depending on which side of the center it belongs to.
+|
+*/
+
+function getCardTransform(left: number, top: number) {
+  let translateX = "-50%";
+  let translateY = "-50%";
+
+  /*
+   * Right side
+   */
+  if (left > 58) {
+    translateX = "0%";
+  }
+
+  /*
+   * Left side
+   */
+  if (left < 42) {
+    translateX = "-100%";
+  }
+
+  /*
+   * Bottom
+   */
+  if (top > 58) {
+    translateY = "0%";
+  }
+
+  /*
+   * Top
+   */
+  if (top < 42) {
+    translateY = "-100%";
+  }
+
+  return `translate(${translateX}, ${translateY})`;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Company Icon
+|--------------------------------------------------------------------------
+*/
 
 function CompanyIcon({
   company,
@@ -53,62 +117,119 @@ function CompanyIcon({
   bg: string;
   className: string;
 }) {
+  /*
+   * If an icon/image exists
+   */
   if (company.icon) {
     return (
       <div
-        className={`shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-white ${className}`}
+        className={`flex shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white ${className}`}
       >
         <img
           src={company.icon}
-          alt={company.name}
+          alt={`${company.name} icon`}
           className="h-full w-full object-contain p-1"
         />
       </div>
     );
   }
 
+  /*
+   * Fallback:
+   * Use first letter of company name.
+   */
   return (
     <div
       className={`flex shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr ${bg} font-bold text-white ${className}`}
     >
-      {company.name.charAt(0)}
+      {company.name.charAt(0).toUpperCase()}
     </div>
   );
 }
 
-export default function EcosystemFlow({ companies }: EcosystemFlowProps) {
+/*
+|--------------------------------------------------------------------------
+| Main Component
+|--------------------------------------------------------------------------
+*/
+
+export default function EcosystemFlow({
+  companies,
+}: EcosystemFlowProps) {
+  /*
+   * Calculate company positions only when companies change.
+   */
   const nodes = useMemo(() => {
     const total = companies.length || 1;
 
     return companies.map((company, index) => {
-      // Start at the top (12 o'clock), go clockwise.
-      const angle = (index * 2 * Math.PI) / total - Math.PI / 2;
-      const left = 50 + RADIUS_X * Math.cos(angle);
-      const top = 50 + RADIUS_Y * Math.sin(angle);
+      /*
+       * Start from top (12 o'clock)
+       * and move clockwise.
+       */
+      const angle =
+        (index * 2 * Math.PI) / total - Math.PI / 2;
 
-      // Anchor edge cards by their inner edge so nothing spills out of the box.
-      const anchorX = left > 62 ? "-100%" : left < 38 ? "0%" : "-50%";
-      const anchorY = top > 62 ? "-100%" : top < 38 ? "0%" : "-50%";
+      /*
+       * Connection point position.
+       *
+       * left/top are percentages relative to
+       * the diagram container.
+       */
+      const left =
+        50 + RADIUS_X * Math.cos(angle);
+
+      const top =
+        50 + RADIUS_Y * Math.sin(angle);
 
       return {
         company,
         index,
+
+        /*
+         * Connection point
+         */
         left,
         top,
-        anchorX,
-        anchorY,
-        iconBg: ICON_BG_POOL[index % ICON_BG_POOL.length],
-        nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
+
+        /*
+         * Card position relative to connection point
+         */
+        cardTransform: getCardTransform(left, top),
+
+        /*
+         * Colors
+         */
+        iconBg:
+          ICON_BG_POOL[index % ICON_BG_POOL.length],
+
+        nameColor:
+          NAME_COLOR_POOL[
+            index % NAME_COLOR_POOL.length
+          ],
       };
     });
   }, [companies]);
 
   return (
     <>
-      {/* ── Desktop: radial diagram ── */}
+      {/* ================================================================== */}
+      {/* DESKTOP RADIAL ECOSYSTEM                                          */}
+      {/* ================================================================== */}
+
       <div className="relative hidden aspect-[16/10] w-full overflow-visible lg:block">
-        {/* Solid connector lines + round joints */}
-        <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
+        {/* ================================================================ */}
+        {/* CONNECTION LINES                                                */}
+        {/* ================================================================ */}
+
+        <svg
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-visible"
+          aria-hidden="true"
+        >
+          {/* -------------------------------------------------------------- */}
+          {/* Center → Company Lines                                         */}
+          {/* -------------------------------------------------------------- */}
+
           {nodes.map((node) => (
             <line
               key={`line-${node.company.id}`}
@@ -119,101 +240,458 @@ export default function EcosystemFlow({ companies }: EcosystemFlowProps) {
               stroke="#f59e0b"
               strokeWidth="1.5"
               strokeLinecap="round"
-              opacity="0.55"
+              opacity="0.65"
             />
           ))}
-          {/* Origin joint */}
-          <circle cx="50%" cy="50%" r="4" fill="#f59e0b" />
-          {/* Card joints */}
+
+          {/* -------------------------------------------------------------- */}
+          {/* Center Connection Point                                       */}
+          {/* -------------------------------------------------------------- */}
+
+          <circle
+            cx="50%"
+            cy="50%"
+            r="4"
+            fill="#f59e0b"
+          />
+
+          {/* -------------------------------------------------------------- */}
+          {/* Company Connection Points                                     */}
+          {/* -------------------------------------------------------------- */}
+
           {nodes.map((node) => (
             <circle
-              key={`dot-${node.company.id}`}
+              key={`connection-${node.company.id}`}
               cx={`${node.left}%`}
               cy={`${node.top}%`}
-              r="4"
+              r="3.5"
               fill="#f59e0b"
               stroke="#ffffff"
-              strokeWidth="2"
+              strokeWidth="1.5"
             />
           ))}
         </svg>
 
-        {/* Center hub */}
-        <div className="absolute left-1/2 top-1/2 z-20 h-40 w-40 -translate-x-1/2 -translate-y-1/2 xl:h-44 xl:w-44">
-          <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-slate-950 px-4 text-center text-white shadow-xl shadow-slate-900/25 ring-1 ring-amber-500/40">
-            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-lg font-bold text-slate-950">
+        {/* ================================================================ */}
+        {/* CENTER HUB                                                       */}
+        {/* ================================================================ */}
+
+        <div
+          className="
+            absolute
+            left-1/2
+            top-1/2
+            z-20
+            h-36
+            w-36
+            -translate-x-1/2
+            -translate-y-1/2
+            xl:h-40
+            xl:w-40
+            2xl:h-44
+            2xl:w-44
+          "
+        >
+          <div
+            className="
+              flex
+              h-full
+              w-full
+              flex-col
+              items-center
+              justify-center
+              rounded-full
+              bg-slate-950
+              px-4
+              text-center
+              text-white
+              shadow-xl
+              shadow-slate-900/25
+              ring-1
+              ring-amber-500/40
+            "
+          >
+            {/* P Logo */}
+            <div
+              className="
+                mb-2
+                flex
+                h-8
+                w-8
+                items-center
+                justify-center
+                rounded-lg
+                bg-gradient-to-tr
+                from-amber-400
+                to-amber-600
+                font-serif
+                text-lg
+                font-bold
+                text-slate-950
+                xl:h-9
+                xl:w-9
+              "
+            >
               P
             </div>
-            <div className="text-[11px] font-bold uppercase leading-tight tracking-wide">
+
+            {/* Holding Company Name */}
+            <div
+              className="
+                max-w-[120px]
+                text-[9px]
+                font-bold
+                uppercase
+                leading-tight
+                tracking-wide
+                xl:max-w-[135px]
+                xl:text-[10px]
+              "
+            >
               Petronick Corporate Holdings LLC
             </div>
           </div>
         </div>
 
-        {/* Company cards */}
-        {nodes.map((node) => (
-          <div
-            key={node.company.id}
-            className="absolute z-10 w-44 xl:w-52"
-            style={{
-              left: `${node.left}%`,
-              top: `${node.top}%`,
-              transform: `translate(${node.anchorX}, ${node.anchorY})`,
-            }}
-          >
-            <div className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm xl:gap-3 xl:p-3">
+        {/* ================================================================ */}
+        {/* COMPANY CARDS                                                    */}
+        {/* ================================================================ */}
+
+        {nodes.map((node) => {
+          const content = (
+            <div
+              className="
+                flex
+                items-center
+                gap-2
+                rounded-xl
+                border
+                border-slate-200
+                bg-white
+                p-2
+                shadow-sm
+                transition-all
+                duration-300
+                hover:-translate-y-0.5
+                hover:shadow-md
+                xl:gap-2.5
+                xl:p-2.5
+              "
+            >
+              {/* Company Icon */}
               <CompanyIcon
                 company={node.company}
                 bg={node.iconBg}
-                className="h-9 w-9 text-xs"
+                className="
+                  h-8
+                  w-8
+                  text-xs
+                  xl:h-9
+                  xl:w-9
+                "
               />
-              <div className="min-w-0">
+
+              {/* Company Information */}
+              <div className="min-w-0 flex-1">
+                {/* Company Name */}
                 <div
-                  className={`truncate text-[13px] font-bold xl:text-sm ${node.nameColor}`}
+                  className={`
+                    truncate
+                    text-[12px]
+                    font-bold
+                    leading-tight
+                    ${node.nameColor}
+                    xl:text-[13px]
+                  `}
+                  title={node.company.name}
                 >
                   {node.index + 1}. {node.company.name}
                 </div>
-                <div className="truncate text-[11px] text-slate-400 xl:text-xs">
-                  {node.company.revenueStage || "Business Unit"}
+
+                {/* Revenue Stage */}
+                <div
+                  className="
+                    mt-0.5
+                    truncate
+                    text-[10px]
+                    leading-tight
+                    text-slate-400
+                    xl:text-[11px]
+                  "
+                  title={
+                    node.company.revenueStage ||
+                    "Business Unit"
+                  }
+                >
+                  {node.company.revenueStage ||
+                    "Business Unit"}
                 </div>
               </div>
             </div>
-          </div>
+          );
+
+          /*
+           * If company has a website,
+           * make the entire card clickable.
+           */
+          if (node.company.website) {
+            return (
+              <a
+                key={node.company.id}
+                href={node.company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${node.company.name}`}
+                className="
+                  absolute
+                  z-10
+                  block
+                  w-40
+                  cursor-pointer
+                  xl:w-48
+                "
+                style={{
+                  left: `${node.left}%`,
+                  top: `${node.top}%`,
+                  transform: node.cardTransform,
+                }}
+              >
+                {content}
+              </a>
+            );
+          }
+
+          /*
+           * Normal non-clickable card
+           */
+          return (
+            <div
+              key={node.company.id}
+              className="
+                absolute
+                z-10
+                w-40
+                xl:w-48
+              "
+              style={{
+                left: `${node.left}%`,
+                top: `${node.top}%`,
+                transform: node.cardTransform,
+              }}
+            >
+              {content}
+            </div>
+          );
+        })}
+
+        {/* ================================================================ */}
+        {/* CONNECTION POINTS OVER CARDS                                    */}
+        {/* ================================================================ */}
+
+        {/*
+         * These points are placed above the company cards.
+         * This guarantees that the amber connection dot remains visible.
+         */}
+
+        {nodes.map((node) => (
+          <div
+            key={`point-${node.company.id}`}
+            className="
+              pointer-events-none
+              absolute
+              z-30
+              h-[7px]
+              w-[7px]
+              -translate-x-1/2
+              -translate-y-1/2
+              rounded-full
+              border
+              border-white
+              bg-amber-500
+              shadow-sm
+            "
+            style={{
+              left: `${node.left}%`,
+              top: `${node.top}%`,
+            }}
+          />
         ))}
       </div>
 
-      {/* ── Mobile / tablet: stacked list ── */}
+      {/* ================================================================== */}
+      {/* MOBILE / TABLET                                                   */}
+      {/* ================================================================== */}
+
       <div className="lg:hidden">
-        <div className="mx-auto mb-5 flex w-fit flex-col items-center rounded-2xl bg-slate-950 px-6 py-4 text-center text-white ring-1 ring-amber-500/40">
-          <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950">
+        {/* ================================================================ */}
+        {/* MOBILE CENTER HUB                                               */}
+        {/* ================================================================ */}
+
+        <div
+          className="
+            mx-auto
+            mb-5
+            flex
+            w-fit
+            flex-col
+            items-center
+            rounded-2xl
+            bg-slate-950
+            px-6
+            py-4
+            text-center
+            text-white
+            shadow-lg
+            ring-1
+            ring-amber-500/40
+          "
+        >
+          {/* P Logo */}
+          <div
+            className="
+              mb-1.5
+              flex
+              h-8
+              w-8
+              items-center
+              justify-center
+              rounded-lg
+              bg-gradient-to-tr
+              from-amber-400
+              to-amber-600
+              font-serif
+              text-base
+              font-bold
+              text-slate-950
+            "
+          >
             P
           </div>
-          <div className="text-[11px] font-bold uppercase tracking-wide">
+
+          {/* Company Name */}
+          <div
+            className="
+              text-[10px]
+              font-bold
+              uppercase
+              tracking-wide
+            "
+          >
             Petronick Corporate Holdings LLC
           </div>
         </div>
 
+        {/* ================================================================ */}
+        {/* MOBILE COMPANY LIST                                             */}
+        {/* ================================================================ */}
+
         <div className="space-y-2.5">
-          {nodes.map((node) => (
-            <div
-              key={node.company.id}
-              className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
-            >
-              <CompanyIcon
-                company={node.company}
-                bg={node.iconBg}
-                className="h-10 w-10 text-sm"
-              />
-              <div className="min-w-0">
-                <div className={`truncate text-sm font-bold ${node.nameColor}`}>
-                  {node.index + 1}. {node.company.name}
+          {nodes.map((node) => {
+            const content = (
+              <>
+                {/* Company Icon */}
+                <CompanyIcon
+                  company={node.company}
+                  bg={node.iconBg}
+                  className="h-10 w-10 text-sm"
+                />
+
+                {/* Company Information */}
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={`
+                      truncate
+                      text-sm
+                      font-bold
+                      ${node.nameColor}
+                    `}
+                  >
+                    {node.index + 1}.{" "}
+                    {node.company.name}
+                  </div>
+
+                  <div
+                    className="
+                      mt-0.5
+                      truncate
+                      text-xs
+                      text-slate-400
+                    "
+                  >
+                    {node.company.revenueStage ||
+                      "Business Unit"}
+                  </div>
                 </div>
-                <div className="truncate text-xs text-slate-400">
-                  {node.company.revenueStage || "Business Unit"}
-                </div>
+
+                {/* Amber Connection Dot */}
+                <div
+                  className="
+                    h-2
+                    w-2
+                    shrink-0
+                    rounded-full
+                    bg-amber-500
+                    ring-2
+                    ring-amber-100
+                  "
+                />
+              </>
+            );
+
+            /*
+             * Website available
+             */
+            if (node.company.website) {
+              return (
+                <a
+                  key={node.company.id}
+                  href={node.company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${node.company.name}`}
+                  className="
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    border
+                    border-slate-200
+                    bg-white
+                    p-3
+                    shadow-sm
+                    transition-all
+                    duration-300
+                    hover:-translate-y-0.5
+                    hover:shadow-md
+                  "
+                >
+                  {content}
+                </a>
+              );
+            }
+
+            /*
+             * Normal card
+             */
+            return (
+              <div
+                key={node.company.id}
+                className="
+                  flex
+                  items-center
+                  gap-3
+                  rounded-xl
+                  border
+                  border-slate-200
+                  bg-white
+                  p-3
+                  shadow-sm
+                "
+              >
+                {content}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </>
