@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import { AuthSection } from "./AuthSection";
 import { navLinks } from "./nav-links";
 import Image from "next/image";
@@ -13,128 +12,87 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-<header className="w-full relative sticky top-0 z-50 border-b-2 border-amber-700/30">
-  <div 
-    className="absolute inset-0"
-   style={{
-      background: `linear-gradient(107.4deg, rgba(255,242,239,1) 11.1%, rgba(255,219,182,1) 37.5%, rgba(247,165,165,1) 54.3%, rgba(26,42,79,1) 84.3%)`
-    }}
-  />
-  
-  <div className="relative max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
-    <div className="flex items-center justify-between h-20">
-
-      {/* Logo */}
-      <Link href="/" className="flex items-center">
-        <Image
-          src="/PCH Logo.png"
-          alt=""
-          width={220}
-          height={180}
-          priority
-          className="h-18 w-auto object-contain"
-        />
-      </Link>
-
-      {/* Desktop Nav — gap বাড়ানো */}
-      {/* <nav className="hidden lg:flex items-center gap-10">
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={cn(
-              "relative h-20 flex items-center text-[17px] font-semibold tracking-wide transition-all duration-300 group",
-              isActive(link.href)
-                ? "text-amber-400"
-                : "text-stone-300 hover:text-amber-300"
-            )}
-            style={{
-              textShadow: isActive(link.href)
-                ? "0 1px 0 rgba(0,0,0,0.6), 0 -1px 0 rgba(255,193,7,0.2)"
-                : "0 1px 1px rgba(0,0,0,0.7), 0 -1px 0 rgba(255,255,255,0.05)",
-            }}
-          >
-            {link.label}
-
-            <span className="absolute bottom-6 left-0 h-[2px] bg-amber-400 transition-all duration-300 w-0 group-hover:w-full" />
-
-            {isActive(link.href) && (
-              <span 
-                className="absolute bottom-6 left-0 right-0 h-[2px] bg-amber-500"
-                style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.5)" }}
-              />
-            )}
+    <header className="w-full sticky top-0 z-50 bg-[#0B1220] border-b border-white/10">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 items-center h-20">
+          {/* Logo — left */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/PCH Logo.png"
+              alt="Petronick Corporate Holdings LLC"
+              width={220}
+              height={180}
+              priority
+              className="h-16 w-auto object-contain"
+            />
           </Link>
-        ))}
-      </nav> */}
 
-{/* Desktop Nav — white rounded pill, drops in from top on load */}
-<motion.nav
-  initial={{ y: -70, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ duration: 0.6, ease: "easeOut" }}
-  className="hidden lg:flex items-center gap-1 bg-white rounded-full px-2 py-1.5 shadow-lg shadow-black/25 ring-1 ring-black/5"
->
-  {navLinks.map((link) => (
-    <Link
-      key={link.href}
-      href={link.href}
-      className={cn(
-        "px-4 py-2 rounded-full text-[14px] font-semibold tracking-wide transition-all duration-300",
-        isActive(link.href)
-          ? "bg-gradient-to-r from-amber-400 to-amber-600 text-stone-900 shadow-sm"
-          : "text-gray-600 hover:text-amber-600 hover:bg-amber-50"
-      )}
-    >
-      {link.label}
-    </Link>
-  ))}
-</motion.nav>
+          {/* Nav — center (desktop only) */}
+          <nav className="hidden lg:flex items-center justify-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "relative h-20 flex items-center text-[15px] font-semibold tracking-wide transition-colors duration-200",
+                  isActive(link.href)
+                    ? "text-amber-400"
+                    : "text-white/80 hover:text-amber-300"
+                )}
+              >
+                {link.label}
+                {isActive(link.href) && (
+                  <span className="absolute bottom-6 left-0 right-0 h-[2px] bg-amber-400 rounded-full" />
+                )}
+              </Link>
+            ))}
+          </nav>
 
-
-
-
-      <div className="hidden lg:flex items-center gap-2">
-        <AuthSection />
-      </div>
-
-      <button
-        className="lg:hidden p-2 rounded-md text-stone-300 hover:text-amber-300 hover:bg-white/5 transition-colors"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X size={22} /> : <Menu size={22} />}
-      </button>
-    </div>
-  </div>
-
-  {/* Mobile Nav */}
-  {isOpen && (
-    <div className="relative lg:hidden border-t border-amber-700/20 bg-[#1a1d23]/98 backdrop-blur-md">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6 py-3 space-y-1">
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setIsOpen(false)}
-            className={cn(
-              "flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg transition-all",
-              isActive(link.href)
-                ? "bg-amber-400/10 text-amber-400 font-medium"
-                : "text-stone-300 hover:text-white hover:bg-white/5"
-            )}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <div className="pt-2 pb-1 space-y-2 border-t border-white/10 mt-2">
-          <AuthSection isMobile />
+          {/* Right — auth section (desktop) / hamburger (mobile) */}
+          <div className="flex items-center justify-end gap-2">
+            <div className="hidden lg:flex">
+              <AuthSection />
+            </div>
+            <button
+              className="lg:hidden p-2 rounded-md text-white/80 hover:text-amber-300 hover:bg-white/5 transition-colors"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  )}
-</header>
+
+      {/* Mobile Nav */}
+      {isOpen && (
+        <div className="lg:hidden border-t border-white/10 bg-[#0B1220]">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6 py-3 space-y-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg transition-all",
+                  isActive(link.href)
+                    ? "bg-amber-400/10 text-amber-400 font-semibold"
+                    : "text-white/80 hover:text-white hover:bg-white/5"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-2 pb-1 mt-2 border-t border-white/10">
+              <AuthSection isMobile />
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

@@ -210,6 +210,7 @@ export const AuthSection = ({ isMobile = false }) => {
   }
 
   // ── Not logged in ──
+  // ── Not logged in ──
   return (
     <div className={`flex ${isMobile ? "flex-col gap-2" : "items-center gap-3"}`}>
       <Button
