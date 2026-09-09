@@ -38,31 +38,29 @@ export default function EcosystemSection({ companies, content }: EcosystemSectio
 
   return (
     <section className="py-12 lg:py-16">
-      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
-        {/* Left: copy */}
-        <div className="lg:col-span-4">
-          <p className="mb-3 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-amber-500">
-            {label}
-          </p>
-          <h2 className="mb-4 text-3xl md:text-4xl font-bold leading-tight tracking-tight text-slate-900">
-            {title}
-          </h2>
-          <p className="mb-6 text-[15px] sm:text-base leading-7 text-slate-500">
-            {description}
-          </p>
-          <Link
-            href={btnLink}
-            className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-slate-800"
-          >
-            {btnText}
-            <ArrowRight size={15} />
-          </Link>
-        </div>
+      {/* Header */}
+      <div className="max-w-2xl">
+        <p className="mb-3 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-amber-500">
+          {label}
+        </p>
+        <h2 className="mb-4 text-3xl md:text-4xl font-bold leading-tight tracking-tight text-slate-900">
+          {title}
+        </h2>
+        <p className="mb-6 text-[15px] sm:text-base leading-7 text-slate-500">
+          {description}
+        </p>
+        <Link
+          href={btnLink}
+          className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-slate-800"
+        >
+          {btnText}
+          <ArrowRight size={15} />
+        </Link>
+      </div>
 
-        {/* Right: diagram */}
-        <div className="lg:col-span-8">
-          <EcosystemFlow companies={companies} />
-        </div>
+      {/* Diagram — full width so the radial has room to breathe */}
+      <div className="mt-10 lg:mt-6">
+        <EcosystemFlow companies={companies} />
       </div>
     </section>
   );

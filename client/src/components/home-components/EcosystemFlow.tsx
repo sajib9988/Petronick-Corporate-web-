@@ -52,7 +52,7 @@ interface EcosystemFlowProps {
 |
 */
 
-const RADIUS_X = 47;
+const RADIUS_X = 48;
 const RADIUS_Y = 44;
 
 /*
@@ -217,7 +217,7 @@ export default function EcosystemFlow({
       {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[540px] w-full overflow-hidden lg:block xl:h-[600px]">
+      <div className="relative hidden h-[560px] w-full overflow-hidden lg:block xl:h-[620px]">
         {/* ================================================================ */}
         {/* CONNECTION LINES                                                */}
         {/* ================================================================ */}
@@ -230,14 +230,14 @@ export default function EcosystemFlow({
           <defs>
             <marker
               id="ecoArrow"
-              viewBox="0 0 12 12"
-              refX="10"
-              refY="6"
-              markerWidth="8"
-              markerHeight="8"
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
               orient="auto"
             >
-              <path d="M 0 0 L 12 6 L 0 12 Z" fill="#f59e0b" />
+              <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
             </marker>
           </defs>
 
@@ -259,7 +259,7 @@ export default function EcosystemFlow({
                 stroke="#f59e0b"
                 strokeWidth="2"
                 strokeLinecap="round"
-                strokeOpacity="0.55"
+                strokeOpacity="0.6"
                 markerEnd="url(#ecoArrow)"
               />
             );
@@ -443,9 +443,9 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-40
+                  w-44
                   cursor-pointer
-                  xl:w-44
+                  xl:w-52
                 "
                 style={{
                   left: `${node.left}%`,
@@ -467,8 +467,8 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-40
-                xl:w-44
+                w-44
+                xl:w-52
               "
               style={{
                 left: `${node.left}%`,
@@ -547,10 +547,10 @@ export default function EcosystemFlow({
         </div>
 
         {/* ================================================================ */}
-        {/* MOBILE COMPANY LIST                                             */}
+        {/* MOBILE / TABLET COMPANY LIST                                    */}
         {/* ================================================================ */}
 
-        <div className="space-y-2.5">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
           {nodes.map((node) => {
             const content = (
               <>
