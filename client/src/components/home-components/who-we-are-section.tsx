@@ -1,36 +1,10 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
-import CountUp from "react-countup";
+import { Rocket, Truck, Package, UserRound, type LucideIcon } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
-const stats = [
-  {
-    number: 10,
-    suffix: " ",
-    label: "Business Units",
-    bg: "bg-gradient-to-br from-amber-500 to-amber-600 text-white",
-  },
-  {
-    number: 100,
-    suffix: "%",
-    label: "Revenue Ready",
-    bg: "bg-white text-gray-900",
-  },
-  {
-    number: null,
-    display: "Multi",
-    label: "Market Reach",
-    bg: "bg-gray-800 text-white ring-1 ring-white/10",
-  },
-  {
-    number: 1,
-    suffix: "",
-    label: "Ecosystem",
-    bg: "bg-white text-gray-900",
-  },
-];
+const ICON_POOL: LucideIcon[] = [Rocket, Truck, Package, UserRound];
 
 const containerVariants: Variants = {
   hidden: {},
@@ -42,10 +16,10 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, x: 60 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     transition: { duration: 0.5, ease: "easeOut" },
   },
 };
@@ -83,111 +57,71 @@ export default function WhoWeAreSection({
   });
 
   const title =
-    content?.title ?? "One Platform. Multiple Revenue Streams.";
+    content?.title ?? "One Platform. Multiple Growth Engines.";
 
   const paragraph =
     content?.paragraph ??
-    "Petronick Corporate Holdings LLC owns and operates multiple business units designed to work together — accelerating market entry, scaling operations, and maximizing profitability across every subsidiary.";
+    "Petronick Corporate Holdings LLC owns and supports businesses that can operate independently while benefiting from shared marketing, technology, logistics, fulfillment, procurement, and strategic leadership.";
 
-  const features = [
-    content?.bullet1 ?? "Digital product launch capability",
-    content?.bullet2 ?? "Procurement and logistics leverage",
+  const capabilities = [
+    content?.bullet1 ?? "Digital launch capability",
+    content?.bullet2 ?? "Procurement and logistics",
     content?.bullet3 ?? "Fulfillment infrastructure",
-    content?.bullet4 ?? "Advisory expertise",
+    content?.bullet4 ?? "Business advisory expertise",
   ].filter(Boolean);
 
   return (
     <section
-      className="relative py-20 lg:py-24 overflow-hidden bg-gray-900 bg-cover bg-center"
+      className="relative py-16 lg:py-20 overflow-hidden bg-white bg-cover bg-center"
       style={image ? { backgroundImage: `url(${image})` } : undefined}
     >
-      {/* Dark overlay — only when a custom image is set, for text readability */}
-      {image && <div className="absolute inset-0 bg-gray-900/80" />}
+      {image && <div className="absolute inset-0 bg-white/90" />}
 
-      {/* Default subtle grid texture — only shows when no image (keeps default look) */}
-      {!image && (
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-      )}
-
-      {/* Amber glow accent — 10% pop */}
-      <div className="pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: Text */}
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
         >
-          <p className="text-sm font-semibold tracking-[0.2em] text-amber-400 uppercase mb-3">
+          <p className="text-xs font-semibold tracking-[0.2em] text-amber-600 uppercase mb-3">
             Who We Are
           </p>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-5 leading-tight">
             {title}
           </h2>
 
-          <p className="text-base leading-8 text-gray-400 mb-8 max-w-2xl">
+          <p className="text-base leading-7 text-gray-500 max-w-md">
             {paragraph}
           </p>
-
-          <ul className="space-y-3">
-            {features.map((item) => (
-              <li
-                key={item}
-                className="flex items-center gap-3 text-base text-gray-200"
-              >
-                <CheckCircle2
-                  size={18}
-                  className="text-amber-400 flex-shrink-0"
-                />
-                {item}
-              </li>
-            ))}
-          </ul>
         </motion.div>
 
-        {/* Right: Stats Grid — stays static, not CMS-driven */}
+        {/* Right: Capability icon grid */}
         <motion.div
           ref={ref}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-2 gap-5 min-w-0"
+          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5"
         >
-          {stats.map((s) => (
-            <motion.div
-              key={s.label}
-              variants={itemVariants}
-              className={`rounded-2xl p-7 shadow-lg ${s.bg}`}
-            >
-              <div className="text-3xl lg:text-4xl font-bold tracking-tight">
-                {s.number !== null ? (
-                  <>
-                    {inView ? <CountUp end={s.number} duration={2} /> : 0}
-                    {s.suffix}
-                  </>
-                ) : (
-                  s.display
-                )}
-              </div>
-
-              <div
-                className={`mt-2 text-base font-medium ${
-                  s.bg.includes("bg-white") ? "text-gray-500" : "opacity-80"
-                }`}
+          {capabilities.map((label, index) => {
+            const Icon = ICON_POOL[index % ICON_POOL.length];
+            return (
+              <motion.div
+                key={label}
+                variants={itemVariants}
+                className="flex flex-col items-center text-center gap-3"
               >
-                {s.label}
-              </div>
-            </motion.div>
-          ))}
+                <div className="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center bg-white">
+                  <Icon size={22} className="text-gray-700" strokeWidth={1.75} />
+                </div>
+                <span className="text-sm font-medium text-gray-700 leading-snug">
+                  {label}
+                </span>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>
