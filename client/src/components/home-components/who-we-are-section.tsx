@@ -84,9 +84,9 @@ export default function WhoWeAreSection({
           animate={inView ? "visible" : "hidden"}
           variants={textVariants}
         >
-          <p className="text-xs font-semibold tracking-[0.2em] text-amber-600 uppercase mb-3">
+          {/* <p className="text-xs font-semibold tracking-[0.2em] text-amber-600 uppercase mb-3">
             Who We Are
-          </p>
+          </p> */}
 
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-5 leading-tight">
             {title}
