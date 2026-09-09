@@ -16,9 +16,9 @@ export default function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-[#00152D] border-b border-white/10">
+    <header className="w-full sticky top-0 z-50 bg-[#052141] border-b border-white/10">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-3 items-center h-20">
+        <div className="grid grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] items-center h-20 gap-4">
           {/* Logo — left */}
           <Link href="/" className="flex items-center">
             <Image
@@ -32,13 +32,13 @@ export default function Navbar() {
           </Link>
 
           {/* Nav — center (desktop only) */}
-          <nav className="hidden lg:flex items-center justify-center gap-8">
+          <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative h-20 flex items-center text-[15px] font-semibold tracking-wide transition-colors duration-200",
+                  "relative h-20 flex items-center whitespace-nowrap text-sm xl:text-[15px] font-semibold tracking-wide transition-colors duration-200",
                   isActive(link.href)
                     ? "text-amber-400"
                     : "text-white/80 hover:text-amber-300"
