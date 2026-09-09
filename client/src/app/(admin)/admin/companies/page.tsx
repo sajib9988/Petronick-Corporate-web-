@@ -43,7 +43,7 @@ type Company = {
   website: string | null;
   order: number;
   isVisible: boolean;
-  revenueStage: string | null;
+  category: string | null;
   createdAt: string;
 };
 
@@ -273,7 +273,7 @@ export default function CompaniesPage() {
                 <div className="pt-3 border-t flex items-center justify-between text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    {company.revenueStage || "N/A"}
+                    {company.category || "N/A"}
                   </div>
                   <div className="bg-gray-100 px-2 py-0.5 rounded text-gray-600">
                     Order: {company.order}
@@ -323,7 +323,7 @@ export default function CompaniesPage() {
                   website: editCompany.website ?? "",
                   order: editCompany.order,
                   isVisible: editCompany.isVisible,
-                  revenueStage: editCompany.revenueStage ?? "",
+                  category: editCompany.category ?? "",
                 }}
                 existingLogo={editCompany.logo}
                 existingIcon={editCompany.icon ?? null}

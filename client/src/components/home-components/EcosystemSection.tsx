@@ -1,20 +1,13 @@
-"use client";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-
-const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[440px] sm:h-[560px] bg-slate-50 rounded-2xl border border-slate-100 animate-pulse" />
-  ),
-});
+import EcosystemFlow from "./EcosystemFlow";
 
 type Company = {
   id: string;
   name: string;
   description: string;
   logo: string;
+  icon: string | null;
   website: string | null;
   revenueStage: string | null;
   order: number;

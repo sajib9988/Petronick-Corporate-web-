@@ -26,7 +26,7 @@ const companySchema = z.object({
   website: z.string().optional(),
   order: z.number().int(),
   isVisible: z.boolean(),
-  revenueStage: z.string().optional(),
+  category: z.string().optional(),
 });
 
 export type CompanyFormValues = z.infer<typeof companySchema>;
@@ -37,7 +37,7 @@ export const defaultCompanyValues: CompanyFormValues = {
   website: "",
   order: 0,
   isVisible: true,
-  revenueStage: "",
+  category: "",
 };
 
 interface CompanyFormProps {
@@ -254,10 +254,10 @@ export default function CompanyForm({
 
             <FormField
               control={form.control}
-              name="revenueStage"
+              name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs font-bold">Revenue Stage</FormLabel>
+                  <FormLabel className="text-xs font-bold">Category</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <BarChart3 className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />

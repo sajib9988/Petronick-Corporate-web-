@@ -15,18 +15,25 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
+type PageSection = {
+  sectionType: string;
+  image?: string | null;
+  content?: Record<string, string> | null;
+};
+
 export default async function HomePage() {
   const [pageRes, allCompanies] = await Promise.all([
     getPageBySlug("home-page"),
-    getAllCompanies({ isVisible: true }),
+    getAllCompanies({ isVisible: true, limit: 100 }),
   ]);
 
   const homePage = pageRes.data;
-  const heroSection = homePage?.sections?.find((s: any) => s.sectionType === "HERO");
-  const whoWeAreSection = homePage?.sections?.find((s: any) => s.sectionType === "WHO_WE_ARE");
-  const ecosystemSection = homePage?.sections?.find((s: any) => s.sectionType === "ECOSYSTEM");
-  const revenueSection = homePage?.sections?.find((s: any) => s.sectionType === "REVENUE");
-  const closingSection = homePage?.sections?.find((s: any) => s.sectionType === "CLOSING");
+  const sections: PageSection[] = homePage?.sections ?? [];
+  const heroSection = sections.find((s) => s.sectionType === "HERO");
+  const whoWeAreSection = sections.find((s) => s.sectionType === "WHO_WE_ARE");
+  const ecosystemSection = sections.find((s) => s.sectionType === "ECOSYSTEM");
+  const revenueSection = sections.find((s) => s.sectionType === "REVENUE");
+  const closingSection = sections.find((s) => s.sectionType === "CLOSING");
 
   const companies: Company[] = allCompanies.data || [];
 
@@ -80,7 +87,7 @@ export default async function HomePage() {
           <Reveal>
             <EcosystemSection
               companies={companies}
-              content={ecosystemSection?.content}
+              content={ecosystemSection?.content ?? undefined}
             />
           </Reveal>
         </Container>
