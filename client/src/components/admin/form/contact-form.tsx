@@ -39,10 +39,6 @@ const contactSchema = z.object({
   message: z
     .string()
     .min(10, "Message must be at least 10 characters"),
-
-  turnstileToken: z
-    .string()
-    .min(1, "Please complete the verification"),
 });
 
 // ─────────────────────────────────────────────
@@ -83,8 +79,8 @@ export default function ContactForm({
       email: "",
       phone: "",
       subject: "",
-      message: "",
-      turnstileToken: "",
+      message: ""
+     
     },
   });
 
@@ -336,40 +332,9 @@ export default function ContactForm({
         ───────────────────────────────────── */}
 
         <Turnstile
-          onVerify={(token: string) => {
-            setTurnstileToken(token);
-
-            form.setValue(
-              "turnstileToken",
-              token,
-              {
-                shouldValidate: true,
-              }
-            );
-          }}
-          onExpire={() => {
-            setTurnstileToken("");
-
-            form.setValue(
-              "turnstileToken",
-              "",
-              {
-                shouldValidate: true,
-              }
-            );
-          }}
+          onVerify={(token: string) => setTurnstileToken(token)}
+          onExpire={() => setTurnstileToken("")}
         />
-
-        {/* Turnstile Validation Message */}
-
-        {form.formState.errors.turnstileToken && (
-          <p className="text-sm text-red-500">
-            {
-              form.formState.errors
-                .turnstileToken.message
-            }
-          </p>
-        )}
 
         {/* ────────────────────────────────────
             Submit Button
