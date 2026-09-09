@@ -118,15 +118,14 @@ export default function HeroSection({
         </div>
       </motion.div>
 
-      {/* Trust bar — overlaps the bottom edge of the hero banner */}
-    
- {hasTrustBar && (
-        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-[75%] px-4 sm:px-6">
-          <TrustBar items={trustItems!} />
+      {/* Trust bar — overlaps the bottom edge of the hero, aligned to the site container */}
+      {hasTrustBar && (
+        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-[75%]">
+          <Container>
+            <TrustBar items={trustItems!} />
+          </Container>
         </div>
       )}
-     
-     
     </section>
   );
 }

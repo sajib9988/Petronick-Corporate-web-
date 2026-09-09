@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 const EcosystemFlow = dynamic(() => import("./EcosystemFlow"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[480px] sm:h-[620px] bg-slate-950/80 rounded-2xl border border-slate-800/80 animate-pulse" />
+    <div className="w-full h-[440px] sm:h-[560px] bg-slate-50 rounded-2xl border border-slate-100 animate-pulse" />
   ),
 });
 
@@ -44,22 +44,22 @@ export default function EcosystemSection({ companies, content }: EcosystemSectio
   const btnLink = content?.btnLink ?? "/companies";
 
   return (
-    <section className="py-16 px-6 lg:px-10">
+    <section className="py-12 lg:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         {/* Left: Text */}
         <div className="lg:col-span-4">
-          <p className="text-sm font-semibold tracking-[0.2em] text-amber-400 uppercase mb-3">
+          <p className="text-sm font-semibold tracking-[0.2em] text-amber-500 uppercase mb-3">
             {label}
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-5 leading-tight tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-5 leading-tight tracking-tight">
             {title}
           </h2>
-          <p className="text-slate-400 text-base leading-7 mb-8">
+          <p className="text-slate-500 text-base leading-7 mb-8">
             {description}
           </p>
           <Link
             href={btnLink}
-            className="inline-flex items-center gap-2 bg-white text-slate-900 rounded-lg px-5 py-3 text-sm font-semibold hover:bg-slate-100 transition-all"
+            className="inline-flex items-center gap-2 bg-slate-900 text-white rounded-lg px-5 py-3 text-sm font-semibold hover:bg-slate-800 transition-all"
           >
             {btnText}
             <ArrowRight size={15} />

@@ -22,7 +22,7 @@ export default function TrustBar({ items }: { items: TrustBarItem[] }) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={staggerContainer(0.1, 0)}
-      className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5"
+      className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5"
     >
       {items.map((item, i) => {
         const Icon = ICON_POOL[i % ICON_POOL.length];

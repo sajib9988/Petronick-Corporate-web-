@@ -24,6 +24,7 @@ export default async function HomePage() {
   const homePage = pageRes.data;
   const heroSection = homePage?.sections?.find((s: any) => s.sectionType === "HERO");
   const whoWeAreSection = homePage?.sections?.find((s: any) => s.sectionType === "WHO_WE_ARE");
+  const ecosystemSection = homePage?.sections?.find((s: any) => s.sectionType === "ECOSYSTEM");
   const revenueSection = homePage?.sections?.find((s: any) => s.sectionType === "REVENUE");
   const closingSection = homePage?.sections?.find((s: any) => s.sectionType === "CLOSING");
 
@@ -77,10 +78,11 @@ export default async function HomePage() {
       <section className="py-8 sm:py-10">
         <Container>
           <Reveal>
-          <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
-            <EcosystemSection companies={companies} />
-          </div>
-             </Reveal>
+            <EcosystemSection
+              companies={companies}
+              content={ecosystemSection?.content}
+            />
+          </Reveal>
         </Container>
       </section>
 
