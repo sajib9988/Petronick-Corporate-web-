@@ -42,6 +42,7 @@ const agentSchema = z.object({
       message: "Please select B2B, B2C, or BOTH",
     }),
 
+    
   message: z
     .string()
     .min(10, "Please write at least 10 characters"),
@@ -49,10 +50,6 @@ const agentSchema = z.object({
   businessUnits: z
     .array(z.string())
     .min(1, "Select at least one business unit"),
-
-  turnstileToken: z
-    .string()
-    .min(1, "Please complete the verification"),
 });
 
 type AgentFormValues = z.infer<typeof agentSchema>;
@@ -94,7 +91,6 @@ export default function PromotionAgentForm() {
       focusType: undefined,
       message: "",
       businessUnits: [],
-      turnstileToken: "",
     },
   });
 
