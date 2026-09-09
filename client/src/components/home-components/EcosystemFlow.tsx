@@ -53,7 +53,7 @@ interface EcosystemFlowProps {
 */
 
 const RADIUS_X = 48;
-const RADIUS_Y = 44;
+const RADIUS_Y = 48;
 
 /*
 |--------------------------------------------------------------------------
@@ -217,7 +217,7 @@ export default function EcosystemFlow({
       {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[560px] w-full overflow-hidden lg:block xl:h-[620px]">
+      <div className="relative hidden h-[540px] w-full overflow-hidden xl:block xl:h-[580px] 2xl:h-[620px]">
         {/* ================================================================ */}
         {/* CONNECTION LINES                                                */}
         {/* ================================================================ */}
@@ -443,9 +443,9 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-44
+                  w-40
                   cursor-pointer
-                  xl:w-52
+                  2xl:w-44
                 "
                 style={{
                   left: `${node.left}%`,
@@ -467,8 +467,8 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-44
-                xl:w-52
+                w-40
+                2xl:w-44
               "
               style={{
                 left: `${node.left}%`,
@@ -487,7 +487,7 @@ export default function EcosystemFlow({
       {/* MOBILE / TABLET                                                   */}
       {/* ================================================================== */}
 
-      <div className="lg:hidden">
+      <div className="xl:hidden">
         {/* ================================================================ */}
         {/* MOBILE CENTER HUB                                               */}
         {/* ================================================================ */}
