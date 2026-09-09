@@ -43,7 +43,7 @@
                             </h2>
                             <p style="margin:0 0 20px; font-size:15px; line-height:24px; color:#4b5563;">
                                 We've successfully received your application to become a Promotion Agent with
-                                <strong><%= appName %></strong>. Our team will carefully review your profile and reach out within <strong>5 business days</strong>.
+                                <strong><%= appName || "Petronick Corporate Holdings" %></strong>. Our team will carefully review your profile and reach out within <strong>5 business days</strong>.
                             </p>
                         </td>
                     </tr>
@@ -103,7 +103,7 @@
                         <td style="padding:24px 32px 32px 32px; font-family:Arial, Helvetica, sans-serif;">
                             <p style="margin:0 0 4px; font-size:14px; color:#374151;">Best regards,</p>
                             <p style="margin:0 0 16px; font-size:15px; font-weight:700; color:#111827;">
-                                <%= appName %>
+                                <%= appName || "Petronick Corporate Holdings" %>
                             </p>
                             <p style="margin:0; font-size:12px; line-height:18px; color:#9ca3af;">
                                 Pittsburgh, PA, USA · This is an automated confirmation — no need to reply directly to this email.
@@ -115,7 +115,7 @@
                 <p style="margin:20px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#9ca3af;">
                     ©
                     <%= new Date().getFullYear() %>
-                        <%= appName %>. All rights reserved.
+                        <%= appName || "Petronick Corporate Holdings" %>. All rights reserved.
                 </p>
             </td>
         </tr>

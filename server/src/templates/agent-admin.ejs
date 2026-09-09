@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Promotion Agent Application</title>
+    <title>New Promotion Agent Application - <%= appName || "Petronick Corporate Holdings" %></title>
 </head>
 
 <body style="margin:0; padding:0; background-color:#f3f4f6;">
@@ -35,6 +35,9 @@
                     <!-- Body -->
                     <tr>
                         <td style="padding:32px 32px 8px 32px; font-family:Arial, Helvetica, sans-serif;">
+                            <p style="margin:0 0 6px; font-size:12px; font-weight:700; letter-spacing:1.5px; color:#d97706; text-transform:uppercase;">
+                                <%= appName || "Petronick Corporate Holdings" %>
+                            </p>
                             <p style="margin:0 0 20px; font-size:15px; line-height:24px; color:#4b5563;">
                                 A new Promotion Agent application has been submitted. Please review the details below.
                             </p>
@@ -130,7 +133,7 @@
                         <td style="padding:24px 32px 32px 32px; font-family:Arial, Helvetica, sans-serif;">
                             <p style="margin:0 0 4px; font-size:14px; color:#374151;">Best regards,</p>
                             <p style="margin:0 0 16px; font-size:15px; font-weight:700; color:#111827;">
-                                <%= appName %>
+                                <%= appName || "Petronick Corporate Holdings" %>
                             </p>
                             <p style="margin:0; font-size:12px; line-height:18px; color:#9ca3af;">
                                 This is an automated notification — no need to reply directly to this email.
@@ -142,7 +145,7 @@
                 <p style="margin:20px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#9ca3af;">
                     ©
                     <%= year %>
-                        <%= appName %>. All rights reserved.
+                        <%= appName || "Petronick Corporate Holdings" %>. All rights reserved.
                 </p>
             </td>
         </tr>
