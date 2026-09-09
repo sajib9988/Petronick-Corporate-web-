@@ -7,7 +7,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
 
     
-    <div className='bg-[#4dd0e1] '>
+    <div className='bg-white'>
       <Navbar/>
       {children}
       <Footer />

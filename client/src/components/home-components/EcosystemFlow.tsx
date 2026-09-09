@@ -29,7 +29,6 @@ type Company = {
   name: string;
   description: string;
   logo: string;
-  icon: string | null;
   website: string | null;
   revenueStage: string | null;
   order: number;
@@ -37,27 +36,27 @@ type Company = {
 };
 
 // Icon & color rotation
-const ICON_POOL = [Globe, ShieldCheck, Sparkles, Truck, Shirt, Gift, TrendingUp, Building2];
+const ICON_POOL = [Globe, Gift, ShieldCheck, TrendingUp, Sparkles, Truck, Shirt, Building2];
 const COLOR_POOL = [
-  "from-amber-500 to-amber-700",
-  "from-emerald-500 to-emerald-700",
-  "from-teal-500 to-teal-700",
-  "from-orange-500 to-orange-700",
+  "from-blue-500 to-blue-700",
   "from-pink-500 to-pink-700",
-  "from-amber-600 to-amber-800",
-  "from-yellow-500 to-yellow-700",
-  "from-amber-400 to-amber-600",
+  "from-emerald-500 to-emerald-700",
+  "from-orange-500 to-orange-700",
+  "from-amber-500 to-amber-700",
+  "from-teal-500 to-teal-700",
+  "from-rose-500 to-rose-700",
+  "from-slate-500 to-slate-700",
 ];
 
 // Per-company name text color (readable on the white node card)
 const NAME_COLOR_POOL = [
-  "text-amber-700",
+  "text-blue-700",
+  "text-pink-700",
   "text-emerald-700",
-  "text-teal-700",
   "text-orange-700",
+  "text-amber-700",
+  "text-teal-700",
   "text-rose-700",
-  "text-violet-700",
-  "text-cyan-700",
   "text-slate-800",
 ];
 
@@ -66,32 +65,25 @@ function CenterNode({ data }: any) {
 
   return (
     <div
-      className={`relative rounded-2xl bg-slate-950 border-2 border-amber-500/60 shadow-xl shadow-amber-500/10 text-center text-white transition-transform duration-300 hover:scale-[1.03] ${
-        compact ? "p-3 w-36" : "p-6 w-64"
+      className={`relative rounded-2xl bg-slate-950 border-2 border-amber-500/60 shadow-xl shadow-amber-500/10 text-center text-white ${
+        compact ? "p-3 w-36" : "p-6 w-56"
       }`}
     >
       <div
         className={`mx-auto rounded-xl bg-gradient-to-tr from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-md ${
-          compact ? "w-8 h-8 mb-1.5" : "w-16 h-16 mb-3"
+          compact ? "w-8 h-8 mb-1.5" : "w-14 h-14 mb-3"
         }`}
       >
-        <Building2 className={compact ? "w-4 h-4" : "w-8 h-8"} />
+        <Building2 className={compact ? "w-4 h-4" : "w-7 h-7"} />
       </div>
       <div
         className={
           compact
             ? "text-sm font-bold tracking-tight leading-tight"
-            : "text-3xl font-bold tracking-tight"
+            : "text-xl font-bold tracking-tight leading-snug"
         }
       >
-        PETRONICK HOLDINGS
-      </div>
-      <div
-        className={`font-semibold uppercase text-amber-300 ${
-          compact ? "mt-0.5 text-[7px] tracking-[0.1em]" : "mt-1 text-sm tracking-[0.2em]"
-        }`}
-      >
-        Parent Core
+        PETRONICK CORPORATE HOLDINGS
       </div>
 
       <Handle type="source" position={Position.Top} className="opacity-0" id="t" />
@@ -104,54 +96,34 @@ function CenterNode({ data }: any) {
 
 function SubsidiaryNode({ data }: any) {
   const IconComponent = data.icon;
-  const isSelected = data.isActive;
   const compact = !!data.compact;
 
   return (
     <div
-      onClick={() => data.onClick(data.id)}
-      className={`rounded-xl border cursor-pointer transition-all duration-300 flex items-center bg-white ${
-        compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3 w-64"
-      } ${
-        isSelected
-          ? "border-amber-500 ring-2 ring-amber-500/30 shadow-lg shadow-amber-500/10 scale-[1.03]"
-          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+      className={`rounded-xl border border-slate-200 bg-white flex items-center shadow-sm ${
+        compact ? "p-2.5 gap-2 w-40" : "p-4 gap-3 w-60"
       }`}
     >
-      {data.iconUrl ? (
-        <div
-          className={` shrink-0 flex items-center justify-center overflow-hidden ${
-            compact ? "w-9 h-9" : "w-12 h-12"
-          }`}
-        >
-          <img
-            src={data.iconUrl}
-            alt={data.name}
-            className="w-full h-full object-contain p-1"
-          />
-        </div>
-      ) : (
-        <div
-          className={`rounded-lg bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
-            compact ? "w-9 h-9" : "w-12 h-12"
-          }`}
-        >
-          <IconComponent className={compact ? "w-4 h-4" : "w-6 h-6"} />
-        </div>
-      )}
+      <div
+        className={`rounded-full bg-gradient-to-tr ${data.color} text-white shrink-0 flex items-center justify-center ${
+          compact ? "w-8 h-8" : "w-11 h-11"
+        }`}
+      >
+        <IconComponent className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
+      </div>
       <div className="min-w-0 flex-1">
         <div
           className={`font-bold truncate ${data.nameColor || "text-slate-800"} ${
-            compact ? "text-sm" : "text-lg"
+            compact ? "text-xs" : "text-sm"
           }`}
         >
-          {data.name}
+          {data.number}. {data.name}
         </div>
-        {!compact && (
-          <div className={`mt-0.5 text-sm truncate leading-5 opacity-70 ${data.nameColor || "text-slate-500"}`}>
-            {data.sector}
-          </div>
-        )}
+        <div
+          className={`mt-0.5 truncate text-slate-400 ${compact ? "text-[10px]" : "text-xs"}`}
+        >
+          {data.sector}
+        </div>
       </div>
 
       <Handle type="target" position={Position.Left} className="opacity-0" id="il" />
@@ -166,18 +138,15 @@ const nodeTypes = { center: CenterNode, subsidiary: SubsidiaryNode };
 
 interface EcosystemFlowProps {
   companies: Company[];
-  activeNodeId: string | null;
-  onSelectNode: (id: string) => void;
 }
 
-function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: EcosystemFlowProps) {
+function EcosystemFlowInner({ companies }: EcosystemFlowProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth : 700,
   );
   const { fitView } = useReactFlow();
 
-  // ── Measure container width responsively ──
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -196,12 +165,12 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
     if (compact) {
       return {
         radiusX: Math.max(containerWidth * 0.58, 120),
-        radiusY: 200,
+        radiusY: 210,
         centerX: containerWidth / 2,
-        centerY: 220,
+        centerY: 230,
       };
     }
-    return { radiusX: 470, radiusY: 300, centerX: 350, centerY: 300 };
+    return { radiusX: 430, radiusY: 280, centerX: 340, centerY: 290 };
   }, [containerWidth, compact]);
 
   const initialNodes = useMemo(() => {
@@ -223,15 +192,12 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         type: "subsidiary",
         position: { x, y },
         data: {
-          id: company.id,
+          number: index + 1,
           name: company.name,
-          iconUrl: company.icon || null,
           sector: company.revenueStage || "Business Unit",
           color: COLOR_POOL[index % COLOR_POOL.length],
           nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
           icon: ICON_POOL[index % ICON_POOL.length],
-          isActive: company.id === activeNodeId,
-          onClick: onSelectNode,
           compact,
         },
         draggable: false,
@@ -239,11 +205,10 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
     });
 
     return [centerNode, ...subNodes];
-  }, [companies, activeNodeId, onSelectNode, compact, radiusX, radiusY, centerX, centerY]);
+  }, [companies, compact, radiusX, radiusY, centerX, centerY]);
 
   const initialEdges = useMemo(() => {
     return companies.map((company, index) => {
-      const isSelected = company.id === activeNodeId;
       const angle = (index * 2 * Math.PI) / companies.length - Math.PI / 2;
 
       let sourceHandle = "b";
@@ -260,27 +225,26 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         target: company.id,
         sourceHandle,
         targetHandle,
-        animated: true,
+        animated: false,
         style: {
           stroke: "#f59e0b",
-          strokeWidth: isSelected ? 3.5 : 2,
-          opacity: isSelected ? 1 : 0.85,
+          strokeWidth: 1.5,
+          strokeDasharray: "4 4",
+          opacity: 0.6,
         },
       };
       return edge;
     });
-  }, [companies, activeNodeId]);
+  }, [companies]);
 
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
 
-  // Sync nodes/edges on every relevant change (selection, data)
   useEffect(() => {
     setNodes(initialNodes);
     setEdges(initialEdges);
   }, [initialNodes, initialEdges, setNodes, setEdges]);
 
-  // Re-fit ONLY on layout change (compact toggle / company count) — not on every click
   useEffect(() => {
     const t = setTimeout(() => {
       fitView({ padding: compact ? 0.3 : 0.12, duration: 200 });
@@ -300,7 +264,6 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
-        nodeOrigin={[0.5, 0.5]} 
         fitView
         fitViewOptions={{ padding: compact ? 0.3 : 0.12 }}
         minZoom={0.3}
@@ -313,26 +276,10 @@ function EcosystemFlowInner({ companies, activeNodeId, onSelectNode }: Ecosystem
         preventScrolling={false}
         nodesDraggable={false}
         elementsSelectable={false}
-          proOptions={{ hideAttribution: true }}
+        proOptions={{ hideAttribution: true }}
         className="relative z-10"
       />
 
-      {/* Legend */}
-      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 bg-slate-900/90 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-3 rounded-xl border border-slate-800 text-[10px] sm:text-xs space-y-1.5 sm:space-y-2 shadow-lg max-w-[145px] sm:max-w-none">
-        <div className="font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-300">
-          Ecosystem Diagram
-        </div>
-        <div className="flex items-center gap-2 text-slate-400">
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-500 animate-pulse flex-shrink-0" />
-          <span>Active Connected Synergy</span>
-        </div>
-        <div className="flex items-center gap-2 text-slate-400">
-          <span className="w-2 h-0.5 bg-amber-500/50 flex-shrink-0" />
-          <span>General Corporate Linkage</span>
-        </div>
-      </div>
-
-      {/* Mobile hint */}
       {compact && (
         <div className="absolute top-3 right-3 z-20 bg-slate-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-lg border border-slate-800 text-[9px] text-slate-400">
           Pinch or drag to explore
