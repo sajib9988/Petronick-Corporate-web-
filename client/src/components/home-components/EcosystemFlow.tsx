@@ -52,8 +52,8 @@ interface EcosystemFlowProps {
 |
 */
 
-const RADIUS_X = 38;
-const RADIUS_Y = 40;
+const RADIUS_X = 47;
+const RADIUS_Y = 44;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,14 +88,14 @@ function getCardTransform(left: number, top: number) {
   /*
    * Bottom → card sits ABOVE the point (toward center)
    */
-  if (top > 58) {
+  if (top > 66) {
     translateY = "-100%";
   }
 
   /*
    * Top → card sits BELOW the point (toward center)
    */
-  if (top < 42) {
+  if (top < 34) {
     translateY = "0%";
   }
 
@@ -217,7 +217,7 @@ export default function EcosystemFlow({
       {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[460px] w-full overflow-hidden lg:block xl:h-[520px]">
+      <div className="relative hidden h-[540px] w-full overflow-hidden lg:block xl:h-[600px]">
         {/* ================================================================ */}
         {/* CONNECTION LINES                                                */}
         {/* ================================================================ */}
@@ -230,15 +230,14 @@ export default function EcosystemFlow({
           <defs>
             <marker
               id="ecoArrow"
-              viewBox="0 0 10 10"
-              refX="9"
-              refY="5"
-              markerUnits="userSpaceOnUse"
-              markerWidth="11"
-              markerHeight="11"
+              viewBox="0 0 12 12"
+              refX="10"
+              refY="6"
+              markerWidth="8"
+              markerHeight="8"
               orient="auto"
             >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
+              <path d="M 0 0 L 12 6 L 0 12 Z" fill="#f59e0b" />
             </marker>
           </defs>
 
@@ -247,9 +246,9 @@ export default function EcosystemFlow({
           {/* -------------------------------------------------------------- */}
 
           {nodes.map((node) => {
-            // Stop the line just short of the card so the arrowhead is visible.
-            const x2 = 50 + (node.left - 50) * 0.93;
-            const y2 = 50 + (node.top - 50) * 0.93;
+            // Stop the line short of the card so the arrowhead sits in open space.
+            const x2 = 50 + (node.left - 50) * 0.84;
+            const y2 = 50 + (node.top - 50) * 0.84;
             return (
               <line
                 key={`line-${node.company.id}`}
@@ -258,9 +257,9 @@ export default function EcosystemFlow({
                 x2={`${x2}%`}
                 y2={`${y2}%`}
                 stroke="#f59e0b"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeLinecap="round"
-                opacity="0.7"
+                strokeOpacity="0.55"
                 markerEnd="url(#ecoArrow)"
               />
             );
@@ -444,9 +443,9 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-44
+                  w-40
                   cursor-pointer
-                  xl:w-52
+                  xl:w-44
                 "
                 style={{
                   left: `${node.left}%`,
@@ -468,8 +467,8 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-44
-                xl:w-52
+                w-40
+                xl:w-44
               "
               style={{
                 left: `${node.left}%`,
