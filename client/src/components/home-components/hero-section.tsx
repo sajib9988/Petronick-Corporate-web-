@@ -42,7 +42,7 @@ export default function HeroSection({
   const heroImage = image || content?.image || content?.backgroundImage || null;
 
   return (
-    <section className="relative flex min-h-[85vh] sm:min-h-[90vh] w-full items-center justify-center bg-gray-950 py-20 sm:py-28">
+    <section className="relative flex min-h-[60vh] sm:min-h-[70vh] w-full items-center justify-center bg-gray-950 py-20 sm:py-28">
       {/* Background */}
       {heroImage && (
         <div
