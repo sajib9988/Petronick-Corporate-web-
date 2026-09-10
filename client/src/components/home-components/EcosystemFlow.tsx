@@ -38,15 +38,16 @@ const NAME_COLOR_POOL = [
 
 /*
 |--------------------------------------------------------------------------
-| RADIAL POSITION
+| RADIAL LAYOUT
 |--------------------------------------------------------------------------
 |
-| Lower value = companies closer to the center.
+| Keep companies close to the center,
+| but leave enough room so cards do not touch.
 |
 */
 
-const RADIUS_X = 38;
-const RADIUS_Y = 38;
+const RADIUS_X = 39;
+const RADIUS_Y = 39;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,27 +59,60 @@ function getCardTransform(left: number, top: number) {
   let translateX = "-50%";
   let translateY = "-50%";
 
-  // Right side
+  /*
+   * Right side
+   * Card extends toward the center.
+   */
   if (left > 58) {
     translateX = "-100%";
   }
 
-  // Left side
+  /*
+   * Left side
+   * Card extends toward the center.
+   */
   if (left < 42) {
     translateX = "0%";
   }
 
-  // Bottom
+  /*
+   * Bottom
+   * Card sits above the connection point.
+   */
   if (top > 66) {
     translateY = "-100%";
   }
 
-  // Top
+  /*
+   * Top
+   * Card sits below the connection point.
+   */
   if (top < 34) {
     translateY = "0%";
   }
 
   return `translate(${translateX}, ${translateY})`;
+}
+
+/*
+|--------------------------------------------------------------------------
+| COMPANY NAME FONT SIZE
+|--------------------------------------------------------------------------
+|
+| Company names always stay on ONE line.
+| Longer names automatically get a smaller font.
+|
+*/
+
+function getCompanyNameFontSize(name: string) {
+  const length = name.trim().length;
+
+  if (length <= 14) return "12px";
+  if (length <= 18) return "11px";
+  if (length <= 22) return "10px";
+  if (length <= 26) return "9px";
+
+  return "8px";
 }
 
 /*
@@ -164,6 +198,9 @@ export default function EcosystemFlow({
         (index * 2 * Math.PI) / total -
         Math.PI / 2;
 
+      /*
+       * Radial connection point.
+       */
       const left =
         50 + RADIUS_X * Math.cos(angle);
 
@@ -175,6 +212,7 @@ export default function EcosystemFlow({
         index,
         left,
         top,
+
         cardTransform: getCardTransform(
           left,
           top,
@@ -189,6 +227,11 @@ export default function EcosystemFlow({
           NAME_COLOR_POOL[
             index % NAME_COLOR_POOL.length
           ],
+
+        nameFontSize:
+          getCompanyNameFontSize(
+            company.name,
+          ),
       };
     });
   }, [companies]);
@@ -196,18 +239,18 @@ export default function EcosystemFlow({
   return (
     <>
       {/* ================================================================== */}
-      {/* DESKTOP                                                            */}
+      {/* DESKTOP RADIAL ECOSYSTEM                                          */}
       {/* ================================================================== */}
 
       <div
         className="
           relative
           hidden
-          h-[500px]
+          h-[520px]
           w-full
           overflow-visible
           xl:block
-          xl:h-[540px]
+          xl:h-[550px]
           2xl:h-[580px]
         "
       >
@@ -228,14 +271,13 @@ export default function EcosystemFlow({
           aria-hidden="true"
         >
           <defs>
-            {/* Amber Arrow */}
             <marker
               id="ecoArrow"
               viewBox="0 0 10 10"
               refX="8"
               refY="5"
-              markerWidth="6"
-              markerHeight="6"
+              markerWidth="5.5"
+              markerHeight="5.5"
               orient="auto"
               markerUnits="strokeWidth"
             >
@@ -252,9 +294,15 @@ export default function EcosystemFlow({
 
           {nodes.map((node) => {
             /*
-             * Arrow stops shortly before the card.
+             * IMPORTANT:
+             *
+             * Previously this was 0.80.
+             * That made the arrow stop too far from the company.
+             *
+             * 0.94 brings the arrow very close to
+             * the company's connection point.
              */
-            const LINE_END_DISTANCE = 0.80;
+            const LINE_END_DISTANCE = 0.94;
 
             const x2 =
               50 +
@@ -274,15 +322,16 @@ export default function EcosystemFlow({
                 x2={`${x2}%`}
                 y2={`${y2}%`}
                 stroke="#f59e0b"
-                strokeWidth="2"
+                strokeWidth="1.8"
                 strokeLinecap="round"
-                strokeOpacity="0.65"
+                strokeOpacity="0.72"
                 markerEnd="url(#ecoArrow)"
               />
             );
           })}
 
           {/* Center Dot */}
+
           <circle
             cx="50%"
             cy="50%"
@@ -355,17 +404,17 @@ export default function EcosystemFlow({
               P
             </div>
 
-            {/* Company Name */}
+            {/* Holding Company Name */}
 
             <div
               className="
-                max-w-[115px]
+                max-w-[118px]
                 text-[8px]
                 font-bold
                 uppercase
                 leading-tight
                 tracking-wide
-                xl:max-w-[125px]
+                xl:max-w-[128px]
                 xl:text-[9px]
               "
             >
@@ -383,25 +432,26 @@ export default function EcosystemFlow({
             <div
               className="
                 flex
-                min-w-0
+                h-[52px]
+                w-full
                 items-center
                 gap-2
                 rounded-xl
                 border
                 border-slate-200
                 bg-white
-                p-2
+                px-2
                 shadow-sm
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
                 hover:shadow-md
-                xl:gap-2.5
-                xl:p-2.5
+                xl:h-[54px]
+                xl:px-2.5
               "
             >
               {/* ======================================================== */}
-              {/* ICON                                                       */}
+              {/* COMPANY ICON                                               */}
               {/* ======================================================== */}
 
               <CompanyIcon
@@ -417,23 +467,30 @@ export default function EcosystemFlow({
               />
 
               {/* ======================================================== */}
-              {/* INFORMATION                                                */}
+              {/* COMPANY INFORMATION                                        */}
               {/* ======================================================== */}
 
-              <div className="min-w-0 flex-1">
+              <div
+                className="
+                  min-w-0
+                  flex-1
+                  overflow-hidden
+                "
+              >
                 {/* Company Name */}
 
                 <div
                   className={`
                     whitespace-nowrap
-                    text-[10px]
                     font-bold
-                    leading-tight
-                    tracking-[-0.01em]
+                    leading-none
+                    tracking-[-0.015em]
                     ${node.nameColor}
-                    xl:text-[11px]
-                    2xl:text-[12px]
                   `}
+                  style={{
+                    fontSize:
+                      node.nameFontSize,
+                  }}
                   title={node.company.name}
                 >
                   {node.index + 1}.{" "}
@@ -447,7 +504,7 @@ export default function EcosystemFlow({
                     mt-1
                     whitespace-nowrap
                     text-[9px]
-                    leading-tight
+                    leading-none
                     text-slate-400
                     xl:text-[10px]
                   "
@@ -479,10 +536,10 @@ export default function EcosystemFlow({
                   absolute
                   z-10
                   block
-                  w-[150px]
+                  w-[154px]
                   cursor-pointer
-                  xl:w-[158px]
-                  2xl:w-[168px]
+                  xl:w-[162px]
+                  2xl:w-[170px]
                 "
                 style={{
                   left: `${node.left}%`,
@@ -506,9 +563,9 @@ export default function EcosystemFlow({
               className="
                 absolute
                 z-10
-                w-[150px]
-                xl:w-[158px]
-                2xl:w-[168px]
+                w-[154px]
+                xl:w-[162px]
+                2xl:w-[170px]
               "
               style={{
                 left: `${node.left}%`,
@@ -529,7 +586,7 @@ export default function EcosystemFlow({
 
       <div className="xl:hidden">
         {/* ================================================================ */}
-        {/* MOBILE HUB                                                       */}
+        {/* MOBILE CENTER HUB                                               */}
         {/* ================================================================ */}
 
         <div
@@ -603,15 +660,18 @@ export default function EcosystemFlow({
                   "
                 />
 
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 overflow-hidden">
                   <div
                     className={`
                       whitespace-nowrap
-                      text-xs
                       font-bold
                       leading-tight
                       ${node.nameColor}
                     `}
+                    style={{
+                      fontSize:
+                        node.nameFontSize,
+                    }}
                   >
                     {node.index + 1}.{" "}
                     {node.company.name}
@@ -630,7 +690,7 @@ export default function EcosystemFlow({
                   </div>
                 </div>
 
-                {/* Amber Dot */}
+                {/* Amber Connection Dot */}
 
                 <div
                   className="
