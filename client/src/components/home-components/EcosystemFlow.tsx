@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
   Globe,
   Gift,
@@ -102,7 +102,6 @@ function CompanyIcon({
     );
   }
 
-  // No custom icon uploaded yet — plain category-matched icon.
   const Icon = fallbackIcon;
   return (
     <div
@@ -115,37 +114,26 @@ function CompanyIcon({
 }
 
 /* -------------------------------------------------------------------------- */
-/* LAYOUT                                                                     */
-/* -------------------------------------------------------------------------- */
-/*
- | Companies are arranged around a central hub in reading order:
- |
- |            1
- |     10           2
- |      9           3
- |      8           4
- |      7           5
- |            6
- |
- |  1  = top          6      = bottom
- |  2..= right column (top → bottom)
- |  ..10 = left column (bottom → top)
-*/
-
-type Slot = "top" | "right" | "bottom" | "left";
-
-// Vertical band the side columns spread across (percent of the box height).
-const BAND_TOP = 15;
-const BAND_BOTTOM = 85;
-
-function bandPosition(i: number, count: number) {
-  if (count <= 1) return 50;
-  return BAND_TOP + ((BAND_BOTTOM - BAND_TOP) * i) / (count - 1);
-}
-
-/* -------------------------------------------------------------------------- */
 /* MAIN COMPONENT                                                             */
 /* -------------------------------------------------------------------------- */
+/*
+ | Layout — reading order around a central hub:
+ |
+ |            1
+ |    10             2
+ |     9             3
+ |     8             4
+ |     7             5
+ |            6
+ |
+ |  1  = top-center            6      = bottom-center
+ |  2..5  = right column (top → bottom)
+ |  7..10 = left column  (bottom → top)
+ |
+ | Both side columns share the same vertical band, so left and right
+ | are always the exact same height. Each card is joined to the hub by
+ | a golden line with an amber arrowhead that lands on the card's inner edge.
+*/
 
 export default function EcosystemFlow({
   companies,
@@ -154,54 +142,99 @@ export default function EcosystemFlow({
 }) {
   const total = companies.length;
 
-  const nodes = useMemo(() => {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [box, setBox] = useState({ w: 960, h: 560 });
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w > 0 && h > 0) {
+        setBox((prev) => (prev.w === w && prev.h === h ? prev : { w, h }));
+      }
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const { nodes, cx, cy } = useMemo(() => {
+    const cX = box.w / 2;
+    const cY = box.h / 2;
+
+    const CARD_W =
+      box.w < 620 ? 176 : box.w < 820 ? 200 : box.w < 1000 ? 220 : 240;
+    const CARD_H = 60;
+    const SIDE_MARGIN = 4;
+    const EDGE_MARGIN = 8;
+
+    // one band shared by both side columns → equal left/right height
+    const bandTop = box.h * 0.17;
+    const bandBottom = box.h * 0.83;
+
     const rest = Math.max(0, total - 2);
     const rightCount = Math.ceil(rest / 2);
     const leftCount = rest - rightCount;
 
-    return companies.map((company, index) => {
-      let slot: Slot = "top";
-      let left = 50;
-      let top = 50;
-      let cardTransform = "translate(-50%, -50%)";
-      // where the connector line ends (arrow tip sits just before the card)
-      let lineX = 50;
-      let lineY = 50;
+    const yAt = (i: number, count: number) =>
+      count <= 1 ? cY : bandTop + ((bandBottom - bandTop) * i) / (count - 1);
+
+    const list = companies.map((company, index) => {
+      let cardStyle: CSSProperties;
+      let connX: number;
+      let connY: number;
 
       if (index === 0) {
-        slot = "top";
-        left = 50;
-        top = 3;
-        cardTransform = "translate(-50%, 0%)";
-        lineX = 50;
-        lineY = 17;
+        // TOP
+        cardStyle = {
+          left: cX,
+          top: EDGE_MARGIN,
+          transform: "translateX(-50%)",
+          width: CARD_W,
+        };
+        connX = cX;
+        connY = EDGE_MARGIN + CARD_H;
       } else if (index <= rightCount) {
-        slot = "right";
-        const i = index - 1; // 0-based, top → bottom
-        left = 98;
-        top = bandPosition(i, rightCount);
-        cardTransform = "translate(-100%, -50%)";
-        lineX = 64;
-        lineY = top;
+        // RIGHT column (top → bottom)
+        const y = yAt(index - 1, rightCount);
+        cardStyle = {
+          left: box.w - SIDE_MARGIN,
+          top: y,
+          transform: "translate(-100%, -50%)",
+          width: CARD_W,
+        };
+        connX = box.w - SIDE_MARGIN - CARD_W;
+        connY = y;
       } else if (index === rightCount + 1) {
-        slot = "bottom";
-        left = 50;
-        top = 97;
-        cardTransform = "translate(-50%, -100%)";
-        lineX = 50;
-        lineY = 83;
+        // BOTTOM
+        cardStyle = {
+          left: cX,
+          top: box.h - EDGE_MARGIN,
+          transform: "translate(-50%, -100%)",
+          width: CARD_W,
+        };
+        connX = cX;
+        connY = box.h - EDGE_MARGIN - CARD_H;
       } else {
-        slot = "left";
-        const i = index - (rightCount + 2); // 0-based within the left column
-        left = 2;
-        // numbering runs bottom → top on the left side
-        top =
+        // LEFT column (bottom → top)
+        const i = index - (rightCount + 2);
+        const y =
           leftCount <= 1
-            ? 50
-            : BAND_BOTTOM - ((BAND_BOTTOM - BAND_TOP) * i) / (leftCount - 1);
-        cardTransform = "translate(0%, -50%)";
-        lineX = 36;
-        lineY = top;
+            ? cY
+            : bandBottom - ((bandBottom - bandTop) * i) / (leftCount - 1);
+        cardStyle = {
+          left: SIDE_MARGIN,
+          top: y,
+          transform: "translateY(-50%)",
+          width: CARD_W,
+        };
+        connX = SIDE_MARGIN + CARD_W;
+        connY = y;
       }
 
       const meta = getFallbackIconMeta(company.revenueStage, index);
@@ -209,18 +242,17 @@ export default function EcosystemFlow({
       return {
         company,
         index,
-        slot,
-        left,
-        top,
-        cardTransform,
-        lineX,
-        lineY,
+        cardStyle,
+        connX,
+        connY,
         fallbackIcon: meta.icon,
         fallbackColor: meta.color,
         nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
       };
     });
-  }, [companies, total]);
+
+    return { nodes: list, cx: cX, cy: cY };
+  }, [companies, total, box]);
 
   return (
     <>
@@ -228,20 +260,24 @@ export default function EcosystemFlow({
       {/* DESKTOP DIAGRAM                                                    */}
       {/* ================================================================== */}
 
-      <div className="relative hidden h-[520px] w-full overflow-visible lg:block xl:h-[560px] 2xl:h-[600px]">
+      <div
+        ref={boxRef}
+        className="relative hidden h-[500px] w-full overflow-hidden lg:block xl:h-[540px] 2xl:h-[580px]"
+      >
         {/* Connector lines + amber arrowheads */}
         <svg
           className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          viewBox={`0 0 ${box.w} ${box.h}`}
           aria-hidden="true"
         >
           <defs>
             <marker
               id="ecoArrow"
               viewBox="0 0 10 10"
-              refX="8"
+              refX="9"
               refY="5"
-              markerWidth="7"
-              markerHeight="7"
+              markerWidth="6"
+              markerHeight="6"
               orient="auto"
             >
               <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
@@ -251,20 +287,19 @@ export default function EcosystemFlow({
           {nodes.map((node) => (
             <line
               key={`line-${node.company.id}`}
-              x1="50%"
-              y1="50%"
-              x2={`${node.lineX}%`}
-              y2={`${node.lineY}%`}
+              x1={cx}
+              y1={cy}
+              x2={node.connX}
+              y2={node.connY}
               stroke="#f59e0b"
               strokeWidth="2"
               strokeLinecap="round"
-              strokeOpacity="0.6"
+              strokeOpacity="0.7"
               markerEnd="url(#ecoArrow)"
             />
           ))}
 
-          {/* origin dot */}
-          <circle cx="50%" cy="50%" r="4" fill="#f59e0b" />
+          <circle cx={cx} cy={cy} r="4" fill="#f59e0b" />
         </svg>
 
         {/* Center hub */}
@@ -287,7 +322,7 @@ export default function EcosystemFlow({
                 company={node.company}
                 fallbackIcon={node.fallbackIcon}
                 fallbackColor={node.fallbackColor}
-                size={38}
+                size={36}
               />
               <div className="min-w-0 flex-1">
                 <div
@@ -303,12 +338,6 @@ export default function EcosystemFlow({
             </div>
           );
 
-          const style = {
-            left: `${node.left}%`,
-            top: `${node.top}%`,
-            transform: node.cardTransform,
-          };
-
           if (node.company.website) {
             return (
               <a
@@ -317,8 +346,8 @@ export default function EcosystemFlow({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit ${node.company.name}`}
-                className="absolute z-30 block w-[190px] cursor-pointer xl:w-[220px] 2xl:w-[240px]"
-                style={style}
+                className="absolute z-30 block cursor-pointer"
+                style={node.cardStyle}
               >
                 {content}
               </a>
@@ -326,11 +355,7 @@ export default function EcosystemFlow({
           }
 
           return (
-            <div
-              key={node.company.id}
-              className="absolute z-30 w-[190px] xl:w-[220px] 2xl:w-[240px]"
-              style={style}
-            >
+            <div key={node.company.id} className="absolute z-30" style={node.cardStyle}>
               {content}
             </div>
           );
