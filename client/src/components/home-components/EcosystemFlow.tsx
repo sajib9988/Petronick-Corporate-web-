@@ -168,14 +168,14 @@ export default function EcosystemFlow({
     const cY = box.h / 2;
 
     const CARD_W =
-      box.w < 620 ? 176 : box.w < 820 ? 200 : box.w < 1000 ? 220 : 240;
-    const CARD_H = 60;
+      box.w < 620 ? 178 : box.w < 820 ? 202 : box.w < 1000 ? 222 : 242;
+    const CARD_H = 66; // fixed → every row lines up left ↔ right
     const SIDE_MARGIN = 4;
-    const EDGE_MARGIN = 8;
+    const EDGE_MARGIN = 6;
 
-    // one band shared by both side columns → equal left/right height
-    const bandTop = box.h * 0.17;
-    const bandBottom = box.h * 0.83;
+    // one band shared by both side columns → identical left/right heights
+    const bandTop = box.h * 0.18;
+    const bandBottom = box.h * 0.82;
 
     const rest = Math.max(0, total - 2);
     const rightCount = Math.ceil(rest / 2);
@@ -262,8 +262,13 @@ export default function EcosystemFlow({
 
       <div
         ref={boxRef}
-        className="relative hidden h-[500px] w-full overflow-hidden lg:block xl:h-[540px] 2xl:h-[580px]"
+        className="relative hidden h-[500px] w-full overflow-hidden rounded-2xl lg:block xl:h-[540px] 2xl:h-[580px]"
       >
+        {/* soft ambient wash */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.06),transparent_68%)]" />
+        {/* hub glow */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/20 blur-3xl xl:h-64 xl:w-64" />
+
         {/* Connector lines + amber arrowheads */}
         <svg
           className="pointer-events-none absolute inset-0 z-0 h-full w-full"
@@ -292,46 +297,49 @@ export default function EcosystemFlow({
               x2={node.connX}
               y2={node.connY}
               stroke="#f59e0b"
-              strokeWidth="2"
+              strokeWidth="1.75"
               strokeLinecap="round"
-              strokeOpacity="0.7"
+              strokeOpacity="0.85"
               markerEnd="url(#ecoArrow)"
             />
           ))}
 
-          <circle cx={cx} cy={cy} r="4" fill="#f59e0b" />
+          <circle cx={cx} cy={cy} r="4.5" fill="#f59e0b" />
         </svg>
 
         {/* Center hub */}
         <div className="absolute left-1/2 top-1/2 z-20 h-36 w-36 -translate-x-1/2 -translate-y-1/2 xl:h-40 xl:w-40">
-          <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-slate-950 px-4 text-center text-white shadow-xl shadow-slate-900/25 ring-1 ring-amber-500/40">
-            <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950 xl:h-9 xl:w-9">
+          <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-gradient-to-b from-slate-800 to-slate-950 px-5 text-center text-white shadow-2xl shadow-slate-900/40 ring-2 ring-amber-500/30">
+            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-300 to-amber-600 font-serif text-lg font-bold text-slate-950 shadow-lg shadow-amber-500/30 xl:h-10 xl:w-10">
               P
             </div>
-            <div className="max-w-[130px] text-[9px] font-bold uppercase leading-tight tracking-wide xl:text-[10px]">
+            <div className="max-w-[130px] text-[9px] font-bold uppercase leading-tight tracking-[0.12em] text-white/90 xl:text-[10px]">
               Petronick Corporate Holdings LLC
             </div>
           </div>
         </div>
 
-        {/* Company cards */}
+        {/* Company cards — fixed height so every left/right row aligns */}
         {nodes.map((node) => {
           const content = (
-            <div className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:gap-3 xl:p-3">
+            <div className="group flex h-[66px] items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 shadow-[0_8px_28px_-12px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-[0_14px_32px_-10px_rgba(245,158,11,0.28)] xl:gap-3">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-gradient-to-tr from-amber-400 to-amber-600 text-[10px] font-bold text-slate-950 shadow-sm shadow-amber-500/30">
+                {node.index + 1}
+              </span>
               <CompanyIcon
                 company={node.company}
                 fallbackIcon={node.fallbackIcon}
                 fallbackColor={node.fallbackColor}
-                size={36}
+                size={34}
               />
               <div className="min-w-0 flex-1">
                 <div
-                  className={`text-[13px] font-bold leading-tight ${node.nameColor} xl:text-sm`}
+                  className={`line-clamp-2 text-[12px] font-bold leading-[1.15] ${node.nameColor} xl:text-[13px]`}
                   title={node.company.name}
                 >
-                  {node.index + 1}. {node.company.name}
+                  {node.company.name}
                 </div>
-                <div className="mt-0.5 text-[10px] leading-tight text-slate-400 xl:text-[11px]">
+                <div className="mt-0.5 truncate text-[10px] font-medium text-slate-400">
                   {node.company.revenueStage || "Business Unit"}
                 </div>
               </div>
@@ -380,21 +388,23 @@ export default function EcosystemFlow({
           {nodes.map((node) => {
             const content = (
               <>
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-gradient-to-tr from-amber-400 to-amber-600 text-[10px] font-bold text-slate-950 shadow-sm shadow-amber-500/30">
+                  {node.index + 1}
+                </span>
                 <CompanyIcon
                   company={node.company}
                   fallbackIcon={node.fallbackIcon}
                   fallbackColor={node.fallbackColor}
-                  size={40}
+                  size={38}
                 />
                 <div className="min-w-0 flex-1">
                   <div className={`text-sm font-bold leading-tight ${node.nameColor}`}>
-                    {node.index + 1}. {node.company.name}
+                    {node.company.name}
                   </div>
                   <div className="mt-0.5 text-xs text-slate-400">
                     {node.company.revenueStage || "Business Unit"}
                   </div>
                 </div>
-                <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500 ring-2 ring-amber-100" />
               </>
             );
 
