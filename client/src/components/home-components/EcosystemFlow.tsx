@@ -173,9 +173,11 @@ export default function EcosystemFlow({
     const SIDE_MARGIN = 4;
     const EDGE_MARGIN = 6;
 
-    // one band shared by both side columns → identical left/right heights
-    const bandTop = box.h * 0.18;
-    const bandBottom = box.h * 0.82;
+    // one band shared by both side columns → identical left/right heights.
+    // Kept fairly tight so the side columns don't sprawl toward the
+    // top/bottom cards.
+    const bandTop = box.h * 0.26;
+    const bandBottom = box.h * 0.74;
 
     const rest = Math.max(0, total - 2);
     const rightCount = Math.ceil(rest / 2);
@@ -262,7 +264,7 @@ export default function EcosystemFlow({
 
       <div
         ref={boxRef}
-        className="relative hidden h-[500px] w-full overflow-hidden rounded-2xl lg:block xl:h-[540px] 2xl:h-[580px]"
+        className="relative hidden h-[480px] w-full overflow-hidden rounded-2xl lg:block xl:h-[520px] 2xl:h-[560px]"
       >
         {/* soft ambient wash */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.06),transparent_68%)]" />
