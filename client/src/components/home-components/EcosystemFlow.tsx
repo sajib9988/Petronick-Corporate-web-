@@ -72,36 +72,6 @@ const NAME_COLOR_POOL = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* COMPANY NAME FONT SIZE                                                     */
-/* -------------------------------------------------------------------------- */
-
-function getCompanyNameFontSize(name: string) {
-  const length = name.trim().length;
-
-  if (length <= 15) return "12px";
-  if (length <= 19) return "11.5px";
-  if (length <= 24) return "10.5px";
-  if (length <= 29) return "10px";
-  return "9.5px";
-}
-
-/* -------------------------------------------------------------------------- */
-/* CARD POSITION                                                              */
-/* -------------------------------------------------------------------------- */
-
-function getCardTransform(left: number, top: number) {
-  let translateX = "-50%";
-  let translateY = "-50%";
-
-  if (left > 58) translateX = "-100%";
-  if (left < 42) translateX = "0%";
-  if (top > 67) translateY = "-100%";
-  if (top < 33) translateY = "0%";
-
-  return `translate(${translateX}, ${translateY})`;
-}
-
-/* -------------------------------------------------------------------------- */
 /* COMPANY ICON                                                               */
 /* -------------------------------------------------------------------------- */
 
@@ -132,16 +102,45 @@ function CompanyIcon({
     );
   }
 
-  // No custom icon uploaded yet — plain category-matched icon, no box.
+  // No custom icon uploaded yet — plain category-matched icon.
   const Icon = fallbackIcon;
   return (
     <div
-      className="flex shrink-0 items-center justify-center"
+      className="flex shrink-0 items-center justify-center rounded-lg bg-slate-50"
       style={{ width: size, height: size }}
     >
-      <Icon size={Math.round(size * 0.58)} className={fallbackColor} strokeWidth={2} />
+      <Icon size={Math.round(size * 0.55)} className={fallbackColor} strokeWidth={2} />
     </div>
   );
+}
+
+/* -------------------------------------------------------------------------- */
+/* LAYOUT                                                                     */
+/* -------------------------------------------------------------------------- */
+/*
+ | Companies are arranged around a central hub in reading order:
+ |
+ |            1
+ |     10           2
+ |      9           3
+ |      8           4
+ |      7           5
+ |            6
+ |
+ |  1  = top          6      = bottom
+ |  2..= right column (top → bottom)
+ |  ..10 = left column (bottom → top)
+*/
+
+type Slot = "top" | "right" | "bottom" | "left";
+
+// Vertical band the side columns spread across (percent of the box height).
+const BAND_TOP = 15;
+const BAND_BOTTOM = 85;
+
+function bandPosition(i: number, count: number) {
+  if (count <= 1) return 50;
+  return BAND_TOP + ((BAND_BOTTOM - BAND_TOP) * i) / (count - 1);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -153,98 +152,128 @@ export default function EcosystemFlow({
 }: {
   companies: Company[];
 }) {
-  const total = companies.length || 1;
-
-  // More companies = more breathing room needed, otherwise cards overlap.
-  const RADIUS_X = total <= 6 ? 40 : total <= 8 ? 44 : 48;
-  const RADIUS_Y = total <= 6 ? 39 : total <= 8 ? 43 : 46;
-  const CARD_WIDTH = total <= 8 ? 188 : 166;
-  const CENTER_RADIUS_PERCENT = 14;
-  const LINE_END_DISTANCE = 0.91;
-
-  const desktopHeightClass =
-    total > 8
-      ? "h-[620px] xl:h-[650px] 2xl:h-[680px]"
-      : "h-[560px] xl:h-[580px] 2xl:h-[610px]";
+  const total = companies.length;
 
   const nodes = useMemo(() => {
+    const rest = Math.max(0, total - 2);
+    const rightCount = Math.ceil(rest / 2);
+    const leftCount = rest - rightCount;
+
     return companies.map((company, index) => {
-      const angle = (index * 2 * Math.PI) / total - Math.PI / 2;
+      let slot: Slot = "top";
+      let left = 50;
+      let top = 50;
+      let cardTransform = "translate(-50%, -50%)";
+      // where the connector line ends (arrow tip sits just before the card)
+      let lineX = 50;
+      let lineY = 50;
 
-      const left = 50 + RADIUS_X * Math.cos(angle);
-      const top = 50 + RADIUS_Y * Math.sin(angle);
+      if (index === 0) {
+        slot = "top";
+        left = 50;
+        top = 3;
+        cardTransform = "translate(-50%, 0%)";
+        lineX = 50;
+        lineY = 17;
+      } else if (index <= rightCount) {
+        slot = "right";
+        const i = index - 1; // 0-based, top → bottom
+        left = 98;
+        top = bandPosition(i, rightCount);
+        cardTransform = "translate(-100%, -50%)";
+        lineX = 64;
+        lineY = top;
+      } else if (index === rightCount + 1) {
+        slot = "bottom";
+        left = 50;
+        top = 97;
+        cardTransform = "translate(-50%, -100%)";
+        lineX = 50;
+        lineY = 83;
+      } else {
+        slot = "left";
+        const i = index - (rightCount + 2); // 0-based within the left column
+        left = 2;
+        // numbering runs bottom → top on the left side
+        top =
+          leftCount <= 1
+            ? 50
+            : BAND_BOTTOM - ((BAND_BOTTOM - BAND_TOP) * i) / (leftCount - 1);
+        cardTransform = "translate(0%, -50%)";
+        lineX = 36;
+        lineY = top;
+      }
 
-      const dx = Math.cos(angle);
-      const dy = Math.sin(angle);
-
-      const lineEndX = 50 + (left - 50) * LINE_END_DISTANCE;
-      const lineEndY = 50 + (top - 50) * LINE_END_DISTANCE;
-
-      const lineStartX = 50 + dx * CENTER_RADIUS_PERCENT;
-      const lineStartY = 50 + dy * CENTER_RADIUS_PERCENT;
-
-      const fallbackMeta = getFallbackIconMeta(company.revenueStage, index);
+      const meta = getFallbackIconMeta(company.revenueStage, index);
 
       return {
         company,
         index,
+        slot,
         left,
         top,
-        lineStartX,
-        lineStartY,
-        lineEndX,
-        lineEndY,
-        cardTransform: getCardTransform(left, top),
-        fallbackIcon: fallbackMeta.icon,
-        fallbackColor: fallbackMeta.color,
+        cardTransform,
+        lineX,
+        lineY,
+        fallbackIcon: meta.icon,
+        fallbackColor: meta.color,
         nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
-        nameFontSize: getCompanyNameFontSize(company.name),
       };
     });
-  }, [companies, total, RADIUS_X, RADIUS_Y]);
+  }, [companies, total]);
 
   return (
     <>
       {/* ================================================================== */}
-      {/* DESKTOP RADIAL ECOSYSTEM                                           */}
+      {/* DESKTOP DIAGRAM                                                    */}
       {/* ================================================================== */}
 
-      <div className={`relative hidden w-full overflow-visible xl:block ${desktopHeightClass}`}>
-        {/* Connection lines */}
+      <div className="relative hidden h-[520px] w-full overflow-visible lg:block xl:h-[560px] 2xl:h-[600px]">
+        {/* Connector lines + amber arrowheads */}
         <svg
-          className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-visible"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           aria-hidden="true"
         >
+          <defs>
+            <marker
+              id="ecoArrow"
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
+            </marker>
+          </defs>
+
           {nodes.map((node) => (
-            <g key={`connection-${node.company.id}`}>
-              <line
-                x1={node.lineStartX}
-                y1={node.lineStartY}
-                x2={node.lineEndX}
-                y2={node.lineEndY}
-                stroke="#f59e0b"
-                strokeWidth="0.26"
-                strokeLinecap="round"
-                strokeOpacity="0.7"
-                strokeDasharray="1.4 1.8"
-                vectorEffect="non-scaling-stroke"
-              />
-              <circle cx={node.lineEndX} cy={node.lineEndY} r="0.85" fill="#f59e0b" />
-            </g>
+            <line
+              key={`line-${node.company.id}`}
+              x1="50%"
+              y1="50%"
+              x2={`${node.lineX}%`}
+              y2={`${node.lineY}%`}
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeOpacity="0.6"
+              markerEnd="url(#ecoArrow)"
+            />
           ))}
 
-          <circle cx="50" cy="50" r="1.5" fill="#f59e0b" />
+          {/* origin dot */}
+          <circle cx="50%" cy="50%" r="4" fill="#f59e0b" />
         </svg>
 
         {/* Center hub */}
         <div className="absolute left-1/2 top-1/2 z-20 h-36 w-36 -translate-x-1/2 -translate-y-1/2 xl:h-40 xl:w-40">
           <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-slate-950 px-4 text-center text-white shadow-xl shadow-slate-900/25 ring-1 ring-amber-500/40">
-            <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950">
+            <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950 xl:h-9 xl:w-9">
               P
             </div>
-            <div className="max-w-[130px] text-[8px] font-bold uppercase leading-tight tracking-wide xl:text-[9px]">
+            <div className="max-w-[130px] text-[9px] font-bold uppercase leading-tight tracking-wide xl:text-[10px]">
               Petronick Corporate Holdings LLC
             </div>
           </div>
@@ -253,24 +282,21 @@ export default function EcosystemFlow({
         {/* Company cards */}
         {nodes.map((node) => {
           const content = (
-            <div className="flex h-[58px] w-full items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:h-[60px] xl:px-3">
+            <div className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md xl:gap-3 xl:p-3">
               <CompanyIcon
                 company={node.company}
                 fallbackIcon={node.fallbackIcon}
                 fallbackColor={node.fallbackColor}
-                size={36}
+                size={38}
               />
-
-              <div className="min-w-0 flex-1 overflow-hidden">
+              <div className="min-w-0 flex-1">
                 <div
-                  className={`whitespace-nowrap font-bold leading-none tracking-[-0.015em] ${node.nameColor}`}
-                  style={{ fontSize: node.nameFontSize }}
+                  className={`text-[13px] font-bold leading-tight ${node.nameColor} xl:text-sm`}
                   title={node.company.name}
                 >
                   {node.index + 1}. {node.company.name}
                 </div>
-
-                <div className="mt-1.5 whitespace-nowrap text-[9px] leading-none text-slate-400 xl:text-[10px]">
+                <div className="mt-0.5 text-[10px] leading-tight text-slate-400 xl:text-[11px]">
                   {node.company.revenueStage || "Business Unit"}
                 </div>
               </div>
@@ -281,7 +307,6 @@ export default function EcosystemFlow({
             left: `${node.left}%`,
             top: `${node.top}%`,
             transform: node.cardTransform,
-            width: CARD_WIDTH,
           };
 
           if (node.company.website) {
@@ -292,7 +317,7 @@ export default function EcosystemFlow({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit ${node.company.name}`}
-                className="absolute z-30 block cursor-pointer"
+                className="absolute z-30 block w-[190px] cursor-pointer xl:w-[220px] 2xl:w-[240px]"
                 style={style}
               >
                 {content}
@@ -301,7 +326,11 @@ export default function EcosystemFlow({
           }
 
           return (
-            <div key={node.company.id} className="absolute z-30" style={style}>
+            <div
+              key={node.company.id}
+              className="absolute z-30 w-[190px] xl:w-[220px] 2xl:w-[240px]"
+              style={style}
+            >
               {content}
             </div>
           );
@@ -312,7 +341,7 @@ export default function EcosystemFlow({
       {/* MOBILE / TABLET                                                    */}
       {/* ================================================================== */}
 
-      <div className="xl:hidden">
+      <div className="lg:hidden">
         <div className="mx-auto mb-5 flex w-fit max-w-full flex-col items-center rounded-2xl bg-slate-950 px-6 py-4 text-center text-white shadow-lg ring-1 ring-amber-500/40">
           <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950">
             P
@@ -322,7 +351,7 @@ export default function EcosystemFlow({
           </div>
         </div>
 
-        <div className="space-y-2.5">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
           {nodes.map((node) => {
             const content = (
               <>
@@ -332,20 +361,14 @@ export default function EcosystemFlow({
                   fallbackColor={node.fallbackColor}
                   size={40}
                 />
-
-                <div className="min-w-0 flex-1 overflow-hidden">
-                  <div
-                    className={`whitespace-nowrap font-bold leading-tight ${node.nameColor}`}
-                    style={{ fontSize: node.nameFontSize }}
-                  >
+                <div className="min-w-0 flex-1">
+                  <div className={`text-sm font-bold leading-tight ${node.nameColor}`}>
                     {node.index + 1}. {node.company.name}
                   </div>
-
-                  <div className="mt-1 whitespace-nowrap text-[10px] text-slate-400">
+                  <div className="mt-0.5 text-xs text-slate-400">
                     {node.company.revenueStage || "Business Unit"}
                   </div>
                 </div>
-
                 <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500 ring-2 ring-amber-100" />
               </>
             );
@@ -358,7 +381,7 @@ export default function EcosystemFlow({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visit ${node.company.name}`}
-                  className="flex items-center gap-3 overflow-hidden rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   {content}
                 </a>
@@ -368,7 +391,7 @@ export default function EcosystemFlow({
             return (
               <div
                 key={node.company.id}
-                className="flex items-center gap-3 overflow-hidden rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
+                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
               >
                 {content}
               </div>
