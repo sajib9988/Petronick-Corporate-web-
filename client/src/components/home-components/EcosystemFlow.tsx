@@ -36,90 +36,91 @@ const NAME_COLOR_POOL = [
   "text-violet-700",
 ];
 
-/*
-|--------------------------------------------------------------------------
-| RADIAL LAYOUT
-|--------------------------------------------------------------------------
-|
-| Keep companies close to the center,
-| but leave enough room so cards do not touch.
-|
-*/
-
-const RADIUS_X = 39;
-const RADIUS_Y = 39;
+/* -------------------------------------------------------------------------- */
+/* RADIAL SETTINGS                                                            */
+/* -------------------------------------------------------------------------- */
 
 /*
-|--------------------------------------------------------------------------
-| CARD POSITION
-|--------------------------------------------------------------------------
-*/
+ * 10 companies-er jonno 39% radius beshi crowded chilo.
+ *
+ * Ekhon companies ke center theke aro baire niye jawa hocche.
+ */
+const RADIUS_X = 46;
+const RADIUS_Y = 45;
+
+/*
+ * Center hub-er size.
+ */
+const CENTER_SIZE = 160;
+
+/*
+ * Company card size.
+ *
+ * 190px width rakha hocche jate long company name
+ * unnecessarily tiny font-e na jay.
+ */
+const CARD_WIDTH = 188;
+
+/* -------------------------------------------------------------------------- */
+/* COMPANY NAME FONT SIZE                                                     */
+/* -------------------------------------------------------------------------- */
+
+function getCompanyNameFontSize(name: string) {
+  const length = name.trim().length;
+
+  if (length <= 15) return "12px";
+  if (length <= 19) return "11.5px";
+  if (length <= 24) return "10.5px";
+  if (length <= 29) return "10px";
+  return "9.5px";
+}
+
+/* -------------------------------------------------------------------------- */
+/* CARD POSITION                                                               */
+/* -------------------------------------------------------------------------- */
 
 function getCardTransform(left: number, top: number) {
   let translateX = "-50%";
   let translateY = "-50%";
 
   /*
-   * Right side
-   * Card extends toward the center.
+   * Right side:
+   * card-er right edge anchor point-er sathe align hobe.
    */
   if (left > 58) {
     translateX = "-100%";
   }
 
   /*
-   * Left side
-   * Card extends toward the center.
+   * Left side:
+   * card-er left edge anchor point-er sathe align hobe.
    */
   if (left < 42) {
     translateX = "0%";
   }
 
   /*
-   * Bottom
-   * Card sits above the connection point.
+   * Bottom:
+   * card connection point-er upore thakbe.
    */
-  if (top > 66) {
+  if (top > 67) {
     translateY = "-100%";
   }
 
   /*
-   * Top
-   * Card sits below the connection point.
+   * Top:
+   * card connection point-er niche thakbe.
    */
-  if (top < 34) {
+  if (top < 33) {
     translateY = "0%";
   }
 
   return `translate(${translateX}, ${translateY})`;
 }
 
-/*
-|--------------------------------------------------------------------------
-| COMPANY NAME FONT SIZE
-|--------------------------------------------------------------------------
-|
-| Company names always stay on ONE line.
-| Longer names automatically get a smaller font.
-|
-*/
-
-function getCompanyNameFontSize(name: string) {
-  const length = name.trim().length;
-
-  if (length <= 14) return "12px";
-  if (length <= 18) return "11px";
-  if (length <= 22) return "10px";
-  if (length <= 26) return "9px";
-
-  return "8px";
-}
-
-/*
-|--------------------------------------------------------------------------
-| COMPANY ICON
-|--------------------------------------------------------------------------
-*/
+/* -------------------------------------------------------------------------- */
+/* COMPANY ICON                                                                */
+/* -------------------------------------------------------------------------- */
 
 function CompanyIcon({
   company,
@@ -175,11 +176,9 @@ function CompanyIcon({
   );
 }
 
-/*
-|--------------------------------------------------------------------------
-| MAIN COMPONENT
-|--------------------------------------------------------------------------
-*/
+/* -------------------------------------------------------------------------- */
+/* MAIN COMPONENT                                                              */
+/* -------------------------------------------------------------------------- */
 
 export default function EcosystemFlow({
   companies,
@@ -191,15 +190,15 @@ export default function EcosystemFlow({
 
     return companies.map((company, index) => {
       /*
-       * Start at 12 o'clock
-       * and rotate clockwise.
+       * 12 o'clock theke start.
+       *
+       * Every company equal angle-e distribute hobe.
        */
       const angle =
-        (index * 2 * Math.PI) / total -
-        Math.PI / 2;
+        (index * 2 * Math.PI) / total - Math.PI / 2;
 
       /*
-       * Radial connection point.
+       * Company anchor point.
        */
       const left =
         50 + RADIUS_X * Math.cos(angle);
@@ -207,16 +206,52 @@ export default function EcosystemFlow({
       const top =
         50 + RADIUS_Y * Math.sin(angle);
 
+      /*
+       * Direction vector.
+       *
+       * Eta use kore line center theke card-er dike
+       * naturally point korbe.
+       */
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+
+      /*
+       * Arrow/card gap.
+       *
+       * Arrowhead card-er vitore dhukbe na.
+       */
+      const lineEndDistance = 0.91;
+
+      const lineEndX =
+        50 + (left - 50) * lineEndDistance;
+
+      const lineEndY =
+        50 + (top - 50) * lineEndDistance;
+
+      /*
+       * Center hub-er edge theke line start.
+       *
+       * 50% center theke hub radius বাদ দেওয়া হচ্ছে।
+       */
+      const centerRadiusPercent = 14;
+
+      const lineStartX =
+        50 + dx * centerRadiusPercent;
+
+      const lineStartY =
+        50 + dy * centerRadiusPercent;
+
       return {
         company,
         index,
+        angle,
         left,
         top,
-
-        cardTransform: getCardTransform(
-          left,
-          top,
-        ),
+        lineStartX,
+        lineStartY,
+        lineEndX,
+        lineEndY,
+        cardTransform: getCardTransform(left, top),
 
         iconBg:
           ICON_BG_POOL[
@@ -229,9 +264,7 @@ export default function EcosystemFlow({
           ],
 
         nameFontSize:
-          getCompanyNameFontSize(
-            company.name,
-          ),
+          getCompanyNameFontSize(company.name),
       };
     });
   }, [companies]);
@@ -239,19 +272,19 @@ export default function EcosystemFlow({
   return (
     <>
       {/* ================================================================== */}
-      {/* DESKTOP RADIAL ECOSYSTEM                                          */}
+      {/* DESKTOP RADIAL ECOSYSTEM                                           */}
       {/* ================================================================== */}
 
       <div
         className="
           relative
           hidden
-          h-[520px]
+          h-[570px]
           w-full
           overflow-visible
           xl:block
-          xl:h-[550px]
-          2xl:h-[580px]
+          xl:h-[590px]
+          2xl:h-[620px]
         "
       >
         {/* ================================================================ */}
@@ -263,21 +296,27 @@ export default function EcosystemFlow({
             pointer-events-none
             absolute
             inset-0
-            z-0
+            z-10
             h-full
             w-full
             overflow-visible
           "
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
           aria-hidden="true"
         >
           <defs>
+            {/* ============================================================ */}
+            {/* AMBER ARROW                                                   */}
+            {/* ============================================================ */}
+
             <marker
               id="ecoArrow"
               viewBox="0 0 10 10"
-              refX="8"
+              refX="8.5"
               refY="5"
-              markerWidth="5.5"
-              markerHeight="5.5"
+              markerWidth="4.5"
+              markerHeight="4.5"
               orient="auto"
               markerUnits="strokeWidth"
             >
@@ -289,53 +328,45 @@ export default function EcosystemFlow({
           </defs>
 
           {/* ============================================================ */}
-          {/* CENTER → COMPANY                                              */}
+          {/* CENTER → COMPANY                                               */}
           {/* ============================================================ */}
 
-          {nodes.map((node) => {
-            /*
-             * IMPORTANT:
-             *
-             * Previously this was 0.80.
-             * That made the arrow stop too far from the company.
-             *
-             * 0.94 brings the arrow very close to
-             * the company's connection point.
-             */
-            const LINE_END_DISTANCE = 0.94;
+          {nodes.map((node) => (
+            <g key={`connection-${node.company.id}`}>
+              {/* Main amber line */}
 
-            const x2 =
-              50 +
-              (node.left - 50) *
-                LINE_END_DISTANCE;
-
-            const y2 =
-              50 +
-              (node.top - 50) *
-                LINE_END_DISTANCE;
-
-            return (
               <line
-                key={`line-${node.company.id}`}
-                x1="50%"
-                y1="50%"
-                x2={`${x2}%`}
-                y2={`${y2}%`}
+                x1={node.lineStartX}
+                y1={node.lineStartY}
+                x2={node.lineEndX}
+                y2={node.lineEndY}
                 stroke="#f59e0b"
-                strokeWidth="1.8"
+                strokeWidth="0.28"
                 strokeLinecap="round"
-                strokeOpacity="0.72"
+                strokeOpacity="0.75"
+                vectorEffect="non-scaling-stroke"
                 markerEnd="url(#ecoArrow)"
               />
-            );
-          })}
 
-          {/* Center Dot */}
+              {/* Small dot near company connection */}
+
+              <circle
+                cx={node.lineEndX}
+                cy={node.lineEndY}
+                r="0.75"
+                fill="#f59e0b"
+              />
+            </g>
+          ))}
+
+          {/* ============================================================ */}
+          {/* CENTER DOT                                                     */}
+          {/* ============================================================ */}
 
           <circle
-            cx="50%"
-            cy="50%"
-            r="3.5"
+            cx="50"
+            cy="50"
+            r="1.5"
             fill="#f59e0b"
           />
         </svg>
@@ -350,14 +381,12 @@ export default function EcosystemFlow({
             left-1/2
             top-1/2
             z-20
-            h-32
-            w-32
+            h-36
+            w-36
             -translate-x-1/2
             -translate-y-1/2
-            xl:h-36
-            xl:w-36
-            2xl:h-40
-            2xl:w-40
+            xl:h-40
+            xl:w-40
           "
         >
           <div
@@ -370,7 +399,7 @@ export default function EcosystemFlow({
               justify-center
               rounded-full
               bg-slate-950
-              px-3
+              px-4
               text-center
               text-white
               shadow-xl
@@ -383,10 +412,10 @@ export default function EcosystemFlow({
 
             <div
               className="
-                mb-1.5
+                mb-2
                 flex
-                h-7
-                w-7
+                h-8
+                w-8
                 items-center
                 justify-center
                 rounded-lg
@@ -397,8 +426,6 @@ export default function EcosystemFlow({
                 text-base
                 font-bold
                 text-slate-950
-                xl:h-8
-                xl:w-8
               "
             >
               P
@@ -408,13 +435,12 @@ export default function EcosystemFlow({
 
             <div
               className="
-                max-w-[118px]
+                max-w-[130px]
                 text-[8px]
                 font-bold
                 uppercase
                 leading-tight
                 tracking-wide
-                xl:max-w-[128px]
                 xl:text-[9px]
               "
             >
@@ -432,22 +458,22 @@ export default function EcosystemFlow({
             <div
               className="
                 flex
-                h-[52px]
+                h-[58px]
                 w-full
                 items-center
-                gap-2
+                gap-2.5
                 rounded-xl
                 border
                 border-slate-200
                 bg-white
-                px-2
+                px-2.5
                 shadow-sm
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
                 hover:shadow-md
-                xl:h-[54px]
-                xl:px-2.5
+                xl:h-[60px]
+                xl:px-3
               "
             >
               {/* ======================================================== */}
@@ -458,11 +484,11 @@ export default function EcosystemFlow({
                 company={node.company}
                 bg={node.iconBg}
                 className="
-                  h-8
-                  w-8
+                  h-9
+                  w-9
                   text-xs
-                  xl:h-9
-                  xl:w-9
+                  xl:h-10
+                  xl:w-10
                 "
               />
 
@@ -488,8 +514,7 @@ export default function EcosystemFlow({
                     ${node.nameColor}
                   `}
                   style={{
-                    fontSize:
-                      node.nameFontSize,
+                    fontSize: node.nameFontSize,
                   }}
                   title={node.company.name}
                 >
@@ -501,17 +526,13 @@ export default function EcosystemFlow({
 
                 <div
                   className="
-                    mt-1
+                    mt-1.5
                     whitespace-nowrap
                     text-[9px]
                     leading-none
                     text-slate-400
                     xl:text-[10px]
                   "
-                  title={
-                    node.company.revenueStage ||
-                    "Business Unit"
-                  }
                 >
                   {node.company.revenueStage ||
                     "Business Unit"}
@@ -520,9 +541,9 @@ export default function EcosystemFlow({
             </div>
           );
 
-          /*
-           * Website available
-           */
+          /* ============================================================== */
+          /* WEBSITE AVAILABLE                                              */
+          /* ============================================================== */
 
           if (node.company.website) {
             return (
@@ -534,18 +555,16 @@ export default function EcosystemFlow({
                 aria-label={`Visit ${node.company.name}`}
                 className="
                   absolute
-                  z-10
+                  z-30
                   block
-                  w-[154px]
+                  w-[188px]
                   cursor-pointer
-                  xl:w-[162px]
-                  2xl:w-[170px]
+                  xl:w-[192px]
                 "
                 style={{
                   left: `${node.left}%`,
                   top: `${node.top}%`,
-                  transform:
-                    node.cardTransform,
+                  transform: node.cardTransform,
                 }}
               >
                 {content}
@@ -553,25 +572,23 @@ export default function EcosystemFlow({
             );
           }
 
-          /*
-           * No website
-           */
+          /* ============================================================== */
+          /* NO WEBSITE                                                      */
+          /* ============================================================== */
 
           return (
             <div
               key={node.company.id}
               className="
                 absolute
-                z-10
-                w-[154px]
-                xl:w-[162px]
-                2xl:w-[170px]
+                z-30
+                w-[188px]
+                xl:w-[192px]
               "
               style={{
                 left: `${node.left}%`,
                 top: `${node.top}%`,
-                transform:
-                  node.cardTransform,
+                transform: node.cardTransform,
               }}
             >
               {content}
@@ -581,12 +598,12 @@ export default function EcosystemFlow({
       </div>
 
       {/* ================================================================== */}
-      {/* MOBILE / TABLET                                                   */}
+      {/* MOBILE / TABLET                                                    */}
       {/* ================================================================== */}
 
       <div className="xl:hidden">
         {/* ================================================================ */}
-        {/* MOBILE CENTER HUB                                               */}
+        {/* MOBILE CENTER HUB                                                */}
         {/* ================================================================ */}
 
         <div
@@ -643,7 +660,7 @@ export default function EcosystemFlow({
         </div>
 
         {/* ================================================================ */}
-        {/* MOBILE COMPANY LIST                                             */}
+        {/* MOBILE COMPANY LIST                                              */}
         {/* ================================================================ */}
 
         <div className="space-y-2.5">
@@ -660,7 +677,13 @@ export default function EcosystemFlow({
                   "
                 />
 
-                <div className="min-w-0 flex-1 overflow-hidden">
+                <div
+                  className="
+                    min-w-0
+                    flex-1
+                    overflow-hidden
+                  "
+                >
                   <div
                     className={`
                       whitespace-nowrap
@@ -669,8 +692,7 @@ export default function EcosystemFlow({
                       ${node.nameColor}
                     `}
                     style={{
-                      fontSize:
-                        node.nameFontSize,
+                      fontSize: node.nameFontSize,
                     }}
                   >
                     {node.index + 1}.{" "}
@@ -690,7 +712,7 @@ export default function EcosystemFlow({
                   </div>
                 </div>
 
-                {/* Amber Connection Dot */}
+                {/* Amber connection dot */}
 
                 <div
                   className="

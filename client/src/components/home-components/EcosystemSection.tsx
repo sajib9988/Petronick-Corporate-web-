@@ -16,6 +16,7 @@ type Company = {
 
 interface EcosystemSectionProps {
   companies: Company[];
+
   content?: {
     label?: string;
     title?: string;
@@ -65,7 +66,7 @@ export default function EcosystemSection({
         "
       >
         {/* ================================================================ */}
-        {/* LEFT CONTENT                                                     */}
+        {/* LEFT CONTENT                                                      */}
         {/* ================================================================ */}
 
         <div className="lg:col-span-4">
@@ -133,7 +134,7 @@ export default function EcosystemSection({
         </div>
 
         {/* ================================================================ */}
-        {/* RIGHT DIAGRAM                                                    */}
+        {/* RIGHT ECOSYSTEM DIAGRAM                                           */}
         {/* ================================================================ */}
 
         <div
@@ -142,9 +143,7 @@ export default function EcosystemSection({
             lg:col-span-8
           "
         >
-          <EcosystemFlow
-            companies={companies}
-          />
+          <EcosystemFlow companies={companies} />
         </div>
       </div>
     </section>
