@@ -84,7 +84,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 3: Our Ecosystem ── */}
-      <section className="py-8 sm:py-10">
+      <section className="py-7 sm:py-10">
         <Container>
           <Reveal>
             <EcosystemSection
