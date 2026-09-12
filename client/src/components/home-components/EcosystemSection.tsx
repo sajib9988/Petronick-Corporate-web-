@@ -133,11 +133,8 @@ export default function EcosystemSection({
           </Link>
         </div>
 
-        {/* ================================================================ */}
-        {/* RIGHT ECOSYSTEM DIAGRAM                                           */}
-        {/* ================================================================ */}
-
-        <div
+   
+      <div
           className="
             min-w-0
             lg:col-span-8
