@@ -43,7 +43,7 @@ export default function RevenueOpportunitySection({
       />
 
       <div
-        className={`relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8 px-6 sm:px-10 py-14 lg:py-16 ${
+        className={`relative flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8 px-6 sm:px-10 py-16 sm:py-20 lg:py-24 ${
           image ? "xl:pr-72" : ""
         }`}
       >
