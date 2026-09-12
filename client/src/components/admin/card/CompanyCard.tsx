@@ -242,14 +242,14 @@ export default function CompanyCard({
           <div
             className={`
               flex
-              h-12
-              w-12
+              h-14
+              w-14
               shrink-0
               items-center
               justify-center
               overflow-hidden
               rounded-xl
-              ${meta.bg}
+              ${company.logo || company.icon ? "" : meta.bg}
             `}
           >
             {company.logo || company.icon ? (
@@ -259,7 +259,7 @@ export default function CompanyCard({
                 className="h-full w-full object-contain"
               />
             ) : (
-              <FallbackIcon size={24} className={meta.text} />
+              <FallbackIcon size={26} className={meta.text} />
             )}
           </div>
 
@@ -320,7 +320,7 @@ export default function CompanyCard({
               px-1.5
               py-2.5
               text-[13px]
-              font-semibold
+              font-medium
               text-white
               transition-colors
               hover:bg-orange-600
@@ -347,7 +347,7 @@ export default function CompanyCard({
                 px-1.5
                 py-2.5
                 text-[13px]
-                font-semibold
+                font-medium
                 text-gray-700
                 transition-all
                 hover:border-orange-300
