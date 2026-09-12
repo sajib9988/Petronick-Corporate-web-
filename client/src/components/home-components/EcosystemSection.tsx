@@ -9,7 +9,7 @@ type Company = {
   logo: string;
   icon: string | null;
   website: string | null;
-  revenueStage: string | null;
+  category: string | null;
   order: number;
   isVisible: boolean;
 };

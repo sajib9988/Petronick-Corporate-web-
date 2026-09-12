@@ -60,8 +60,8 @@ export default async function CompanyDetailPage({
     },
     {
       icon: Sparkles,
-      label: "Revenue Stage",
-      value: company.revenueStage ? company.revenueStage : "—",
+      label: "Category",
+      value: company.category ? company.category : "—",
     },
     {
       icon: Layers,
@@ -124,15 +124,15 @@ export default async function CompanyDetailPage({
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  {company.revenueStage && (
+                  {company.category && (
                     <span
                       className={`mb-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${
-                        stageColors[company.revenueStage] ??
+                        stageColors[company.category] ??
                         "border-white/20 bg-white/10 text-white/70"
                       }`}
                     >
                       <CircleDot size={9} />
-                      {company.revenueStage}
+                      {company.category}
                     </span>
                   )}
                   <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
@@ -243,9 +243,9 @@ export default async function CompanyDetailPage({
                     </dd>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <dt className="text-xs text-gray-400">Stage</dt>
+                    <dt className="text-xs text-gray-400">Category</dt>
                     <dd className="text-xs font-semibold text-gray-800">
-                      {company.revenueStage ?? "—"}
+                      {company.category ?? "—"}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">

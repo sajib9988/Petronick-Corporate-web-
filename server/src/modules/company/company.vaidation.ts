@@ -9,7 +9,7 @@ const createCompany = z.object({
   website: z.string().optional(),
   order:  z.number().int(),
   isVisible:  z.boolean().optional(),
-  revenueStage: z.string().optional(),
+  category: z.string().optional(),
 });
 
 const updateCompany = z.object({
@@ -19,7 +19,7 @@ const updateCompany = z.object({
   website: z.string().optional(),
   order: z.coerce.number().int().optional(),
   isVisible: z.coerce.boolean().optional(),
-  revenueStage: z.string().optional(),
+  category: z.string().optional(),
 });
 
 export const companyValidation = {

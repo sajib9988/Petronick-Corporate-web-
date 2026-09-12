@@ -24,7 +24,7 @@ const createCompany = async (payload: IcreateCompany) => {
       website: payload.website ?? null,
       order: payload.order ?? 0,
       isVisible: payload.isVisible ?? true,
-      revenueStage: payload.revenueStage ?? null,
+      category: payload.category ?? null,
     },
   });
 };
@@ -106,7 +106,7 @@ const updateCompany = async (id: string, payload: IupdateCompany) => {
       ...(payload.website !== undefined && { website: payload.website }),
       ...(payload.order !== undefined && { order: payload.order }),
       ...(payload.isVisible !== undefined && { isVisible: payload.isVisible }),
-      ...(payload.revenueStage !== undefined && { revenueStage: payload.revenueStage }),
+      ...(payload.category !== undefined && { category: payload.category }),
     },
   });
 };

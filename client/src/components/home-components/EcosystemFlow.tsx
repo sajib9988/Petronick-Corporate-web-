@@ -23,7 +23,7 @@ type Company = {
   logo: string;
   icon: string | null;
   website: string | null;
-  revenueStage: string | null;
+  category: string | null;
   order: number;
   isVisible: boolean;
 };
@@ -257,7 +257,7 @@ export default function EcosystemFlow({
         connY = y;
       }
 
-      const meta = getFallbackIconMeta(company.revenueStage, index);
+      const meta = getFallbackIconMeta(company.category, index);
 
       return {
         company,
@@ -406,7 +406,7 @@ export default function EcosystemFlow({
               </div>
               {node.showSubtitle && (
                 <div className="mt-0.5 truncate text-[10px] font-medium text-slate-400">
-                  {node.company.revenueStage || "Business Unit"}
+                  {node.company.category || "Business Unit"}
                 </div>
               )}
             </div>

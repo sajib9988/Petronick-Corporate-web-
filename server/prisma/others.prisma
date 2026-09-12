@@ -56,7 +56,7 @@ model Company {
   website      String?
   order        Int      @default(0)
   isVisible    Boolean  @default(true)
-  revenueStage String?
+  category     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

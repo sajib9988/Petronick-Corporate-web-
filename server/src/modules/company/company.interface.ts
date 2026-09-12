@@ -6,7 +6,7 @@ export interface IcreateCompany {
   website?: string | null;
   order?: number;
   isVisible?: boolean;
-  revenueStage?: string;
+  category?: string;
 }
 
 export interface IupdateCompany {
@@ -17,7 +17,7 @@ export interface IupdateCompany {
   website?: string;
   order?: number;
   isVisible?: boolean;
-  revenueStage?: string;
+  category?: string;
 }
 
 export interface ICompanyQuery {

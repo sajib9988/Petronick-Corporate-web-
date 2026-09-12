@@ -86,12 +86,12 @@ export const companiesColumns = ({
   },
 
  {
-  accessorKey: "revenueStage",
-  header: "Category",   
+  accessorKey: "category",
+  header: "Category",
   cell: ({ row }) =>
-    row.original.revenueStage ? (
+    row.original.category ? (
       <span className="text-[10px] bg-amber-50 text-amber-700 font-medium px-2 py-1 rounded-full">
-        {row.original.revenueStage}
+        {row.original.category}
       </span>
     ) : (
       <span className="text-xs text-gray-300">—</span>

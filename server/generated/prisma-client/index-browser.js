@@ -177,7 +177,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   website: 'website',
   order: 'order',
   isVisible: 'isVisible',
-  revenueStage: 'revenueStage',
+  category: 'category',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

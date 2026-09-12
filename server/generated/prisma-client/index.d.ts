@@ -5934,7 +5934,7 @@ export namespace Prisma {
     website: string | null
     order: number | null
     isVisible: boolean | null
-    revenueStage: string | null
+    category: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5948,7 +5948,7 @@ export namespace Prisma {
     website: string | null
     order: number | null
     isVisible: boolean | null
-    revenueStage: string | null
+    category: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5962,7 +5962,7 @@ export namespace Prisma {
     website: number
     order: number
     isVisible: number
-    revenueStage: number
+    category: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5986,7 +5986,7 @@ export namespace Prisma {
     website?: true
     order?: true
     isVisible?: true
-    revenueStage?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6000,7 +6000,7 @@ export namespace Prisma {
     website?: true
     order?: true
     isVisible?: true
-    revenueStage?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6014,7 +6014,7 @@ export namespace Prisma {
     website?: true
     order?: true
     isVisible?: true
-    revenueStage?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6115,7 +6115,7 @@ export namespace Prisma {
     website: string | null
     order: number
     isVisible: boolean
-    revenueStage: string | null
+    category: string | null
     createdAt: Date
     updatedAt: Date
     _count: CompanyCountAggregateOutputType | null
@@ -6148,7 +6148,7 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     isVisible?: boolean
-    revenueStage?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -6162,7 +6162,7 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     isVisible?: boolean
-    revenueStage?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -6176,7 +6176,7 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     isVisible?: boolean
-    revenueStage?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -6190,12 +6190,12 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     isVisible?: boolean
-    revenueStage?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "icon" | "website" | "order" | "isVisible" | "revenueStage" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "logo" | "icon" | "website" | "order" | "isVisible" | "category" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
 
   export type $CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Company"
@@ -6209,7 +6209,7 @@ export namespace Prisma {
       website: string | null
       order: number
       isVisible: boolean
-      revenueStage: string | null
+      category: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["company"]>
@@ -6643,7 +6643,7 @@ export namespace Prisma {
     readonly website: FieldRef<"Company", 'String'>
     readonly order: FieldRef<"Company", 'Int'>
     readonly isVisible: FieldRef<"Company", 'Boolean'>
-    readonly revenueStage: FieldRef<"Company", 'String'>
+    readonly category: FieldRef<"Company", 'String'>
     readonly createdAt: FieldRef<"Company", 'DateTime'>
     readonly updatedAt: FieldRef<"Company", 'DateTime'>
   }
@@ -9333,7 +9333,7 @@ export namespace Prisma {
     website: 'website',
     order: 'order',
     isVisible: 'isVisible',
-    revenueStage: 'revenueStage',
+    category: 'category',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9869,7 +9869,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"Company"> | string | null
     order?: IntFilter<"Company"> | number
     isVisible?: BoolFilter<"Company"> | boolean
-    revenueStage?: StringNullableFilter<"Company"> | string | null
+    category?: StringNullableFilter<"Company"> | string | null
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
   }
@@ -9883,7 +9883,7 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     isVisible?: SortOrder
-    revenueStage?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9900,7 +9900,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"Company"> | string | null
     order?: IntFilter<"Company"> | number
     isVisible?: BoolFilter<"Company"> | boolean
-    revenueStage?: StringNullableFilter<"Company"> | string | null
+    category?: StringNullableFilter<"Company"> | string | null
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
   }, "id" | "name">
@@ -9914,7 +9914,7 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     isVisible?: SortOrder
-    revenueStage?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CompanyCountOrderByAggregateInput
@@ -9936,7 +9936,7 @@ export namespace Prisma {
     website?: StringNullableWithAggregatesFilter<"Company"> | string | null
     order?: IntWithAggregatesFilter<"Company"> | number
     isVisible?: BoolWithAggregatesFilter<"Company"> | boolean
-    revenueStage?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    category?: StringNullableWithAggregatesFilter<"Company"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
   }
@@ -10426,7 +10426,7 @@ export namespace Prisma {
     website?: string | null
     order?: number
     isVisible?: boolean
-    revenueStage?: string | null
+    category?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10440,7 +10440,7 @@ export namespace Prisma {
     website?: string | null
     order?: number
     isVisible?: boolean
-    revenueStage?: string | null
+    category?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10454,7 +10454,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
-    revenueStage?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10468,7 +10468,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
-    revenueStage?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10482,7 +10482,7 @@ export namespace Prisma {
     website?: string | null
     order?: number
     isVisible?: boolean
-    revenueStage?: string | null
+    category?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10496,7 +10496,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
-    revenueStage?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10510,7 +10510,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
-    revenueStage?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11046,7 +11046,7 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder
-    revenueStage?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11064,7 +11064,7 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder
-    revenueStage?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11078,7 +11078,7 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     isVisible?: SortOrder
-    revenueStage?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
