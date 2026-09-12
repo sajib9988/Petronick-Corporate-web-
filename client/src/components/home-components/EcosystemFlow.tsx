@@ -113,11 +113,21 @@ function CompanyIcon({
   );
 }
 
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
 /* -------------------------------------------------------------------------- */
 /* MAIN COMPONENT                                                             */
 /* -------------------------------------------------------------------------- */
 /*
- | Layout — reading order around a central hub:
+ | ONE diagram, every screen size — no separate mobile "list" fallback.
+ | Every size (hub, card, icon, badge, margins, box height) is derived from
+ | the measured container width via `t` (0 = a ~320px phone, 1 = a ~1200px+
+ | desktop column), so the exact same radial layout scales smoothly all the
+ | way down to a small phone instead of switching to a different component.
+ |
+ | Reading order around the hub:
  |
  |            1
  |    10             2
@@ -130,9 +140,9 @@ function CompanyIcon({
  |  2..5  = right column (top → bottom)
  |  7..10 = left column  (bottom → top)
  |
- | Both side columns share the same vertical band, so left and right
- | are always the exact same height. Each card is joined to the hub by
- | a golden line with an amber arrowhead that lands on the card's inner edge.
+ | Both side columns share the same vertical band, so left and right are
+ | always the exact same height. Each card is joined to the hub by a golden
+ | line with an amber arrowhead landing on the card's inner edge.
 */
 
 export default function EcosystemFlow({
@@ -143,7 +153,7 @@ export default function EcosystemFlow({
   const total = companies.length;
 
   const boxRef = useRef<HTMLDivElement>(null);
-  const [box, setBox] = useState({ w: 960, h: 560 });
+  const [containerWidth, setContainerWidth] = useState(960);
 
   useEffect(() => {
     const el = boxRef.current;
@@ -151,9 +161,8 @@ export default function EcosystemFlow({
 
     const measure = () => {
       const w = el.clientWidth;
-      const h = el.clientHeight;
-      if (w > 0 && h > 0) {
-        setBox((prev) => (prev.w === w && prev.h === h ? prev : { w, h }));
+      if (w > 0) {
+        setContainerWidth((prev) => (prev === w ? prev : w));
       }
     };
 
@@ -163,21 +172,27 @@ export default function EcosystemFlow({
     return () => ro.disconnect();
   }, []);
 
-  const { nodes, cx, cy } = useMemo(() => {
-    const cX = box.w / 2;
-    const cY = box.h / 2;
+  // 0 at a small phone (~300px wide) → 1 at a wide desktop column (~1200px+).
+  const t = clamp01((containerWidth - 300) / 900);
 
-    const CARD_W =
-      box.w < 620 ? 178 : box.w < 820 ? 202 : box.w < 1000 ? 222 : 242;
-    const CARD_H = 66; // fixed → every row lines up left ↔ right
-    const SIDE_MARGIN = 4;
-    const EDGE_MARGIN = 6;
+  const { nodes, cx, cy, boxHeight, hubSize, hubShowsText } = useMemo(() => {
+    const CARD_W = Math.round(104 + 140 * t);
+    const CARD_H = Math.round(50 + 16 * t);
+    const HUB = Math.round(64 + 96 * t);
+    const ICON = Math.round(20 + 16 * t);
+    const BADGE = Math.round(14 + 6 * t);
+    const SIDE_MARGIN = Math.round(3 + 1 * t);
+    const EDGE_MARGIN = Math.round(6 + 4 * t);
+    const H = Math.round(440 + 160 * t);
+    const showText = HUB >= 100;
+    const showSubtitle = CARD_W >= 132;
+
+    const cX = containerWidth / 2;
+    const cY = H / 2;
 
     // one band shared by both side columns → identical left/right heights.
-    // Kept fairly tight so the side columns don't sprawl toward the
-    // top/bottom cards.
-    const bandTop = box.h * 0.26;
-    const bandBottom = box.h * 0.74;
+    const bandTop = H * 0.26;
+    const bandBottom = H * 0.74;
 
     const rest = Math.max(0, total - 2);
     const rightCount = Math.ceil(rest / 2);
@@ -205,23 +220,23 @@ export default function EcosystemFlow({
         // RIGHT column (top → bottom)
         const y = yAt(index - 1, rightCount);
         cardStyle = {
-          left: box.w - SIDE_MARGIN,
+          left: containerWidth - SIDE_MARGIN,
           top: y,
           transform: "translate(-100%, -50%)",
           width: CARD_W,
         };
-        connX = box.w - SIDE_MARGIN - CARD_W;
+        connX = containerWidth - SIDE_MARGIN - CARD_W;
         connY = y;
       } else if (index === rightCount + 1) {
         // BOTTOM
         cardStyle = {
           left: cX,
-          top: box.h - EDGE_MARGIN,
+          top: H - EDGE_MARGIN,
           transform: "translate(-50%, -100%)",
           width: CARD_W,
         };
         connX = cX;
-        connY = box.h - EDGE_MARGIN - CARD_H;
+        connY = H - EDGE_MARGIN - CARD_H;
       } else {
         // LEFT column (bottom → top)
         const i = index - (rightCount + 2);
@@ -247,195 +262,176 @@ export default function EcosystemFlow({
         cardStyle,
         connX,
         connY,
+        cardH: CARD_H,
+        iconSize: ICON,
+        badgeSize: BADGE,
+        showSubtitle,
         fallbackIcon: meta.icon,
         fallbackColor: meta.color,
         nameColor: NAME_COLOR_POOL[index % NAME_COLOR_POOL.length],
       };
     });
 
-    return { nodes: list, cx: cX, cy: cY };
-  }, [companies, total, box]);
+    return {
+      nodes: list,
+      cx: cX,
+      cy: cY,
+      boxHeight: H,
+      hubSize: HUB,
+      hubShowsText: showText,
+    };
+  }, [companies, total, containerWidth, t]);
+
+  const pBadgeSize = hubShowsText
+    ? Math.round(hubSize * 0.26)
+    : Math.round(hubSize * 0.5);
+  const pBadgeFontSize = hubShowsText
+    ? Math.round(hubSize * 0.16)
+    : Math.round(hubSize * 0.28);
+  const hubLabelFontSize = Math.min(10, Math.max(7, Math.round(hubSize * 0.075)));
 
   return (
-    <>
-      {/* ================================================================== */}
-      {/* DESKTOP DIAGRAM                                                    */}
-      {/* ================================================================== */}
-
+    <div
+      ref={boxRef}
+      className="relative w-full overflow-hidden rounded-2xl"
+      style={{ height: boxHeight }}
+    >
+      {/* soft ambient wash */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.06),transparent_68%)]" />
+      {/* hub glow */}
       <div
-        ref={boxRef}
-        className="relative hidden h-[480px] w-full overflow-hidden rounded-2xl lg:block xl:h-[520px] 2xl:h-[560px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/20 blur-3xl"
+        style={{ width: hubSize * 2.2, height: hubSize * 2.2 }}
+      />
+
+      {/* Connector lines + amber arrowheads */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        viewBox={`0 0 ${containerWidth} ${boxHeight}`}
+        aria-hidden="true"
       >
-        {/* soft ambient wash */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.06),transparent_68%)]" />
-        {/* hub glow */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/20 blur-3xl xl:h-64 xl:w-64" />
+        <defs>
+          <marker
+            id="ecoArrow"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
+          </marker>
+        </defs>
 
-        {/* Connector lines + amber arrowheads */}
-        <svg
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-          viewBox={`0 0 ${box.w} ${box.h}`}
-          aria-hidden="true"
-        >
-          <defs>
-            <marker
-              id="ecoArrow"
-              viewBox="0 0 10 10"
-              refX="9"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto"
+        {nodes.map((node) => (
+          <line
+            key={`line-${node.company.id}`}
+            x1={cx}
+            y1={cy}
+            x2={node.connX}
+            y2={node.connY}
+            stroke="#f59e0b"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeOpacity="0.85"
+            markerEnd="url(#ecoArrow)"
+          />
+        ))}
+
+        <circle cx={cx} cy={cy} r="4.5" fill="#f59e0b" />
+      </svg>
+
+      {/* Center hub */}
+      <div
+        className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+        style={{ width: hubSize, height: hubSize }}
+      >
+        <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-gradient-to-b from-slate-800 to-slate-950 px-2 text-center text-white shadow-2xl shadow-slate-900/40 ring-2 ring-amber-500/30">
+          <div
+            className="flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-300 to-amber-600 font-serif font-bold text-slate-950 shadow-lg shadow-amber-500/30"
+            style={{
+              width: pBadgeSize,
+              height: pBadgeSize,
+              fontSize: pBadgeFontSize,
+              marginBottom: hubShowsText ? Math.round(hubSize * 0.05) : 0,
+            }}
+          >
+            P
+          </div>
+          {hubShowsText && (
+            <div
+              className="font-bold uppercase leading-tight tracking-[0.1em] text-white/90"
+              style={{ maxWidth: hubSize * 0.82, fontSize: hubLabelFontSize }}
             >
-              <path d="M 0 0 L 10 5 L 0 10 Z" fill="#f59e0b" />
-            </marker>
-          </defs>
-
-          {nodes.map((node) => (
-            <line
-              key={`line-${node.company.id}`}
-              x1={cx}
-              y1={cy}
-              x2={node.connX}
-              y2={node.connY}
-              stroke="#f59e0b"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeOpacity="0.85"
-              markerEnd="url(#ecoArrow)"
-            />
-          ))}
-
-          <circle cx={cx} cy={cy} r="4.5" fill="#f59e0b" />
-        </svg>
-
-        {/* Center hub */}
-        <div className="absolute left-1/2 top-1/2 z-20 h-36 w-36 -translate-x-1/2 -translate-y-1/2 xl:h-40 xl:w-40">
-          <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-gradient-to-b from-slate-800 to-slate-950 px-5 text-center text-white shadow-2xl shadow-slate-900/40 ring-2 ring-amber-500/30">
-            <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-300 to-amber-600 font-serif text-lg font-bold text-slate-950 shadow-lg shadow-amber-500/30 xl:h-10 xl:w-10">
-              P
-            </div>
-            <div className="max-w-[130px] text-[9px] font-bold uppercase leading-tight tracking-[0.12em] text-white/90 xl:text-[10px]">
               Petronick Corporate Holdings LLC
             </div>
-          </div>
+          )}
         </div>
+      </div>
 
-        {/* Company cards — fixed height so every left/right row aligns */}
-        {nodes.map((node) => {
-          const content = (
-            <div className="group flex h-[66px] items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 shadow-[0_8px_28px_-12px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-[0_14px_32px_-10px_rgba(245,158,11,0.28)] xl:gap-3">
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-gradient-to-tr from-amber-400 to-amber-600 text-[10px] font-bold text-slate-950 shadow-sm shadow-amber-500/30">
-                {node.index + 1}
-              </span>
-              <CompanyIcon
-                company={node.company}
-                fallbackIcon={node.fallbackIcon}
-                fallbackColor={node.fallbackColor}
-                size={34}
-              />
-              <div className="min-w-0 flex-1">
-                <div
-                  className={`line-clamp-2 text-[12px] font-bold leading-[1.15] ${node.nameColor} xl:text-[13px]`}
-                  title={node.company.name}
-                >
-                  {node.company.name}
-                </div>
+      {/* Company cards — every row lines up left ↔ right at any screen size */}
+      {nodes.map((node) => {
+        const content = (
+          <div
+            className="group flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-2 shadow-[0_8px_28px_-12px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-[0_14px_32px_-10px_rgba(245,158,11,0.28)]"
+            style={{ height: node.cardH }}
+          >
+            <span
+              className="flex shrink-0 items-center justify-center rounded-md bg-gradient-to-tr from-amber-400 to-amber-600 font-bold text-slate-950 shadow-sm shadow-amber-500/30"
+              style={{
+                width: node.badgeSize,
+                height: node.badgeSize,
+                fontSize: Math.max(8, Math.round(node.badgeSize * 0.55)),
+              }}
+            >
+              {node.index + 1}
+            </span>
+            <CompanyIcon
+              company={node.company}
+              fallbackIcon={node.fallbackIcon}
+              fallbackColor={node.fallbackColor}
+              size={node.iconSize}
+            />
+            <div className="min-w-0 flex-1">
+              <div
+                className={`line-clamp-2 font-bold leading-[1.15] ${node.nameColor}`}
+                style={{ fontSize: Math.max(9.5, node.cardH * 0.19) }}
+                title={node.company.name}
+              >
+                {node.company.name}
+              </div>
+              {node.showSubtitle && (
                 <div className="mt-0.5 truncate text-[10px] font-medium text-slate-400">
                   {node.company.revenueStage || "Business Unit"}
                 </div>
-              </div>
+              )}
             </div>
-          );
+          </div>
+        );
 
-          if (node.company.website) {
-            return (
-              <a
-                key={node.company.id}
-                href={node.company.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visit ${node.company.name}`}
-                className="absolute z-30 block cursor-pointer"
-                style={node.cardStyle}
-              >
-                {content}
-              </a>
-            );
-          }
-
+        if (node.company.website) {
           return (
-            <div key={node.company.id} className="absolute z-30" style={node.cardStyle}>
+            <a
+              key={node.company.id}
+              href={node.company.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${node.company.name}`}
+              className="absolute z-30 block cursor-pointer"
+              style={node.cardStyle}
+            >
               {content}
-            </div>
+            </a>
           );
-        })}
-      </div>
+        }
 
-      {/* ================================================================== */}
-      {/* MOBILE / TABLET                                                    */}
-      {/* ================================================================== */}
-
-      <div className="lg:hidden">
-        <div className="mx-auto mb-5 flex w-fit max-w-full flex-col items-center rounded-2xl bg-slate-950 px-6 py-4 text-center text-white shadow-lg ring-1 ring-amber-500/40">
-          <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 to-amber-600 font-serif text-base font-bold text-slate-950">
-            P
+        return (
+          <div key={node.company.id} className="absolute z-30" style={node.cardStyle}>
+            {content}
           </div>
-          <div className="text-[10px] font-bold uppercase tracking-wide">
-            Petronick Corporate Holdings LLC
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
-          {nodes.map((node) => {
-            const content = (
-              <>
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-gradient-to-tr from-amber-400 to-amber-600 text-[10px] font-bold text-slate-950 shadow-sm shadow-amber-500/30">
-                  {node.index + 1}
-                </span>
-                <CompanyIcon
-                  company={node.company}
-                  fallbackIcon={node.fallbackIcon}
-                  fallbackColor={node.fallbackColor}
-                  size={38}
-                />
-                <div className="min-w-0 flex-1">
-                  <div className={`text-sm font-bold leading-tight ${node.nameColor}`}>
-                    {node.company.name}
-                  </div>
-                  <div className="mt-0.5 text-xs text-slate-400">
-                    {node.company.revenueStage || "Business Unit"}
-                  </div>
-                </div>
-              </>
-            );
-
-            if (node.company.website) {
-              return (
-                <a
-                  key={node.company.id}
-                  href={node.company.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Visit ${node.company.name}`}
-                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  {content}
-                </a>
-              );
-            }
-
-            return (
-              <div
-                key={node.company.id}
-                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
-              >
-                {content}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </>
+        );
+      })}
+    </div>
   );
 }

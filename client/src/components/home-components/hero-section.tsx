@@ -118,9 +118,11 @@ export default function HeroSection({
         </div>
       </motion.div>
 
-      {/* Trust bar — overlaps the bottom edge of the hero, aligned to the site container */}
+      {/* Trust bar — overlaps the bottom edge of the hero, aligned to the site container.
+          Mobile renders 2 rows (grid-cols-2) so it needs a smaller overlap than the
+          single-row desktop layout, otherwise it bleeds into the next section. */}
       {hasTrustBar && (
-        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-[75%]">
+        <div className="absolute inset-x-0 bottom-0 z-20 translate-y-1/2 sm:translate-y-[75%]">
           <Container>
             <TrustBar items={trustItems!} />
           </Container>

@@ -66,7 +66,9 @@ export default async function HomePage() {
       />
 
       {/* ── Section 2: Who We Are ── */}
-      <section className="pt-20 pb-8 sm:pt-24 sm:pb-10">
+      {/* pt-28 on mobile clears the 2-row trust bar (translate-y-1/2 in HeroSection);
+          sm:pt-24 clears the single-row desktop trust bar (translate-y-[75%]). */}
+      <section className="pt-28 pb-8 sm:pt-24 sm:pb-10">
         <Container>
       <Reveal>
 
