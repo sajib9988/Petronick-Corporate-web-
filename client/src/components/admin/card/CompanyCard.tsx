@@ -332,7 +332,7 @@ export default function CompanyCard({
               justify-center
               rounded-lg
               bg-[#0F2747]
-              px-3
+              px-1.5
               py-2.5
               text-[13px]
               font-semibold
@@ -359,7 +359,7 @@ export default function CompanyCard({
                 rounded-lg
                 border
                 border-gray-200
-                px-3
+                px-1.5
                 py-2.5
                 text-[13px]
                 font-semibold
@@ -382,7 +382,7 @@ export default function CompanyCard({
                 rounded-lg
                 border
                 border-gray-100
-                px-3
+                px-1.5
                 py-2.5
                 text-[13px]
                 font-medium
