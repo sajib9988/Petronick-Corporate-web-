@@ -64,6 +64,7 @@ export default function EcosystemSection({
           border
           border-amber-300
           lg:grid-cols-12
+          lg:items-start
           lg:gap-6
           xl:gap-8
         "
