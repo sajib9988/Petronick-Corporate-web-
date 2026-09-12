@@ -64,7 +64,6 @@ export default function EcosystemSection({
           border
           border-amber-300
           lg:grid-cols-12
-          lg:items-start
           lg:gap-6
           xl:gap-8
         "
@@ -73,7 +72,7 @@ export default function EcosystemSection({
         {/* LEFT CONTENT                                                      */}
         {/* ================================================================ */}
 
-        <div className="lg:col-span-4 px-1">
+        <div className="lg:col-span-4">
           <p
             className="
               mb-3
