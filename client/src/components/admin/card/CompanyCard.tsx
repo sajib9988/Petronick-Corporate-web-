@@ -240,41 +240,38 @@ export default function CompanyCard({
         {/* =================================
             LOGO + COMPANY INFO
         ================================== */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col items-center text-center">
           {/* Logo */}
           <div
-            className={`
+            className="
               flex
-              h-14
-              w-14
-              shrink-0
+              h-20
+              w-20
               items-center
               justify-center
               overflow-hidden
-              rounded-xl
-              ${
-                company.logo || company.icon
-                  ? "border border-gray-100 bg-white"
-                  : meta.bg
-              }
-            `}
+            "
           >
             {company.logo || company.icon ? (
               <img
                 src={company.logo || company.icon || ""}
                 alt={company.name}
-                className="h-9 w-9 object-contain"
+                className="
+                  h-full
+                  w-full
+                  object-contain
+                "
               />
             ) : (
               <FallbackIcon
-                size={26}
+                size={42}
                 className={meta.text}
               />
             )}
           </div>
 
           {/* Company Name + Category */}
-          <div className="min-w-0">
+          <div className="mt-3 min-w-0 w-full">
             <h3
               className="
                 truncate
@@ -293,7 +290,7 @@ export default function CompanyCard({
             {company.category && (
               <p
                 className={`
-                  mt-0.5
+                  mt-1
                   text-xs
                   font-semibold
                   ${meta.text}
@@ -312,6 +309,7 @@ export default function CompanyCard({
           className="
             mt-4
             line-clamp-3
+            text-center
             text-[13px]
             leading-6
             text-gray-500
