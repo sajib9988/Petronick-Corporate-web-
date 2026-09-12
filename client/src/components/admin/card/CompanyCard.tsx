@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { fadeSlide } from "@/lib/motion";
-import { Container } from "@/components/Container";
 
 type Company = {
   id: string;
@@ -153,7 +152,7 @@ export default function CompanyCard({
   const FallbackIcon = meta.icon;
 
   return (
-    <Container>  <motion.div
+    <motion.div
       variants={fadeSlide(direction, index * 0.08, 90, 0.65)}
       initial="hidden"
       whileInView="visible"
@@ -216,19 +215,21 @@ export default function CompanyCard({
         `}
       >
         {/* =================================
-            NUMBER BADGE
+            HEADER: NUMBER + ICON + NAME/CATEGORY
         ================================== */}
-        <div className="mb-4">
+        <div className="flex items-start gap-3">
+          {/* Number Badge */}
           <span
             className="
               flex
-              h-8
-              w-8
+              h-7
+              w-7
+              shrink-0
               items-center
               justify-center
               rounded-full
               bg-[#0F2747]
-              text-sm
+              text-xs
               font-bold
               text-white
               shadow-sm
@@ -236,43 +237,34 @@ export default function CompanyCard({
           >
             {index + 1}
           </span>
-        </div>
 
-        {/* =================================
-            LOGO + COMPANY INFO
-        ================================== */}
-        <div className="flex flex-col items-center text-center">
-          {/* Logo */}
+          {/* Icon */}
           <div
-            className="
+            className={`
               flex
-              h-25
-              w-225
+              h-12
+              w-12
+              shrink-0
               items-center
               justify-center
               overflow-hidden
-            "
+              rounded-xl
+              ${meta.bg}
+            `}
           >
             {company.logo || company.icon ? (
               <img
                 src={company.logo || company.icon || ""}
                 alt={company.name}
-                className="
-                  h-full
-                  w-full
-                  object-contain
-                "
+                className="h-full w-full object-contain"
               />
             ) : (
-              <FallbackIcon
-                size={42}
-                className={meta.text}
-              />
+              <FallbackIcon size={24} className={meta.text} />
             )}
           </div>
 
           {/* Company Name + Category */}
-          <div className="mt-3 min-w-0 w-full">
+          <div className="min-w-0 flex-1 pt-0.5">
             <h3
               className="
                 truncate
@@ -289,14 +281,7 @@ export default function CompanyCard({
             </h3>
 
             {company.category && (
-              <p
-                className={`
-                  mt-1
-                  text-xs
-                  font-semibold
-                  ${meta.text}
-                `}
-              >
+              <p className={`mt-0.5 text-xs font-semibold ${meta.text}`}>
                 {company.category}
               </p>
             )}
@@ -310,7 +295,6 @@ export default function CompanyCard({
           className="
             mt-4
             line-clamp-3
-            text-center
             text-[13px]
             leading-6
             text-gray-500
@@ -396,7 +380,5 @@ export default function CompanyCard({
         </div>
       </div>
     </motion.div>
-    </Container>
-  
   );
 }
