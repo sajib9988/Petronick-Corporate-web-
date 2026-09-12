@@ -182,10 +182,11 @@ export default function EcosystemFlow({
     const ICON = Math.round(20 + 16 * t);
     const BADGE = Math.round(14 + 6 * t);
     const SIDE_MARGIN = Math.round(3 + 1 * t);
-    // Box kept as short as the side columns allow, so there's no dead
-    // whitespace between the border and the top/bottom cards.
+    // Top/bottom cards sit exactly as close to the box edge as the left/right
+    // cards do (SIDE_MARGIN) — no extra dead space between the border and
+    // cards 1 & 6.
+    const EDGE_MARGIN = Math.round(4 + 2 * t);
     const H = Math.round(410 + 140 * t);
-    const EDGE_MARGIN = Math.round(H * 0.07);
     const showText = HUB >= 100;
     const showSubtitle = CARD_W >= 132;
 
