@@ -79,6 +79,7 @@ const createSection = async (payload: ICreateSection, image?: string) => {
       sectionType: payload.type,
       content: payload.content,
       image: image ?? null,
+      imageVisible: payload.imageVisible ?? true,
       sortOrder: payload.order ?? 0, // ✅ Prisma-safe
       isVisible: payload.isVisible ?? true,
     },
@@ -113,6 +114,7 @@ const updateSection = async (id: string, payload: IUpdateSection, image?: string
       ...(payload.content && { content: payload.content }),
       ...(payload.order !== undefined && { sortOrder: payload.order }), // ✅ Prisma-safe
       ...(payload.isVisible !== undefined && { isVisible: payload.isVisible }),
+      ...(payload.imageVisible !== undefined && { imageVisible: payload.imageVisible }),
       ...(image && { image }),
     },
   });

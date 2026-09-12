@@ -31,4 +31,6 @@ export const sectionSchema = z.object({
   order: z.number().int().default(0),
 
   isVisible: z.boolean().default(true),
+
+  imageVisible: z.boolean().default(true),
 });

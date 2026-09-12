@@ -155,6 +155,7 @@ export default function SectionsPage() {
                 content: selected.content,
                 order: selected.sortOrder,
                 isVisible: selected.isVisible,
+                imageVisible: selected.imageVisible ?? true,
               }}
               existingImage={selected.image}
               onSubmit={handleUpdate}

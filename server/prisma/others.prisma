@@ -86,7 +86,8 @@ model Section {
   sectionType SectionType
   content     Json
   image       String?
-   sortOrder   Int         @default(0) @map("order") 
+  imageVisible Boolean    @default(true)
+   sortOrder   Int         @default(0) @map("order")
   isVisible   Boolean     @default(true)
   page        Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())

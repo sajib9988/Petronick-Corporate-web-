@@ -86,6 +86,7 @@ const handleCreate = async (
       pageId: page.id,
       order: values.order,
       isVisible: values.isVisible,
+      imageVisible: values.imageVisible,
     }));
     if (imageFile) fd.append("image", imageFile);
 
@@ -123,6 +124,7 @@ const handleEditSection = async (
       pageId: page.id,
       order: values.order,
       isVisible: values.isVisible,
+      imageVisible: values.imageVisible,
     }));
     if (imageFile) fd.append("image", imageFile);
 
@@ -164,6 +166,7 @@ const handleEditSection = async (
       pageId: page.id,
       order: values.order,
       isVisible: values.isVisible,
+      imageVisible: values.imageVisible,
         })
       );
 
@@ -346,6 +349,7 @@ return (
                 content: editSection.content as Record<string, string>,
                 order: editSection.sortOrder,
                 isVisible: editSection.isVisible,
+                imageVisible: editSection.imageVisible ?? true,
               }}
               existingImage={editSection.image}
               onSubmit={handleEditSection}

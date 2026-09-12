@@ -36,6 +36,11 @@ const createSection = z.object({
     .boolean()
     .default(true)
     .optional(),
+
+  imageVisible: z.coerce
+    .boolean()
+    .default(true)
+    .optional(),
 });
 
 const updateSection = z.object({
@@ -49,6 +54,10 @@ const updateSection = z.object({
     .optional(),
 
   isVisible: z.coerce
+    .boolean()
+    .optional(),
+
+  imageVisible: z.coerce
     .boolean()
     .optional(),
 });

@@ -8117,6 +8117,7 @@ export namespace Prisma {
     pageId: string | null
     sectionType: $Enums.SectionType | null
     image: string | null
+    imageVisible: boolean | null
     sortOrder: number | null
     isVisible: boolean | null
     createdAt: Date | null
@@ -8128,6 +8129,7 @@ export namespace Prisma {
     pageId: string | null
     sectionType: $Enums.SectionType | null
     image: string | null
+    imageVisible: boolean | null
     sortOrder: number | null
     isVisible: boolean | null
     createdAt: Date | null
@@ -8140,6 +8142,7 @@ export namespace Prisma {
     sectionType: number
     content: number
     image: number
+    imageVisible: number
     sortOrder: number
     isVisible: number
     createdAt: number
@@ -8161,6 +8164,7 @@ export namespace Prisma {
     pageId?: true
     sectionType?: true
     image?: true
+    imageVisible?: true
     sortOrder?: true
     isVisible?: true
     createdAt?: true
@@ -8172,6 +8176,7 @@ export namespace Prisma {
     pageId?: true
     sectionType?: true
     image?: true
+    imageVisible?: true
     sortOrder?: true
     isVisible?: true
     createdAt?: true
@@ -8184,6 +8189,7 @@ export namespace Prisma {
     sectionType?: true
     content?: true
     image?: true
+    imageVisible?: true
     sortOrder?: true
     isVisible?: true
     createdAt?: true
@@ -8283,6 +8289,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonValue
     image: string | null
+    imageVisible: boolean
     sortOrder: number
     isVisible: boolean
     createdAt: Date
@@ -8314,6 +8321,7 @@ export namespace Prisma {
     sectionType?: boolean
     content?: boolean
     image?: boolean
+    imageVisible?: boolean
     sortOrder?: boolean
     isVisible?: boolean
     createdAt?: boolean
@@ -8327,6 +8335,7 @@ export namespace Prisma {
     sectionType?: boolean
     content?: boolean
     image?: boolean
+    imageVisible?: boolean
     sortOrder?: boolean
     isVisible?: boolean
     createdAt?: boolean
@@ -8340,6 +8349,7 @@ export namespace Prisma {
     sectionType?: boolean
     content?: boolean
     image?: boolean
+    imageVisible?: boolean
     sortOrder?: boolean
     isVisible?: boolean
     createdAt?: boolean
@@ -8353,13 +8363,14 @@ export namespace Prisma {
     sectionType?: boolean
     content?: boolean
     image?: boolean
+    imageVisible?: boolean
     sortOrder?: boolean
     isVisible?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pageId" | "sectionType" | "content" | "image" | "sortOrder" | "isVisible" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
+  export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pageId" | "sectionType" | "content" | "image" | "imageVisible" | "sortOrder" | "isVisible" | "createdAt" | "updatedAt", ExtArgs["result"]["section"]>
   export type SectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     page?: boolean | PageDefaultArgs<ExtArgs>
   }
@@ -8381,6 +8392,7 @@ export namespace Prisma {
       sectionType: $Enums.SectionType
       content: Prisma.JsonValue
       image: string | null
+      imageVisible: boolean
       sortOrder: number
       isVisible: boolean
       createdAt: Date
@@ -8814,6 +8826,7 @@ export namespace Prisma {
     readonly sectionType: FieldRef<"Section", 'SectionType'>
     readonly content: FieldRef<"Section", 'Json'>
     readonly image: FieldRef<"Section", 'String'>
+    readonly imageVisible: FieldRef<"Section", 'Boolean'>
     readonly sortOrder: FieldRef<"Section", 'Int'>
     readonly isVisible: FieldRef<"Section", 'Boolean'>
     readonly createdAt: FieldRef<"Section", 'DateTime'>
@@ -9345,6 +9358,7 @@ export namespace Prisma {
     sectionType: 'sectionType',
     content: 'content',
     image: 'image',
+    imageVisible: 'imageVisible',
     sortOrder: 'sortOrder',
     isVisible: 'isVisible',
     createdAt: 'createdAt',
@@ -9991,6 +10005,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     content?: JsonFilter<"Section">
     image?: StringNullableFilter<"Section"> | string | null
+    imageVisible?: BoolFilter<"Section"> | boolean
     sortOrder?: IntFilter<"Section"> | number
     isVisible?: BoolFilter<"Section"> | boolean
     createdAt?: DateTimeFilter<"Section"> | Date | string
@@ -10004,6 +10019,7 @@ export namespace Prisma {
     sectionType?: SortOrder
     content?: SortOrder
     image?: SortOrderInput | SortOrder
+    imageVisible?: SortOrder
     sortOrder?: SortOrder
     isVisible?: SortOrder
     createdAt?: SortOrder
@@ -10020,6 +10036,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     content?: JsonFilter<"Section">
     image?: StringNullableFilter<"Section"> | string | null
+    imageVisible?: BoolFilter<"Section"> | boolean
     sortOrder?: IntFilter<"Section"> | number
     isVisible?: BoolFilter<"Section"> | boolean
     createdAt?: DateTimeFilter<"Section"> | Date | string
@@ -10033,6 +10050,7 @@ export namespace Prisma {
     sectionType?: SortOrder
     content?: SortOrder
     image?: SortOrderInput | SortOrder
+    imageVisible?: SortOrder
     sortOrder?: SortOrder
     isVisible?: SortOrder
     createdAt?: SortOrder
@@ -10053,6 +10071,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeWithAggregatesFilter<"Section"> | $Enums.SectionType
     content?: JsonWithAggregatesFilter<"Section">
     image?: StringNullableWithAggregatesFilter<"Section"> | string | null
+    imageVisible?: BoolWithAggregatesFilter<"Section"> | boolean
     sortOrder?: IntWithAggregatesFilter<"Section"> | number
     isVisible?: BoolWithAggregatesFilter<"Section"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Section"> | Date | string
@@ -10561,6 +10580,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -10574,6 +10594,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -10585,6 +10606,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10598,6 +10620,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10610,6 +10633,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -10621,6 +10645,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10633,6 +10658,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11152,6 +11178,7 @@ export namespace Prisma {
     sectionType?: SortOrder
     content?: SortOrder
     image?: SortOrder
+    imageVisible?: SortOrder
     sortOrder?: SortOrder
     isVisible?: SortOrder
     createdAt?: SortOrder
@@ -11167,6 +11194,7 @@ export namespace Prisma {
     pageId?: SortOrder
     sectionType?: SortOrder
     image?: SortOrder
+    imageVisible?: SortOrder
     sortOrder?: SortOrder
     isVisible?: SortOrder
     createdAt?: SortOrder
@@ -11178,6 +11206,7 @@ export namespace Prisma {
     pageId?: SortOrder
     sectionType?: SortOrder
     image?: SortOrder
+    imageVisible?: SortOrder
     sortOrder?: SortOrder
     isVisible?: SortOrder
     createdAt?: SortOrder
@@ -11788,6 +11817,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -11799,6 +11829,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -11840,6 +11871,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     content?: JsonFilter<"Section">
     image?: StringNullableFilter<"Section"> | string | null
+    imageVisible?: BoolFilter<"Section"> | boolean
     sortOrder?: IntFilter<"Section"> | number
     isVisible?: BoolFilter<"Section"> | boolean
     createdAt?: DateTimeFilter<"Section"> | Date | string
@@ -11919,6 +11951,7 @@ export namespace Prisma {
     sectionType: $Enums.SectionType
     content: JsonNullValueInput | InputJsonValue
     image?: string | null
+    imageVisible?: boolean
     sortOrder?: number
     isVisible?: boolean
     createdAt?: Date | string
@@ -11930,6 +11963,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11941,6 +11975,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11952,6 +11987,7 @@ export namespace Prisma {
     sectionType?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     content?: JsonNullValueInput | InputJsonValue
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageVisible?: BoolFieldUpdateOperationsInput | boolean
     sortOrder?: IntFieldUpdateOperationsInput | number
     isVisible?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

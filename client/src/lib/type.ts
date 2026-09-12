@@ -10,6 +10,7 @@ export type section ={
     sectionType:string,
     content: Record<string, unknown>,
     image?: string | null,
+    imageVisible?: boolean,
     sortOrder:number,
     isVisible:boolean,
     createdAt:string,

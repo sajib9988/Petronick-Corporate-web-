@@ -18,8 +18,16 @@ export const dynamic = "force-dynamic";
 type PageSection = {
   sectionType: string;
   image?: string | null;
+  imageVisible?: boolean;
   content?: Record<string, string> | null;
 };
+
+// Image is only shown on the frontend when the admin's "Image Visibility"
+// toggle is on — the upload itself is preserved either way.
+function visibleImage(section?: PageSection) {
+  if (!section?.image) return null;
+  return section.imageVisible === false ? null : section.image;
+}
 
 export default async function HomePage() {
   const [pageRes, allCompanies] = await Promise.all([
@@ -60,7 +68,7 @@ export default async function HomePage() {
   return (
     <main>
       <HeroSection
-        image={heroSection?.image || "/placeholder-hero.jpg"}
+        image={visibleImage(heroSection) || "/placeholder-hero.jpg"}
         content={heroContent}
         trustItems={trustItems}
       />
@@ -74,7 +82,7 @@ export default async function HomePage() {
 
           <div className="rounded-3xl overflow-hidden">
             <WhoWeAreSection
-              image={whoWeAreSection?.image}
+              image={visibleImage(whoWeAreSection)}
               content={whoWeAreSection?.content ?? {}}
             />
           </div>
@@ -123,7 +131,7 @@ export default async function HomePage() {
         <Container>
           <Reveal>
           <RevenueOpportunitySection
-            image={revenueSection?.image}
+            image={visibleImage(revenueSection)}
             content={revenueSection?.content ?? {}}
           />
           </Reveal>
@@ -135,7 +143,7 @@ export default async function HomePage() {
         <Container>
           <Reveal>
             <ClosingSection
-              image={closingSection?.image}
+              image={visibleImage(closingSection)}
               content={closingSection?.content ?? {}}
             />
           </Reveal>

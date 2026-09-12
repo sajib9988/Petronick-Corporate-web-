@@ -11,6 +11,7 @@ export interface ICreateSection {
   type: SectionType; // ✅ no manual string union
   content: Prisma.InputJsonValue;
   image?: string;
+  imageVisible?: boolean;
   order?: number;
   isVisible?: boolean;
 }
@@ -20,6 +21,7 @@ export interface IUpdateSection {
   type?: SectionType; // ✅
   content?: Prisma.InputJsonValue;
   image?: string;
+  imageVisible?: boolean;
   order?: number;
   isVisible?: boolean; }
 

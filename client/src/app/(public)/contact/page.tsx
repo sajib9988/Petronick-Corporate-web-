@@ -22,8 +22,12 @@ export default async function ContactPage() {
   // DYNAMIC CONTENT
   // ==========================================
 
+  // Only use the uploaded image when the admin's "Image Visibility" toggle is
+  // on — the upload itself is preserved either way, this just controls
+  // whether it renders on the frontend.
   const heroImage =
-    contactSection?.image ?? "/contact-hero.jpg";
+    (contactSection?.imageVisible !== false && contactSection?.image) ||
+    "/contact-hero.jpg";
 
   const badge =
     content.badge ?? "GET IN TOUCH";

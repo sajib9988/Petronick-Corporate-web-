@@ -37,6 +37,7 @@ const defaultSectionValues: SectionFormValues = {
   content: {},
   order: 0,
   isVisible: true,
+  imageVisible: true,
 };
 
 interface SectionFormProps {
@@ -267,6 +268,39 @@ export default function SectionForm({
                     </p>
                   )}
                 </div>
+
+                {/* Image Visibility Toggle — independent of the section's own visibility */}
+                <Controller
+                  name="imageVisible"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-gray-700">
+                        Image Visibility
+                      </FormLabel>
+                      <FormControl>
+                        <button
+                          type="button"
+                          onClick={() => field.onChange(!field.value)}
+                          className={`w-full h-16 rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1 transition-colors ${
+                            field.value
+                              ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                              : "border-gray-300 bg-gray-50 text-gray-500"
+                          }`}
+                        >
+                          <span className="text-sm font-semibold">
+                            {field.value ? "Image Shown" : "Image Hidden"}
+                          </span>
+                          <span className="text-xs">
+                            {field.value
+                              ? "Visible on the frontend"
+                              : "Uploaded, but hidden from visitors"}
+                          </span>
+                        </button>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
                 {/* Visibility Toggle */}
                 <Controller

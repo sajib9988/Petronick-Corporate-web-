@@ -150,16 +150,17 @@ model Page {
 // CMS: SECTION
 // ======================
 model Section {
-  id          String      @id @default(cuid())
-  pageId      String
-  sectionType SectionType
-  content     Json
-  image       String?
-  sortOrder   Int         @default(0) @map("order")
-  isVisible   Boolean     @default(true)
-  page        Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id           String      @id @default(cuid())
+  pageId       String
+  sectionType  SectionType
+  content      Json
+  image        String?
+  imageVisible Boolean     @default(true)
+  sortOrder    Int         @default(0) @map("order")
+  isVisible    Boolean     @default(true)
+  page         Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@index([pageId, sortOrder])
   @@map("section")
