@@ -118,9 +118,8 @@ export default async function CompaniesPage() {
   return (
     <main className="min-h-screen bg-[#F7F9FC]">
 
-      {/* ==================================================
-          HERO
-      ================================================== */}
+
+
 
       <section className="relative overflow-hidden text-white">
 
