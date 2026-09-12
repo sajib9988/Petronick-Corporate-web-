@@ -58,12 +58,12 @@ export default function EcosystemSection({
         className="
           grid
           grid-cols-1
-          items-center
           gap-10
           rounded-3xl
           border
           border-amber-300
           lg:grid-cols-12
+          lg:items-stretch
           lg:gap-6
           xl:gap-8
         "
@@ -72,16 +72,16 @@ export default function EcosystemSection({
         {/* LEFT CONTENT                                                      */}
         {/* ================================================================ */}
 
-        <div className="lg:col-span-4">
+        <div className="flex flex-col justify-center lg:col-span-4">
           <p
             className="
-              mb-3
-             text-xs
+              mb-4
+              text-sm
               font-semibold
               uppercase
               tracking-[0.2em]
               text-amber-500
-              sm:text-sm
+              sm:text-base
             "
           >
             {label}
@@ -89,13 +89,13 @@ export default function EcosystemSection({
 
           <h2
             className="
-              mb-4
-              text-3xl
+              mb-6
+              text-4xl
               font-bold
               leading-tight
               tracking-tight
               text-slate-900
-              md:text-4xl
+              md:text-5xl
             "
           >
             {title}
@@ -103,11 +103,11 @@ export default function EcosystemSection({
 
           <p
             className="
-              mb-6
-              text-[15px]
-              leading-7
+              mb-10
+              text-base
+              leading-8
               text-slate-500
-              sm:text-base
+              sm:text-lg
             "
           >
             {description}
@@ -117,13 +117,14 @@ export default function EcosystemSection({
             href={btnLink}
             className="
               inline-flex
+              w-fit
               items-center
               gap-2
               rounded-lg
               bg-slate-900
-              px-5
-              py-3
-              text-sm
+              px-6
+              py-3.5
+              text-base
               font-semibold
               text-white
               transition-all
@@ -132,12 +133,15 @@ export default function EcosystemSection({
           >
             {btnText}
 
-            <ArrowRight size={15} />
+            <ArrowRight size={16} />
           </Link>
         </div>
 
-   
-      <div
+        {/* ================================================================ */}
+        {/* RIGHT: ECOSYSTEM FLOW                                             */}
+        {/* ================================================================ */}
+
+        <div
           className="
             min-w-0
             lg:col-span-8
