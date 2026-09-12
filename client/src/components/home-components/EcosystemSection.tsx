@@ -60,11 +60,15 @@ export default function EcosystemSection({
           grid-cols-1
           items-center
           gap-10
+          rounded-3xl
+          border
+          border-amber-300
+          p-6
+          sm:p-8
           lg:grid-cols-12
           lg:gap-6
+          lg:p-10
           xl:gap-8
-          border
-          border-amber-200
         "
       >
         {/* ================================================================ */}
