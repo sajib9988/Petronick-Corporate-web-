@@ -317,8 +317,8 @@ export default function CompanyCard({
               justify-center
               rounded-lg
               bg-[#0F2747]
-              px-1.5
-              py-1.5
+              px-1
+              py-2.5
               text-[13px]
               font-semibold
               text-white
@@ -344,8 +344,8 @@ export default function CompanyCard({
                 rounded-lg
                 border
                 border-gray-200
-                px-1.5
-                py-1.5
+                px-1
+                py-2.5
                 text-[13px]
                 font-semibold
                 text-gray-700
@@ -355,7 +355,7 @@ export default function CompanyCard({
               "
             >
               Website
-              <ExternalLink size={13} />
+              <ExternalLink size={16} />
             </a>
           ) : (
             <span
@@ -367,8 +367,8 @@ export default function CompanyCard({
                 rounded-lg
                 border
                 border-gray-100
-                px-1.5
-                py-1.5
+                px-1
+                py-2.5
                 text-[13px]
                 font-medium
                 text-gray-300
