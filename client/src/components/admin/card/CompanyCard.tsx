@@ -137,19 +137,19 @@ export default function CompanyCard({
       >
         {/* ================================
             HEADER
-            Number badge + Icon + Name/Category
+            Number badge + Icon + Name+Category
         ================================= */}
         <div className="flex items-start gap-3">
           <div className="relative shrink-0">
             <div
               className={`flex h-12 w-12 items-center justify-center overflow-hidden rounded-full ${
-                company.icon ? "border border-gray-100 bg-white" : meta.bg
+                company.logo || company.icon ? "border border-gray-100 bg-white" : meta.bg
               }`}
             >
-              {company.icon ? (
+              {company.logo || company.icon ? (
                 <img
-                  src={company.icon}
-                  alt=""
+                  src={company.logo || company.icon || ""}
+                  alt={company.name}
                   className="h-7 w-7 object-contain"
                 />
               ) : (

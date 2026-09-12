@@ -58,9 +58,7 @@ export default async function CompaniesPage() {
 
   const companies: any[] = companiesRes?.data ?? [];
 
-  // =========================
-  // HERO
-  // =========================
+
 
   const badge =
     heroContent.badge ?? "PORTFOLIO OVERVIEW";
@@ -124,7 +122,7 @@ export default async function CompaniesPage() {
           HERO
       ================================================== */}
 
-      <section className="relative overflow-hidden bg-[#0B1220] text-white">
+      <section className="relative overflow-hidden text-white">
 
         {/* Background grid */}
 
