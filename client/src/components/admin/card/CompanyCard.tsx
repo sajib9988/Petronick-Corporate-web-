@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { fadeSlide } from "@/lib/motion";
+import { Container } from "@/components/Container";
 
 type Company = {
   id: string;
@@ -152,7 +153,7 @@ export default function CompanyCard({
   const FallbackIcon = meta.icon;
 
   return (
-    <motion.div
+    <Container>  <motion.div
       variants={fadeSlide(direction, index * 0.08, 90, 0.65)}
       initial="hidden"
       whileInView="visible"
@@ -395,5 +396,7 @@ export default function CompanyCard({
         </div>
       </div>
     </motion.div>
+    </Container>
+  
   );
 }
