@@ -89,12 +89,12 @@ export default function EcosystemSection({
           <h2
             className="
               mb-6
-              text-4xl
+              text-3xl
               font-bold
               leading-tight
               tracking-tight
               text-slate-900
-              md:text-5xl
+              md:text-4xl
             "
           >
             {title}
