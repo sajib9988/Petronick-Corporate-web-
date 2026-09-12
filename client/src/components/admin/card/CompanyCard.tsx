@@ -245,8 +245,8 @@ export default function CompanyCard({
           <div
             className="
               flex
-              h-20
-              w-20
+              h-25
+              w-225
               items-center
               justify-center
               overflow-hidden
@@ -321,7 +321,7 @@ export default function CompanyCard({
         {/* =================================
             FOOTER
         ================================== */}
-        <div className="mt-auto flex items-center gap-2 pt-5">
+        <div className="mt-auto flex items-center gap-3 pt-5">
           {/* View Details */}
           <Link
             href={`/companies/${company.id}`}
