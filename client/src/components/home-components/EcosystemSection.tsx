@@ -73,11 +73,11 @@ export default function EcosystemSection({
         {/* LEFT CONTENT                                                      */}
         {/* ================================================================ */}
 
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-4 px-1">
           <p
             className="
               mb-3
-              text-xs
+             text-xs
               font-semibold
               uppercase
               tracking-[0.2em]
