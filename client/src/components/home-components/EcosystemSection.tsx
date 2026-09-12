@@ -63,6 +63,8 @@ export default function EcosystemSection({
           lg:grid-cols-12
           lg:gap-6
           xl:gap-8
+          border
+          border-amber-200
         "
       >
         {/* ================================================================ */}
