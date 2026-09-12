@@ -53,7 +53,7 @@ export default function EcosystemSection({
     "/companies";
 
   return (
-    <section className="py-8 lg:py-16">
+    <section>
       <div
         className="
           grid
