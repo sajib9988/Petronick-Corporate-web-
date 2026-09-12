@@ -103,7 +103,7 @@ export default function WhoWeAreSection({
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5"
+          className="grid grid-cols-2 gap-y-8 gap-x-4 sm:flex sm:flex-row sm:gap-0 sm:divide-x sm:divide-gray-200"
         >
           {capabilities.map((label, index) => {
             const Icon = ICON_POOL[index % ICON_POOL.length];
@@ -111,10 +111,10 @@ export default function WhoWeAreSection({
               <motion.div
                 key={label}
                 variants={itemVariants}
-                className="flex flex-col items-center text-center gap-3"
+                className="flex flex-col items-center text-center gap-3 sm:flex-1 sm:px-6 first:sm:pl-0 last:sm:pr-0"
               >
-                <div className="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center bg-white">
-                  <Icon size={22} className="text-gray-700" strokeWidth={1.75} />
+                <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full border border-gray-200 flex items-center justify-center bg-white">
+                  <Icon size={28} className="text-gray-700" strokeWidth={1.75} />
                 </div>
                 <span className="text-sm font-medium text-gray-700 leading-snug">
                   {label}
