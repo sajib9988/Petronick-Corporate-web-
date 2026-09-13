@@ -109,10 +109,10 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           }
         `}
       >
-        {/* NUMBER BADGE — floats above the top-left corner of the card */}
+        {/* NUMBER BADGE — vertically centered on the card's top edge */}
         <span
           className="
-            absolute -top-1 left-5 z-10 flex h-6 w-6 items-center justify-center
+            absolute left-4 top-0 z-10 flex h-6 w-6 -translate-y-1/2 items-center justify-center
             rounded-full bg-[#0F2747] text-[11px] font-bold text-white
             shadow-md ring-2 ring-white
           "
@@ -122,24 +122,24 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* HEADER: LOGO + NAME/CATEGORY — left-aligned, one row */}
         <div className="flex items-center gap-3 text-left">
-          {/* Logo — real uploaded logo prioritized, generic icon only as fallback */}
-          <div
-            className={`
-              flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl
-              border border-gray-100
-              ${logoSrc ? "bg-white" : meta.bg}
-            `}
-          >
-            {logoSrc ? (
-              <img
-                src={logoSrc}
-                alt={company.name}
-                className="h-full w-full object-contain p-1.5"
-              />
-            ) : (
+          {/* Logo — natural aspect ratio (jemon upload, temon), capped at icon height.
+              No background/box behind the logo. Fallback icon keeps its colored box. */}
+          {logoSrc ? (
+            <img
+              src={logoSrc}
+              alt={company.name}
+              className="h-14 w-auto max-w-16 shrink-0 object-contain"
+            />
+          ) : (
+            <div
+              className={`
+                flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl
+                border border-gray-100 ${meta.bg}
+              `}
+            >
               <FallbackIcon size={24} className={meta.text} />
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Company Name + Category */}
           <div className="min-w-0 flex-1 text-left">
