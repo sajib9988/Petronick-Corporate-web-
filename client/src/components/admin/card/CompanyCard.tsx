@@ -100,7 +100,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       {/* CARD */}
       <div
         className={`
-          relative flex h-full flex-col overflow-visible rounded-2xl border bg-white p-5 pt-6
+          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-5 pt-8
           transition-all duration-300
           ${
             company.isVisible
@@ -109,26 +109,25 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           }
         `}
       >
-        {/* NUMBER BADGE — vertically centered on the card's top edge */}
+        {/* NUMBER BADGE — bigger, slightly lower on the top edge */}
         <span
           className="
-            absolute left-4 top-0 z-10 flex h-6 w-6 -translate-y-1/2 items-center justify-center
-            rounded-full bg-[#0F2747] text-[11px] font-bold text-white
+            absolute left-5 top-0 z-10 flex h-7 w-7 -translate-y-1/3 items-center justify-center
+            rounded-full bg-[#0F2747] text-[12px] font-bold text-white
             shadow-md ring-2 ring-white
           "
         >
           {index + 1}
         </span>
 
-        {/* HEADER: LOGO + NAME/CATEGORY — left-aligned, one row */}
-        <div className="flex items-center gap-3 text-left">
-          {/* Logo — natural aspect ratio (jemon upload, temon), capped at icon height.
-              No background/box behind the logo. Fallback icon keeps its colored box. */}
+        {/* HEADER: LOGO + NAME/CATEGORY — same row, centered as a group */}
+        <div className="flex w-full items-center justify-center gap-3">
+          {/* Logo — natural aspect ratio, no background/box */}
           {logoSrc ? (
             <img
               src={logoSrc}
               alt={company.name}
-              className="h-16 max-w-18 shrink-0 object-contain"
+              className="h-14 max-w-18 shrink-0 object-contain"
             />
           ) : (
             <div
@@ -142,7 +141,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           )}
 
           {/* Company Name + Category */}
-          <div className="min-w-0 flex-1 text-left">
+          <div className="min-w-0 text-left">
             <h3
               className="
                 truncate text-[15px] font-bold tracking-tight text-gray-900
@@ -160,18 +159,18 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </div>
         </div>
 
-        {/* DESCRIPTION */}
-        <p className="mt-4 line-clamp-3 text-[13px] leading-6 text-gray-500">
+        {/* DESCRIPTION — centered */}
+        <p className="mt-4 line-clamp-3 text-center text-[13px] leading-6 text-gray-500">
           {company.description}
         </p>
 
         {/* FOOTER */}
-        <div className="mt-auto flex justify-between gap-8 pt-5">
+        <div className="mt-auto flex w-full justify-between gap-3 pt-5">
           <Link
             href={`/companies/${company.id}`}
             className="
               inline-flex flex-1 items-center justify-center rounded-lg bg-[#0F2747]
-              px-2 py-2.5 text-[13px] font-semibold text-white transition-colors
+              px-4 py-2.5 text-[13px] font-semibold text-white transition-colors
               hover:bg-orange-600
             "
           >
@@ -185,7 +184,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
               rel="noopener noreferrer"
               className="
                 inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg
-                border border-gray-200 px-2 py-2.5 text-[13px] font-semibold text-gray-700
+                border border-gray-200 px-4 py-2.5 text-[13px] font-semibold text-gray-700
                 transition-all hover:border-orange-300 hover:text-orange-600
               "
             >
