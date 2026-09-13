@@ -179,7 +179,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </Link>
 
           {company.website ? (
-            <a>
+            <a
               href={company.website}
               target="_blank"
               rel="noopener noreferrer"
@@ -188,7 +188,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
                 border border-gray-200 px-4 py-2.5 text-[13px] font-semibold text-gray-700
                 transition-all hover:border-orange-300 hover:text-orange-600
               "
-            
+            >
               Website
               <ExternalLink size={14} />
             </a>
