@@ -109,10 +109,10 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           }
         `}
       >
-        {/* NUMBER BADGE — bigger, slightly lower on the top edge */}
+        {/* NUMBER BADGE — top-left corner, centered on the card's top edge */}
         <span
           className="
-            absolute left-5 top-0 z-10 flex h-7 w-7 -translate-y-1/3 items-center justify-center
+            absolute left-4 top-0 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center
             rounded-full bg-[#0F2747] text-[12px] font-bold text-white
             shadow-md ring-2 ring-white
           "
@@ -122,21 +122,21 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* HEADER: LOGO + NAME/CATEGORY — same row, centered as a group */}
         <div className="flex w-full items-center justify-center gap-3">
-          {/* Logo — natural aspect ratio, no background/box */}
+          {/* Logo — natural aspect ratio, big size, no background/box */}
           {logoSrc ? (
             <img
               src={logoSrc}
               alt={company.name}
-              className="h-14 max-w-18 shrink-0 object-contain"
+              className="h-16 max-w-20 shrink-0 object-contain"
             />
           ) : (
             <div
               className={`
-                flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl
+                flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl
                 border border-gray-100 ${meta.bg}
               `}
             >
-              <FallbackIcon size={24} className={meta.text} />
+              <FallbackIcon size={28} className={meta.text} />
             </div>
           )}
 
@@ -159,13 +159,13 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </div>
         </div>
 
-
+        {/* DESCRIPTION */}
         <p className="mt-4 line-clamp-3 text-left text-[13px] leading-6 text-gray-500">
           {company.description}
         </p>
 
         {/* FOOTER */}
-        <div className="mt-auto flex w-full justify-between gap-3 pt-5">
+        <div className="mt-auto flex w-full justify-between gap-6 pt-5">
           <Link
             href={`/companies/${company.id}`}
             className="
