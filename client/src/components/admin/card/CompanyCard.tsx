@@ -161,7 +161,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* DESCRIPTION */}
 
-<p className="mt-2 line-clamp-3 text-left text-[11px] leading-[1.35rem] text-gray-500">
+<p className="mt-2 line-clamp-5 text-left font-medium text-[11px] leading-[1.35rem] text-gray-500">
   {company.description}
 </p>
 
