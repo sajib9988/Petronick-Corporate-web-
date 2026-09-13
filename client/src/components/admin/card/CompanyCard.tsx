@@ -112,7 +112,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         {/* NUMBER BADGE — top-left corner, centered on the card's top edge */}
    <span
   className="
-    absolute left-4 top-3 z-10 flex h-10 w-10 items-center justify-center
+    absolute left-4 top-3 z-10 flex h-8 w-18 items-center justify-center
     rounded-full bg-[#0F2747] text-[12px] font-bold text-white
     shadow-md ring-2 ring-white
   "
@@ -160,12 +160,13 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         </div>
 
         {/* DESCRIPTION */}
-        <p className="mt-3 line-clamp-3 text-left text-[13px] leading-6 text-gray-500">
-          {company.description}
-        </p>
+
+<p className="mt-2 line-clamp-3 text-left text-[11px] leading-[1.35rem] text-gray-500">
+  {company.description}
+</p>
 
        {/* FOOTER */}
-<div className="mt-3 flex w-full items-center justify-between gap-6 pt-3">
+<div className="mt-2 flex w-full items-center justify-between gap-3 pt-3">
   <Link
     href={`/companies/${company.id}`}
     className="
