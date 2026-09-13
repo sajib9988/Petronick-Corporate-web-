@@ -100,7 +100,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       {/* CARD */}
       <div
         className={`
-          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-2 pt-8
+          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-2.5 pt-8
           transition-all duration-300
           ${
             company.isVisible
@@ -109,7 +109,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           }
         `}
       >
-        {/* NUMBER BADGE — top-left corner, centered on the card's top edge */}
+        {/* NUMBER BADGE — top-left corner, centered on the card's top edge * Need number badge little upper from Logo and company name * */}
 <span
   className="
     absolute left-4 top-3 z-10
@@ -163,7 +163,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* DESCRIPTION */}
 
-<p className="mt-1 line-clamp-3 text-left font-medium text-[18px] leading-[0.75 rem] text-gray-700">
+<p className="mt-1 line-clamp-3 text-left font-medium text-[15px] leading-[0.75 rem] text-gray-700">
   {company.description}
 </p>
 
