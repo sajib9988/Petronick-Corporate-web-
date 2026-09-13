@@ -110,10 +110,12 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         `}
       >
         {/* NUMBER BADGE — top-left corner, centered on the card's top edge */}
-   <span
+<span
   className="
-    absolute left-4 top-3 z-10 flex h-8 w-18 items-center justify-center
-    rounded-full bg-[#0F2747] text-[12px] font-bold text-white
+    absolute left-4 top-3 z-10
+    flex h-8 w-8 items-center justify-center
+    rounded-full
+    bg-[#0F2747] text-[12px] font-bold text-white
     shadow-md ring-2 ring-white
   "
 >
