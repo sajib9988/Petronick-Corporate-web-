@@ -100,7 +100,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       {/* CARD */}
       <div
         className={`
-          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-5 pt-8
+          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-2 pt-8
           transition-all duration-300
           ${
             company.isVisible
@@ -163,7 +163,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* DESCRIPTION */}
 
-<p className="mt-2 line-clamp-5 text-left font-medium text-[11px] leading-[1.35rem] text-gray-500">
+<p className="mt-2 line-clamp-5 text-left font-medium text-[18px] leading-[1.35rem] text-gray-700">
   {company.description}
 </p>
 
