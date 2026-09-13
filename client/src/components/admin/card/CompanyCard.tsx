@@ -159,8 +159,8 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </div>
         </div>
 
-        {/* DESCRIPTION — centered */}
-        <p className="mt-4 line-clamp-3 text-center text-[13px] leading-6 text-gray-500">
+
+        <p className="mt-4 line-clamp-3 text-left text-[13px] leading-6 text-gray-500">
           {company.description}
         </p>
 
