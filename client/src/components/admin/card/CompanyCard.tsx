@@ -128,7 +128,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
             <img
               src={logoSrc}
               alt={company.name}
-              className="h-14 w-auto max-w-16 shrink-0 object-contain"
+              className="h-16 max-w-18 shrink-0 object-contain"
             />
           ) : (
             <div
