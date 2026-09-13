@@ -77,7 +77,10 @@ export default function WhoWeAreSection({
     >
       {image && <div className="absolute inset-0 bg-white/90" />}
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-0.5 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* Container already provides max-width + horizontal padding at the
+          page level — don't re-narrow/re-pad here or it creates uneven
+          left/right space compared to sibling sections. */}
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: Text */}
         <motion.div
           initial="hidden"

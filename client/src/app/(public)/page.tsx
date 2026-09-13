@@ -107,7 +107,9 @@ export default async function HomePage() {
 
       <section className="py-8 sm:py-10">
         <Container>
-          <div className="rounded-3xl  overflow-visible px-4 sm:px-6  py-16">
+          {/* Container already applies horizontal padding — no extra px-* here,
+              otherwise the grid narrows compared to the Ecosystem section above it. */}
+          <div className="rounded-3xl overflow-visible py-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {companies.map((company, index) => (
                 <CompanyCard key={company.id} company={company} index={index} />
