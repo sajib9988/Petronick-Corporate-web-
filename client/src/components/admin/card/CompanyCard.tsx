@@ -127,7 +127,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
             <img
               src={logoSrc}
               alt={company.name}
-              className="h-16 max-w-20 shrink-0 object-contain"
+              className="h-25 w-24 shrink-0 object-contain"
             />
           ) : (
             <div
@@ -165,7 +165,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         </p>
 
        {/* FOOTER */}
-<div className="mt-3 flex w-full items-between justify-center gap-6 pt-3">
+<div className="mt-3 flex w-full items-center justify-between gap-6 pt-3">
   <Link
     href={`/companies/${company.id}`}
     className="
