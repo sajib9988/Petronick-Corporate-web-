@@ -166,7 +166,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         </p>
 
         {/* FOOTER */}
-        <div className="mt-auto flex items-center gap-4 pt-5">
+        <div className="mt-auto flex justify-between gap-4 pt-5">
           <Link
             href={`/companies/${company.id}`}
             className="
