@@ -110,15 +110,15 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         `}
       >
         {/* NUMBER BADGE — top-left corner, centered on the card's top edge */}
-        <span
-          className="
-            absolute left-4 top-0 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center
-            rounded-full bg-[#0F2747] text-[12px] font-bold text-white
-            shadow-md ring-2 ring-white
-          "
-        >
-          {index + 1}
-        </span>
+   <span
+  className="
+    absolute left-4 top-3 z-10 flex h-7 w-7 items-center justify-center
+    rounded-full bg-[#0F2747] text-[12px] font-bold text-white
+    shadow-md ring-2 ring-white
+  "
+>
+  {index + 1}
+</span>
 
         {/* HEADER: LOGO + NAME/CATEGORY — same row, centered as a group */}
         <div className="flex w-full items-center justify-center gap-3">
@@ -164,44 +164,44 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           {company.description}
         </p>
 
-        {/* FOOTER */}
-        <div className="mt-auto flex w-full justify-between gap-6 pt-5">
-          <Link
-            href={`/companies/${company.id}`}
-            className="
-              inline-flex flex-1 items-center justify-center rounded-lg bg-[#0F2747]
-              px-4 py-2.5 text-[13px] font-semibold text-white transition-colors
-              hover:bg-orange-600
-            "
-          >
-            View Details
-          </Link>
+       {/* FOOTER */}
+<div className="mt-auto flex w-full items-center justify-center gap-10 pt-5">
+  <Link
+    href={`/companies/${company.id}`}
+    className="
+      inline-flex items-center justify-center rounded-lg bg-[#0F2747]
+      px-5 py-2 text-[12px] font-semibold text-white transition-colors
+      hover:bg-orange-600
+    "
+  >
+    View Details
+  </Link>
 
-          {company.website ? (
-            <a
-              href={company.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg
-                border border-gray-200 px-4 py-2.5 text-[13px] font-semibold text-gray-700
-                transition-all hover:border-orange-300 hover:text-orange-600
-              "
-            >
-              Website
-              <ExternalLink size={14} />
-            </a>
-          ) : (
-            <span
-              className="
-                inline-flex flex-1 items-center justify-center rounded-lg
-                border border-gray-100 px-4 py-2.5 text-[13px] font-medium text-gray-300
-              "
-            >
-              Website
-            </span>
-          )}
-        </div>
+  {company.website ? (
+    <a
+      href={company.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="
+        inline-flex items-center justify-center gap-1.5 rounded-lg
+        border border-gray-200 px-5 py-2 text-[12px] font-semibold text-gray-700
+        transition-all hover:border-orange-300 hover:text-orange-600
+      "
+    >
+      Website
+      <ExternalLink size={13} />
+    </a>
+  ) : (
+    <span
+      className="
+        inline-flex items-center justify-center rounded-lg
+        border border-gray-100 px-5 py-2 text-[12px] font-medium text-gray-300
+      "
+    >
+      Website
+    </span>
+  )}
+</div>
       </div>
     </motion.div>
   );
