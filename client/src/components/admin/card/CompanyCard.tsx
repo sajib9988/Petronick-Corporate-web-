@@ -112,7 +112,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
         {/* NUMBER BADGE — floats above the top-left corner of the card */}
         <span
           className="
-            absolute -top-3 left-5 z-10 flex h-6 w-6 items-center justify-center
+            absolute -top-1 left-5 z-10 flex h-6 w-6 items-center justify-center
             rounded-full bg-[#0F2747] text-[11px] font-bold text-white
             shadow-md ring-2 ring-white
           "
