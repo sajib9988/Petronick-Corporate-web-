@@ -74,8 +74,8 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
   const meta = getCategoryMeta(company.category, index);
   const FallbackIcon = meta.icon;
 
-  // Prefer the real uploaded logo/icon over the lucide fallback — only
-  // fall back to the generated icon when neither exists.
+  // Real uploaded logo/icon always wins over the generated Lucide icon —
+  // fallback icon only shows when the company has no logo/icon uploaded yet.
   const logoSrc = company.logo || company.icon || null;
 
   return (
@@ -122,7 +122,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 
         {/* HEADER: LOGO + NAME/CATEGORY — left-aligned, one row */}
         <div className="flex items-center gap-3 text-left">
-          {/* Logo — bigger, real logo prioritized */}
+          {/* Logo — real uploaded logo prioritized, generic icon only as fallback */}
           <div
             className={`
               flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl
@@ -179,7 +179,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
           </Link>
 
           {company.website ? (
-         <a>   
+            <a>
               href={company.website}
               target="_blank"
               rel="noopener noreferrer"
