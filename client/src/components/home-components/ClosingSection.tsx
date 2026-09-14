@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -64,7 +65,7 @@ export default function ClosingSection({
   ].filter(Boolean);
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl py-6 sm:py-7 lg:py-8">
+    <section className="relative w-full overflow-hidden rounded-2xl py-8 sm:py-9 lg:py-10">
       {/* Decorative glow */}
       <div className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
 
@@ -75,23 +76,23 @@ export default function ClosingSection({
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={staggerContainer(0.1, 0)}
-        className="relative flex w-full flex-col gap-8 lg:flex-row lg:items-center lg:gap-10"
+        className="relative flex w-full flex-col gap-9 lg:flex-row lg:items-center lg:gap-10"
       >
-        {/* LEFT */}
+        {/* ================= LEFT ================= */}
         <div className="lg:w-[44%] lg:border-r lg:border-gray-200 lg:pr-8">
           {/* Label */}
           <motion.p
             variants={fadeUp(0, 0.5)}
-            className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-amber-600"
+            className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-amber-600"
           >
-            <span className="h-px w-5 bg-amber-500" />
+            <span className="h-px w-6 bg-amber-500" />
             {label}
           </motion.p>
 
           {/* Headline */}
           <motion.h2
             variants={fadeUp(0.05, 0.6)}
-            className="mb-4 max-w-xl text-2xl font-bold leading-[1.05] text-gray-900 sm:text-3xl"
+            className="mb-5 max-w-xl text-2xl font-bold leading-[1.08] text-gray-900 sm:text-3xl"
           >
             {headline}
           </motion.h2>
@@ -103,28 +104,28 @@ export default function ClosingSection({
           >
             <Link
               href={ctaLink}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F2747] px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#16365f]"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F2747] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#16365f]"
             >
               {ctaText}
-              <ArrowRight size={14} />
+              <ArrowRight size={15} />
             </Link>
 
             <Link
               href={secondaryBtnLink}
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-50"
             >
               {secondaryBtnText}
-              <ArrowRight size={14} />
+              <ArrowRight size={15} />
             </Link>
           </motion.div>
         </div>
 
-        {/* RIGHT */}
+        {/* ================= RIGHT ================= */}
         <div className="lg:w-[56%]">
           {/* Paragraph */}
           <motion.p
             variants={fadeUp(0.1, 0.6)}
-            className="mb-5 max-w-2xl text-xs leading-relaxed text-gray-500 sm:text-sm"
+            className="mb-6 max-w-[520px] text-sm leading-6 text-gray-500"
           >
             {paragraph}
           </motion.p>
@@ -132,25 +133,25 @@ export default function ClosingSection({
           {/* ICON ITEMS */}
           <motion.div
             variants={staggerContainer(0.1, 0.1)}
-            className="grid grid-cols-3 gap-3"
+            className="grid grid-cols-3 gap-4"
           >
-            {items.map((label, i) => {
+            {items.map((itemLabel, i) => {
               const Icon = ICONS[i % ICONS.length];
 
               return (
                 <motion.div
-                  key={label}
+                  key={itemLabel}
                   variants={fadeUp(0, 0.5)}
-                  className="flex items-center gap-2"
+                  className="flex items-start gap-3"
                 >
                   {/* Icon */}
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
-                    <Icon size={19} />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                    <Icon size={21} strokeWidth={2} />
                   </div>
 
-                  {/* Label */}
-                  <span className="text-[11px] font-semibold leading-snug text-gray-800 sm:text-xs">
-                    {label}
+                  {/* Dynamic Label */}
+                  <span className="max-w-[125px] text-xs font-semibold leading-5 text-gray-800 sm:text-sm">
+                    {itemLabel}
                   </span>
                 </motion.div>
               );
@@ -161,3 +162,4 @@ export default function ClosingSection({
     </section>
   );
 }
+
