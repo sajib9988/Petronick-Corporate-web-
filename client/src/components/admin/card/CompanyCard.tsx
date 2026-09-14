@@ -192,7 +192,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       "
     >
       Website
-      <ExternalLink size={13} />
+      <ExternalLink size={16} />
     </a>
   ) : (
     <span
