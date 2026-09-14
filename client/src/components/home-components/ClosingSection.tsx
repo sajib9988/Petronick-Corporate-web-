@@ -46,7 +46,7 @@ export default function ClosingSection({ content }: ClosingSectionProps) {
   ].filter(Boolean);
 
   return (
-    <section className="relative py-10 px-6 sm:px-10 lg:px-12 rounded-2xl bg-gray-950 overflow-hidden">
+    <section className="relative py-10  sm:px-10 lg:px-12 rounded-2xloverflow-hidden">
       <div className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 right-1/4 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
 
