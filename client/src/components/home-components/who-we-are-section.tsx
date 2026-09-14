@@ -72,7 +72,7 @@ export default function WhoWeAreSection({
 
   return (
     <section
-      className="relative py-16  overflow-hidden bg-white bg-cover bg-center"
+      className="relative   overflow-hidden bg-white bg-cover bg-center"
       style={image ? { backgroundImage: `url(${image})` } : undefined}
     >
       {image && <div className="absolute inset-0 bg-white/90" />}
