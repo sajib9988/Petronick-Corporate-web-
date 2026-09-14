@@ -43,35 +43,38 @@ export default function RevenueOpportunitySection({
       />
 
       {/* Content */}
-      <div className="relative flex w-full items-center gap-6 py-10 sm:gap-8 sm:py-12 lg:py-14">
-        {/* LEFT: Icon + Text */}
-        <div className="flex min-w-0 flex-1 items-center gap-5">
+      <div className="relative flex w-full flex-col gap-8 py-10 sm:py-12 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-14">
+        {/* LEFT: Icon + Label + Headline */}
+        <div className="flex min-w-0 items-start gap-4 sm:gap-5 lg:max-w-sm">
           {/* Icon */}
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-amber-400/30 bg-amber-400/10 sm:h-16 sm:w-16">
-            <Users className="text-amber-400" size={28} strokeWidth={1.8} />
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-amber-400/40 bg-amber-400/10 sm:h-16 sm:w-16">
+            <Users className="text-amber-400" size={26} strokeWidth={1.8} />
           </div>
 
           {/* Text */}
           <div className="min-w-0">
             {/* Label */}
-            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-amber-400">
-              {label}
-            </p>
+            <div className="mb-2 flex items-center gap-3">
+              <p className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.16em] text-amber-400">
+                {label}
+              </p>
+              <span className="hidden h-px w-10 shrink-0 bg-amber-400/40 sm:block" />
+            </div>
 
             {/* Headline */}
-            <h2 className="mb-2 text-xl font-bold leading-snug text-white sm:text-2xl">
+            <h2 className="text-2xl font-bold leading-snug text-white sm:text-[28px] lg:text-3xl">
               {headline}
             </h2>
-
-            {/* Paragraph */}
-            <p className="max-w-2xl text-sm leading-6 text-slate-300 sm:text-[15px]">
-              {paragraph}
-            </p>
           </div>
         </div>
 
+        {/* MIDDLE: Paragraph */}
+        <p className="max-w-sm text-sm leading-6 text-slate-300 sm:text-[15px] lg:pt-1">
+          {paragraph}
+        </p>
+
         {/* RIGHT: CTA */}
-        <div className="shrink-0">
+        <div className="relative z-10 shrink-0">
           <Link
             href={btnLink}
             className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg shadow-amber-900/30 transition-all hover:scale-[1.03] hover:shadow-amber-700/40"
@@ -84,7 +87,7 @@ export default function RevenueOpportunitySection({
 
       {/* Decorative Right Image */}
       {image && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-72 xl:block">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-80 xl:block">
           <div className="relative h-full w-full">
             <Image
               src={image}
@@ -93,9 +96,9 @@ export default function RevenueOpportunitySection({
               className="object-cover"
               style={{
                 maskImage:
-                  "linear-gradient(to right, transparent, black 35%)",
+                  "linear-gradient(to right, transparent, black 40%)",
                 WebkitMaskImage:
-                  "linear-gradient(to right, transparent, black 35%)",
+                  "linear-gradient(to right, transparent, black 40%)",
               }}
             />
           </div>
