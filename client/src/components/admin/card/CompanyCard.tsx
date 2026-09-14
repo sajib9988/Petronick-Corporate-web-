@@ -100,7 +100,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
       {/* CARD */}
       <div
         className={`
-          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-2.5 pt-6
+          relative flex h-full flex-col items-center overflow-visible rounded-2xl border bg-white p-2.5 pt-4
           transition-all duration-300
           ${
             company.isVisible
@@ -168,7 +168,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
 </p>
 
        {/* FOOTER */}
-<div className="mt-2 flex w-full items-center justify-between gap-7 pt-3">
+<div className="mt-auto flex w-full items-center justify-between gap-7 pt-3">
   <Link
     href={`/companies/${company.id}`}
     className="
