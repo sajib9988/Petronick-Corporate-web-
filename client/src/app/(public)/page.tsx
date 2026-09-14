@@ -129,7 +129,9 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
-      <section className="py-8 sm:py-10">
+      <section className="py-8 bg-[#052141] sm:py-10">
+       
+         
         <Container>
           <Reveal>
           <RevenueOpportunitySection
