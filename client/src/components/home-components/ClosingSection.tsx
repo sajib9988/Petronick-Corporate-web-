@@ -112,7 +112,7 @@ export default function ClosingSection({ content }: ClosingSectionProps) {
                 <motion.div
                   key={label}
                   variants={fadeUp(0, 0.5)}
-                  className="flex flex-row items-center text-center gap-3"
+                  className="flex flex-row items-center text-center gap-2"
                 >
                   <div className="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
                     <Icon size={20} />
