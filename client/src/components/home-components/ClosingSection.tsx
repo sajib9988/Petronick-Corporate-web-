@@ -65,7 +65,7 @@ export default function ClosingSection({
   ].filter(Boolean);
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl py-8 sm:py-9 lg:py-10">
+    <section className="relative w-full overflow-hidden rounded-2xl  sm:py-9">
       {/* Decorative glow */}
       <div className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
 
