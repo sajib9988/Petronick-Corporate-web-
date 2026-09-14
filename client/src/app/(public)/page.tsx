@@ -78,15 +78,13 @@ export default async function HomePage() {
           sm:pt-24 clears the single-row desktop trust bar (translate-y-[75%]). */}
       <section className="py-8 pt-24 sm:pb-10">
         <Container>
-      <Reveal>
-
-          <div className="rounded-3xl overflow-hidden">
-            <WhoWeAreSection
-              image={visibleImage(whoWeAreSection)}
-              content={whoWeAreSection?.content ?? {}}
-            />
-          </div>
-
+          <Reveal>
+            <div className="rounded-3xl overflow-hidden">
+              <WhoWeAreSection
+                image={visibleImage(whoWeAreSection)}
+                content={whoWeAreSection?.content ?? {}}
+              />
+            </div>
           </Reveal>
         </Container>
       </section>
@@ -129,15 +127,13 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 5: Revenue Opportunity ── */}
-      <section className="py-8 bg-[#052141] sm:py-10">
-       
-         
+      <section className="w-full bg-[#052141] py-8 sm:py-10">
         <Container>
           <Reveal>
-          <RevenueOpportunitySection
-            image={visibleImage(revenueSection)}
-            content={revenueSection?.content ?? {}}
-          />
+            <RevenueOpportunitySection
+              image={visibleImage(revenueSection)}
+              content={revenueSection?.content ?? {}}
+            />
           </Reveal>
         </Container>
       </section>
