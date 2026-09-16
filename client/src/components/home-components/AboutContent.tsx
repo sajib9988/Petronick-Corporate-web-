@@ -3,11 +3,36 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Users, Settings, BarChart3 } from "lucide-react";
 
 import { Container } from "@/components/Container";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
 import { Button } from "../ui/button";
+
+// ============================================================
+// TRUST CARDS (static icon + label, shown beside the About text)
+// ============================================================
+
+const TRUST_CARDS = [
+  {
+    icon: Users,
+    title: "Shared Strategy",
+    description:
+      "Portfolio level leadership helps align priorities, resources, and long term business direction.",
+  },
+  {
+    icon: Settings,
+    title: "Operational Support",
+    description:
+      "Marketing, technology, procurement, logistics, fulfillment, and advisory capabilities support execution.",
+  },
+  {
+    icon: BarChart3,
+    title: "Independent Growth",
+    description:
+      "Each company serves its own market while benefiting from shared infrastructure and expertise.",
+  },
+];
 
 interface AboutContentProps {
   // ============================================================
@@ -36,19 +61,6 @@ interface AboutContentProps {
     body?: string;
     btnText?: string;
     btnLink?: string;
-  };
-
-  // ============================================================
-  // SNAPSHOT
-  // ============================================================
-
-  snapshotContent?: {
-    title?: string;
-    entityType?: string;
-    headquarters?: string;
-    structure?: string;
-    businessModel?: string;
-    industryFocus?: string;
   };
 
   // ============================================================
@@ -90,7 +102,6 @@ export default function AboutContent({
   heroImage,
   heroContent = {},
   aboutContent = {},
-  snapshotContent = {},
   valuesContent = {},
   ctaContent = {},
 }: AboutContentProps) {
@@ -118,51 +129,21 @@ export default function AboutContent({
   // ============================================================
 
   const missionSubtitle =
-    aboutContent.subtitle ?? "Our Mission";
+    aboutContent.subtitle ?? "Our Story";
 
   const missionTitle =
     aboutContent.title ??
-    "Building and Scaling Revenue-Driven Businesses";
+    "One Holding Company. Multiple Specialized Businesses.";
 
   const missionBody =
     aboutContent.body ??
-    "Petronick Corporate Holdings LLC owns and operates multiple business units specifically designed to work together — accelerating market entry, scaling operations, and maximizing profitability across every subsidiary.";
+    "Petronick Corporate Holdings LLC was established to organize, support, and scale multiple business ventures through shared resources and strategic leadership. Each business maintains its own market focus while benefiting from a connected operational ecosystem that helps accelerate launches, improve execution, and create long term growth opportunities.";
 
   const aboutBtnText =
     aboutContent.btnText ?? "Explore Our Companies";
 
   const aboutBtnLink =
     aboutContent.btnLink ?? "/companies";
-
-  // ============================================================
-  // SNAPSHOT DATA
-  // ============================================================
-
-  const snapshotTitle =
-    snapshotContent.title ?? "Corporate Snapshot";
-
-  const quickFacts = [
-    {
-      label: "Entity Type",
-      value: snapshotContent.entityType,
-    },
-    {
-      label: "Headquarters",
-      value: snapshotContent.headquarters,
-    },
-    {
-      label: "Structure",
-      value: snapshotContent.structure,
-    },
-    {
-      label: "Business Model",
-      value: snapshotContent.businessModel,
-    },
-    {
-      label: "Industry Focus",
-      value: snapshotContent.industryFocus,
-    },
-  ].filter((fact) => Boolean(fact.value));
 
   // ============================================================
   // VALUES DATA
@@ -223,9 +204,8 @@ export default function AboutContent({
         {/* ======================================================
             PART 1 — HERO
         ====================================================== */}
-
         <section className="pt-8 sm:pt-10">
-          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-20 sm:py-28 lg:py-32">
+          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-10 sm:py-14 lg:py-16">
 
             {heroImage && (
               <Image
@@ -326,14 +306,14 @@ export default function AboutContent({
               )}
             >
               <p className="text-xs font-semibold tracking-widest text-amber-600 uppercase mb-4">
-                {missionSubtitle}
+                — {missionSubtitle}
               </p>
 
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-6 leading-tight">
                 {missionTitle}
               </h2>
 
-              <p className="text-gray-700 text-base leading-relaxed mb-8 whitespace-pre-line">
+              <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8 whitespace-pre-line">
                 {missionBody}
               </p>
 
@@ -347,7 +327,7 @@ export default function AboutContent({
               </Link>
             </motion.div>
 
-            {/* RIGHT — SNAPSHOT */}
+            {/* RIGHT — TRUST CARDS */}
 
             <motion.div
               initial="hidden"
@@ -356,34 +336,30 @@ export default function AboutContent({
                 once: true,
                 amount: 0.3,
               }}
-              variants={fadeSlide(
-                "right",
-                0.1,
-                70,
-                0.7
-              )}
-              className="rounded-2xl border border-amber-100 bg-amber-50/50 p-7"
+              variants={staggerContainer(0.1, 0.1)}
+              className="flex flex-col gap-4"
             >
-              <p className="text-xs font-semibold tracking-widest text-amber-700 uppercase mb-5">
-                {snapshotTitle}
-              </p>
+              {TRUST_CARDS.map((card) => (
+                <motion.div
+                  key={card.title}
+                  variants={fadeSlide("right", 0, 60, 0.6)}
+                  className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                    <card.icon size={20} />
+                  </span>
 
-              <dl className="divide-y divide-amber-100/80">
-                {quickFacts.map((fact) => (
-                  <div
-                    key={fact.label}
-                    className="py-3.5 flex items-start justify-between gap-4"
-                  >
-                    <dt className="text-xs text-amber-700/70 font-medium flex-shrink-0">
-                      {fact.label}
-                    </dt>
+                  <div>
+                    <h3 className="font-bold text-gray-900 text-sm mb-1">
+                      {card.title}
+                    </h3>
 
-                    <dd className="text-xs font-semibold text-gray-800 text-right">
-                      {fact.value}
-                    </dd>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      {card.description}
+                    </p>
                   </div>
-                ))}
-              </dl>
+                </motion.div>
+              ))}
             </motion.div>
 
           </div>

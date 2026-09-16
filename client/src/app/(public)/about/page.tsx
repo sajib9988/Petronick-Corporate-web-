@@ -18,10 +18,6 @@ console.log("HERO IMAGE:", heroSection?.image);
     (s: any) => s.sectionType === "ABOUT"
   );
 
-  const snapshotSection = sections.find(
-    (s: any) => s.sectionType === "SNAPSHOT"
-  );
-
   const valuesSection = sections.find(
     (s: any) => s.sectionType === "VALUES"
   );
@@ -35,7 +31,6 @@ console.log("HERO IMAGE:", heroSection?.image);
       heroImage={heroSection?.image}
       heroContent={heroSection?.content ?? {}}
       aboutContent={aboutSection?.content ?? {}}
-      snapshotContent={snapshotSection?.content ?? {}}
       valuesContent={valuesSection?.content ?? {}}
       ctaContent={ctaSection?.content ?? {}}
     />
