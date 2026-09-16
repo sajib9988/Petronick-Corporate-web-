@@ -240,7 +240,7 @@ export default function AboutContent({
 
       <motion.h1
         variants={fadeUp(0.05, 0.9)}
-        className="font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-white tracking-tight leading-[1.15]"
+        className="font-serif text-2xl sm:text-5xl lg:text-[2.25rem] font-bold text-white tracking-tight leading-[1.05]"
       >
         {headline}
       </motion.h1>
