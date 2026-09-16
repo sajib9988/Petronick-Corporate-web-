@@ -204,83 +204,86 @@ export default function AboutContent({
         {/* ======================================================
             PART 1 — HERO
         ====================================================== */}
-        <section className="pt-8 sm:pt-10">
-          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-10 sm:py-14 lg:py-16">
+   
+<section className="pt-4 sm:pt-6">
+  <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-8 sm:py-10 lg:py-12">
 
-            {heroImage && (
-              <Image
-                src={heroImage}
-                alt="Petronick Corporate Holdings"
-                fill
-                priority
-                className="object-cover opacity-30"
-              />
-            )}
+    {heroImage && (
+      <Image
+        src={heroImage}
+        alt="Petronick Corporate Holdings"
+        fill
+        priority
+        className="object-cover opacity-30"
+      />
+    )}
 
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-950/40 via-gray-950/70 to-gray-950" />
+    <div className="absolute inset-0 bg-gradient-to-b from-gray-950/40 via-gray-950/70 to-gray-950" />
 
-            <div className="pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
+    <div className="pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
 
-            <div className="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-amber-600/10 blur-3xl" />
+    <div className="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-amber-600/10 blur-3xl" />
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer(0.15, 0.1)}
-              className="relative max-w-3xl mx-auto px-6 text-center"
-            >
-              <motion.p
-                variants={fadeUp(0, 0.6)}
-                className="text-amber-400 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-5"
-              >
-                — {heroBadge} —
-              </motion.p>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer(0.15, 0.1)}
+      className="relative max-w-3xl mx-auto px-6 text-center"
+    >
 
-              <motion.h1
-                variants={fadeUp(0.05, 0.9)}
-                className="font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-white tracking-tight leading-[1.15]"
-              >
-                {headline}
-              </motion.h1>
+      <motion.p
+        variants={fadeUp(0, 0.6)}
+        className="text-amber-400 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-5"
+      >
+        — {heroBadge} —
+      </motion.p>
 
-              <motion.p
-                variants={fadeUp(0.15, 0.9)}
-                className="mt-6 text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-              >
-                {subheadline}
-              </motion.p>
+      <motion.h1
+        variants={fadeUp(0.05, 0.9)}
+        className="font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-white tracking-tight leading-[1.15]"
+      >
+        {headline}
+      </motion.h1>
 
-              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-amber-400 hover:bg-amber-300 text-gray-950! font-semibold border-0 rounded-md shadow-lg shadow-amber-900/30 hover:scale-[1.03] transition-all"
-                  >
-                    <Link href={primaryBtnLink}>
-                      {primaryBtn}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
+      <motion.p
+        variants={fadeUp(0.15, 0.9)}
+        className="mt-6 text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+      >
+        {subheadline}
+      </motion.p>
 
-                <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-transparent text-white! font-semibold border border-white/50 rounded-md hover:bg-white/10 hover:border-white hover:scale-[1.03] transition-all"
-                  >
-                    <Link href={secondaryBtnLink}>
-                      {secondaryBtn}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.div>
+      <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
 
-          </div>
-        </section>
+        <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+          <Button
+            asChild
+            size="lg"
+            className="bg-amber-400 hover:bg-amber-300 text-gray-950! font-semibold border-0 rounded-md shadow-lg shadow-amber-900/30 hover:scale-[1.03] transition-all"
+          >
+            <Link href={primaryBtnLink}>
+              {primaryBtn}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </motion.div>
+
+        <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+          <Button
+            asChild
+            size="lg"
+            className="bg-transparent text-white! font-semibold border border-white/50 rounded-md hover:bg-white/10 hover:border-white hover:scale-[1.03] transition-all"
+          >
+            <Link href={secondaryBtnLink}>
+              {secondaryBtn}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </motion.div>
+
+      </div>
+    </motion.div>
+  </div>
+</section>
 
         {/* ======================================================
             PART 2 — ABOUT + SNAPSHOT
