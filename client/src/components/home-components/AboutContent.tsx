@@ -464,8 +464,8 @@ export default function AboutContent({
             PART 3 — SNAPSHOT
         ====================================================== */}
 
-        <section className="py-8">
-          <div className="rounded-3xl bg-gray-950 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
+        <section className="w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] bg-gray-950 py-16 sm:py-20">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
 
             <motion.div
               initial="hidden"
