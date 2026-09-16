@@ -205,7 +205,7 @@ export default function AboutContent({
             PART 1 — HERO
         ====================================================== */}
    
-<section className="pt-4 sm:pt-6">
+<section className=" ">
   <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-8 sm:py-10 lg:py-12">
 
     {heroImage && (
