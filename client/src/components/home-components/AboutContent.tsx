@@ -3,7 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Settings, BarChart3 } from "lucide-react";
+import {
+  ArrowRight,
+  Users,
+  Settings,
+  BarChart3,
+  Building2,
+  MapPin,
+  Layers,
+  TrendingUp,
+  LayoutGrid,
+} from "lucide-react";
 
 import { Container } from "@/components/Container";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
@@ -34,6 +44,18 @@ const TRUST_CARDS = [
   },
 ];
 
+// ============================================================
+// SNAPSHOT FACTS (icon is fixed per fact; label/value are dynamic)
+// ============================================================
+
+const SNAPSHOT_ICONS = [
+  Building2,
+  MapPin,
+  Layers,
+  TrendingUp,
+  LayoutGrid,
+] as const;
+
 interface AboutContentProps {
   // ============================================================
   // HERO
@@ -61,6 +83,30 @@ interface AboutContentProps {
     body?: string;
     btnText?: string;
     btnLink?: string;
+  };
+
+  // ============================================================
+  // SNAPSHOT
+  // ============================================================
+
+  snapshotContent?: {
+    label?: string;
+    title?: string;
+
+    entityTypeLabel?: string;
+    entityType?: string;
+
+    headquartersLabel?: string;
+    headquarters?: string;
+
+    structureLabel?: string;
+    structure?: string;
+
+    businessModelLabel?: string;
+    businessModel?: string;
+
+    industryFocusLabel?: string;
+    industryFocus?: string;
   };
 
   // ============================================================
@@ -102,6 +148,7 @@ export default function AboutContent({
   heroImage,
   heroContent = {},
   aboutContent = {},
+  snapshotContent = {},
   valuesContent = {},
   ctaContent = {},
 }: AboutContentProps) {
@@ -144,6 +191,51 @@ export default function AboutContent({
 
   const aboutBtnLink =
     aboutContent.btnLink ?? "/companies";
+
+  // ============================================================
+  // SNAPSHOT DATA
+  // ============================================================
+
+  const snapshotLabel =
+    snapshotContent.label ?? "Corporate Snapshot";
+
+  const snapshotTitle =
+    snapshotContent.title ?? "Petronick at a Glance";
+
+  const snapshotFacts = [
+    {
+      label: snapshotContent.entityTypeLabel ?? "Entity Type",
+      value:
+        snapshotContent.entityType ?? "Limited Liability Company",
+    },
+    {
+      label: snapshotContent.headquartersLabel ?? "Headquarters",
+      value:
+        snapshotContent.headquarters ??
+        "Pittsburgh, Pennsylvania, USA",
+    },
+    {
+      label: snapshotContent.structureLabel ?? "Structure",
+      value:
+        snapshotContent.structure ??
+        "Vertically Integrated Holding Company",
+    },
+    {
+      label: snapshotContent.businessModelLabel ?? "Business Model",
+      value:
+        snapshotContent.businessModel ??
+        "Holding Company plus Promotion Agent Network",
+    },
+    {
+      label: snapshotContent.industryFocusLabel ?? "Industry Focus",
+      value:
+        snapshotContent.industryFocus ??
+        "Digital, Fulfillment, Ecommerce, Advisory, Specialty Commerce, Gifting, and Title Services",
+    },
+  ].map((fact, i) => ({
+    ...fact,
+    icon: SNAPSHOT_ICONS[i],
+  }));
 
   // ============================================================
   // VALUES DATA
@@ -369,7 +461,64 @@ export default function AboutContent({
         </section>
 
         {/* ======================================================
-            PART 3 — VALUES
+            PART 3 — SNAPSHOT
+        ====================================================== */}
+
+        <section className="py-8">
+          <div className="rounded-3xl bg-gray-950 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.3,
+              }}
+              className="text-center mb-12"
+            >
+              <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
+                — {snapshotLabel} —
+              </p>
+
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+                {snapshotTitle}
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+              variants={staggerContainer(0.08, 0)}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"
+            >
+              {snapshotFacts.map((fact) => (
+                <motion.div
+                  key={fact.label}
+                  variants={fadeUp(0, 0.5)}
+                  className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 hover:border-amber-500/40 hover:bg-slate-900 transition-all duration-300"
+                >
+                  <fact.icon className="text-amber-400 mb-4" size={22} />
+
+                  <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-2">
+                    {fact.label}
+                  </p>
+
+                  <p className="text-sm text-white leading-relaxed">
+                    {fact.value}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* ======================================================
+            PART 4 — VALUES
         ====================================================== */}
 
         <section className="py-8">
@@ -424,7 +573,7 @@ export default function AboutContent({
         </section>
 
         {/* ======================================================
-            PART 4 — CTA
+            PART 5 — CTA
         ====================================================== */}
 
         <section className="py-8 pb-14">

@@ -345,33 +345,63 @@ export const FIELDS: Record<SectionType, SectionField[]> = {
 
   SNAPSHOT: [
     {
+      key: "label",
+      label: "Eyebrow / Badge Label",
+    },
+
+    {
       key: "title",
       label: "Section Title",
     },
 
     {
+      key: "entityTypeLabel",
+      label: "Fact 1 Label (e.g. Entity Type)",
+    },
+
+    {
       key: "entityType",
-      label: "Entity Type",
+      label: "Fact 1 Value",
+    },
+
+    {
+      key: "headquartersLabel",
+      label: "Fact 2 Label (e.g. Headquarters)",
     },
 
     {
       key: "headquarters",
-      label: "Headquarters",
+      label: "Fact 2 Value",
+    },
+
+    {
+      key: "structureLabel",
+      label: "Fact 3 Label (e.g. Structure)",
     },
 
     {
       key: "structure",
-      label: "Structure",
+      label: "Fact 3 Value",
+    },
+
+    {
+      key: "businessModelLabel",
+      label: "Fact 4 Label (e.g. Business Model)",
     },
 
     {
       key: "businessModel",
-      label: "Business Model",
+      label: "Fact 4 Value",
+    },
+
+    {
+      key: "industryFocusLabel",
+      label: "Fact 5 Label (e.g. Industry Focus)",
     },
 
     {
       key: "industryFocus",
-      label: "Industry Focus",
+      label: "Fact 5 Value",
     },
   ],
 
