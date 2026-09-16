@@ -258,7 +258,7 @@ export default function AboutContent({
 
               <motion.h1
                 variants={fadeUp(0.05, 0.9)}
-                className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.05]"
+                className="text-2xl sm:text-6xl lg:text-3xl font-bold text-white tracking-tight leading-[1.05]"
               >
                 {headline}
               </motion.h1>
@@ -332,7 +332,7 @@ export default function AboutContent({
                 {missionSubtitle}
               </p>
 
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 leading-tight">
                 {missionTitle}
               </h2>
 
