@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/Container";
 import { fadeUp, fadeSlide, staggerContainer } from "@/lib/motion";
+import { Button } from "../ui/button";
 
 interface AboutContentProps {
   // ============================================================
@@ -103,6 +104,11 @@ export default function AboutContent({
   const subheadline =
     heroContent.subheadline ??
     "A vertically integrated holding company built to own, operate, and scale multiple revenue-generating business units under one strategic roof.";
+
+  const primaryBtn = heroContent.primaryBtn ?? "Explore Our Companies";
+  const primaryBtnLink = heroContent.primaryBtnLink ?? "/companies";
+  const secondaryBtn = heroContent.secondaryBtn ?? "Learn More";
+  const secondaryBtnLink = heroContent.secondaryBtnLink ?? "/about";
 
   // ============================================================
   // ABOUT DATA
@@ -204,11 +210,11 @@ export default function AboutContent({
   const secondaryBtnText =
     ctaContent.secondaryBtnText ?? "Contact Us";
 
-  const secondaryBtnLink =
+  const ctaSecondaryBtnLink =
     ctaContent.secondaryBtnLink ?? "/contact";
 
   return (
-    <main className="min-h-screen bg-[#4dd0e1]">
+    <main className="min-h-screen ">
       <Container>
 
         {/* ======================================================
@@ -216,7 +222,7 @@ export default function AboutContent({
         ====================================================== */}
 
         <section className="pt-8 sm:pt-10">
-          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-24 sm:py-32">
+          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-12 sm:py-32">
 
             {heroImage && (
               <Image
@@ -269,6 +275,33 @@ export default function AboutContent({
                 {subheadline}
               </motion.p>
             </motion.div>
+                 <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-amber-400 to-amber-600 text-gray-950! font-semibold border-0 shadow-lg shadow-amber-900/30 hover:shadow-amber-700/40 hover:scale-[1.03] transition-all"
+            >
+              <Link href={primaryBtnLink}>
+                {primaryBtn}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </motion.div>
+
+          <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white/10! text-white! font-semibold border-2 border-white/70 backdrop-blur-sm hover:bg-white/20! hover:border-white hover:scale-[1.03] transition-all"
+            >
+              <Link href={secondaryBtnLink}>
+                {secondaryBtn}
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+
           </div>
         </section>
 
@@ -447,7 +480,7 @@ export default function AboutContent({
                 </Link>
 
                 <Link
-                  href={secondaryBtnLink}
+                  href={ctaSecondaryBtnLink}
                   className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-white/10 transition-colors"
                 >
                   {secondaryBtnText}
