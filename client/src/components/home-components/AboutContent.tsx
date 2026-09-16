@@ -98,17 +98,20 @@ export default function AboutContent({
   // HERO DATA
   // ============================================================
 
+  const heroBadge = heroContent.badge ?? "About Petronick";
+
   const headline =
-    heroContent.headline ?? "Building What Comes Next";
+    heroContent.headline ??
+    "Building Businesses Through Strategic Ownership and Operational Collaboration";
 
   const subheadline =
     heroContent.subheadline ??
-    "A vertically integrated holding company built to own, operate, and scale multiple revenue-generating business units under one strategic roof.";
+    "Petronick Corporate Holdings LLC owns and supports a connected portfolio of companies designed to operate independently while benefiting from shared strategy, technology, marketing, logistics, fulfillment, procurement, and leadership.";
 
   const primaryBtn = heroContent.primaryBtn ?? "Explore Our Companies";
   const primaryBtnLink = heroContent.primaryBtnLink ?? "/companies";
-  const secondaryBtn = heroContent.secondaryBtn ?? "Learn More";
-  const secondaryBtnLink = heroContent.secondaryBtnLink ?? "/about";
+  const secondaryBtn = heroContent.secondaryBtn ?? "Contact Us";
+  const secondaryBtnLink = heroContent.secondaryBtnLink ?? "/contact";
 
   // ============================================================
   // ABOUT DATA
@@ -222,7 +225,7 @@ export default function AboutContent({
         ====================================================== */}
 
         <section className="pt-8 sm:pt-10">
-          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-12 sm:py-32">
+          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-20 sm:py-28 lg:py-32">
 
             {heroImage && (
               <Image
@@ -244,63 +247,57 @@ export default function AboutContent({
               initial="hidden"
               animate="visible"
               variants={staggerContainer(0.15, 0.1)}
-              className="relative max-w-4xl mx-auto px-6 text-center"
+              className="relative max-w-3xl mx-auto px-6 text-center"
             >
-              <motion.div
+              <motion.p
                 variants={fadeUp(0, 0.6)}
-                className="inline-flex items-center gap-2 bg-white/5 border border-amber-500/20 text-amber-300 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6"
+                className="text-amber-400 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-5"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-
-                {heroContent.badge ??
-                  "Petronick Corporate Holdings LLC"}
-              </motion.div>
+                — {heroBadge} —
+              </motion.p>
 
               <motion.h1
                 variants={fadeUp(0.05, 0.9)}
-                className="text-2xl sm:text-6xl lg:text-3xl font-bold text-white tracking-tight leading-[1.05]"
+                className="font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-white tracking-tight leading-[1.15]"
               >
                 {headline}
               </motion.h1>
 
-              <motion.div
-                variants={fadeUp(0.1, 0.7)}
-                className="mx-auto mt-7 h-1 w-16 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"
-              />
-
               <motion.p
                 variants={fadeUp(0.15, 0.9)}
-                className="mt-7 text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+                className="mt-6 text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
               >
                 {subheadline}
               </motion.p>
-            </motion.div>
-                 <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-amber-400 to-amber-600 text-gray-950! font-semibold border-0 shadow-lg shadow-amber-900/30 hover:shadow-amber-700/40 hover:scale-[1.03] transition-all"
-            >
-              <Link href={primaryBtnLink}>
-                {primaryBtn}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
 
-          <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
-            <Button
-              asChild
-              size="lg"
-              className="bg-white/10! text-white! font-semibold border-2 border-white/70 backdrop-blur-sm hover:bg-white/20! hover:border-white hover:scale-[1.03] transition-all"
-            >
-              <Link href={secondaryBtnLink}>
-                {secondaryBtn}
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-amber-400 hover:bg-amber-300 text-gray-950! font-semibold border-0 rounded-md shadow-lg shadow-amber-900/30 hover:scale-[1.03] transition-all"
+                  >
+                    <Link href={primaryBtnLink}>
+                      {primaryBtn}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </motion.div>
+
+                <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-transparent text-white! font-semibold border border-white/50 rounded-md hover:bg-white/10 hover:border-white hover:scale-[1.03] transition-all"
+                  >
+                    <Link href={secondaryBtnLink}>
+                      {secondaryBtn}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
 
           </div>
         </section>
