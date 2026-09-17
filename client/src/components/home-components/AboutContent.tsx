@@ -710,8 +710,8 @@ export default function AboutContent({
             PART 5 — VALUES (How We Operate — 5-step flow)
         ====================================================== */}
 
-        <section className="py-8 w-full">
-          <div className="rounded-3xl bg-slate-50 border border-slate-100 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
+        <section className="py-8 bg-slate-50 w-full">
+            <div className="mx-auto w-full max-w-350 px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
 
             <motion.div
               initial="hidden"
