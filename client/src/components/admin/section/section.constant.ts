@@ -11,6 +11,7 @@ export type SectionType =
   | "VALUES"
   | "BENEFITS"
   | "PROCESS"
+  | "CAPABILITIES"
   | "STATS"
   | "APPLICATION"
   | "TESTIMONIALS"
@@ -31,6 +32,7 @@ export const SECTION_TYPES: SectionType[] = [
   "ECOSYSTEM",
   "REVENUE",
   "CLOSING",
+  "CAPABILITIES",
 
   "ABOUT",
   "SNAPSHOT",
@@ -86,6 +88,7 @@ export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
   GALLERY: "Gallery",
 
   CONTACT: "Contact",
+  CAPABILITIES: "Capabilities",
 };
 
 // ============================================================
@@ -106,7 +109,26 @@ export const FIELDS: Record<SectionType, SectionField[]> = {
   // ==========================================================
   // HERO
   // ==========================================================
+CAPABILITIES: [
+  { key: "label", label: "Eyebrow / Badge Label" },
+  { key: "title", label: "Section Title" },
+  { key: "subtitle", label: "Subtitle", multiline: true },
 
+  { key: "capability1Title", label: "Capability 1 Title" },
+  { key: "capability1Description", label: "Capability 1 Description", multiline: true },
+
+  { key: "capability2Title", label: "Capability 2 Title" },
+  { key: "capability2Description", label: "Capability 2 Description", multiline: true },
+
+  { key: "capability3Title", label: "Capability 3 Title" },
+  { key: "capability3Description", label: "Capability 3 Description", multiline: true },
+
+  { key: "capability4Title", label: "Capability 4 Title" },
+  { key: "capability4Description", label: "Capability 4 Description", multiline: true },
+
+  { key: "capability5Title", label: "Capability 5 Title" },
+  { key: "capability5Description", label: "Capability 5 Description", multiline: true },
+],
   HERO: [
     {
       key: "badge",

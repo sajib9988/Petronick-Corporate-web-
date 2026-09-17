@@ -110,6 +110,31 @@ interface AboutContentProps {
   };
 
   // ============================================================
+  // CAPABILITIES
+  // ============================================================
+
+  capabilitiesContent?: {
+    label?: string;
+    title?: string;
+    subtitle?: string;
+
+    capability1Title?: string;
+    capability1Description?: string;
+
+    capability2Title?: string;
+    capability2Description?: string;
+
+    capability3Title?: string;
+    capability3Description?: string;
+
+    capability4Title?: string;
+    capability4Description?: string;
+
+    capability5Title?: string;
+    capability5Description?: string;
+  };
+
+  // ============================================================
   // VALUES
   // ============================================================
 
@@ -149,6 +174,7 @@ export default function AboutContent({
   heroContent = {},
   aboutContent = {},
   snapshotContent = {},
+  capabilitiesContent = {},
   valuesContent = {},
   ctaContent = {},
 }: AboutContentProps) {
@@ -236,6 +262,54 @@ export default function AboutContent({
     ...fact,
     icon: SNAPSHOT_ICONS[i],
   }));
+
+  // ============================================================
+  // CAPABILITIES DATA
+  // ============================================================
+
+  const capabilitiesLabel =
+    capabilitiesContent.label ?? "Core Strengths";
+
+  const capabilitiesTitle =
+    capabilitiesContent.title ??
+    "Capabilities That Support the Portfolio";
+
+  const capabilitiesSubtitle =
+    capabilitiesContent.subtitle ??
+    "The PCH ecosystem combines specialized business expertise with shared resources that help each company scale efficiently.";
+
+  const capabilitiesList = [
+    {
+      title: capabilitiesContent.capability1Title ?? "Marketing & Brand Development",
+      desc:
+        capabilitiesContent.capability1Description ??
+        "Shared marketing expertise helps each business build its brand and reach new customers faster.",
+    },
+    {
+      title: capabilitiesContent.capability2Title ?? "Technology & Digital Infrastructure",
+      desc:
+        capabilitiesContent.capability2Description ??
+        "Portfolio level systems and tools reduce overhead and keep every company running on modern infrastructure.",
+    },
+    {
+      title: capabilitiesContent.capability3Title ?? "Logistics & Fulfillment",
+      desc:
+        capabilitiesContent.capability3Description ??
+        "Coordinated logistics and fulfillment capabilities support consistent delivery across business units.",
+    },
+    {
+      title: capabilitiesContent.capability4Title ?? "Procurement & Vendor Relations",
+      desc:
+        capabilitiesContent.capability4Description ??
+        "Centralized procurement gives every subsidiary better pricing and more reliable vendor relationships.",
+    },
+    {
+      title: capabilitiesContent.capability5Title ?? "Advisory & Leadership Support",
+      desc:
+        capabilitiesContent.capability5Description ??
+        "Portfolio level leadership provides strategic guidance so each company can focus on its core market.",
+    },
+  ].filter((c) => Boolean(c.title));
 
   // ============================================================
   // VALUES DATA
@@ -518,7 +592,68 @@ export default function AboutContent({
         </section>
 
         {/* ======================================================
-            PART 4 — VALUES
+            PART 4 — CAPABILITIES
+        ====================================================== */}
+
+        <section className="py-16 sm:py-24">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.3,
+            }}
+            className="text-center max-w-2xl mx-auto mb-12"
+          >
+            <p className="text-xs font-semibold tracking-widest text-amber-600 uppercase mb-3">
+              — {capabilitiesLabel} —
+            </p>
+
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+              {capabilitiesTitle}
+            </h2>
+
+            <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
+              {capabilitiesSubtitle}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            variants={staggerContainer(0.08, 0)}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5"
+          >
+            {capabilitiesList.map((c, i) => (
+              <motion.div
+                key={c.title}
+                variants={fadeUp(0, 0.5)}
+                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300"
+              >
+                <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-amber-50 text-amber-600 text-sm font-bold">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <h3 className="font-bold text-gray-900 text-sm mb-2">
+                  {c.title}
+                </h3>
+
+                {c.desc && (
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    {c.desc}
+                  </p>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ======================================================
+            PART 5 — VALUES
         ====================================================== */}
 
         <section className="py-8">
@@ -573,7 +708,7 @@ export default function AboutContent({
         </section>
 
         {/* ======================================================
-            PART 5 — CTA
+            PART 6 — CTA
         ====================================================== */}
 
         <section className="py-8 pb-14">

@@ -29,13 +29,16 @@ console.log("HERO IMAGE:", heroSection?.image);
   const ctaSection = sections.find(
     (s: any) => s.sectionType === "CTA"
   );
-
+const capabilitiesSection = sections.find(
+  (s: any) => s.sectionType === "CAPABILITIES"
+);
   return (
     <AboutContent
       heroImage={heroSection?.image}
       heroContent={heroSection?.content ?? {}}
       aboutContent={aboutSection?.content ?? {}}
       snapshotContent={snapshotSection?.content ?? {}}
+     capabilitiesContent={capabilitiesSection?.content ?? {}} 
       valuesContent={valuesSection?.content ?? {}}
       ctaContent={ctaSection?.content ?? {}}
     />

@@ -40,6 +40,7 @@ export const TYPE_LABELS: Record<string, string> = {
     "CONTACT": "Contact",
     "TESTIMONIALS": "Testimonials",
     "GALLERY": "Gallery",
+     "CAPABILITIES": "Capabilities / Core Strengths",
 }
 
 export const TYPE_COLORS: Record<string, string> = {
@@ -60,6 +61,7 @@ export const TYPE_COLORS: Record<string, string> = {
     "CONTACT": "bg-pink-100 text-pink-800",
     "TESTIMONIALS": "bg-gray-100 text-gray-800",
     "GALLERY": "bg-cyan-100 text-cyan-800",
+     "CAPABILITIES": "bg-amber-100 text-amber-800",
 }
 
 

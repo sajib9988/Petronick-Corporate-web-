@@ -12,7 +12,7 @@ export const sectionSchema = z.object({
     "ABOUT",
     "SNAPSHOT",
     "VALUES",
-
+ "CAPABILITIES",
     // Promotion Agent
     "BENEFITS",
     "PROCESS",
