@@ -1,10 +1,12 @@
 "use client";
 
+import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
+  ChevronRight,
   Users,
   Settings,
   BarChart3,
@@ -141,18 +143,22 @@ interface AboutContentProps {
   valuesContent?: {
     label?: string;
     title?: string;
+    subtitle?: string;
 
-    value1Title?: string;
-    value1Description?: string;
+    step1Title?: string;
+    step1Description?: string;
 
-    value2Title?: string;
-    value2Description?: string;
+    step2Title?: string;
+    step2Description?: string;
 
-    value3Title?: string;
-    value3Description?: string;
+    step3Title?: string;
+    step3Description?: string;
 
-    value4Title?: string;
-    value4Description?: string;
+    step4Title?: string;
+    step4Description?: string;
+
+    step5Title?: string;
+    step5Description?: string;
   };
 
   // ============================================================
@@ -312,33 +318,52 @@ export default function AboutContent({
   ].filter((c) => Boolean(c.title));
 
   // ============================================================
-  // VALUES DATA
+  // VALUES DATA (5-step "How We Operate" flow)
   // ============================================================
 
-  const coreValues = [
-    {
-      title: valuesContent.value1Title,
-      desc: valuesContent.value1Description,
-    },
-    {
-      title: valuesContent.value2Title,
-      desc: valuesContent.value2Description,
-    },
-    {
-      title: valuesContent.value3Title,
-      desc: valuesContent.value3Description,
-    },
-    {
-      title: valuesContent.value4Title,
-      desc: valuesContent.value4Description,
-    },
-  ].filter((v) => Boolean(v.title));
-
   const valuesLabel =
-    valuesContent.label ?? "Our DNA";
+    valuesContent.label ?? "How We Operate";
 
   const valuesTitle =
-    valuesContent.title ?? "How We Operate as a Company";
+    valuesContent.title ??
+    "Independent Companies. Shared Capabilities.";
+
+  const valuesSubtitle =
+    valuesContent.subtitle ??
+    "Each company contributes a distinct capability while benefiting from shared expertise and infrastructure across the PCH ecosystem.";
+
+  const operateSteps = [
+    {
+      title: valuesContent.step1Title ?? "Own and Build",
+      desc:
+        valuesContent.step1Description ??
+        "Create or acquire focused business opportunities.",
+    },
+    {
+      title: valuesContent.step2Title ?? "Launch and Market",
+      desc:
+        valuesContent.step2Description ??
+        "Use digital growth and customer acquisition resources.",
+    },
+    {
+      title: valuesContent.step3Title ?? "Operate and Support",
+      desc:
+        valuesContent.step3Description ??
+        "Apply shared procurement, systems, and operational expertise.",
+    },
+    {
+      title: valuesContent.step4Title ?? "Fulfill and Deliver",
+      desc:
+        valuesContent.step4Description ??
+        "Support logistics, packaging, shipping, and service execution.",
+    },
+    {
+      title: valuesContent.step5Title ?? "Advise and Scale",
+      desc:
+        valuesContent.step5Description ??
+        "Improve performance and expand value growth opportunities.",
+    },
+  ].filter((v) => Boolean(v.title));
 
   // ============================================================
   // CTA DATA
@@ -682,21 +707,33 @@ export default function AboutContent({
 </section>
 
         {/* ======================================================
-            PART 5 — VALUES
+            PART 5 — VALUES (How We Operate — 5-step flow)
         ====================================================== */}
 
         <section className="py-8">
-          <div className="rounded-3xl bg-gray-950 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
+          <div className="rounded-3xl bg-slate-50 border border-slate-100 overflow-hidden px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
 
-            <div className="text-center mb-12">
-              <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
-                {valuesLabel}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.3,
+              }}
+              className="text-center max-w-2xl mx-auto mb-12"
+            >
+              <p className="text-xs font-semibold tracking-widest text-amber-600 uppercase mb-3">
+                — {valuesLabel} —
               </p>
 
-              <h2 className="text-3xl sm:text-4xl font-bold text-white">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                 {valuesTitle}
               </h2>
-            </div>
+
+              <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
+                {valuesSubtitle}
+              </p>
+            </motion.div>
 
             <motion.div
               initial="hidden"
@@ -705,31 +742,36 @@ export default function AboutContent({
                 once: true,
                 amount: 0.2,
               }}
-              variants={staggerContainer(0.1, 0)}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+              variants={staggerContainer(0.08, 0)}
+              className="flex flex-col gap-4 lg:flex-row lg:items-stretch"
             >
-              {coreValues.map((v, i) => (
-                <motion.div
-                  key={v.title}
-                  variants={fadeUp(0, 0.5)}
-                  className="rounded-2xl border border-slate-800 bg-slate-900/60 p-7 hover:border-amber-500/40 hover:bg-slate-900 transition-all duration-300 flex gap-5"
-                >
-                  <span className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-stone-900 text-sm font-bold flex items-center justify-center flex-shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+              {operateSteps.map((step, i) => (
+                <Fragment key={step.title}>
+                  <motion.div
+                    variants={fadeUp(0, 0.5)}
+                    className="flex-1 rounded-xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300"
+                  >
+                    <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-white text-sm font-bold">
+                      {i + 1}
+                    </span>
 
-                  <div>
-                    <h3 className="font-bold text-white text-base mb-2">
-                      {v.title}
+                    <h3 className="font-bold text-gray-900 text-sm mb-1">
+                      {step.title}
                     </h3>
 
-                    {v.desc && (
-                      <p className="text-sm text-slate-400 leading-relaxed">
-                        {v.desc}
+                    {step.desc && (
+                      <p className="text-gray-500 text-xs leading-relaxed">
+                        {step.desc}
                       </p>
                     )}
-                  </div>
-                </motion.div>
+                  </motion.div>
+
+                  {i < operateSteps.length - 1 && (
+                    <div className="hidden lg:flex items-center justify-center text-amber-500 flex-shrink-0">
+                      <ChevronRight size={18} />
+                    </div>
+                  )}
+                </Fragment>
               ))}
             </motion.div>
 

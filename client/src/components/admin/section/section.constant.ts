@@ -443,46 +443,63 @@ CAPABILITIES: [
     },
 
     {
-      key: "value1Title",
-      label: "Value 1 Title",
-    },
-
-    {
-      key: "value1Description",
-      label: "Value 1 Description",
+      key: "subtitle",
+      label: "Subtitle",
       multiline: true,
     },
 
     {
-      key: "value2Title",
-      label: "Value 2 Title",
+      key: "step1Title",
+      label: "Step 1 Title",
     },
 
     {
-      key: "value2Description",
-      label: "Value 2 Description",
+      key: "step1Description",
+      label: "Step 1 Description",
       multiline: true,
     },
 
     {
-      key: "value3Title",
-      label: "Value 3 Title",
+      key: "step2Title",
+      label: "Step 2 Title",
     },
 
     {
-      key: "value3Description",
-      label: "Value 3 Description",
+      key: "step2Description",
+      label: "Step 2 Description",
       multiline: true,
     },
 
     {
-      key: "value4Title",
-      label: "Value 4 Title",
+      key: "step3Title",
+      label: "Step 3 Title",
     },
 
     {
-      key: "value4Description",
-      label: "Value 4 Description",
+      key: "step3Description",
+      label: "Step 3 Description",
+      multiline: true,
+    },
+
+    {
+      key: "step4Title",
+      label: "Step 4 Title",
+    },
+
+    {
+      key: "step4Description",
+      label: "Step 4 Description",
+      multiline: true,
+    },
+
+    {
+      key: "step5Title",
+      label: "Step 5 Title",
+    },
+
+    {
+      key: "step5Description",
+      label: "Step 5 Description",
       multiline: true,
     },
   ],
