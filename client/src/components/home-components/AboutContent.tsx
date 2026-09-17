@@ -595,62 +595,91 @@ export default function AboutContent({
             PART 4 — CAPABILITIES
         ====================================================== */}
 
-        <section className="py-8 sm:py-12">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            className="text-center max-w-2xl mx-auto mb-12"
-          >
-            <p className="text-xs font-semibold tracking-widest text-amber-600 uppercase mb-3">
-              — {capabilitiesLabel} —
+      <section className="py-8 sm:py-12">
+  {/* SECTION HEADER */}
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{
+      once: true,
+      amount: 0.3,
+    }}
+    className="mx-auto mb-12 max-w-2xl text-center"
+  >
+    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-amber-600">
+      — {capabilitiesLabel} —
+    </p>
+
+    <h2 className="mb-4 font-serif text-2xl font-bold leading-tight text-gray-900 sm:text-3xl">
+      {capabilitiesTitle}
+    </h2>
+
+    <p className="text-sm leading-relaxed text-gray-500 sm:text-base">
+      {capabilitiesSubtitle}
+    </p>
+  </motion.div>
+
+  {/* CAPABILITIES */}
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{
+      once: true,
+      amount: 0.2,
+    }}
+    variants={staggerContainer(0.08, 0)}
+  >
+    {/* FIRST ROW — 3 CARDS */}
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {capabilitiesList.slice(0, 3).map((c, i) => (
+        <motion.div
+          key={c.title}
+          variants={fadeUp(0, 0.5)}
+          className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-amber-200 hover:shadow-md"
+        >
+          <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-amber-100 text-sm font-bold text-amber-700">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+
+          <h3 className="mb-2 text-base font-bold text-gray-900">
+            {c.title}
+          </h3>
+
+          {c.desc && (
+            <p className="text-sm leading-relaxed text-gray-500">
+              {c.desc}
             </p>
+          )}
+        </motion.div>
+      ))}
+    </div>
 
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-              {capabilitiesTitle}
-            </h2>
+    {/* SECOND ROW — 2 CENTERED CARDS */}
+    <div className="mt-5 flex justify-center gap-5">
+      {capabilitiesList.slice(3, 5).map((c, i) => (
+        <motion.div
+          key={c.title}
+          variants={fadeUp(0, 0.5)}
+          className="w-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-amber-200 hover:shadow-md sm:w-[calc(50%-0.625rem)] lg:w-[calc((100%-2.5rem)/3)]"
+        >
+          <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-amber-100 text-sm font-bold text-amber-700">
+            {String(i + 4).padStart(2, "0")}
+          </span>
 
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
-              {capabilitiesSubtitle}
+          <h3 className="mb-2 text-base font-bold text-gray-900">
+            {c.title}
+          </h3>
+
+          {c.desc && (
+            <p className="text-sm leading-relaxed text-gray-500">
+              {c.desc}
             </p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            variants={staggerContainer(0.08, 0)}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            {capabilitiesList.map((c, i) => (
-              <motion.div
-                key={c.title}
-                variants={fadeUp(0, 0.5)}
-                className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300"
-              >
-                <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-amber-100 text-amber-700 text-sm font-bold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                <h3 className="font-bold text-gray-900 text-base mb-2">
-                  {c.title}
-                </h3>
-
-                {c.desc && (
-                  <p className="text-gray-500 text-sm leading-relaxed">
-                    {c.desc}
-                  </p>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
+          )}
+        </motion.div>
+      ))}
+    </div>
+  </motion.div>
+</section>
 
         {/* ======================================================
             PART 5 — VALUES
