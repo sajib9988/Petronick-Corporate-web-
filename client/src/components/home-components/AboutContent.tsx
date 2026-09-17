@@ -276,38 +276,38 @@ export default function AboutContent({
 
   const capabilitiesSubtitle =
     capabilitiesContent.subtitle ??
-    "The PCH ecosystem combines specialized business expertise with shared resources that help each company scale efficiently.";
+    "The PCH ecosystem combines specialized business expertise with shared resources that help companies launch, operate, and grow more efficiently.";
 
   const capabilitiesList = [
     {
-      title: capabilitiesContent.capability1Title ?? "Marketing & Brand Development",
+      title: capabilitiesContent.capability1Title ?? "Business Creation",
       desc:
         capabilitiesContent.capability1Description ??
-        "Shared marketing expertise helps each business build its brand and reach new customers faster.",
+        "Launching and scaling new ventures with practical structure, resources, and execution support.",
     },
     {
-      title: capabilitiesContent.capability2Title ?? "Technology & Digital Infrastructure",
+      title: capabilitiesContent.capability2Title ?? "Digital Growth",
       desc:
         capabilitiesContent.capability2Description ??
-        "Portfolio level systems and tools reduce overhead and keep every company running on modern infrastructure.",
+        "Marketing, websites, automation, branding, and customer acquisition capabilities.",
     },
     {
-      title: capabilitiesContent.capability3Title ?? "Logistics & Fulfillment",
+      title: capabilitiesContent.capability3Title ?? "Fulfillment Support",
       desc:
         capabilitiesContent.capability3Description ??
-        "Coordinated logistics and fulfillment capabilities support consistent delivery across business units.",
+        "Packaging, logistics, shipping, and operational support for product based businesses.",
     },
     {
-      title: capabilitiesContent.capability4Title ?? "Procurement & Vendor Relations",
+      title: capabilitiesContent.capability4Title ?? "Advisory Services",
       desc:
         capabilitiesContent.capability4Description ??
-        "Centralized procurement gives every subsidiary better pricing and more reliable vendor relationships.",
+        "Business strategy, profitability, management, technology, and consulting support.",
     },
     {
-      title: capabilitiesContent.capability5Title ?? "Advisory & Leadership Support",
+      title: capabilitiesContent.capability5Title ?? "Specialty Commerce",
       desc:
         capabilitiesContent.capability5Description ??
-        "Portfolio level leadership provides strategic guidance so each company can focus on its core market.",
+        "Specialty product sourcing, development, gifting, restoration, and commerce opportunities.",
     },
   ].filter((c) => Boolean(c.title));
 
@@ -595,7 +595,7 @@ export default function AboutContent({
             PART 4 — CAPABILITIES
         ====================================================== */}
 
-        <section className="py-16 sm:py-24">
+        <section className="py-8 sm:py-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -626,19 +626,19 @@ export default function AboutContent({
               amount: 0.2,
             }}
             variants={staggerContainer(0.08, 0)}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
             {capabilitiesList.map((c, i) => (
               <motion.div
                 key={c.title}
                 variants={fadeUp(0, 0.5)}
-                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300"
+                className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300"
               >
-                <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-amber-50 text-amber-600 text-sm font-bold">
+                <span className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-amber-100 text-amber-700 text-sm font-bold">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
-                <h3 className="font-bold text-gray-900 text-sm mb-2">
+                <h3 className="font-bold text-gray-900 text-base mb-2">
                   {c.title}
                 </h3>
 
