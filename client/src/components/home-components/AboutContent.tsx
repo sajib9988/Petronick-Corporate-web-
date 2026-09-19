@@ -721,10 +721,10 @@ export default function AboutContent({
             PART 5 — VALUES (How We Operate — 5-step flow)-full width section with 5 steps
         ====================================================== */}
 
-        <section className="py-2  bg-slate-50 w-full">
+        <section className="py-3  bg-slate-50 w-full">
 
             <Container>
-           <div className="w-full py-8 sm:py-12 lg:py-8">
+           <div className="w-full py-8 sm:py-12 lg:py-4">
 
             <motion.div
               initial="hidden"
