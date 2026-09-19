@@ -790,7 +790,7 @@ export default function AboutContent({
             PART 6 — CTA
         ====================================================== */}
 
-        <section className="py-2 pb-14">
+        <section className="py-2 pb-7 sm:pb-10 lg:pb-7">
           <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-16 sm:py-20 lg:py-16">
 
             {ctaImage && (
