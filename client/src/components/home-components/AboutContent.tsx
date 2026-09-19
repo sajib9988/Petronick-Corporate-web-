@@ -166,6 +166,7 @@ interface AboutContentProps {
   // ============================================================
 
   ctaContent?: {
+    eyebrow?: string;
     title?: string;
     description?: string;
     btnText?: string;
@@ -173,6 +174,8 @@ interface AboutContentProps {
     secondaryBtnText?: string;
     secondaryBtnLink?: string;
   };
+
+  ctaImage?: string | null;
 }
 
 export default function AboutContent({
@@ -183,6 +186,7 @@ export default function AboutContent({
   capabilitiesContent = {},
   valuesContent = {},
   ctaContent = {},
+  ctaImage,
 }: AboutContentProps) {
   // ============================================================
   // HERO DATA
@@ -369,18 +373,22 @@ export default function AboutContent({
   // CTA DATA
   // ============================================================
 
+  const ctaEyebrow =
+    ctaContent.eyebrow ?? "Explore the Ecosystem";
+
   const ctaTitle =
-    ctaContent.title ?? "Ready to Partner With Us?";
+    ctaContent.title ??
+    "Discover the Companies Behind Petronick Corporate Holdings LLC";
 
   const ctaDescription =
     ctaContent.description ??
-    "Qualified Promotion Agents can represent one or multiple Petronick business units. Join our growing ecosystem today.";
+    "Explore our portfolio or connect with our team to learn more about the businesses and opportunities within the PCH ecosystem.";
 
   const ctaBtnText =
-    ctaContent.btnText ?? "Apply as Promotion Agent";
+    ctaContent.btnText ?? "View Our Companies";
 
   const ctaBtnLink =
-    ctaContent.btnLink ?? "/promotion-agent";
+    ctaContent.btnLink ?? "/companies";
 
   const secondaryBtnText =
     ctaContent.secondaryBtnText ?? "Contact Us";
@@ -710,7 +718,7 @@ export default function AboutContent({
             PART 5 — VALUES (How We Operate — 5-step flow)
         ====================================================== */}
 
-        <section className="py-4  bg-slate-50 w-full">
+        <section className="py-2  bg-slate-50 w-full">
             <div className="mx-auto w-full max-w-350 px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
 
             <motion.div
@@ -783,43 +791,77 @@ export default function AboutContent({
         ====================================================== */}
 
         <section className="py-8 pb-14">
-          <div className="relative overflow-hidden rounded-3xl bg-gray-900 text-white py-16 sm:py-20 px-6 sm:px-10 text-center">
+          <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-16 sm:py-20 lg:py-24">
 
-            <div className="pointer-events-none absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl" />
+            {ctaImage && (
+              <Image
+                src={ctaImage}
+                alt={ctaTitle}
+                fill
+                className="object-cover opacity-30"
+              />
+            )}
 
-            <div className="pointer-events-none absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-amber-600/10 blur-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-950/40 via-gray-950/70 to-gray-950" />
 
-            <div className="relative">
+            <div className="pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
 
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+            <div className="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-amber-600/10 blur-3xl" />
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.3,
+              }}
+              variants={staggerContainer(0.15, 0.1)}
+              className="relative max-w-3xl mx-auto px-6 text-center"
+            >
+              <motion.p
+                variants={fadeUp(0, 0.6)}
+                className="text-amber-400 text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mb-5"
+              >
+                — {ctaEyebrow} —
+              </motion.p>
+
+              <motion.h2
+                variants={fadeUp(0.05, 0.9)}
+                className="font-serif text-2xl sm:text-4xl lg:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15]"
+              >
                 {ctaTitle}
-              </h2>
+              </motion.h2>
 
-              <p className="text-gray-400 text-sm mb-8 max-w-lg mx-auto">
+              <motion.p
+                variants={fadeUp(0.15, 0.9)}
+                className="mt-6 text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+              >
                 {ctaDescription}
-              </p>
+              </motion.p>
 
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <motion.div variants={fadeSlide("left", 0, 80, 0.9)}>
+                  <Link
+                    href={ctaBtnLink}
+                    className="inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-950 font-semibold text-sm px-6 py-3 rounded-md shadow-lg shadow-amber-900/30 hover:scale-[1.03] transition-all"
+                  >
+                    {ctaBtnText}
+                    <ArrowRight size={16} />
+                  </Link>
+                </motion.div>
 
-                <Link
-                  href={ctaBtnLink}
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 text-gray-900 font-semibold text-sm px-6 py-3 rounded-lg hover:scale-[1.03] transition-all"
-                >
-                  {ctaBtnText}
-
-                  <ArrowRight size={14} />
-                </Link>
-
-                <Link
-                  href={ctaSecondaryBtnLink}
-                  className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold text-sm px-6 py-3 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                  {secondaryBtnText}
-                </Link>
-
+                <motion.div variants={fadeSlide("right", 0, 80, 0.9)}>
+                  <Link
+                    href={ctaSecondaryBtnLink}
+                    className="inline-flex items-center justify-center gap-2 bg-transparent text-white font-semibold text-sm px-6 py-3 rounded-md border border-white/50 hover:bg-white/10 hover:border-white hover:scale-[1.03] transition-all"
+                  >
+                    {secondaryBtnText}
+                    <ArrowRight size={16} />
+                  </Link>
+                </motion.div>
               </div>
+            </motion.div>
 
-            </div>
           </div>
         </section>
 

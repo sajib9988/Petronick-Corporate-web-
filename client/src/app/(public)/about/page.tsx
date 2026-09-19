@@ -41,6 +41,7 @@ const capabilitiesSection = sections.find(
      capabilitiesContent={capabilitiesSection?.content ?? {}} 
       valuesContent={valuesSection?.content ?? {}}
       ctaContent={ctaSection?.content ?? {}}
+      ctaImage={ctaSection?.image}
     />
   );
 }
