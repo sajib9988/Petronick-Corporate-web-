@@ -483,11 +483,11 @@ export default function AboutContent({
     </motion.div>
   </div>
 </section>
-
+ </Container>
         {/* ======================================================
             PART 2 — ABOUT + SNAPSHOT
         ====================================================== */}
-
+  <Container>
         <section className="py-16 sm:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
@@ -566,12 +566,13 @@ export default function AboutContent({
 
           </div>
         </section>
-
+ </Container>
         {/* ======================================================
-            PART 3 — SNAPSHOT
+            PART 3 — SNAPSHOT-full width section with 5 facts
         ====================================================== */}
 
         <section className="w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] bg-gray-950 py-16 sm:py-20">
+            <Container>
           <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6">
 
             <motion.div
@@ -622,13 +623,13 @@ export default function AboutContent({
             </motion.div>
 
           </div>
+          </Container>
         </section>
 
         {/* ======================================================
             PART 4 — CAPABILITIES
         ====================================================== */}
-
-      <section className="py-8 sm:py-12">
+  <Container>  <section className="py-8 sm:py-12">
   {/* SECTION HEADER */}
   <motion.div
     initial="hidden"
@@ -713,12 +714,16 @@ export default function AboutContent({
     </div>
   </motion.div>
 </section>
+</Container>
+    
 
         {/* ======================================================
-            PART 5 — VALUES (How We Operate — 5-step flow)
+            PART 5 — VALUES (How We Operate — 5-step flow)-full width section with 5 steps
         ====================================================== */}
 
         <section className="py-2  bg-slate-50 w-full">
+
+            <Container>
             <div className="mx-auto w-full max-w-350 px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
 
             <motion.div
@@ -784,13 +789,13 @@ export default function AboutContent({
             </motion.div>
 
           </div>
+          </Container>
         </section>
 
         {/* ======================================================
             PART 6 — CTA
         ====================================================== */}
-
-        <section className="py-2 pb-7 sm:pb-10 lg:pb-7">
+  <Container>  <section className="py-2 pb-7 sm:pb-10 lg:pb-7">
           <div className="relative bg-gray-950 rounded-3xl overflow-hidden py-16 sm:py-20 lg:py-16">
 
             {ctaImage && (
@@ -864,8 +869,10 @@ export default function AboutContent({
 
           </div>
         </section>
+        </Container>
+      
 
-      </Container>
+     
     </main>
   );
 }
