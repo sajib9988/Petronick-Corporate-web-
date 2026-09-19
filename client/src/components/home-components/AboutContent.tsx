@@ -724,7 +724,7 @@ export default function AboutContent({
         <section className="py-2  bg-slate-50 w-full">
 
             <Container>
-            <div className="mx-auto w-full max-w-350 px-6 sm:px-10 lg:px-14 py-16 sm:py-20">
+            <div className=" w-full max-w-350 px-6 sm:px-10  py-16 sm:py-20">
 
             <motion.div
               initial="hidden"
