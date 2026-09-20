@@ -90,7 +90,7 @@ export default function CompaniesHero({image,  content }: CompaniesHeroProps) {
           <motion.div variants={fadeSlide("right", 0.15, 60, 0.8)}>
             <Link
               href={secondaryBtnLink}
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-white/40 bg-white/5 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:border-white/70 hover:bg-white/10 hover:scale-[1.02]"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-amber-400 bg-white/5 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:border-white/70 hover:bg-white/10 hover:scale-[1.02]"
             >
               {secondaryBtn}
               <ArrowRight size={16} />

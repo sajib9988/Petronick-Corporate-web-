@@ -70,17 +70,6 @@ export default async function CompaniesPage() {
   const companies: any[] = companiesRes?.data ?? [];
 
 
-
-  // =========================
-  // STATS
-  // =========================
-
-  
-
-  // =========================
-  // CTA
-  // =========================
-
   const ctaEyebrow =
     ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
 
@@ -114,22 +103,18 @@ export default async function CompaniesPage() {
         image={visibleImage(heroSection)}
       />
 
-
       {/* ==================================================
-          CONTENT
+          CONTENT part is missing here, but it should include insted of the stats section , it will be dyanmic and will be fetched from the CMS. 
       ================================================== */}
-
+     
       <Container>
 
-        {/* ==================================================
-            STATS
-        ================================================== */}
 
    
 
 
         {/* ==================================================
-            COMPANIES
+            COMPANIES section
         ================================================== */}
 
         <section className="py-20">
