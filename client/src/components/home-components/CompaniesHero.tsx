@@ -38,75 +38,7 @@ export default function CompaniesHero({image,  content }: CompaniesHeroProps) {
 
   return (
     <section style={{ backgroundImage: `url(${imageUrl})` }}  className="relative overflow-hidden  text-white">
-      {/* Decorative orbit lines + stars */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 1440 560"
-        fill="none"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <g stroke="#d4af37" strokeWidth="1">
-          <ellipse
-            cx="380"
-            cy="120"
-            rx="720"
-            ry="170"
-            transform="rotate(-10 380 120)"
-            opacity="0.35"
-          />
-          <ellipse
-            cx="980"
-            cy="360"
-            rx="760"
-            ry="150"
-            transform="rotate(9 980 360)"
-            opacity="0.3"
-          />
-          <ellipse
-            cx="120"
-            cy="420"
-            rx="560"
-            ry="190"
-            transform="rotate(18 120 420)"
-            opacity="0.25"
-          />
-          <ellipse
-            cx="1260"
-            cy="90"
-            rx="520"
-            ry="240"
-            transform="rotate(-22 1260 90)"
-            opacity="0.2"
-          />
-          <ellipse
-            cx="1480"
-            cy="470"
-            rx="640"
-            ry="210"
-            transform="rotate(-12 1480 470)"
-            opacity="0.25"
-          />
-        </g>
-
-        <g fill="#d4af37">
-          <circle cx="130" cy="132" r="2.5" opacity="0.7" />
-          <circle cx="232" cy="232" r="2" opacity="0.55" />
-          <circle cx="85" cy="300" r="2" opacity="0.5" />
-          <circle cx="165" cy="255" r="1.8" opacity="0.6" />
-          <circle cx="915" cy="108" r="2.2" opacity="0.65" />
-          <circle cx="1085" cy="300" r="2" opacity="0.55" />
-          <circle cx="1335" cy="140" r="2.5" opacity="0.7" />
-          <circle cx="695" cy="192" r="1.8" opacity="0.5" />
-          <circle cx="1250" cy="330" r="2" opacity="0.5" />
-        </g>
-
-        <g fill="#ffffff">
-          <circle cx="60" cy="80" r="1.5" opacity="0.4" />
-          <circle cx="1380" cy="60" r="1.5" opacity="0.35" />
-          <circle cx="1200" cy="420" r="1.5" opacity="0.35" />
-        </g>
-      </svg>
+   
 
       <motion.div
         initial="hidden"

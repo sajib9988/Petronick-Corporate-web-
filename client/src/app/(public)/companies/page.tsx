@@ -125,38 +125,7 @@ export default async function CompaniesPage() {
             STATS
         ================================================== */}
 
-        <section className="relative -mt-8 rounded-2xl border border-gray-200 bg-white shadow-sm">
-
-          <div className="grid grid-cols-3">
-
-            {stats.map((stat, index) => (
-
-              <div
-                key={stat.label}
-                className={`
-                  px-3 py-6 text-center sm:px-6 sm:py-7
-                  ${index !== stats.length - 1
-                    ? "border-r border-gray-100"
-                    : ""
-                  }
-                `}
-              >
-
-                <div className="text-xl font-bold text-[#111827] sm:text-2xl">
-                  {stat.value}
-                </div>
-
-                <div className="mt-1 text-[11px] font-medium text-[#64748B] sm:text-xs">
-                  {stat.label}
-                </div>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </section>
+   
 
 
         {/* ==================================================
