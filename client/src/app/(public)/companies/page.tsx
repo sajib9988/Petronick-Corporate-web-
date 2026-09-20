@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import CompanyCard from "@/components/admin/card/CompanyCard";
 import CompaniesHero from "@/components/home-components/CompaniesHero";
-import { motion } from "framer-motion";
+
 
 export const dynamic = "force-dynamic";
 
@@ -110,10 +110,10 @@ export default async function CompaniesPage() {
 
       <section className="bg-white py-16 sm:py-20">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+         
+         
+         
             className="mx-auto max-w-3xl text-center"
           >
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-600">
@@ -129,7 +129,7 @@ export default async function CompaniesPage() {
               {statsContent.description ??
                 "The PCH portfolio brings together businesses across digital growth, fulfillment, distribution, specialty commerce, gifting, title services, lifestyle products, and business advisory. Each company operates with its own market focus while contributing to a broader connected business ecosystem."}
             </p>
-          </motion.div>
+          </div>
         </Container>
       </section>
 
