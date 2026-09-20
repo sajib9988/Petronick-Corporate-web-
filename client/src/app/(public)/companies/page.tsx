@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import CompanyCard from "@/components/admin/card/CompanyCard";
+import CompaniesHero from "@/components/home-components/CompaniesHero";
 
 export const dynamic = "force-dynamic";
 
@@ -59,16 +60,6 @@ export default async function CompaniesPage() {
   const companies: any[] = companiesRes?.data ?? [];
 
 
-
-  const badge =
-    heroContent.badge ?? "PORTFOLIO OVERVIEW";
-
-  const headline =
-    heroContent.headline ?? "Our Companies";
-
-  const subheadline =
-    heroContent.subheadline ??
-    "Petronick Corporate Holdings operates multiple specialized business units, each built to create independent revenue while contributing to a stronger and more collaborative business ecosystem.";
 
   // =========================
   // STATS
@@ -121,47 +112,7 @@ export default async function CompaniesPage() {
 
 
 
-      <section className="relative overflow-hidden text-white">
-
-        {/* Background grid */}
-
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-24 text-center sm:px-6 lg:px-8">
-
-          {/* Badge */}
-
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2">
-
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-
-            <span className="text-[11px] font-bold tracking-[0.22em] text-emerald-300">
-              {badge}
-            </span>
-
-          </div>
-
-          {/* Heading */}
-
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            {headline}
-          </h1>
-
-          {/* Description */}
-
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-            {subheadline}
-          </p>
-
-        </div>
-      </section>
+      <CompaniesHero image={heroContent.image} content={heroContent} />
 
 
       {/* ==================================================
@@ -184,10 +135,9 @@ export default async function CompaniesPage() {
                 key={stat.label}
                 className={`
                   px-3 py-6 text-center sm:px-6 sm:py-7
-                  ${
-                    index !== stats.length - 1
-                      ? "border-r border-gray-100"
-                      : ""
+                  ${index !== stats.length - 1
+                    ? "border-r border-gray-100"
+                    : ""
                   }
                 `}
               >
@@ -266,15 +216,15 @@ export default async function CompaniesPage() {
 
           {companies.length > 0 ? (
 
-         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-    {companies.map((company: any, idx: number) => (
-      <CompanyCard 
-        key={company.id} 
-        company={company} 
-        index={idx}  
-      />
-    ))}
-  </div>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {companies.map((company: any, idx: number) => (
+                <CompanyCard
+                  key={company.id}
+                  company={company}
+                  index={idx}
+                />
+              ))}
+            </div>
 
           ) : (
 
