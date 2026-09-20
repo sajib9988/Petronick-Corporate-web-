@@ -75,7 +75,7 @@ export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
 
   PROCESS: "Process / How It Works",
 
-  STATS: "Stats Bar",
+  STATS: "Portfolio Overview",
 
   APPLICATION: "Application Panel",
 
@@ -325,8 +325,8 @@ CAPABILITIES: [
   { key: "badge3", label: "Icon Item 3 (e.g. Strategic Ownership Model)" },
   { key: "ctaText", label: "Primary Button Text" },
   { key: "ctaLink", label: "Primary Button Link" },
-  { key: "secondaryBtnText", label: "Secondary Button Text" },   // ← নতুন
-  { key: "secondaryBtnLink", label: "Secondary Button Link" },   // ← নতুন
+  { key: "secondaryBtnText", label: "Secondary Button Text" },   
+  { key: "secondaryBtnLink", label: "Secondary Button Link" },   
 ],
 
   // ==========================================================
@@ -737,33 +737,19 @@ CAPABILITIES: [
 
   STATS: [
     {
-      key: "statValue1",
-      label: "Stat 1 Value",
+      key: "eyebrow",
+      label: "Eyebrow",
     },
 
     {
-      key: "statLabel1",
-      label: "Stat 1 Label",
+      key: "title",
+      label: "Title",
     },
 
     {
-      key: "statValue2",
-      label: "Stat 2 Value",
-    },
-
-    {
-      key: "statLabel2",
-      label: "Stat 2 Label",
-    },
-
-    {
-      key: "statValue3",
-      label: "Stat 3 Value",
-    },
-
-    {
-      key: "statLabel3",
-      label: "Stat 3 Label",
+      key: "description",
+      label: "Description",
+      multiline: true,
     },
   ],
 

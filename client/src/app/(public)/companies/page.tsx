@@ -1,6 +1,6 @@
 import { getAllCompanies } from "@/service/company";
 import { getPageBySlug } from "@/service/cms";
-import { Container } from "@/components/Container";
+import {  Container } from "@/components/Container";
 import {
   ExternalLink,
   ArrowRight,
@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import CompanyCard from "@/components/admin/card/CompanyCard";
 import CompaniesHero from "@/components/home-components/CompaniesHero";
+import { motion } from "framer-motion";
 
 export const dynamic = "force-dynamic";
 
@@ -104,9 +105,34 @@ export default async function CompaniesPage() {
       />
 
       {/* ==================================================
-          CONTENT part is missing here, but it should include insted of the stats section , it will be dyanmic and will be fetched from the CMS. 
+          PORTFOLIO OVERVIEW (dynamic, from CMS "STATS" section)
       ================================================== */}
-     
+
+      <section className="bg-white py-16 sm:py-20">
+        <Container>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-600">
+              {statsContent.eyebrow ?? "Portfolio Overview"}
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
+              {statsContent.title ??
+                "10 Specialized Companies. One Connected Ecosystem."}
+            </h2>
+
+            <p className="mt-4 text-sm leading-7 text-[#64748B] sm:text-base">
+              {statsContent.description ??
+                "The PCH portfolio brings together businesses across digital growth, fulfillment, distribution, specialty commerce, gifting, title services, lifestyle products, and business advisory. Each company operates with its own market focus while contributing to a broader connected business ecosystem."}
+            </p>
+          </motion.div>
+        </Container>
+      </section>
+
       <Container>
 
 

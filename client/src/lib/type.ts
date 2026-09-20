@@ -33,7 +33,7 @@ export const TYPE_LABELS: Record<string, string> = {
     "VALUES": "Our Values",
     "BENEFITS": "Benefits / Why Join",
     "PROCESS": "Process / How It Works",
-    "STATS": "Stats Bar",
+    "STATS": "Portfolio Overview",
     "APPLICATION": "Application Panel",
     "CTA": "Call To Action",
     "FEATURE": "Feature",
