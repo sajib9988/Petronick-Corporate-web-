@@ -53,7 +53,7 @@ export default function CompaniesHero({image,  content }: CompaniesHeroProps) {
         initial="hidden"
         animate="visible"
         variants={staggerContainer(0.15, 0.1)}
-        className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-6 sm:py-28 lg:px-8"
+        className="relative mx-auto max-w-4xl px-5 py-12 text-center sm:px-3 sm:py-12 lg:px-4"
       >
         <motion.p
           variants={fadeUp(0, 0.7)}
