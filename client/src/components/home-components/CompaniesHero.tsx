@@ -37,8 +37,17 @@ export default function CompaniesHero({image,  content }: CompaniesHeroProps) {
   const secondaryBtnLink = content?.secondaryBtnLink ?? "/promotion-agent";
 
   return (
-    <section style={{ backgroundImage: `url(${imageUrl})` }}  className="relative overflow-hidden  text-white">
-   
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1830] via-[#204368] to-[#0a1830] text-white">
+      {/* Uploaded background image, if any */}
+      {imageUrl && (
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        />
+      )}
+
+      {/* Overlay for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1830]/90 via-[#0a1830]/75 to-[#0a1830]/90" />
 
       <motion.div
         initial="hidden"

@@ -13,6 +13,16 @@ import CompaniesHero from "@/components/home-components/CompaniesHero";
 
 export const dynamic = "force-dynamic";
 
+// Image is only shown on the frontend when the admin's "Image Visibility"
+// toggle is on — the upload itself is preserved either way.
+function visibleImage(section?: {
+  image?: string | null;
+  imageVisible?: boolean;
+}) {
+  if (!section?.image) return null;
+  return section.imageVisible === false ? null : section.image;
+}
+
 const stageColors: Record<string, string> = {
   Active:
     "bg-emerald-50 text-emerald-700 border border-emerald-200",
@@ -65,20 +75,7 @@ export default async function CompaniesPage() {
   // STATS
   // =========================
 
-  const stats = [
-    {
-      value: statsContent.statValue1 ?? "10",
-      label: statsContent.statLabel1 ?? "Business Units",
-    },
-    {
-      value: statsContent.statValue2 ?? "100%",
-      label: statsContent.statLabel2 ?? "Revenue Ready",
-    },
-    {
-      value: statsContent.statValue3 ?? "Multi",
-      label: statsContent.statLabel3 ?? "Market Reach",
-    },
-  ];
+  
 
   // =========================
   // CTA
@@ -112,7 +109,10 @@ export default async function CompaniesPage() {
 
 
 
-      <CompaniesHero image={heroContent.image} content={heroContent} />
+      <CompaniesHero
+        content={heroContent}
+        image={visibleImage(heroSection)}
+      />
 
 
       {/* ==================================================
