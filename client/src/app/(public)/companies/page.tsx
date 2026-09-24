@@ -114,7 +114,7 @@ export default async function CompaniesPage() {
          
          
          
-            className="mx-auto max-w-3xl text-center"
+            className="mx-auto flex items-center text-center"
           >
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-600">
               {statsContent.eyebrow ?? "Portfolio Overview"}
