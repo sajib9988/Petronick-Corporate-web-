@@ -64,7 +64,9 @@ export default async function CompaniesPage() {
     (s: any) => s.sectionType === "STATS" && s.order === 1
   );
 
-
+  const statsSection2 = sections.find(
+    (s: any) => s.sectionType === "STATS" && s.order === 2
+  );
 
 
 
@@ -76,6 +78,7 @@ export default async function CompaniesPage() {
   const heroContent = heroSection?.content ?? {};
   const statsContent0 = statsSection0?.content ?? {};
   const statsContent1 = statsSection1?.content ?? {};
+  const statsContent2 = statsSection2?.content ?? {};
   const ctaContent = ctaSection?.content ?? {};
 
   const companies: any[] = companiesRes?.data ?? [];
@@ -213,78 +216,29 @@ export default async function CompaniesPage() {
             CTA
         ================================================== */}
 
-        <section className="pb-20">
+        <section className="pb-20 bg-[#173652]">
 
-          <div className="overflow-hidden rounded-3xl bg-[#0B1220]">
+    
 
             <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
 
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
-                {ctaEyebrow}
+               {statsContent2.eyebrow ?? "Connected Capabilities"}
               </p>
 
               <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {ctaTitle}
+                {statsContent2.title ?? "Different Businesses. Shared Strengths"}
               </h2>
 
               <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-                {ctaDescription}
+            {statsContent2.description ?? "The companies operate independently while benefiting from capabilities that can support launch, operations, customer acquisition, fulfillment, and long term growth."}
               </p>
 
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-
-                <Link
-                  href={ctaBtnLink}
-                  className="
-                    inline-flex
-                    items-center
-                    justify-center
-                    gap-2
-                    rounded-lg
-                    bg-emerald-500
-                    px-6
-                    py-3
-                    text-sm
-                    font-bold
-                    text-white
-                    transition-colors
-                    hover:bg-emerald-600
-                  "
-                >
-                  {ctaBtnText}
-
-                  <ArrowRight size={16} />
-
-                </Link>
-
-                <Link
-                  href={ctaSecondaryLink}
-                  className="
-                    inline-flex
-                    items-center
-                    justify-center
-                    gap-2
-                    rounded-lg
-                    border
-                    border-white/15
-                    bg-white/5
-                    px-6
-                    py-3
-                    text-sm
-                    font-semibold
-                    text-white
-                    transition-colors
-                    hover:bg-white/10
-                  "
-                >
-                  {ctaSecondaryText}
-                </Link>
-
-              </div>
+             
 
             </div>
 
-          </div>
+ 
 
         </section>
 
