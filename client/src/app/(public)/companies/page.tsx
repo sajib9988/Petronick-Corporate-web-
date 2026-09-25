@@ -164,12 +164,12 @@ export default async function CompaniesPage() {
             <div className="mb-3 flex items-center justify-center gap-2">
               <span className="h-1 w-6 rounded-full bg-emerald-500" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600"> {statsContent1.eyebrow ?? "Our Portfolio"}
-             </span>
+              </span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl"> 
-              
+            <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
+
               {statsContent1.title ?? "Explore Our Companies"}
-            </h2> <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base"> 
+            </h2> <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base">
               {statsContent1.description ?? "Learn what each company does, where it fits within the PCH ecosystem, and how to explore its services or website."}
 
             </p>
@@ -210,39 +210,36 @@ export default async function CompaniesPage() {
           )}
 
         </section>
+      </Container>
 
-
-        {/* ==================================================
+      {/* ==================================================
             CTA
         ================================================== */}
 
-        <section className="pb-20 bg-[#173652]">
+      <section className="pb-20 bg-[#173652]">
 
-    
+        <Container>
 
-            <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
+          <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
 
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
-               {statsContent2.eyebrow ?? "Connected Capabilities"}
-              </p>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
+              {statsContent2.eyebrow ?? "Connected Capabilities"}
+            </p>
 
-              <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {statsContent2.title ?? "Different Businesses. Shared Strengths"}
-              </h2>
+            <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              {statsContent2.title ?? "Different Businesses. Shared Strengths"}
+            </h2>
 
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-            {statsContent2.description ?? "The companies operate independently while benefiting from capabilities that can support launch, operations, customer acquisition, fulfillment, and long term growth."}
-              </p>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+              {statsContent2.description ?? "The companies operate independently while benefiting from capabilities that can support launch, operations, customer acquisition, fulfillment, and long term growth."}
+            </p>
+          </div>
 
-             
 
-            </div>
+        </Container>
+      </section>
 
- 
 
-        </section>
-
-      </Container>
 
     </main>
   );
