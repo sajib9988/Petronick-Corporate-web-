@@ -216,7 +216,7 @@ export default async function CompaniesPage() {
             CTA
         ================================================== */}
 
-      <section className="pb-15 bg-[#173652]">
+      <section className="pb-8 bg-[#173652]">
 
         <Container>
 
