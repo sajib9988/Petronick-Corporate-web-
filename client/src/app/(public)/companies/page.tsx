@@ -156,11 +156,11 @@ export default async function CompaniesPage() {
             COMPANIES section
         ================================================== */}
 
-        <section className="py-20">
+        <section className="py-10">
 
           {/* Section Header */}
 
-          <div className="text-center">
+          <div className="text-center mb-1">
             <div className="mb-3 flex items-center justify-center gap-2">
               <span className="h-1 w-6 rounded-full bg-emerald-500" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600"> {statsContent1.eyebrow ?? "Our Portfolio"}
