@@ -56,16 +56,26 @@ export default async function CompaniesPage() {
     (s: any) => s.sectionType === "HERO"
   );
 
-  const statsSection = sections.find(
-    (s: any) => s.sectionType === "STATS"
+  const statsSection0 = sections.find(
+    (s: any) => s.sectionType === "STATS" && s.order === 0
   );
+
+ const statsSection1 = sections.find(
+    (s: any) => s.sectionType === "STATS" && s.order === 1
+  );
+
+
+
+
+
 
   const ctaSection = sections.find(
     (s: any) => s.sectionType === "CTA"
   );
 
   const heroContent = heroSection?.content ?? {};
-  const statsContent = statsSection?.content ?? {};
+  const statsContent0 = statsSection0?.content ?? {};
+  const statsContent1 = statsSection1?.content ?? {};
   const ctaContent = ctaSection?.content ?? {};
 
   const companies: any[] = companiesRes?.data ?? [];
@@ -117,16 +127,16 @@ export default async function CompaniesPage() {
             className="mx-auto max-w-3xl text-center"
           >
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-600">
-              {statsContent.eyebrow ?? "Portfolio Overview"}
+              {statsContent0.eyebrow ?? "Portfolio Overview"}
             </p>
 
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
-              {statsContent.title ??
+              {statsContent0.title ??
                 "10 Specialized Companies. One Connected Ecosystem."}
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-[#64748B] sm:text-base">
-              {statsContent.description ??
+              {statsContent0.description ??
                 "The PCH portfolio brings together businesses across digital growth, fulfillment, distribution, specialty commerce, gifting, title services, lifestyle products, and business advisory. Each company operates with its own market focus while contributing to a broader connected business ecosystem."}
             </p>
           </div>
@@ -154,7 +164,7 @@ export default async function CompaniesPage() {
               <span className="h-1 w-6 rounded-full bg-emerald-500" />
 
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
-                Our Portfolio
+               {statsContent1.eyebrow ?? "Portfolio Overview"}
               </span>
 
             </div>
@@ -164,13 +174,13 @@ export default async function CompaniesPage() {
               <div>
 
                 <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
-                  Business Units
+                  {statsContent1.title ??
+                "Explore Our Companies"}
                 </h2>
 
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base">
-                  Explore the businesses operating under
-                  Petronick Corporate Holdings and their
-                  respective market focus.
+                  {statsContent1.description ??
+                    "Learn what each company does, where it fits within the PCH ecosystem, and how to explore its services or website."}
                 </p>
 
               </div>
