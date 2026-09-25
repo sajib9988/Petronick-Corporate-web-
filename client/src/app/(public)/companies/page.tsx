@@ -1,6 +1,6 @@
 import { getAllCompanies } from "@/service/company";
 import { getPageBySlug } from "@/service/cms";
-import {  Container } from "@/components/Container";
+import { Container } from "@/components/Container";
 import {
   ExternalLink,
   ArrowRight,
@@ -60,7 +60,7 @@ export default async function CompaniesPage() {
     (s: any) => s.sectionType === "STATS" && s.order === 0
   );
 
- const statsSection1 = sections.find(
+  const statsSection1 = sections.find(
     (s: any) => s.sectionType === "STATS" && s.order === 1
   );
 
@@ -121,9 +121,9 @@ export default async function CompaniesPage() {
       <section className="bg-white py-16 sm:py-20">
         <Container>
           <div
-         
-         
-         
+
+
+
             className="mx-auto max-w-3xl text-center"
           >
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-amber-600">
@@ -146,7 +146,7 @@ export default async function CompaniesPage() {
       <Container>
 
 
-   
+
 
 
         {/* ==================================================
@@ -157,46 +157,19 @@ export default async function CompaniesPage() {
 
           {/* Section Header */}
 
-          <div className="mb-10">
-
-            <div className="mb-3 flex items-center gap-2">
-
+          <div className="text-center">
+            <div className="mb-3 flex items-center justify-center gap-2">
               <span className="h-1 w-6 rounded-full bg-emerald-500" />
-
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">
-               {statsContent1.eyebrow ?? "Portfolio Overview"}
-              </span>
-
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600"> {statsContent1.eyebrow ?? "Our Portfolio"}
+             </span>
             </div>
+            <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl"> 
+              
+              {statsContent1.title ?? "Explore Our Companies"}
+            </h2> <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base"> 
+              {statsContent1.description ?? "Learn what each company does, where it fits within the PCH ecosystem, and how to explore its services or website."}
 
-            <div className="flex items-end justify-between gap-6">
-
-              <div>
-
-                <h2 className="text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
-                  {statsContent1.title ??
-                "Explore Our Companies"}
-                </h2>
-
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-[#64748B] sm:text-base">
-                  {statsContent1.description ??
-                    "Learn what each company does, where it fits within the PCH ecosystem, and how to explore its services or website."}
-                </p>
-
-              </div>
-
-              <div className="hidden items-center gap-2 text-sm font-medium text-slate-400 sm:flex">
-
-                <Building2 size={17} />
-
-                <span>
-                  {companies.length} Companies
-                </span>
-
-              </div>
-
-            </div>
-
+            </p>
           </div>
 
 
