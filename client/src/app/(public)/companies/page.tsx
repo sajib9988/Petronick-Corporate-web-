@@ -73,7 +73,7 @@ export default async function CompaniesPage() {
   );
 
   const snapshotSection = sections.find(
-    (s: any) => s.sectionType === "SNAPSHOT" && s.order === 1
+    (s: any) => s.sectionType === "SNAPSHOT" 
   );
 
 
@@ -97,7 +97,7 @@ export default async function CompaniesPage() {
   // sensible defaults when nothing's set) actually show up.
   const snapshotFacts: { label: string; value: string }[] = [
     {
-      label: snapshotContent.DigitalGrowth ?? "Entity Type",
+      label: snapshotContent.entityTypeLabel ?? "Entity Type",
       value: snapshotContent.entityType ?? "Limited Liability Company",
     },
     {
