@@ -91,8 +91,37 @@ export default async function CompaniesPage() {
 
   const companies: any[] = companiesRes?.data ?? [];
 
- const snapshotFacts: { label: string; value: string }[] =
-    snapshotContent.facts ?? [];
+  // Snapshot content is stored as individual CMS fields (see
+  // FIELDS.SNAPSHOT in section.constant.ts), not as a `facts` array — build
+  // the array here the same way AboutContent.tsx does, so admin edits (or
+  // sensible defaults when nothing's set) actually show up.
+  const snapshotFacts: { label: string; value: string }[] = [
+    {
+      label: snapshotContent.entityTypeLabel ?? "Entity Type",
+      value: snapshotContent.entityType ?? "Limited Liability Company",
+    },
+    {
+      label: snapshotContent.headquartersLabel ?? "Headquarters",
+      value: snapshotContent.headquarters ?? "Pittsburgh, Pennsylvania, USA",
+    },
+    {
+      label: snapshotContent.structureLabel ?? "Structure",
+      value:
+        snapshotContent.structure ?? "Vertically Integrated Holding Company",
+    },
+    {
+      label: snapshotContent.businessModelLabel ?? "Business Model",
+      value:
+        snapshotContent.businessModel ??
+        "Holding Company plus Promotion Agent Network",
+    },
+    {
+      label: snapshotContent.industryFocusLabel ?? "Industry Focus",
+      value:
+        snapshotContent.industryFocus ??
+        "Digital, Fulfillment, Ecommerce, Advisory, Specialty Commerce, Gifting, and Title Services",
+    },
+  ];
 
   const ctaEyebrow =
     ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
