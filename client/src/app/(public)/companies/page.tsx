@@ -275,14 +275,14 @@ console.log("SNAPSHOT FACTS:", snapshotFacts);
 
           {/* Snapshot */}
           {snapshotFacts.length > 0 && (
-            <div className="grid grid-cols-1 gap-4  pb-16 pt-10 sm:grid-cols-2 sm:px-6 sm:pb-20 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4  pb-8 pt-6 sm:grid-cols-2 sm:px-6 sm:pb-20 lg:grid-cols-4">
               {snapshotFacts.map((fact, idx) => {
                 const Icon = FACT_ICONS[idx % FACT_ICONS.length];
 
                 return (
                   <div
                     key={idx}
-                    className="rounded-xl border border-white/10 bg-[#10233A] p-6 text-left transition-colors hover:border-amber-400/40"
+                    className="rounded-xl border border-white/10 bg-[#10233A]  text-left transition-colors hover:border-amber-400/40"
                   >
                     <div className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-amber-400/30 bg-amber-400/10 text-amber-400">
                       <Icon size={18} />
