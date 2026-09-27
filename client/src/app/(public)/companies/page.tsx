@@ -6,6 +6,9 @@ import {
   ArrowRight,
   Building2,
   Globe2,
+  TrendingUp,
+  Package,
+  Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import CompanyCard from "@/components/admin/card/CompanyCard";
@@ -23,6 +26,7 @@ function visibleImage(section?: {
   if (!section?.image) return null;
   return section.imageVisible === false ? null : section.image;
 }
+const FACT_ICONS = [TrendingUp, Package, Globe2, Briefcase];
 
 const stageColors: Record<string, string> = {
   Active:
@@ -68,6 +72,9 @@ export default async function CompaniesPage() {
     (s: any) => s.sectionType === "STATS" && s.order === 2
   );
 
+  const snapshotSection = sections.find(
+    (s: any) => s.sectionType === "SNAPSHOT" && s.order === 1
+  );
 
 
 
@@ -79,10 +86,13 @@ export default async function CompaniesPage() {
   const statsContent0 = statsSection0?.content ?? {};
   const statsContent1 = statsSection1?.content ?? {};
   const statsContent2 = statsSection2?.content ?? {};
+  const snapshotContent = snapshotSection?.content ?? {};
   const ctaContent = ctaSection?.content ?? {};
 
   const companies: any[] = companiesRes?.data ?? [];
 
+ const snapshotFacts: { label: string; value: string }[] =
+    snapshotContent.facts ?? [];
 
   const ctaEyebrow =
     ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
@@ -212,30 +222,56 @@ export default async function CompaniesPage() {
         </section>
       </Container>
 
-      {/* ==================================================
-            CTA
-        ================================================== */}
 
+
+        {/* ==================================================
+          CTA
+      ================================================== */}
       <section className="pb-8 bg-[#173652]">
-
         <Container>
-
           <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
-
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
               {statsContent2.eyebrow ?? "Connected Capabilities"}
             </p>
 
             <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {statsContent2.title ?? "Different Businesses. Shared Strengths"}
+              {statsContent2.title ??
+                "Different Businesses. Shared Strengths"}
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-              {statsContent2.description ?? "The companies operate independently while benefiting from capabilities that can support launch, operations, customer acquisition, fulfillment, and long term growth."}
+              {statsContent2.description ??
+                "The companies operate independently while benefiting from capabilities that can support launch, operations, customer acquisition, fulfillment, and long term growth."}
             </p>
           </div>
 
+          {/* Snapshot */}
+          {snapshotFacts.length > 0 && (
+            <div className="grid grid-cols-1 gap-4 px-6 pb-16 pt-10 sm:grid-cols-2 sm:px-12 sm:pb-20 lg:grid-cols-4">
+              {snapshotFacts.map((fact, idx) => {
+                const Icon = FACT_ICONS[idx % FACT_ICONS.length];
 
+                return (
+                  <div
+                    key={idx}
+                    className="rounded-xl border border-white/10 bg-[#10233A] p-6 text-left transition-colors hover:border-amber-400/40"
+                  >
+                    <div className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-amber-400/30 bg-amber-400/10 text-amber-400">
+                      <Icon size={18} />
+                    </div>
+
+                    <h3 className="text-base font-semibold text-white">
+                      {fact.label}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                      {fact.value}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </Container>
       </section>
 
