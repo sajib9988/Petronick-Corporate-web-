@@ -97,7 +97,7 @@ export default async function CompaniesPage() {
   // sensible defaults when nothing's set) actually show up.
   const snapshotFacts: { label: string; value: string }[] = [
     {
-      label: snapshotContent.entityTypeLabel ?? "Entity Type",
+      label: snapshotContent.DigitalGrowth ?? "Entity Type",
       value: snapshotContent.entityType ?? "Limited Liability Company",
     },
     {
@@ -117,6 +117,10 @@ export default async function CompaniesPage() {
     },
   
   ];
+console.log("SNAPSHOT SECTION:", snapshotSection);
+console.log("SNAPSHOT CONTENT:", snapshotContent);
+console.log("SNAPSHOT FACTS:", snapshotFacts);
+
 
   const ctaEyebrow =
     ctaContent.eyebrow ?? "PARTNERSHIP OPPORTUNITY";
