@@ -115,12 +115,7 @@ export default async function CompaniesPage() {
         snapshotContent.businessModel ??
         "Holding Company plus Promotion Agent Network",
     },
-    {
-      label: snapshotContent.industryFocusLabel ?? "Industry Focus",
-      value:
-        snapshotContent.industryFocus ??
-        "Digital, Fulfillment, Ecommerce, Advisory, Specialty Commerce, Gifting, and Title Services",
-    },
+  
   ];
 
   const ctaEyebrow =
@@ -258,7 +253,7 @@ export default async function CompaniesPage() {
       ================================================== */}
       <section className="pb-8 bg-[#173652]">
         <Container>
-          <div className="px-6 py-16 text-center sm:px-12 sm:py-20">
+          <div className=" py-16 text-center sm:px-12 sm:py-20">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">
               {statsContent2.eyebrow ?? "Connected Capabilities"}
             </p>
@@ -276,7 +271,7 @@ export default async function CompaniesPage() {
 
           {/* Snapshot */}
           {snapshotFacts.length > 0 && (
-            <div className="grid grid-cols-1 gap-4 px-6 pb-16 pt-10 sm:grid-cols-2 sm:px-12 sm:pb-20 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4  pb-16 pt-10 sm:grid-cols-2 sm:px-6 sm:pb-20 lg:grid-cols-4">
               {snapshotFacts.map((fact, idx) => {
                 const Icon = FACT_ICONS[idx % FACT_ICONS.length];
 
