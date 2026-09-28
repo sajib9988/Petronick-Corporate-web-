@@ -86,7 +86,7 @@ export default function PromotionAgentContent({
         </div>
 
         <Container>
-          <div className="relative flex min-h-[430px] flex-col items-center justify-center px-4 py-24 text-center">
+          <div className="relative flex min-h-[430px] flex-col items-center justify-center px-4 py-16 text-center">
             {/* Badge */}
             <motion.p
               initial={{ opacity: 0, y: 15 }}
