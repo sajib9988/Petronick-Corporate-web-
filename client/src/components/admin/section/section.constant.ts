@@ -285,32 +285,14 @@ CAPABILITIES: [
   // ==========================================================
 
   REVENUE: [
-    {
-      key: "label",
-      label: "Badge Label",
-    },
-
-    {
-      key: "headline",
-      label: "Headline",
-    },
-
-    {
-      key: "paragraph",
-      label: "Paragraph",
-      multiline: true,
-    },
-
-    {
-      key: "btnText",
-      label: "Button Text",
-    },
-
-    {
-      key: "btnLink",
-      label: "Button Link",
-    },
-  ],
+    {key: "label", label: "Badge Label"}, 
+    {key: "headline", label: "Headline"},
+    {key: "paragraph", label: "Paragraph", multiline: true },
+    { key: "btnText", label: "Button Text" },
+    {key: "btnLink", label: "Button Link" },
+    { key: "secondaryBtnText", label: "Secondary Button Text" },
+    { key: "secondaryBtnLink", label: "Secondary Button Link" },
+],
 
   // ==========================================================
   // CLOSING AUTHORITY
