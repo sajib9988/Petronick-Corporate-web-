@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import PromotionAgentForm from "@/components/admin/form/Promotion-form";
 import { Container } from "@/components/Container";
+import TrustBar from "./TrustBar";
 
 // ============================================================
 // HERO CONTENT
@@ -20,6 +21,12 @@ interface HeroContent {
 
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
+  stat1Value?: string;
+  stat1Label?: string;
+  stat2Value?: string;
+  stat2Label?: string;
+  stat3Value?: string;
+  stat3Label?: string;  
 }
 
 // ============================================================
@@ -62,6 +69,21 @@ export default function PromotionAgentContent({
 
   const secondaryButtonLink =
     heroContent.secondaryButtonLink ?? "#how-it-works";
+ const trustItems = [
+    {
+      value: heroContent.stat1Value?.trim() || "10",
+      label: heroContent.stat1Label?.trim() || "Core Business Units",
+    },
+    {
+      value: heroContent.stat2Value?.trim() || "1",
+      label: heroContent.stat2Label?.trim() || "Connected Ecosystem",
+    },
+    {
+      value: heroContent.stat3Value?.trim() || "B2B • B2C",
+      label: heroContent.stat3Label?.trim() || "Market Reach",
+    },
+ 
+  ];  
 
   // ============================================================
   // RENDER
@@ -141,8 +163,11 @@ export default function PromotionAgentContent({
               </a>
             </motion.div>
           </div>
+          <TrustBar items={trustItems} />
         </Container>
       </section>
+
+
 
       {/* ========================================================
           APPLICATION

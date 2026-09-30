@@ -12,6 +12,11 @@ export default async function PromotionAgentPage() {
     (section: any) => section.sectionType === "HERO"
   );
 
+
+
+
+
+
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
