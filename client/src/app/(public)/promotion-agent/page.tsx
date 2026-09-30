@@ -12,7 +12,9 @@ export default async function PromotionAgentPage() {
     (section: any) => section.sectionType === "HERO"
   );
 
-
+const  whyJoinSection = sections.find(
+  (section: any) => section.sectionType === "BENEFITS"
+);
 
 
 
@@ -20,6 +22,7 @@ export default async function PromotionAgentPage() {
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
+      whyJoinContent={whyJoinSection?.content ?? {}}
     />
   );
 }
