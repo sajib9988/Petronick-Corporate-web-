@@ -50,12 +50,35 @@ interface WhyJoinContent {
 }
 
 // ============================================================
+// HOW IT WORKS / PROCESS CONTENT
+// ============================================================
+
+interface ProcessContent {
+  badge?: string;
+  title?: string;
+  subtitle?: string;
+
+  step1Title?: string;
+  step1Description?: string;
+
+  step2Title?: string;
+  step2Description?: string;
+
+  step3Title?: string;
+  step3Description?: string;
+
+  step4Title?: string;
+  step4Description?: string;
+}
+
+// ============================================================
 // PROPS
 // ============================================================
 
 interface PromotionAgentContentProps {
   heroContent?: HeroContent;
   whyJoinContent?: WhyJoinContent;
+  processContent?: ProcessContent;
 }
 
 // ============================================================
@@ -65,6 +88,7 @@ interface PromotionAgentContentProps {
 export default function PromotionAgentContent({
   heroContent = {},
   whyJoinContent = {},
+  processContent = {},
 }: PromotionAgentContentProps) {
   // ============================================================
   // HERO DATA
@@ -156,6 +180,55 @@ export default function PromotionAgentContent({
       description:
         whyJoinContent.benefit3Description ??
         "Applying to become a Promotion Agent requires no financial commitment from the applicant.",
+    },
+  ];
+
+  // ============================================================
+  // HOW IT WORKS DATA
+  // ============================================================
+
+  const processBadge =
+    processContent.badge ?? "Simple Process";
+
+  const processTitle =
+    processContent.title ?? "How It Works";
+
+  const processSubtitle =
+    processContent.subtitle ??
+    "From application to next steps, the process should be easy to understand.";
+
+  const processSteps = [
+    {
+      number: "01",
+      title:
+        processContent.step1Title ?? "Submit",
+      description:
+        processContent.step1Description ??
+        "Tell us about your experience, market focus, and the companies you are interested in representing.",
+    },
+    {
+      number: "02",
+      title:
+        processContent.step2Title ?? "Review",
+      description:
+        processContent.step2Description ??
+        "The PCH team reviews your profile and areas of interest.",
+    },
+    {
+      number: "03",
+      title:
+        processContent.step3Title ?? "Connect",
+      description:
+        processContent.step3Description ??
+        "The team contacts you regarding fit, questions, and next steps.",
+    },
+    {
+      number: "04",
+      title:
+        processContent.step4Title ?? "Start",
+      description:
+        processContent.step4Description ??
+        "Approved Promotion Agents can begin introducing opportunities for the selected companies.",
     },
   ];
 
@@ -484,6 +557,134 @@ export default function PromotionAgentContent({
 
                 <p className="mt-3 text-xs leading-6 text-slate-500 sm:text-[13px]">
                   {benefit.description}
+                </p>
+
+              </motion.div>
+            ))}
+
+          </motion.div>
+
+        </Container>
+
+      </section>
+
+
+      {/* ========================================================
+          HOW IT WORKS
+      ========================================================= */}
+
+      <section
+        id="how-it-works"
+        className="bg-slate-50 py-20 sm:py-24"
+      >
+
+        <Container>
+
+          {/* Section Header */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: 0.7,
+            }}
+            className="mx-auto max-w-3xl text-center"
+          >
+
+            {/* Badge */}
+
+            <div className="flex items-center justify-center gap-3">
+
+              <span className="h-px w-8 bg-[#c89d3c]" />
+
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c89d3c]">
+                {processBadge}
+              </p>
+
+              <span className="h-px w-8 bg-[#c89d3c]" />
+
+            </div>
+
+            {/* Title */}
+
+            <h2 className="mt-4 font-serif text-3xl font-bold leading-tight text-[#10283f] sm:text-4xl">
+              {processTitle}
+            </h2>
+
+            {/* Subtitle */}
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-[15px]">
+              {processSubtitle}
+            </p>
+
+          </motion.div>
+
+
+          {/* Process Steps */}
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.15,
+            }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.12,
+                },
+              },
+            }}
+            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          >
+
+            {processSteps.map((step) => (
+              <motion.div
+                key={step.number}
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 25,
+                  },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.6,
+                    },
+                  },
+                }}
+                className="relative flex min-h-[190px] flex-col items-center rounded-xl border border-slate-200 bg-white px-5 py-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#c89d3c]/40 hover:shadow-[0_15px_40px_rgba(15,23,42,0.08)]"
+              >
+
+                {/* Step Number */}
+
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#10283f] text-[11px] font-bold text-white shadow-sm">
+                  {step.number}
+                </div>
+
+                {/* Title */}
+
+                <h3 className="mt-4 font-serif text-lg font-bold text-[#10283f]">
+                  {step.title}
+                </h3>
+
+                {/* Description */}
+
+                <p className="mt-2 text-[11px] leading-5 text-slate-500 sm:text-xs">
+                  {step.description}
                 </p>
 
               </motion.div>

@@ -15,7 +15,9 @@ export default async function PromotionAgentPage() {
 const  whyJoinSection = sections.find(
   (section: any) => section.sectionType === "BENEFITS"
 );
-
+const processSection = sections.find(
+  (section: any) => section.sectionType === "PROCESS"
+);
 
 
 
@@ -23,6 +25,7 @@ const  whyJoinSection = sections.find(
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
       whyJoinContent={whyJoinSection?.content ?? {}}
+      processContent={processSection?.content ?? {}}
     />
   );
 }
