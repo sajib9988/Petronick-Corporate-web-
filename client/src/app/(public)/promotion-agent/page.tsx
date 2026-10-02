@@ -24,7 +24,9 @@ const snapshotSection = sections.find(
 const applicationSection = sections.find(
   (section: any) => section.sectionType === "APPLICATION"
 );
-
+const closingSection = sections.find(
+  (section: any) => section.sectionType === "CLOSING"
+);
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
@@ -32,6 +34,8 @@ const applicationSection = sections.find(
       processContent={processSection?.content ?? {}}
       snapshotContent={snapshotSection?.content ?? {}}
       applicationContent={applicationSection?.content ?? {}}
+
+      
     />
   );
 }

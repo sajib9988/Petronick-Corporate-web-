@@ -70,9 +70,31 @@ interface ProcessContent {
   step4Description?: string;
 }
 
+interface ClosingContent {
+  label?: string;
+  headline?: string;
+  paragraph?: string;
+}
+
+
+
+
+
+
+
+
+
 // ============================================================
 // SNAPSHOT CONTENT
 // ============================================================
+
+
+
+
+
+
+
+
 
 interface SnapshotContent {
   label?: string;
@@ -132,6 +154,7 @@ interface PromotionAgentContentProps {
   processContent?: ProcessContent;
   snapshotContent?: SnapshotContent;
   applicationContent?: ApplicationContent;
+  closingContent?: ClosingContent;
 }
 
 // ============================================================
@@ -144,6 +167,7 @@ export default function PromotionAgentContent({
   processContent = {},
   snapshotContent = {},
   applicationContent = {},
+  closingContent = {},
 }: PromotionAgentContentProps) {
   // ============================================================
   // HERO DATA
@@ -253,6 +277,25 @@ export default function PromotionAgentContent({
         "Applying to become a Promotion Agent requires no financial commitment from the applicant.",
     },
   ];
+
+
+const closingLabel =
+  closingContent.label?.trim() ||
+  "Start Your Application";
+
+const closingHeadline =
+  closingContent.headline?.trim() ||
+  "Tell Us Where You Can Create the Most Value.";
+
+const closingParagraph =
+  closingContent.paragraph?.trim() ||
+  "Complete the form below and select the companies and market areas that best fit your experience.";
+
+
+
+
+
+
 
   // ============================================================
   // PROCESS DATA
@@ -937,41 +980,61 @@ export default function PromotionAgentContent({
       </section>
 
       {/* ========================================================
-          APPLICATION FORM
+          APPLICATION FORM Section now this part work
       ========================================================= */}
 
-      <section
-        id="application"
-        className="bg-white py-12 sm:py-16"
-      >
+    {/* ========================================================
+    APPLICATION FORM
+========================================================= */}
 
-        <Container>
+<section
+  id="application"
+  className="bg-[#f2f4f7] py-14 sm:py-16 lg:py-20"
+>
+  <Container>
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      viewport={{
+        once: true,
+        amount: 0.1,
+      }}
+      className="mx-auto max-w-[1180px] overflow-hidden rounded-[18px] bg-[#10283f] px-5 py-8 text-white shadow-[0_18px_55px_rgba(15,23,42,0.12)] sm:px-8 lg:px-12 lg:py-10"
+    >
+      {/* HEADER */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 35,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.7,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            viewport={{
-              once: true,
-              amount: 0.1,
-            }}
-            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10"
-          >
+      <div className="mx-auto mb-7 max-w-[760px] text-center">
+        <div className="flex items-center justify-center gap-3">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#c99a3c] sm:text-[10px]">
+            {closingLabel}
+          </p>
 
-            <PromotionAgentForm />
+          <span className="h-px w-8 bg-[#c99a3c]" />
+        </div>
 
-          </motion.div>
-        </Container>
-      </section>
+        <h2 className="mt-3 font-serif text-[24px] font-bold leading-tight text-white sm:text-[28px] lg:text-[32px]">
+          {closingHeadline}
+        </h2>
+
+        <p className="mx-auto mt-3 max-w-[620px] text-[11px] leading-5 text-slate-300 sm:text-[12px]">
+          {closingParagraph}
+        </p>
+      </div>
+
+      <PromotionAgentForm />
+    </motion.div>
+  </Container>
+</section>
 
     </main>
   );
