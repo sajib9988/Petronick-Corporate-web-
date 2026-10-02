@@ -448,7 +448,7 @@ export default function PromotionAgentContent({
           WHY JOIN THE ECOSYSTEM
       ========================================================= */}
 
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-12 sm:py-16">
 
         <Container>
 
@@ -575,7 +575,7 @@ export default function PromotionAgentContent({
 
       <section
         id="how-it-works"
-        className="bg-slate-50 py-20 sm:py-24"
+        className="bg-slate-50 py-12 sm:py-16"
       >
 
         <Container>
