@@ -18,14 +18,20 @@ const  whyJoinSection = sections.find(
 const processSection = sections.find(
   (section: any) => section.sectionType === "PROCESS"
 );
-
-
+const snapshotSection = sections.find(
+  (section: any) => section.sectionType === "SNAPSHOT"
+);
+const applicationSection = sections.find(
+  (section: any) => section.sectionType === "APPLICATION"
+);
 
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
       whyJoinContent={whyJoinSection?.content ?? {}}
       processContent={processSection?.content ?? {}}
+      snapshotContent={snapshotSection?.content ?? {}}
+      applicationContent={applicationSection?.content ?? {}}
     />
   );
 }
