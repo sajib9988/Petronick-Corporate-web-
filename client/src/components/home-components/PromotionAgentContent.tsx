@@ -832,159 +832,142 @@ const closingParagraph =
           START YOUR JOURNEY
       ========================================================= */}
 
-      <section className="bg-white py-12 sm:py-14 lg:py-[52px]">
 
-        <Container className="max-w-[1280px]">
+<section className="bg-white py-12 sm:py-14 lg:py-[52px]">
+  <Container>
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 24,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.15,
+      }}
+      transition={{
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="grid w-full items-start gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-[56px]"
+    >
+      {/* LEFT SIDE */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 24,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.15,
-            }}
-            transition={{
-              duration: 0.65,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-[56px]"
-          >
+      <div className="pt-[2px]">
+        <div className="flex items-center gap-4">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#b98b34]">
+            {journeyBadge}
+          </p>
 
-            {/* LEFT SIDE */}
+          <span className="h-px w-[36px] bg-[#b98b34]" />
+        </div>
 
-            <div className="pt-[2px]">
+        <h2 className="mt-5 font-serif text-[38px] font-bold leading-[1.12] tracking-[-0.02em] text-[#10283f] sm:text-[44px] lg:text-[46px]">
+          {journeyTitle}
+        </h2>
 
-              <div className="flex items-center gap-4">
+        <p className="mt-6 text-[16px] leading-[1.75] text-[#66758a] sm:text-[17px]">
+          {journeyDescription}
+        </p>
 
-                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#b98b34]">
-                  {journeyBadge}
-                </p>
-
-                <span className="h-px w-[36px] bg-[#b98b34]" />
-
-              </div>
-
-              <h2 className="mt-5 max-w-[650px] font-serif text-[38px] font-bold leading-[1.12] tracking-[-0.02em] text-[#10283f] sm:text-[44px] lg:text-[46px]">
-                {journeyTitle}
-              </h2>
-
-              <p className="mt-6 max-w-[660px] text-[16px] leading-[1.75] text-[#66758a] sm:text-[17px]">
-                {journeyDescription}
-              </p>
-
-              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-
-                {snapshotStats.map((item, index) => (
-                  <motion.div
-                    key={`${item.label}-${index}`}
-                    initial={{
-                      opacity: 0,
-                      y: 14,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                    }}
-                    transition={{
-                      duration: 0.45,
-                      delay: index * 0.08,
-                    }}
-                    className="flex min-h-[106px] flex-col items-center justify-center rounded-[12px] border border-[#d9e0e8] bg-white px-4 py-5 text-center"
-                  >
-
-                    <p className="font-serif text-[30px] font-bold leading-none text-[#10283f]">
-                      {item.value}
-                    </p>
-
-                    <p className="mt-3 text-[12px] leading-[1.4] text-[#66758a]">
-                      {item.label}
-                    </p>
-
-                  </motion.div>
-                ))}
-
-              </div>
-            </div>
-
-            {/* RIGHT SIDE */}
-
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {snapshotStats.map((item, index) => (
             <motion.div
+              key={`${item.label}-${index}`}
               initial={{
                 opacity: 0,
-                x: 24,
+                y: 14,
               }}
               whileInView={{
                 opacity: 1,
-                x: 0,
+                y: 0,
               }}
               viewport={{
                 once: true,
-                amount: 0.2,
               }}
               transition={{
-                duration: 0.7,
-                delay: 0.08,
-                ease: [0.22, 1, 0.36, 1],
+                duration: 0.45,
+                delay: index * 0.08,
               }}
-              className="rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
+              className="flex min-h-[106px] flex-col items-center justify-center rounded-[12px] border border-[#d9e0e8] bg-white px-4 py-5 text-center"
             >
-
-              <h3 className="max-w-[520px] font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.01em] text-white sm:text-[30px]">
-                {checklistTitle}
-              </h3>
-
-              <p className="mt-4 max-w-[510px] text-[15px] leading-[1.7] text-[#d5dce6]">
-                {checklistDescription}
+              <p className="font-serif text-[30px] font-bold leading-none text-[#10283f]">
+                {item.value}
               </p>
 
-              <div className="mt-6 space-y-5">
-
-                {journeyChecklist.map((item, index) => (
-                  <div
-                    key={`${item.title}-${index}`}
-                    className="flex items-start gap-3"
-                  >
-
-                    <div className="mt-[1px] flex h-[27px] w-[27px] shrink-0 items-center justify-center rounded-full bg-[#c99a3c] text-[13px] font-bold text-white">
-                      ✓
-                    </div>
-
-                    <div>
-
-                      <p className="text-[15px] font-semibold leading-[1.3] text-white sm:text-[16px]">
-                        {item.title}
-                      </p>
-
-                      <p className="mt-[2px] text-[12px] leading-[1.45] text-[#cfd8e3] sm:text-[13px]">
-                        {item.description}
-                      </p>
-
-                    </div>
-                  </div>
-                ))}
-
-              </div>
+              <p className="mt-3 text-[12px] leading-[1.4] text-[#66758a]">
+                {item.label}
+              </p>
             </motion.div>
+          ))}
+        </div>
+      </div>
 
-          </motion.div>
-        </Container>
-      </section>
+      {/* RIGHT SIDE */}
 
-      {/* ========================================================
-          APPLICATION FORM Section now this part work
-      ========================================================= */}
+      <motion.div
+        initial={{
+          opacity: 0,
+          x: 24,
+        }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+        }}
+        viewport={{
+          once: true,
+          amount: 0.2,
+        }}
+        transition={{
+          duration: 0.7,
+          delay: 0.08,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="w-full rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
+      >
+        <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.01em] text-white sm:text-[30px]">
+          {checklistTitle}
+        </h3>
 
-    {/* ========================================================
-    APPLICATION FORM
+        <p className="mt-4 text-[15px] leading-[1.7] text-[#d5dce6]">
+          {checklistDescription}
+        </p>
+
+        <div className="mt-6 space-y-5">
+          {journeyChecklist.map((item, index) => (
+            <div
+              key={`${item.title}-${index}`}
+              className="flex items-start gap-3"
+            >
+              <div className="mt-[1px] flex h-[27px] w-[27px] shrink-0 items-center justify-center rounded-full bg-[#c99a3c] text-[13px] font-bold text-white">
+                ✓
+              </div>
+
+              <div>
+                <p className="text-[15px] font-semibold leading-[1.3] text-white sm:text-[16px]">
+                  {item.title}
+                </p>
+
+                <p className="mt-[2px] text-[12px] leading-[1.45] text-[#cfd8e3] sm:text-[13px]">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
+  </Container>
+</section>
+
+
+
+
+{/* ========================================================
+    START YOUR APPLICATION
 ========================================================= */}
 
 <section
@@ -1009,11 +992,11 @@ const closingParagraph =
         once: true,
         amount: 0.1,
       }}
-      className="mx-auto max-w-[1180px] overflow-hidden rounded-[18px] bg-[#10283f] px-5 py-8 text-white shadow-[0_18px_55px_rgba(15,23,42,0.12)] sm:px-8 lg:px-12 lg:py-10"
+      className="w-full overflow-hidden rounded-[18px] bg-[#10283f] px-5 py-8 text-white shadow-[0_18px_55px_rgba(15,23,42,0.12)] sm:px-8 lg:px-12 lg:py-10"
     >
       {/* HEADER */}
 
-      <div className="mx-auto mb-7 max-w-[760px] text-center">
+      <div className="mb-7 text-center">
         <div className="flex items-center justify-center gap-3">
           <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#c99a3c] sm:text-[10px]">
             {closingLabel}
@@ -1026,7 +1009,7 @@ const closingParagraph =
           {closingHeadline}
         </h2>
 
-        <p className="mx-auto mt-3 max-w-[620px] text-[11px] leading-5 text-slate-300 sm:text-[12px]">
+        <p className="mx-auto mt-3 max-w-[760px] text-[11px] leading-5 text-slate-300 sm:text-[12px]">
           {closingParagraph}
         </p>
       </div>
