@@ -578,7 +578,7 @@ export default function PromotionAgentContent({
         className="bg-slate-50 py-12 sm:py-16"
       >
 
-        <Container>
+        <Container className="py-4 lg:py-2">
 
           {/* Section Header */}
 
