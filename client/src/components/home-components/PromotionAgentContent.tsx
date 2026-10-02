@@ -703,7 +703,7 @@ export default function PromotionAgentContent({
 
       <section
         id="application"
-        className="bg-white py-24 sm:py-28"
+        className="bg-white py-12 sm:py-16"
       >
 
         <Container>

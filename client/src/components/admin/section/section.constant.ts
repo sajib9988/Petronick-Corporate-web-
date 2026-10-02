@@ -739,82 +739,30 @@ CAPABILITIES: [
   // APPLICATION
   // ==========================================================
 
-  APPLICATION: [
-    // --------------------------------------------------------
-    // LEFT PANEL
-    // --------------------------------------------------------
+ APPLICATION: [
+  { key: "badge", label: "Eyebrow / Badge" },
+  { key: "title", label: "Left Panel Title" },
+  { key: "description", label: "Left Panel Description", multiline: true },
 
-    {
-      key: "badge",
-      label: "Eyebrow / Badge",
-    },
+  // Checklist (dark card)
+  { key: "checklistTitle", label: "Dark Card Title" },
+  { key: "checklistDescription", label: "Dark Card Description", multiline: true },
 
-    {
-      key: "title",
-      label: "Left Panel Title",
-    },
+  { key: "checklist1Title", label: "Checklist 1 Title" },
+  { key: "checklist1Desc", label: "Checklist 1 Description" },
+  { key: "checklist2Title", label: "Checklist 2 Title" },
+  { key: "checklist2Desc", label: "Checklist 2 Description" },
+  { key: "checklist3Title", label: "Checklist 3 Title" },
+  { key: "checklist3Desc", label: "Checklist 3 Description" },
 
-    {
-      key: "description",
-      label: "Left Panel Description",
-      multiline: true,
-    },
+  // Form panel
+  { key: "formPanelTitle", label: "Form Panel Title" },
+  { key: "formPanelDescription", label: "Form Panel Subtitle", multiline: true },
 
-    // --------------------------------------------------------
-    // CHECKLIST
-    // --------------------------------------------------------
-
-    {
-      key: "checklist1",
-      label: "Checklist Item 1",
-    },
-
-    {
-      key: "checklist2",
-      label: "Checklist Item 2",
-    },
-
-    {
-      key: "checklist3",
-      label: "Checklist Item 3",
-    },
-
-    {
-      key: "checklist4",
-      label: "Checklist Item 4",
-    },
-
-    // --------------------------------------------------------
-    // FORM PANEL
-    // --------------------------------------------------------
-
-    {
-      key: "formPanelTitle",
-      label: "Form Panel Title",
-    },
-
-    {
-      key: "formPanelDescription",
-      label: "Form Panel Subtitle",
-      multiline: true,
-    },
-
-    // --------------------------------------------------------
-    // NOTE BOX
-    // --------------------------------------------------------
-
-    {
-      key: "noteTitle",
-      label: "Note Box Title",
-    },
-
-    {
-      key: "noteDescription",
-      label: "Note Box Description",
-      multiline: true,
-    },
-  ],
-
+  // Note
+  { key: "noteTitle", label: "Note Box Title" },
+  { key: "noteDescription", label: "Note Box Description", multiline: true },
+],
   // ==========================================================
   // FEATURE
   // ==========================================================
