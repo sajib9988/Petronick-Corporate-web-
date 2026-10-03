@@ -49,7 +49,6 @@ const agentSchema = z.object({
       message: "Please select B2B, B2C, or BOTH",
     }),
 
-    
   message: z
     .string()
     .min(10, "Please write at least 10 characters"),
@@ -61,19 +60,18 @@ const agentSchema = z.object({
 
 type AgentFormValues = z.infer<typeof agentSchema>;
 
-type CompanyOption = { id: string; name: string };
+type CompanyOption = {
+  id: string;
+  name: string;
+};
 
 export default function PromotionAgentForm() {
   const [isLoading, setIsLoading] = useState(false);
-
   const [isSuccess, setIsSuccess] = useState(false);
-
   const [error, setError] = useState("");
-
   const [turnstileToken, setTurnstileToken] = useState("");
 
   const [companies, setCompanies] = useState<CompanyOption[]>([]);
-
   const [companiesLoading, setCompaniesLoading] = useState(true);
 
   useEffect(() => {
@@ -81,9 +79,16 @@ export default function PromotionAgentForm() {
 
     (async () => {
       try {
-        const res = await getAllCompanies({ isVisible: true, limit: 100 });
+        const res = await getAllCompanies({
+          isVisible: true,
+          limit: 100,
+        });
 
-        if (active && res?.success && Array.isArray(res.data)) {
+        if (
+          active &&
+          res?.success &&
+          Array.isArray(res.data)
+        ) {
           setCompanies(
             (res.data as CompanyOption[]).map((c) => ({
               id: c.id,
@@ -92,7 +97,9 @@ export default function PromotionAgentForm() {
           );
         }
       } finally {
-        if (active) setCompaniesLoading(false);
+        if (active) {
+          setCompaniesLoading(false);
+        }
       }
     })();
 
@@ -134,7 +141,6 @@ export default function PromotionAgentForm() {
     values: AgentFormValues,
   ) => {
     setIsLoading(true);
-
     setError("");
 
     try {
@@ -157,7 +163,6 @@ export default function PromotionAgentForm() {
           "Submission failed. Please try again.";
 
         setError(msg);
-
         toast.error(msg);
 
         return;
@@ -168,9 +173,7 @@ export default function PromotionAgentForm() {
       );
 
       setIsSuccess(true);
-
       form.reset();
-
       setTurnstileToken("");
     } catch (err) {
       console.error("Submit error:", err);
@@ -181,7 +184,6 @@ export default function PromotionAgentForm() {
           : "Something went wrong. Please try again.";
 
       setError(msg);
-
       toast.error(msg);
     } finally {
       setIsLoading(false);
@@ -203,366 +205,367 @@ export default function PromotionAgentForm() {
         </h3>
 
         <p className="mt-3 max-w-md text-sm leading-7 text-slate-500">
-          Thank you for applying. We&apos;ll review your
-          application and contact you within 5 business
-          days.
+          Thank you for applying. We&apos;ll review
+          your application and contact you within 5
+          business days.
         </p>
       </div>
     );
   }
 
-return (
-  <Form {...form}>
-    <form
-      onSubmit={form.handleSubmit(handleSubmit)}
-      className="space-y-4"
-    >
-      {error && (
-        <div className="rounded-md border border-red-300/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
-          {error}
-        </div>
-      )}
-
-      {/* NAME AND EMAIL */}
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField
-          control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Full Name
-              </FormLabel>
-
-              <FormControl>
-                <Input
-                  placeholder="Enter your full name"
-                  className="h-10 rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Email Address
-              </FormLabel>
-
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="h-10 rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      {/* PHONE AND LOCATION */}
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Phone Number
-              </FormLabel>
-
-              <FormControl>
-                <Input
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  placeholder="Enter your phone number"
-                  className="h-10 rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  name={field.name}
-                  ref={field.ref}
-                  value={field.value ?? ""}
-                  onBlur={field.onBlur}
-                  onChange={(e) =>
-                    field.onChange(
-                      formatUsPhone(e.target.value),
-                    )
-                  }
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="location"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                City and State or Location
-              </FormLabel>
-
-              <FormControl>
-                <Input
-                  placeholder="Enter your location"
-                  className="h-10 rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      {/* EXPERIENCE AND FOCUS */}
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField
-          control={form.control}
-          name="experience"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Business Experience
-              </FormLabel>
-
-              <FormControl>
-                <Textarea
-                  placeholder="Briefly describe your business, sales, marketing, or professional experience"
-                  className="min-h-[68px] resize-none rounded-md border border-white/15 bg-white px-3 py-2 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="focus"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Primary Focus Area
-              </FormLabel>
-
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us your primary industry or professional focus"
-                  className="min-h-[68px] resize-none rounded-md border border-white/15 bg-white px-3 py-2 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      {/* COMPANIES */}
-
-      <FormField
-        control={form.control}
-        name="businessUnits"
-        render={({ field }) => (
-          <FormItem className="space-y-1">
-            <FormLabel className="text-[10px] font-semibold text-white">
-              Companies You Would Like to Represent
-            </FormLabel>
-
-            <p className="text-[9px] text-slate-300">
-              Select one or multiple companies.
-            </p>
-
-            <FormControl>
-              <div>
-                {companiesLoading ? (
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-                    {Array.from({
-                      length: 10,
-                    }).map((_, index) => (
-                      <div
-                        key={index}
-                        className="h-9 animate-pulse rounded-md bg-white/10"
-                      />
-                    ))}
-                  </div>
-                ) : companies.length === 0 ? (
-                  <p className="text-[10px] text-slate-300">
-                    No companies are available right now.
-                  </p>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-                    {companies.map(
-                      (company, index) => {
-                        const selected =
-                          field.value.includes(
-                            company.name,
-                          );
-
-                        return (
-                          <button
-                            key={company.id}
-                            type="button"
-                            onClick={() =>
-                              field.onChange(
-                                toggleUnit(
-                                  company.name,
-                                  field.value,
-                                ),
-                              )
-                            }
-                            className={`min-h-9 rounded-md border px-2 py-2 text-[9px] font-semibold transition ${
-                              selected
-                                ? "border-[#c99a3c] bg-[#c99a3c] text-white"
-                                : "border-white/20 bg-white text-[#10283f] hover:border-[#c99a3c] hover:bg-[#f8f3e8]"
-                            }`}
-                          >
-                            <span className="line-clamp-1">
-                              {index + 1}.{" "}
-                              {company.name}
-                            </span>
-                          </button>
-                        );
-                      },
-                    )}
-                  </div>
-                )}
-              </div>
-            </FormControl>
-
-            <FormMessage className="text-[10px] text-red-300" />
-          </FormItem>
-        )}
-      />
-
-      {/* MARKET FOCUS AND STATEMENT */}
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField
-          control={form.control}
-          name="focusType"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Market Focus
-              </FormLabel>
-
-              <FormControl>
-                <select
-                  value={field.value ?? ""}
-                  onChange={(e) =>
-                    field.onChange(e.target.value)
-                  }
-                  className="h-10 w-full rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-600 outline-none transition focus:border-[#c99a3c] focus:ring-2 focus:ring-[#c99a3c]/20"
-                >
-                  <option value="" disabled>
-                    B2B B2C Both
-                  </option>
-
-                  <option value="B2B">
-                    B2B
-                  </option>
-
-                  <option value="B2C">
-                    B2C
-                  </option>
-
-                  <option value="BOTH">
-                    Both
-                  </option>
-                </select>
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel className="text-[10px] font-semibold text-white">
-                Statement of Interest
-              </FormLabel>
-
-              <FormControl>
-                <Input
-                  placeholder="Tell us why you are interested in the Promotion Agent opportunity"
-                  className="h-10 rounded-md border border-white/15 bg-white px-3 text-[12px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="text-[10px] text-red-300" />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      {/* TURNSTILE */}
-
-      <div className="flex justify-center py-1">
-        <Turnstile
-          onVerify={setTurnstileToken}
-          onExpire={() =>
-            setTurnstileToken("")
-          }
-        />
-      </div>
-
-      {/* SUBMIT */}
-
-      <Button
-        type="submit"
-        disabled={
-          isLoading ||
-          !turnstileToken
-        }
-        className="group h-11 w-full rounded-md bg-[#c99a3c] text-[11px] font-semibold text-white shadow-none transition hover:bg-[#b78b32] disabled:cursor-not-allowed disabled:opacity-50"
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-4"
       >
-        {isLoading ? (
-          <>
-            <Loader2
-              size={15}
-              className="mr-2 animate-spin"
-            />
-
-            Submitting Application...
-          </>
-        ) : (
-          "Submit Application"
+        {error && (
+          <div className="rounded-md border border-red-300/30 bg-red-500/10 px-3 py-2 text-[12px] text-red-200">
+            {error}
+          </div>
         )}
-      </Button>
 
-      <p className="text-center text-[9px] leading-4 text-slate-300">
-        Your information will be reviewed by the Petronick
-        Corporate Holdings team and used to evaluate your
-        Promotion Agent application.
-      </p>
-    </form>
-  </Form>
-);
+        {/* NAME AND EMAIL */}
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Full Name
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    placeholder="Enter your full name"
+                    className="h-10 rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Email Address
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="h-10 rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* PHONE AND LOCATION */}
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Phone Number
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    placeholder="Enter your phone number"
+                    className="h-10 rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    name={field.name}
+                    ref={field.ref}
+                    value={field.value ?? ""}
+                    onBlur={field.onBlur}
+                    onChange={(e) =>
+                      field.onChange(
+                        formatUsPhone(e.target.value),
+                      )
+                    }
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  City and State or Location
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    placeholder="Enter your location"
+                    className="h-10 rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* EXPERIENCE AND FOCUS */}
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="experience"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Business Experience
+                </FormLabel>
+
+                <FormControl>
+                  <Textarea
+                    placeholder="Briefly describe your business, sales, marketing, or professional experience"
+                    className="min-h-[68px] resize-none rounded-md border border-white/15 bg-white px-3 py-2 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="focus"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Primary Focus Area
+                </FormLabel>
+
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us your primary industry or professional focus"
+                    className="min-h-[68px] resize-none rounded-md border border-white/15 bg-white px-3 py-2 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* COMPANIES */}
+
+        <FormField
+          control={form.control}
+          name="businessUnits"
+          render={({ field }) => (
+            <FormItem className="space-y-1.5">
+              <FormLabel className="text-[13px] font-semibold text-white">
+                Companies You Would Like to Represent
+              </FormLabel>
+
+              <p className="text-[12px] leading-5 text-slate-300">
+                Select one or multiple companies.
+              </p>
+
+              <FormControl>
+                <div>
+                  {companiesLoading ? (
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+                      {Array.from({
+                        length: 10,
+                      }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="h-11 animate-pulse rounded-md bg-white/10"
+                        />
+                      ))}
+                    </div>
+                  ) : companies.length === 0 ? (
+                    <p className="text-[12px] text-slate-300">
+                      No companies are available
+                      right now.
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+                      {companies.map(
+                        (company, index) => {
+                          const selected =
+                            field.value.includes(
+                              company.name,
+                            );
+
+                          return (
+                            <button
+                              key={company.id}
+                              type="button"
+                              onClick={() =>
+                                field.onChange(
+                                  toggleUnit(
+                                    company.name,
+                                    field.value,
+                                  ),
+                                )
+                              }
+                              className={`min-h-11 rounded-md border px-3 py-2.5 text-[12px] leading-4 font-semibold transition ${
+                                selected
+                                  ? "border-[#c99a3c] bg-[#c99a3c] text-white"
+                                  : "border-white/20 bg-white text-[#10283f] hover:border-[#c99a3c] hover:bg-[#f8f3e8]"
+                              }`}
+                            >
+                              <span className="block text-center">
+                                {index + 1}.{" "}
+                                {company.name}
+                              </span>
+                            </button>
+                          );
+                        },
+                      )}
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+
+              <FormMessage className="text-[11px] text-red-300" />
+            </FormItem>
+          )}
+        />
+
+        {/* MARKET FOCUS AND STATEMENT */}
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="focusType"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Market Focus
+                </FormLabel>
+
+                <FormControl>
+                  <select
+                    value={field.value ?? ""}
+                    onChange={(e) =>
+                      field.onChange(e.target.value)
+                    }
+                    className="h-10 w-full rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-600 outline-none transition focus:border-[#c99a3c] focus:ring-2 focus:ring-[#c99a3c]/20"
+                  >
+                    <option value="" disabled>
+                      B2B B2C Both
+                    </option>
+
+                    <option value="B2B">
+                      B2B
+                    </option>
+
+                    <option value="B2C">
+                      B2C
+                    </option>
+
+                    <option value="BOTH">
+                      Both
+                    </option>
+                  </select>
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-[13px] font-semibold text-white">
+                  Statement of Interest
+                </FormLabel>
+
+                <FormControl>
+                  <Input
+                    placeholder="Tell us why you are interested in the Promotion Agent opportunity"
+                    className="h-10 rounded-md border border-white/15 bg-white px-3 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-[#c99a3c] focus:ring-[#c99a3c]/20"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage className="text-[11px] text-red-300" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* TURNSTILE */}
+
+        <div className="flex justify-center py-1">
+          <Turnstile
+            onVerify={setTurnstileToken}
+            onExpire={() =>
+              setTurnstileToken("")
+            }
+          />
+        </div>
+
+        {/* SUBMIT */}
+
+        <Button
+          type="submit"
+          disabled={
+            isLoading ||
+            !turnstileToken
+          }
+          className="group h-11 w-full rounded-md bg-[#c99a3c] text-[13px] font-semibold text-white shadow-none transition hover:bg-[#b78b32] disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isLoading ? (
+            <>
+              <Loader2
+                size={15}
+                className="mr-2 animate-spin"
+              />
+              Submitting Application...
+            </>
+          ) : (
+            "Submit Application"
+          )}
+        </Button>
+
+        <p className="text-center text-[11px] leading-5 text-slate-300">
+          Your information will be reviewed by the
+          Petronick Corporate Holdings team and used
+          to evaluate your Promotion Agent
+          application.
+        </p>
+      </form>
+    </Form>
+  );
 }
