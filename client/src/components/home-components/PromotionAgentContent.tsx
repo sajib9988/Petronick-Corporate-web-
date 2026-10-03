@@ -27,6 +27,8 @@ interface HeroContent {
 
   stat3Value?: string;
   stat3Label?: string;
+
+  backgroundImage?: string;
 }
 
 // ============================================================
@@ -70,31 +72,19 @@ interface ProcessContent {
   step4Description?: string;
 }
 
+// ============================================================
+// CLOSING CONTENT
+// ============================================================
+
 interface ClosingContent {
   label?: string;
   headline?: string;
   paragraph?: string;
 }
 
-
-
-
-
-
-
-
-
 // ============================================================
 // SNAPSHOT CONTENT
 // ============================================================
-
-
-
-
-
-
-
-
 
 interface SnapshotContent {
   label?: string;
@@ -155,6 +145,7 @@ interface PromotionAgentContentProps {
   snapshotContent?: SnapshotContent;
   applicationContent?: ApplicationContent;
   closingContent?: ClosingContent;
+  heroContent1?: HeroContent;
 }
 
 // ============================================================
@@ -168,6 +159,7 @@ export default function PromotionAgentContent({
   snapshotContent = {},
   applicationContent = {},
   closingContent = {},
+  heroContent1 = {},
 }: PromotionAgentContentProps) {
   // ============================================================
   // HERO DATA
@@ -199,6 +191,41 @@ export default function PromotionAgentContent({
 
   const secondaryButtonLink =
     heroContent.secondaryButtonLink?.trim() ||
+    "#how-it-works";
+
+  const backgroundImage =
+    heroContent.backgroundImage?.trim() || "";
+
+  // ============================================================
+  // SECOND HERO DATA
+  // ============================================================
+
+  const heroBadge1 =
+    heroContent1.badge?.trim() ||
+    "Promotion Agent Opportunity";
+
+  const heroTitle1 =
+    heroContent1.title?.trim() ||
+    "Become a Promotion Agent";
+
+  const heroDescription1 =
+    heroContent1.description?.trim() ||
+    "Introduce businesses and customers to products, services, and opportunities across the Petronick Corporate Holdings ecosystem. Choose one or multiple companies based on your experience, network, and market focus.";
+
+  const primaryButtonText1 =
+    heroContent1.primaryButtonText?.trim() ||
+    "Start Your Application";
+
+  const primaryButtonLink1 =
+    heroContent1.primaryButtonLink?.trim() ||
+    "#application";
+
+  const secondaryButtonText1 =
+    heroContent1.secondaryButtonText?.trim() ||
+    "See How It Works";
+
+  const secondaryButtonLink1 =
+    heroContent1.secondaryButtonLink?.trim() ||
     "#how-it-works";
 
   // ============================================================
@@ -278,24 +305,21 @@ export default function PromotionAgentContent({
     },
   ];
 
+  // ============================================================
+  // CLOSING DATA
+  // ============================================================
 
-const closingLabel =
-  closingContent.label?.trim() ||
-  "Start Your Application";
+  const closingLabel =
+    closingContent.label?.trim() ||
+    "Start Your Application";
 
-const closingHeadline =
-  closingContent.headline?.trim() ||
-  "Tell Us Where You Can Create the Most Value.";
+  const closingHeadline =
+    closingContent.headline?.trim() ||
+    "Tell Us Where You Can Create the Most Value.";
 
-const closingParagraph =
-  closingContent.paragraph?.trim() ||
-  "Complete the form below and select the companies and market areas that best fit your experience.";
-
-
-
-
-
-
+  const closingParagraph =
+    closingContent.paragraph?.trim() ||
+    "Complete the form below and select the companies and market areas that best fit your experience.";
 
   // ============================================================
   // PROCESS DATA
@@ -447,6 +471,20 @@ const closingParagraph =
 
       <section className="relative overflow-hidden bg-[#10283f] text-white">
 
+        {/* Hero banner image */}
+        {backgroundImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url("${backgroundImage}")`,
+            }}
+          />
+        )}
+
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-[#10283f]/85" />
+
+        {/* Decorative overlay */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-[20%] top-[25%] h-[420px] w-[75%] rotate-[-10deg] rounded-[50%] border border-[#c89d3c]/15" />
 
@@ -458,9 +496,9 @@ const closingParagraph =
         </div>
 
         <Container>
-          <div className="relative flex min-h-[430px] flex-col items-center justify-center px-4 py-16 text-center">
+          <div className="relative z-10 flex min-h-[430px] flex-col items-center justify-center px-4 py-16 text-center">
 
-            <motion.p
+            <motion.div
               initial={{
                 opacity: 0,
                 y: 15,
@@ -472,10 +510,14 @@ const closingParagraph =
               transition={{
                 duration: 0.5,
               }}
-              className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c89d3c]"
+              className="flex items-center justify-center gap-3"
             >
-              {heroBadge}
-            </motion.p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#c89d3c]">
+                {heroBadge}
+              </p>
+
+              <span className="h-px w-8 bg-[#c89d3c]" />
+            </motion.div>
 
             <motion.h1
               initial={{
@@ -490,7 +532,7 @@ const closingParagraph =
                 duration: 0.6,
                 delay: 0.1,
               }}
-              className="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl"
+              className="mt-4 max-w-[900px] font-serif text-[36px] font-bold leading-[1.12] tracking-[-0.02em] text-white sm:text-[46px] lg:text-[56px]"
             >
               {heroTitle}
             </motion.h1>
@@ -508,7 +550,7 @@ const closingParagraph =
                 duration: 0.6,
                 delay: 0.2,
               }}
-              className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base"
+              className="mt-5 max-w-[720px] text-[14px] leading-7 text-slate-300 sm:text-[15px]"
             >
               {heroDescription}
             </motion.p>
@@ -526,24 +568,23 @@ const closingParagraph =
                 duration: 0.6,
                 delay: 0.3,
               }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
             >
-
               <a
                 href={primaryButtonLink}
-                className="inline-flex h-12 min-w-[145px] items-center justify-center rounded-md bg-[#c89d3c] px-6 text-xs font-semibold text-white transition hover:bg-[#b78c30]"
+                className="inline-flex h-[50px] min-w-[190px] items-center justify-center rounded-md bg-[#c99a3c] px-7 text-[13px] font-semibold text-white transition hover:bg-[#b78b32]"
               >
                 {primaryButtonText}
               </a>
 
               <a
                 href={secondaryButtonLink}
-                className="inline-flex h-12 min-w-[145px] items-center justify-center rounded-md border border-[#c89d3c] px-6 text-xs font-semibold text-white transition hover:bg-white/5"
+                className="inline-flex h-[50px] min-w-[190px] items-center justify-center rounded-md border border-[#c99a3c] px-7 text-[13px] font-semibold text-white transition hover:bg-white/5"
               >
                 {secondaryButtonText}
               </a>
-
             </motion.div>
+
           </div>
         </Container>
       </section>
@@ -610,10 +651,12 @@ const closingParagraph =
                   </p>
 
                 </div>
+
               </motion.div>
             ))}
 
           </motion.div>
+
         </Container>
       </section>
 
@@ -718,6 +761,7 @@ const closingParagraph =
             ))}
 
           </motion.div>
+
         </Container>
       </section>
 
@@ -825,6 +869,7 @@ const closingParagraph =
             ))}
 
           </motion.div>
+
         </Container>
       </section>
 
@@ -832,192 +877,317 @@ const closingParagraph =
           START YOUR JOURNEY
       ========================================================= */}
 
+      <section className="bg-white py-12 sm:py-14 lg:py-[52px]">
+        <Container>
 
-<section className="bg-white py-12 sm:py-14 lg:py-[52px]">
-  <Container>
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 24,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      viewport={{
-        once: true,
-        amount: 0.15,
-      }}
-      transition={{
-        duration: 0.65,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="grid w-full items-start gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-[56px]"
-    >
-      {/* LEFT SIDE */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 24,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.15,
+            }}
+            transition={{
+              duration: 0.65,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="grid w-full items-start gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-[56px]"
+          >
 
-      <div className="pt-[2px]">
-        <div className="flex items-center gap-4">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#b98b34]">
-            {journeyBadge}
-          </p>
+            {/* LEFT SIDE */}
 
-          <span className="h-px w-[36px] bg-[#b98b34]" />
-        </div>
+            <div className="pt-[2px]">
 
-        <h2 className="mt-5 font-serif text-[38px] font-bold leading-[1.12] tracking-[-0.02em] text-[#10283f] sm:text-[44px] lg:text-[46px]">
-          {journeyTitle}
-        </h2>
+              <div className="flex items-center gap-4">
 
-        <p className="mt-6 text-[16px] leading-[1.75] text-[#66758a] sm:text-[17px]">
-          {journeyDescription}
-        </p>
+                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#b98b34]">
+                  {journeyBadge}
+                </p>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {snapshotStats.map((item, index) => (
+                <span className="h-px w-[36px] bg-[#b98b34]" />
+
+              </div>
+
+              <h2 className="mt-5 font-serif text-[38px] font-bold leading-[1.12] tracking-[-0.02em] text-[#10283f] sm:text-[44px] lg:text-[46px]">
+                {journeyTitle}
+              </h2>
+
+              <p className="mt-6 text-[16px] leading-[1.75] text-[#66758a] sm:text-[17px]">
+                {journeyDescription}
+              </p>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+                {snapshotStats.map((item, index) => (
+                  <motion.div
+                    key={`${item.label}-${index}`}
+                    initial={{
+                      opacity: 0,
+                      y: 14,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    viewport={{
+                      once: true,
+                    }}
+                    transition={{
+                      duration: 0.45,
+                      delay: index * 0.08,
+                    }}
+                    className="flex min-h-[106px] flex-col items-center justify-center rounded-[12px] border border-[#d9e0e8] bg-white px-4 py-5 text-center"
+                  >
+
+                    <p className="font-serif text-[30px] font-bold leading-none text-[#10283f]">
+                      {item.value}
+                    </p>
+
+                    <p className="mt-3 text-[12px] leading-[1.4] text-[#66758a]">
+                      {item.label}
+                    </p>
+
+                  </motion.div>
+                ))}
+
+              </div>
+
+            </div>
+
+            {/* RIGHT SIDE */}
+
             <motion.div
-              key={`${item.label}-${index}`}
               initial={{
                 opacity: 0,
-                y: 14,
+                x: 24,
               }}
               whileInView={{
                 opacity: 1,
-                y: 0,
+                x: 0,
               }}
               viewport={{
                 once: true,
+                amount: 0.2,
               }}
               transition={{
-                duration: 0.45,
-                delay: index * 0.08,
+                duration: 0.7,
+                delay: 0.08,
+                ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex min-h-[106px] flex-col items-center justify-center rounded-[12px] border border-[#d9e0e8] bg-white px-4 py-5 text-center"
+              className="w-full rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
             >
-              <p className="font-serif text-[30px] font-bold leading-none text-[#10283f]">
-                {item.value}
+
+              <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.01em] text-white sm:text-[30px]">
+                {checklistTitle}
+              </h3>
+
+              <p className="mt-4 text-[15px] leading-[1.7] text-[#d5dce6]">
+                {checklistDescription}
               </p>
 
-              <p className="mt-3 text-[12px] leading-[1.4] text-[#66758a]">
-                {item.label}
-              </p>
+              <div className="mt-6 space-y-5">
+
+                {journeyChecklist.map((item, index) => (
+                  <div
+                    key={`${item.title}-${index}`}
+                    className="flex items-start gap-3"
+                  >
+
+                    <div className="mt-[1px] flex h-[27px] w-[27px] shrink-0 items-center justify-center rounded-full bg-[#c99a3c] text-[13px] font-bold text-white">
+                      ✓
+                    </div>
+
+                    <div>
+
+                      <p className="text-[15px] font-semibold leading-[1.3] text-white sm:text-[16px]">
+                        {item.title}
+                      </p>
+
+                      <p className="mt-[2px] text-[12px] leading-[1.45] text-[#cfd8e3] sm:text-[13px]">
+                        {item.description}
+                      </p>
+
+                    </div>
+
+                  </div>
+                ))}
+
+              </div>
+
             </motion.div>
-          ))}
-        </div>
-      </div>
 
-      {/* RIGHT SIDE */}
+          </motion.div>
 
-      <motion.div
-        initial={{
-          opacity: 0,
-          x: 24,
-        }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
-        }}
-        viewport={{
-          once: true,
-          amount: 0.2,
-        }}
-        transition={{
-          duration: 0.7,
-          delay: 0.08,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="w-full rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
+        </Container>
+      </section>
+
+      {/* ========================================================
+          START YOUR APPLICATION
+      ========================================================= */}
+
+      <section
+        id="application"
+        className="bg-[#f2f4f7] py-14 sm:py-16 lg:py-20"
       >
-        <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.01em] text-white sm:text-[30px]">
-          {checklistTitle}
-        </h3>
+        <Container>
 
-        <p className="mt-4 text-[15px] leading-[1.7] text-[#d5dce6]">
-          {checklistDescription}
-        </p>
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            viewport={{
+              once: true,
+              amount: 0.1,
+            }}
+            className="w-full overflow-hidden rounded-[18px] bg-[#10283f] px-5 py-8 text-white shadow-[0_18px_55px_rgba(15,23,42,0.12)] sm:px-8 lg:px-12 lg:py-10"
+          >
 
-        <div className="mt-6 space-y-5">
-          {journeyChecklist.map((item, index) => (
-            <div
-              key={`${item.title}-${index}`}
-              className="flex items-start gap-3"
-            >
-              <div className="mt-[1px] flex h-[27px] w-[27px] shrink-0 items-center justify-center rounded-full bg-[#c99a3c] text-[13px] font-bold text-white">
-                ✓
-              </div>
+            {/* HEADER */}
 
-              <div>
-                <p className="text-[15px] font-semibold leading-[1.3] text-white sm:text-[16px]">
-                  {item.title}
+            <div className="mb-7 text-center">
+
+              <div className="flex items-center justify-center gap-3">
+
+                <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#c99a3c] sm:text-[10px]">
+                  {closingLabel}
                 </p>
 
-                <p className="mt-[2px] text-[12px] leading-[1.45] text-[#cfd8e3] sm:text-[13px]">
-                  {item.description}
-                </p>
+                <span className="h-px w-8 bg-[#c99a3c]" />
+
               </div>
+
+              <h2 className="mt-3 font-serif text-[24px] font-bold leading-tight text-white sm:text-[28px] lg:text-[32px]">
+                {closingHeadline}
+              </h2>
+
+              <p className="mx-auto mt-3 max-w-[760px] text-[11px] leading-5 text-slate-300 sm:text-[12px]">
+                {closingParagraph}
+              </p>
+
             </div>
-          ))}
-        </div>
-      </motion.div>
-    </motion.div>
-  </Container>
-</section>
 
+            <PromotionAgentForm />
 
+          </motion.div>
 
+        </Container>
+      </section>
 
-{/* ========================================================
-    START YOUR APPLICATION
-========================================================= */}
+      {/* ========================================================
+          SECOND HERO / CLOSING BANNER
+      ========================================================= */}
 
-<section
-  id="application"
-  className="bg-[#f2f4f7] py-14 sm:py-16 lg:py-20"
->
-  <Container>
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      viewport={{
-        once: true,
-        amount: 0.1,
-      }}
-      className="w-full overflow-hidden rounded-[18px] bg-[#10283f] px-5 py-8 text-white shadow-[0_18px_55px_rgba(15,23,42,0.12)] sm:px-8 lg:px-12 lg:py-10"
-    >
-      {/* HEADER */}
+      <section className="relative overflow-hidden bg-[#16324f] text-white">
 
-      <div className="mb-7 text-center">
-        <div className="flex items-center justify-center gap-3">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-[#c99a3c] sm:text-[10px]">
-            {closingLabel}
-          </p>
+        {/* HeroContent1 banner image */}
+        {heroContent1.backgroundImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url("${heroContent1.backgroundImage}")`,
+            }}
+          />
+        )}
 
-          <span className="h-px w-8 bg-[#c99a3c]" />
+        {/* Dark blue overlay */}
+        <div className="absolute inset-0 bg-[#16324f]/88" />
+
+        {/* Decorative ellipse */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+
+          <div className="absolute left-1/2 top-1/2 h-[120px] w-[500px] -translate-x-1/2 -translate-y-[48%] rounded-[50%] border border-[#c99a3c]/20 sm:h-[145px] sm:w-[650px]" />
+
+          <div className="absolute left-1/2 top-1/2 h-[210px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/[0.05]" />
+
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,154,60,0.07),transparent_62%)]" />
+
         </div>
 
-        <h2 className="mt-3 font-serif text-[24px] font-bold leading-tight text-white sm:text-[28px] lg:text-[32px]">
-          {closingHeadline}
-        </h2>
+        <Container>
 
-        <p className="mx-auto mt-3 max-w-[760px] text-[11px] leading-5 text-slate-300 sm:text-[12px]">
-          {closingParagraph}
-        </p>
-      </div>
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 24,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            viewport={{
+              once: true,
+              amount: 0.15,
+            }}
+            className="relative z-10 flex min-h-[285px] flex-col items-center justify-center px-4 py-12 text-center sm:min-h-[330px] sm:py-14"
+          >
 
-      <PromotionAgentForm />
-    </motion.div>
-  </Container>
-</section>
+            {/* Badge */}
+
+            <div className="flex items-center justify-center gap-3">
+
+              <p className="text-[10px] font-semibold uppercase tracking-[0.23em] text-[#d2a33d] sm:text-[11px]">
+                {heroBadge1}
+              </p>
+
+              <span className="h-px w-8 bg-[#c99a3c]" />
+
+            </div>
+
+            {/* Heading */}
+
+            <h2 className="mt-3 max-w-[680px] font-serif text-[28px] font-bold leading-[1.08] tracking-[-0.015em] text-white sm:text-[36px] lg:text-[40px]">
+              {heroTitle1}
+            </h2>
+
+            {/* Description */}
+
+            <p className="mt-4 max-w-[600px] text-[12px] leading-[1.7] text-slate-300 sm:text-[13px]">
+              {heroDescription1}
+            </p>
+
+            {/* CTA buttons */}
+
+            <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+
+              <a
+                href={primaryButtonLink1}
+                className="inline-flex h-[48px] min-w-[178px] items-center justify-center rounded-[5px] bg-[#c99a3c] px-6 text-[12px] font-semibold text-white transition hover:bg-[#b88b32]"
+              >
+                {primaryButtonText1}
+              </a>
+
+              <a
+                href={secondaryButtonLink1}
+                className="inline-flex h-[48px] min-w-[178px] items-center justify-center rounded-[5px] border border-[#c99a3c] bg-transparent px-6 text-[12px] font-semibold text-white transition hover:bg-white/5"
+              >
+                {secondaryButtonText1}
+              </a>
+
+            </div>
+
+          </motion.div>
+
+        </Container>
+      </section>
 
     </main>
   );

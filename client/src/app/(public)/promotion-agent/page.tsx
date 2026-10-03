@@ -9,24 +9,35 @@ export default async function PromotionAgentPage() {
   const sections = pageRes?.data?.sections ?? [];
 
   const heroSection = sections.find(
-    (section: any) => section.sectionType === "HERO"
+    (section: any) =>
+      section.sectionType === "HERO" 
   );
 
-const  whyJoinSection = sections.find(
-  (section: any) => section.sectionType === "BENEFITS"
-);
-const processSection = sections.find(
-  (section: any) => section.sectionType === "PROCESS"
-);
-const snapshotSection = sections.find(
-  (section: any) => section.sectionType === "SNAPSHOT"
-);
-const applicationSection = sections.find(
-  (section: any) => section.sectionType === "APPLICATION"
-);
-const closingSection = sections.find(
-  (section: any) => section.sectionType === "CLOSING"
-);
+  const whyJoinSection = sections.find(
+    (section: any) => section.sectionType === "BENEFITS"
+  );
+
+  const processSection = sections.find(
+    (section: any) => section.sectionType === "PROCESS"
+  );
+
+  const snapshotSection = sections.find(
+    (section: any) => section.sectionType === "SNAPSHOT"
+  );
+
+  const applicationSection = sections.find(
+    (section: any) => section.sectionType === "APPLICATION"
+  );
+
+  const closingSection = sections.find(
+    (section: any) => section.sectionType === "CLOSING"
+  );
+
+  const heroSection1 = sections.find(
+    (section: any) =>
+      section.sectionType === "HERO" && section.order === 1
+  );
+
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
@@ -34,8 +45,8 @@ const closingSection = sections.find(
       processContent={processSection?.content ?? {}}
       snapshotContent={snapshotSection?.content ?? {}}
       applicationContent={applicationSection?.content ?? {}}
-
-      
+      closingContent={closingSection?.content ?? {}}
+      heroContent1={heroSection1?.content ?? {}}
     />
   );
 }
