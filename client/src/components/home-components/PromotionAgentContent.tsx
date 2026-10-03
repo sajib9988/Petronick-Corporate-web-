@@ -137,15 +137,16 @@ interface ApplicationContent {
 // ============================================================
 // PROPS
 // ============================================================
-
 interface PromotionAgentContentProps {
   heroContent?: HeroContent;
+  heroImage?: string | null;        
+  heroContent1?: HeroContent;
+  heroImage1?: string | null;     
   whyJoinContent?: WhyJoinContent;
   processContent?: ProcessContent;
   snapshotContent?: SnapshotContent;
   applicationContent?: ApplicationContent;
   closingContent?: ClosingContent;
-  heroContent1?: HeroContent;
 }
 
 // ============================================================
@@ -154,12 +155,14 @@ interface PromotionAgentContentProps {
 
 export default function PromotionAgentContent({
   heroContent = {},
+  heroImage,
   whyJoinContent = {},
   processContent = {},
   snapshotContent = {},
   applicationContent = {},
   closingContent = {},
   heroContent1 = {},
+  heroImage1,
 }: PromotionAgentContentProps) {
   // ============================================================
   // HERO DATA
@@ -192,9 +195,8 @@ export default function PromotionAgentContent({
   const secondaryButtonLink =
     heroContent.secondaryButtonLink?.trim() ||
     "#how-it-works";
-
-  const backgroundImage =
-    heroContent.backgroundImage?.trim() || "";
+const backgroundImage =
+  heroImage || heroContent.backgroundImage?.trim() || "";
 
   // ============================================================
   // SECOND HERO DATA
@@ -227,6 +229,10 @@ export default function PromotionAgentContent({
   const secondaryButtonLink1 =
     heroContent1.secondaryButtonLink?.trim() ||
     "#how-it-works";
+
+const backgroundImage1 =
+  heroImage1 || heroContent1.backgroundImage?.trim() || "";
+
 
   // ============================================================
   // HERO STATS
@@ -1095,14 +1101,14 @@ export default function PromotionAgentContent({
       <section className="relative overflow-hidden bg-[#16324f] text-white">
 
         {/* HeroContent1 banner image */}
-        {heroContent1.backgroundImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url("${heroContent1.backgroundImage}")`,
-            }}
-          />
-        )}
+      {backgroundImage1 && (
+  <div
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{
+      backgroundImage: `url("${backgroundImage1}")`,
+    }}
+  />
+)}
 
         {/* Dark blue overlay */}
         <div className="absolute inset-0 bg-[#16324f]/88" />
@@ -1187,6 +1193,10 @@ export default function PromotionAgentContent({
           </motion.div>
 
         </Container>
+
+
+
+
       </section>
 
     </main>

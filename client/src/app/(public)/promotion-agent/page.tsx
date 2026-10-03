@@ -3,50 +3,39 @@ import { getPageBySlug } from "@/service/cms";
 
 export const dynamic = "force-dynamic";
 
+function visibleImage(section?: {
+  image?: string | null;
+  imageVisible?: boolean;
+}) {
+  if (!section?.image) return null;
+  return section.imageVisible === false ? null : section.image;
+}
+
 export default async function PromotionAgentPage() {
   const pageRes = await getPageBySlug("promotion-agent");
-
   const sections = pageRes?.data?.sections ?? [];
 
-  const heroSection = sections.find(
-    (section: any) =>
-      section.sectionType === "HERO" 
+  // sob HERO sortOrder onujayi (service already asc e pathay)
+  const heroSections = sections.filter(
+    (s: any) => s.sectionType === "HERO"
   );
+  const heroSection = heroSections[0];
+  const heroSection1 = heroSections[1];
 
-  const whyJoinSection = sections.find(
-    (section: any) => section.sectionType === "BENEFITS"
-  );
-
-  const processSection = sections.find(
-    (section: any) => section.sectionType === "PROCESS"
-  );
-
-  const snapshotSection = sections.find(
-    (section: any) => section.sectionType === "SNAPSHOT"
-  );
-
-  const applicationSection = sections.find(
-    (section: any) => section.sectionType === "APPLICATION"
-  );
-
-  const closingSection = sections.find(
-    (section: any) => section.sectionType === "CLOSING"
-  );
-
-  const heroSection1 = sections.find(
-    (section: any) =>
-      section.sectionType === "HERO" && section.order === 1
-  );
+  const find = (type: string) =>
+    sections.find((s: any) => s.sectionType === type);
 
   return (
     <PromotionAgentContent
       heroContent={heroSection?.content ?? {}}
-      whyJoinContent={whyJoinSection?.content ?? {}}
-      processContent={processSection?.content ?? {}}
-      snapshotContent={snapshotSection?.content ?? {}}
-      applicationContent={applicationSection?.content ?? {}}
-      closingContent={closingSection?.content ?? {}}
+      heroImage={visibleImage(heroSection)}
       heroContent1={heroSection1?.content ?? {}}
+      heroImage1={visibleImage(heroSection1)}
+      whyJoinContent={find("BENEFITS")?.content ?? {}}
+      processContent={find("PROCESS")?.content ?? {}}
+      snapshotContent={find("SNAPSHOT")?.content ?? {}}
+      applicationContent={find("APPLICATION")?.content ?? {}}
+      closingContent={find("CLOSING")?.content ?? {}}
     />
   );
 }
