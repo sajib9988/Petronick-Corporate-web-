@@ -435,15 +435,7 @@ export default function ContactContent({
                   <ContactForm />
                 </div>
 
-                <p className="mt-5 text-xs leading-5 text-slate-500">
-                  {formNote}{" "}
-                  <Link
-                    href="/privacy"
-                    className="font-medium text-[#10283f] underline underline-offset-2"
-                  >
-                    See Privacy Policy.
-                  </Link>
-                </p>
+             
               </div>
             </Reveal>
           </div>
