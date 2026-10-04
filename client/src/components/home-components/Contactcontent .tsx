@@ -295,7 +295,7 @@ export default function ContactContent({
             initial="hidden"
             animate="visible"
             variants={staggerContainer(0.12, 0.1)}
-            className="relative z-10 flex min-h-[420px] flex-col justify-center py-16 sm:min-h-[500px] lg:min-h-[560px]"
+            className="relative z-10 flex min-h-[420px] flex-col justify-center py-10 sm:min-h-[500px] lg:min-h-[560px]"
           >
             <motion.p
               variants={fadeUp(0, 0.6)}
