@@ -195,82 +195,77 @@ export default function ContactForm({
   // Main Form
   // ───────────────────────────────────────────
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className={`space-y-4 ${className ?? ""}`}
-      >
-        {/* Error Message */}
+return (
+  <Form {...form}>
+    <form
+      onSubmit={form.handleSubmit(handleSubmit)}
+      className={`space-y-3 ${className ?? ""}`}
+    >
+      {error && (
+        <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
+          {error}
+        </p>
+      )}
 
-        {error && (
-          <p className="text-sm text-red-500 bg-red-50 px-4 py-3 rounded-xl">
-            {error}
-          </p>
-        )}
+      {/* Name + Email */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel className="text-xs font-semibold">
+                Name *
+              </FormLabel>
 
-        {/* ────────────────────────────────────
-            Name + Email
-        ───────────────────────────────────── */}
+              <FormControl>
+                <Input
+                  placeholder="Your full name"
+                  className="h-9 text-sm"
+                  {...field}
+                />
+              </FormControl>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Name */}
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name *</FormLabel>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel className="text-xs font-semibold">
+                Email *
+              </FormLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="John Doe"
-                    {...field}
-                  />
-                </FormControl>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder="Your email address"
+                  className="h-9 text-sm"
+                  {...field}
+                />
+              </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
+        />
+      </div>
 
-          {/* Email */}
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email *</FormLabel>
-
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="john@example.com"
-                    {...field}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        {/* ────────────────────────────────────
-            Phone
-        ───────────────────────────────────── */}
-
+      {/* Phone + Subject */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <FormField
           control={form.control}
           name="phone"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Phone{" "}
-                <span className="text-gray-400">
-                  (optional)
+            <FormItem className="space-y-1">
+              <FormLabel className="text-xs font-semibold">
+                Phone
+                <span className="ml-1 text-gray-400 font-normal">
+                  optional
                 </span>
               </FormLabel>
 
@@ -279,100 +274,108 @@ export default function ContactForm({
                   type="tel"
                   inputMode="tel"
                   autoComplete="tel"
-                  placeholder="(234) 567-8900"
+                  placeholder="Your phone number"
+                  className="h-9 text-sm"
                   name={field.name}
                   ref={field.ref}
                   value={field.value ?? ""}
                   onBlur={field.onBlur}
                   onChange={(e) =>
-                    field.onChange(formatUsPhone(e.target.value))
+                    field.onChange(
+                      formatUsPhone(e.target.value)
+                    )
                   }
                 />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
-
-        {/* ────────────────────────────────────
-            Subject
-        ───────────────────────────────────── */}
 
         <FormField
           control={form.control}
           name="subject"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Subject *</FormLabel>
+            <FormItem className="space-y-1">
+              <FormLabel className="text-xs font-semibold">
+                Subject *
+              </FormLabel>
 
               <FormControl>
                 <Input
-                  placeholder="Project inquiry"
+                  placeholder="Inquiry subject"
+                  className="h-9 text-sm"
                   {...field}
                 />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
+      </div>
 
-        {/* ────────────────────────────────────
-            Message
-        ───────────────────────────────────── */}
+      {/* Message */}
+      <FormField
+        control={form.control}
+        name="message"
+        render={({ field }) => (
+          <FormItem className="space-y-1">
+            <FormLabel className="text-xs font-semibold">
+              Message *
+            </FormLabel>
 
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message *</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Tell us how we can help"
+                className="min-h-[68px] h-[68px] resize-none text-sm"
+                {...field}
+              />
+            </FormControl>
 
-              <FormControl>
-                <Textarea
-                  placeholder="How can we help you?"
-                  className="min-h-[120px] resize-none"
-                  {...field}
-                />
-              </FormControl>
+            <FormMessage className="text-xs" />
+          </FormItem>
+        )}
+      />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* ────────────────────────────────────
-            Cloudflare Turnstile
-        ───────────────────────────────────── */}
-
+      {/* Cloudflare Turnstile */}
+      <div className="pt-1">
         <Turnstile
-          onVerify={(token: string) => setTurnstileToken(token)}
-          onExpire={() => setTurnstileToken("")}
-        />
-
-        {/* ────────────────────────────────────
-            Submit Button
-        ───────────────────────────────────── */}
-
-        <Button
-          type="submit"
-          className="w-full h-11"
-          disabled={
-            isLoading ||
-            !turnstileToken
+          onVerify={(token: string) =>
+            setTurnstileToken(token)
           }
-        >
-          {isLoading && (
-            <Loader2
-              size={16}
-              className="mr-2 animate-spin"
-            />
-          )}
+          onExpire={() =>
+            setTurnstileToken("")
+          }
+        />
+      </div>
 
-          Send Message
-        </Button>
-      </form>
-    </Form>
-  );
+      {/* Submit Button */}
+      <Button
+        type="submit"
+        className="w-full h-9 text-sm font-semibold"
+        disabled={
+          isLoading ||
+          !turnstileToken
+        }
+      >
+        {isLoading && (
+          <Loader2
+            size={15}
+            className="mr-2 animate-spin"
+          />
+        )}
+
+        Submit Inquiry
+      </Button>
+
+      <p className="text-[10px] leading-4 text-gray-500">
+        By submitting this form, you agree that Petronick
+        Corporate Holdings LLC may use the information provided
+        to respond to your inquiry. See Privacy Policy.
+      </p>
+    </form>
+  </Form>
+);
 }

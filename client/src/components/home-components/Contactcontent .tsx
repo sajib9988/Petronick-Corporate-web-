@@ -453,7 +453,7 @@ export default function ContactContent({
       {/* ======================================================
           3. LOOKING FOR SOMETHING SPECIFIC? (2 pathways)
       ====================================================== */}
-      <section className="bg-[#F5F7FB] py-16 sm:py-20">
+      <section className="bg-[#F5F7FB] py-10 sm:py-16 lg:py-12">
         <Container>
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
@@ -529,7 +529,7 @@ export default function ContactContent({
 
         <Container>
           <Reveal>
-            <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 py-16 text-center sm:py-20">
+            <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 py-10 text-center sm:py-16 lg:py-10">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8934A]">
                 {ctaEyebrow}
               </p>
