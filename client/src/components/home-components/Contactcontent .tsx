@@ -344,7 +344,7 @@ export default function ContactContent({
       {/* ======================================================
           2. GET IN TOUCH (company info + form)
       ====================================================== */}
-      <section className="bg-white py-16 sm:py-20">
+      <section className="bg-white py-14 sm:py-20">
         <Container>
           <Reveal>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8934A]">
