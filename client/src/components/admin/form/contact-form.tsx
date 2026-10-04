@@ -22,6 +22,7 @@ import {
 import { createContact } from "@/service/contact";
 import Turnstile from "@/components/ui/turnstile";
 import { formatUsPhone, isCompleteUsPhone } from "@/lib/phone";
+import Link from "next/link";
 
 
 // ─────────────────────────────────────────────
@@ -55,6 +56,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 interface ContactFormProps {
   className?: string;
+  note?: string;
 }
 
 // ─────────────────────────────────────────────
@@ -63,6 +65,7 @@ interface ContactFormProps {
 
 export default function ContactForm({
   className,
+  note,
 }: ContactFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -199,34 +202,34 @@ return (
   <Form {...form}>
     <form
       onSubmit={form.handleSubmit(handleSubmit)}
-      className={`space-y-3 ${className ?? ""}`}
+      className={`space-y-[10px] ${className ?? ""}`}
     >
       {error && (
-        <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
+        <p className="rounded-md bg-red-50 px-3 py-2 text-[11px] text-red-500">
           {error}
         </p>
       )}
 
-      {/* Name + Email */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Name and Email */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel className="text-xs font-semibold">
+              <FormLabel className="text-[11px] font-bold text-[#10283f]">
                 Name *
               </FormLabel>
 
               <FormControl>
                 <Input
                   placeholder="Your full name"
-                  className="h-9 text-sm"
+                  className="h-9 rounded-md border-slate-200 px-3 text-[11px]"
                   {...field}
                 />
               </FormControl>
 
-              <FormMessage className="text-xs" />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
@@ -236,7 +239,7 @@ return (
           name="email"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel className="text-xs font-semibold">
+              <FormLabel className="text-[11px] font-bold text-[#10283f]">
                 Email *
               </FormLabel>
 
@@ -244,29 +247,26 @@ return (
                 <Input
                   type="email"
                   placeholder="Your email address"
-                  className="h-9 text-sm"
+                  className="h-9 rounded-md border-slate-200 px-3 text-[11px]"
                   {...field}
                 />
               </FormControl>
 
-              <FormMessage className="text-xs" />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
       </div>
 
-      {/* Phone + Subject */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Phone and Subject */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <FormField
           control={form.control}
           name="phone"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel className="text-xs font-semibold">
+              <FormLabel className="text-[11px] font-bold text-[#10283f]">
                 Phone
-                <span className="ml-1 text-gray-400 font-normal">
-                  optional
-                </span>
               </FormLabel>
 
               <FormControl>
@@ -275,7 +275,7 @@ return (
                   inputMode="tel"
                   autoComplete="tel"
                   placeholder="Your phone number"
-                  className="h-9 text-sm"
+                  className="h-9 rounded-md border-slate-200 px-3 text-[11px]"
                   name={field.name}
                   ref={field.ref}
                   value={field.value ?? ""}
@@ -288,7 +288,7 @@ return (
                 />
               </FormControl>
 
-              <FormMessage className="text-xs" />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
@@ -298,19 +298,19 @@ return (
           name="subject"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel className="text-xs font-semibold">
+              <FormLabel className="text-[11px] font-bold text-[#10283f]">
                 Subject *
               </FormLabel>
 
               <FormControl>
                 <Input
                   placeholder="Inquiry subject"
-                  className="h-9 text-sm"
+                  className="h-9 rounded-md border-slate-200 px-3 text-[11px]"
                   {...field}
                 />
               </FormControl>
 
-              <FormMessage className="text-xs" />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
@@ -322,47 +322,42 @@ return (
         name="message"
         render={({ field }) => (
           <FormItem className="space-y-1">
-            <FormLabel className="text-xs font-semibold">
+            <FormLabel className="text-[11px] font-bold text-[#10283f]">
               Message *
             </FormLabel>
 
             <FormControl>
               <Textarea
                 placeholder="Tell us how we can help"
-                className="min-h-[68px] h-[68px] resize-none text-sm"
+                className="h-[66px] min-h-[66px] resize-none rounded-md border-slate-200 px-3 py-2 text-[11px]"
                 {...field}
               />
             </FormControl>
 
-            <FormMessage className="text-xs" />
+            <FormMessage className="text-[10px]" />
           </FormItem>
         )}
       />
 
-      {/* Cloudflare Turnstile */}
-      <div className="pt-1">
-        <Turnstile
-          onVerify={(token: string) =>
-            setTurnstileToken(token)
-          }
-          onExpire={() =>
-            setTurnstileToken("")
-          }
-        />
-      </div>
+      {/* Turnstile */}
+      <Turnstile
+        onVerify={(token: string) =>
+          setTurnstileToken(token)
+        }
+        onExpire={() =>
+          setTurnstileToken("")
+        }
+      />
 
-      {/* Submit Button */}
+      {/* Submit */}
       <Button
         type="submit"
-        className="w-full h-9 text-sm font-semibold"
-        disabled={
-          isLoading ||
-          !turnstileToken
-        }
+        disabled={isLoading || !turnstileToken}
+        className="h-9 w-full rounded-md bg-[#B8934A] text-[11px] font-bold text-white hover:bg-[#a5823f]"
       >
         {isLoading && (
           <Loader2
-            size={15}
+            size={14}
             className="mr-2 animate-spin"
           />
         )}
@@ -370,10 +365,15 @@ return (
         Submit Inquiry
       </Button>
 
-      <p className="text-[10px] leading-4 text-gray-500">
-        By submitting this form, you agree that Petronick
-        Corporate Holdings LLC may use the information provided
-        to respond to your inquiry. See Privacy Policy.
+      <p className="text-[9px] leading-[1.3] text-slate-500">
+        {note ||
+          "By submitting this form, you agree that Petronick Corporate Holdings LLC may use the information provided to respond to your inquiry."}{" "}
+        <Link
+          href="/privacy"
+          className="transition-colors hover:text-[#B8934A]"
+        >
+          See Privacy Policy.
+        </Link>
       </p>
     </form>
   </Form>

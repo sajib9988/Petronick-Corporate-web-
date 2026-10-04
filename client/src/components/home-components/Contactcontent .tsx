@@ -344,103 +344,113 @@ export default function ContactContent({
       {/* ======================================================
           2. GET IN TOUCH (company info + form)
       ====================================================== */}
-      <section className="bg-white py-14 sm:py-20">
-        <Container>
-          <Reveal>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8934A]">
-              {badge}
-            </p>
-            <h2 className="mt-4 max-w-4xl font-serif text-3xl font-bold leading-tight text-[#10283f] sm:text-4xl lg:text-[42px]">
-              {title}
-            </h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-500">
-              {subtitle}
-            </p>
-          </Reveal>
+   <section className="bg-white py-14 sm:py-16">
+  <Container>
+    <Reveal>
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8934A]">
+        {badge}
+      </p>
 
-          <div className="mt-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-            {/* LEFT — Company information */}
-            <Reveal>
-              <div className="rounded-2xl border border-slate-200 bg-[#F5F7FB] p-6 sm:p-8">
-                <h3 className="font-serif text-2xl font-bold text-[#10283f]">
-                  {infoTitle}
-                </h3>
-                <p className="mt-3 max-w-sm text-sm leading-6 text-slate-500">
-                  {infoDescription}
-                </p>
+      <h2 className="mt-3 max-w-4xl font-serif text-3xl font-bold leading-tight text-[#10283f] sm:text-4xl lg:text-[42px]">
+        {title}
+      </h2>
 
-                <ul className="mt-6 divide-y divide-slate-200">
-                  {infoRows.map((row) => {
-                    const Icon = row.icon;
-                    const valueClass =
-                      "mt-0.5 break-words text-sm leading-6 text-slate-500";
-                    return (
-                      <li
-                        key={row.key}
-                        className="flex items-start gap-4 py-4 first:pt-0 last:pb-0"
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
+        {subtitle}
+      </p>
+    </Reveal>
+
+    <div className="mt-10 grid grid-cols-1 items-stretch gap-7 lg:grid-cols-[0.8fr_1.2fr]">
+
+      {/* Company Information */}
+      <Reveal className="h-full">
+        <div className="h-full rounded-xl border border-slate-200 bg-[#F5F7FB] p-5">
+          <h3 className="font-serif text-[22px] font-bold leading-tight text-[#10283f]">
+            {infoTitle}
+          </h3>
+
+          <p className="mt-2 max-w-sm text-[12px] leading-[1.45] text-slate-500">
+            {infoDescription}
+          </p>
+
+          <ul className="mt-5 divide-y divide-slate-200">
+            {infoRows.map((row) => {
+              const Icon = row.icon;
+
+              const valueClass =
+                "mt-0.5 break-words text-[11px] leading-[1.35] text-slate-500";
+
+              return (
+                <li
+                  key={row.key}
+                  className="flex items-center gap-3 py-[9px] first:pt-0 last:pb-0"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-[#B8934A]">
+                    {Icon ? (
+                      <Icon size={14} strokeWidth={1.6} />
+                    ) : (
+                      <span className="font-serif text-sm font-bold">
+                        {row.letter}
+                      </span>
+                    )}
+                  </span>
+
+                  <div className="min-w-0">
+                    <p className="text-[12px] font-bold leading-tight text-[#10283f]">
+                      {row.label}
+                    </p>
+
+                    {row.href ? (
+                      <a
+                        href={row.href}
+                        target={
+                          row.href.startsWith("http")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel="noopener noreferrer"
+                        className={cn(
+                          valueClass,
+                          "block transition-colors hover:text-[#B8934A]"
+                        )}
                       >
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-[#B8934A]">
-                          {Icon ? (
-                            <Icon size={18} />
-                          ) : (
-                            <span className="font-serif text-base font-bold">
-                              {row.letter}
-                            </span>
-                          )}
-                        </span>
+                        {row.value}
+                      </a>
+                    ) : (
+                      <p className={valueClass}>
+                        {row.value}
+                      </p>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </Reveal>
 
-                        <div className="min-w-0">
-                          <p className="text-sm font-bold text-[#10283f]">
-                            {row.label}
-                          </p>
-                          {row.href ? (
-                            <a
-                              href={row.href}
-                              target={
-                                row.href.startsWith("http") ? "_blank" : undefined
-                              }
-                              rel="noopener noreferrer"
-                              className={cn(
-                                valueClass,
-                                "block transition-colors hover:text-[#B8934A]",
-                              )}
-                            >
-                              {row.value}
-                            </a>
-                          ) : (
-                            <p className={valueClass}>{row.value}</p>
-                          )}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </Reveal>
+      {/* Contact Form */}
+      <Reveal delay={0.1} className="h-full">
+        <div
+          id="contact-form"
+          className="scroll-mt-28 h-full rounded-xl border border-slate-200 bg-white p-5"
+        >
+          <h3 className="font-serif text-[22px] font-bold leading-tight text-[#10283f]">
+            {formTitle}
+          </h3>
 
-            {/* RIGHT — Form */}
-            <Reveal delay={0.1}>
-              <div
-                id="contact-form"
-                className="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
-              >
-                <h3 className="font-serif text-2xl font-bold text-[#10283f]">
-                  {formTitle}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-slate-500">
-                  {formDescription}
-                </p>
+          <p className="mt-2 text-[12px] leading-[1.45] text-slate-500">
+            {formDescription}
+          </p>
 
-                <div className="mt-8">
-                  <ContactForm />
-                </div>
-
-             
-              </div>
-            </Reveal>
+          <div className="mt-5">
+            <ContactForm note={formNote} />
           </div>
-        </Container>
-      </section>
+        </div>
+      </Reveal>
+    </div>
+  </Container>
+</section>
 
       {/* ======================================================
           3. LOOKING FOR SOMETHING SPECIFIC? (2 pathways)
