@@ -767,23 +767,34 @@ CAPABILITIES: [
   // FEATURE
   // ==========================================================
 
-  FEATURE: [
+ FEATURE: [
+    {
+      key: "icon",
+      label: "Icon Badge Text (e.g. 10 — blank = default icon)",
+    },
+ 
     {
       key: "title",
       label: "Title",
     },
-
+ 
     {
       key: "description",
       label: "Description",
       multiline: true,
     },
-
+ 
     {
-      key: "icon",
-      label: "Icon",
+      key: "btnText",
+      label: "Button Text",
+    },
+ 
+    {
+      key: "btnLink",
+      label: "Button Link",
     },
   ],
+ 
 
   // ==========================================================
   // CTA
