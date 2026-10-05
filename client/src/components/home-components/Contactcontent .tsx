@@ -679,7 +679,7 @@ export default function ContactContent({
                   {formDescription}
                 </p>
 
-                <div className="mt-5">
+                <div id= "contact" className="mt-5">
                   <ContactForm note={formNote} />
                 </div>
 
@@ -836,5 +836,5 @@ export default function ContactContent({
   );
 
 
-  
+
 }
