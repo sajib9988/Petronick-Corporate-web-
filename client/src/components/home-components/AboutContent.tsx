@@ -398,7 +398,7 @@ export default function AboutContent({
 
   return (
     <main className="min-h-screen ">
-      <Container>
+
 
         {/* ======================================================
             PART 1 — HERO
@@ -483,7 +483,7 @@ export default function AboutContent({
     </motion.div>
   </div>
 </section>
- </Container>
+
         {/* ======================================================
             PART 2 — ABOUT + SNAPSHOT
         ====================================================== */}
