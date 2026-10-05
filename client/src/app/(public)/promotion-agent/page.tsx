@@ -35,6 +35,7 @@ export default async function PromotionAgentPage() {
       processContent={find("PROCESS")?.content ?? {}}
       snapshotContent={find("SNAPSHOT")?.content ?? {}}
       applicationContent={find("APPLICATION")?.content ?? {}}
+      applicationImage={visibleImage(find("APPLICATION"))}
       closingContent={find("CLOSING")?.content ?? {}}
     />
   );

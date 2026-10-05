@@ -147,6 +147,7 @@ interface PromotionAgentContentProps {
   snapshotContent?: SnapshotContent;
   applicationContent?: ApplicationContent;
   closingContent?: ClosingContent;
+  applicationImage?: string | null;
 }
 
 // ============================================================
@@ -160,6 +161,7 @@ export default function PromotionAgentContent({
   processContent = {},
   snapshotContent = {},
   applicationContent = {},
+  applicationImage,
   closingContent = {},
   heroContent1 = {},
   heroImage1,
@@ -405,6 +407,8 @@ const backgroundImage1 =
   const checklistDescription =
     applicationContent.checklistDescription?.trim() ||
     "You can select one or multiple companies based on your experience and interests.";
+
+ const imageUrl = applicationImage?.trim() || "";
 
   const journeyChecklist = [
     {
@@ -967,27 +971,33 @@ const backgroundImage1 =
             </div>
 
             {/* RIGHT SIDE */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                x: 24,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.2,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="w-full rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
-            >
+           
+         <motion.div
+  initial={{
+    opacity: 0,
+    x: 24,
+  }}
+  whileInView={{
+    opacity: 1,
+    x: 0,
+  }}
+  viewport={{
+    once: true,
+    amount: 0.2,
+  }}
+  transition={{
+    duration: 0.7,
+    delay: 0.08,
+    ease: [0.22, 1, 0.36, 1],
+  }}
+  className="relative w-full overflow-hidden rounded-[18px] bg-[#10283f] px-7 py-8 text-white sm:px-9 sm:py-9 lg:min-h-[335px] lg:px-[36px] lg:py-[34px]"
+  style={{
+    backgroundImage: imageUrl ? `url("${imageUrl}")` : undefined,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+>
 
               <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.01em] text-white sm:text-[30px]">
                 {checklistTitle}
