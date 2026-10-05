@@ -679,7 +679,7 @@ export default function ContactContent({
                   {formDescription}
                 </p>
 
-                <div id= "contact" className="mt-5">
+                <div className="mt-5">
                   <ContactForm note={formNote} />
                 </div>
 

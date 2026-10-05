@@ -141,7 +141,7 @@ export default async function CompaniesPage() {
             COMPANIES section
         ================================================== */}
 
-        <section className="py-8">
+        <section id="company-card" className="py-8">
           <div className="mb-3 text-center">
             <div className="mb-3 flex items-center justify-center gap-2">
               <span className="h-1 w-6 rounded-full bg-emerald-500" />
