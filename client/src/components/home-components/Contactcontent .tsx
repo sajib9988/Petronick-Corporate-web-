@@ -668,7 +668,7 @@ export default function ContactContent({
             >
               <div
                 id="contact-form"
-                className="scroll-mt-28 h-full rounded-xl border border-slate-200 bg-white p-5"
+                className="scroll-mt-30 h-full rounded-xl border border-slate-200 bg-white p-5"
               >
 
                 <h3 className="font-serif text-[22px] font-bold leading-tight text-[#10283f]">
