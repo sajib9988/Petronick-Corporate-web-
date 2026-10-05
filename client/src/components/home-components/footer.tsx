@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import {
   FaFacebookF,
   FaInstagram,
@@ -86,12 +85,10 @@ export default function Footer() {
             lg:gap-[44px]
           "
         >
+
           {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="inline-block"
-            >
+            <Link href="/" className="inline-block">
               <Image
                 src="/Word Mark.png"
                 alt="Petronick Corporate Holdings LLC"
@@ -105,10 +102,10 @@ export default function Footer() {
             <p
               className="
                 mt-[17px]
-                max-w-[240px]
-                text-[10px]
+                max-w-[280px]
+                text-[13px]
                 font-normal
-                leading-[1.42]
+                leading-[1.6]
                 text-[#F0F3F7]
               "
             >
@@ -124,10 +121,10 @@ export default function Footer() {
             <h3
               className="
                 mb-[15px]
-                text-[9px]
+                text-[11px]
                 font-bold
                 uppercase
-                tracking-[0.02em]
+                tracking-[0.04em]
                 text-[#B99346]
               "
             >
@@ -140,8 +137,9 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="
-                      text-[9px]
+                      text-[12px]
                       font-normal
+                      leading-[1.5]
                       text-[#EEF2F6]
                       transition-colors
                       hover:text-[#B99346]
@@ -159,10 +157,10 @@ export default function Footer() {
             <h3
               className="
                 mb-[15px]
-                text-[9px]
+                text-[11px]
                 font-bold
                 uppercase
-                tracking-[0.02em]
+                tracking-[0.04em]
                 text-[#B99346]
               "
             >
@@ -176,8 +174,9 @@ export default function Footer() {
                     href={link.href}
                     className="
                       whitespace-nowrap
-                      text-[9px]
+                      text-[12px]
                       font-normal
+                      leading-[1.5]
                       text-[#EEF2F6]
                       transition-colors
                       hover:text-[#B99346]
@@ -195,10 +194,10 @@ export default function Footer() {
             <h3
               className="
                 mb-[15px]
-                text-[9px]
+                text-[11px]
                 font-bold
                 uppercase
-                tracking-[0.02em]
+                tracking-[0.04em]
                 text-[#B99346]
               "
             >
@@ -211,8 +210,9 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="
-                      text-[9px]
+                      text-[12px]
                       font-normal
+                      leading-[1.5]
                       text-[#EEF2F6]
                       transition-colors
                       hover:text-[#B99346]
@@ -230,10 +230,10 @@ export default function Footer() {
             <h3
               className="
                 mb-[17px]
-                text-[9px]
+                text-[11px]
                 font-bold
                 uppercase
-                tracking-[0.02em]
+                tracking-[0.04em]
                 text-[#B99346]
               "
             >
@@ -253,8 +253,8 @@ export default function Footer() {
                     aria-label={social.label}
                     className="
                       flex
-                      h-[27px]
-                      w-[27px]
+                      h-[30px]
+                      w-[30px]
                       items-center
                       justify-center
                       rounded-full
@@ -267,7 +267,7 @@ export default function Footer() {
                       hover:text-[#0C1D31]
                     "
                   >
-                    <Icon size={9} />
+                    <Icon size={11} />
                   </Link>
                 );
               })}
@@ -290,18 +290,22 @@ export default function Footer() {
             sm:justify-between
           "
         >
-          <p className="text-[8px] font-normal text-[#D9E0E7]">
+          <p className="text-[11px] font-normal text-[#D9E0E7]">
             © {new Date().getFullYear()} Petronick Corporate Holdings LLC.
             All rights reserved.
           </p>
 
-          <p className="text-[8px] font-normal text-[#D9E0E7]">
+          <p className="text-[11px] font-normal text-[#D9E0E7]">
             Digital Development by{" "}
             <a
               href="https://fusiondigiweb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#B99346] transition-colors hover:text-[#D4AE5B]"
+              className="
+                text-[#B99346]
+                transition-colors
+                hover:text-[#D4AE5B]
+              "
             >
               Fusion DigiWeb
             </a>
