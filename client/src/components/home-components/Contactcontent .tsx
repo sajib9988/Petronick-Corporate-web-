@@ -346,67 +346,19 @@ export default function ContactContent({
       ====================================================== */}
    <section className="bg-white py-14 sm:py-16">
   <Container>
-    <Reveal className="h-full">
-  <div className="flex h-full flex-col rounded-xl border border-slate-200 bg-[#F5F7FB] p-5">
-    <h3 className="font-serif text-[22px] font-bold leading-tight text-[#10283f]">
-      {infoTitle}
-    </h3>
+    <Reveal>
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#B8934A]">
+        {badge}
+      </p>
 
-    <p className="mt-2 max-w-sm text-[12px] leading-5 text-slate-500">
-      {infoDescription}
-    </p>
+      <h2 className="mt-3 max-w-4xl font-serif text-3xl font-bold leading-tight text-[#10283f] sm:text-4xl lg:text-[42px]">
+        {title}
+      </h2>
 
-    <ul className="mt-6 flex flex-1 flex-col justify-between divide-y divide-slate-200">
-      {infoRows.map((row) => {
-        const Icon = row.icon;
-
-        const valueClass =
-          "mt-1 break-words text-[11px] leading-[1.45] text-slate-500";
-
-        return (
-          <li
-            key={row.key}
-            className="flex items-center gap-3 py-4 first:pt-0 last:pb-0"
-          >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-[#B8934A]">
-              {Icon ? (
-                <Icon size={14} strokeWidth={1.6} />
-              ) : (
-                <span className="font-serif text-sm font-bold">
-                  {row.letter}
-                </span>
-              )}
-            </span>
-
-            <div className="min-w-0">
-              <p className="text-[12px] font-bold leading-tight text-[#10283f]">
-                {row.label}
-              </p>
-
-              {row.href ? (
-                <a
-                  href={row.href}
-                  target={
-                    row.href.startsWith("http") ? "_blank" : undefined
-                  }
-                  rel="noopener noreferrer"
-                  className={cn(
-                    valueClass,
-                    "block transition-colors hover:text-[#B8934A]"
-                  )}
-                >
-                  {row.value}
-                </a>
-              ) : (
-                <p className={valueClass}>{row.value}</p>
-              )}
-            </div>
-          </li>
-        );
-      })}
-    </ul>
-  </div>
-</Reveal>
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
+        {subtitle}
+      </p>
+    </Reveal>
 
     <div className="mt-10 grid grid-cols-1 items-stretch gap-7 lg:grid-cols-[0.8fr_1.2fr]">
 
