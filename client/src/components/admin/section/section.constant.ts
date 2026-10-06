@@ -453,4 +453,4 @@ export const FIELDS: Record<SectionType, SectionField[]> = {
     {key: "formTitle", label: "Form Title"},
     {key: "formDescription", label: "Form Description", multiline: true},
   ],
-};
+};  
