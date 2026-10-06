@@ -20,7 +20,8 @@ export type SectionType =
   | "WHO_WE_ARE"
   | "ECOSYSTEM"
   | "REVENUE"
-  | "CLOSING";
+  | "CLOSING"
+  | "LEGAL";
 
 // ============================================================
 // SECTION TYPES LIST
@@ -33,21 +34,19 @@ export const SECTION_TYPES: SectionType[] = [
   "REVENUE",
   "CLOSING",
   "CAPABILITIES",
-
   "ABOUT",
   "SNAPSHOT",
   "VALUES",
-
   "BENEFITS",
   "PROCESS",
   "STATS",
   "APPLICATION",
-
   "FEATURE",
   "CTA",
   "TESTIMONIALS",
   "GALLERY",
   "CONTACT",
+  "LEGAL",
 ];
 
 // ============================================================
@@ -56,39 +55,24 @@ export const SECTION_TYPES: SectionType[] = [
 
 export const SECTION_TYPE_LABELS: Record<SectionType, string> = {
   HERO: "Hero / Banner",
-
   WHO_WE_ARE: "Who We Are",
-
   ECOSYSTEM: "Our Ecosystem",
-
   REVENUE: "Revenue / Partner",
-
   CLOSING: "Closing Authority",
-
   ABOUT: "About",
-
   SNAPSHOT: "Corporate Snapshot",
-
   VALUES: "Our Values",
-
   BENEFITS: "Benefits / Why Join",
-
   PROCESS: "Process / How It Works",
-
   STATS: "Portfolio Overview",
-
   APPLICATION: "Application Panel",
-
   FEATURE: "Feature",
-
   CTA: "Call to Action",
-
   TESTIMONIALS: "Testimonials",
-
   GALLERY: "Gallery",
-
   CONTACT: "Contact",
   CAPABILITIES: "Capabilities",
+  LEGAL: "Legal",
 };
 
 // ============================================================
@@ -107,118 +91,62 @@ export type SectionField = {
 
 export const FIELDS: Record<SectionType, SectionField[]> = {
   // ==========================================================
+  // CAPABILITIES
+  // ==========================================================
+
+  CAPABILITIES: [
+    {key: "label", label: "Eyebrow / Badge Label"},
+    {key: "title", label: "Section Title"},
+    {key: "subtitle", label: "Subtitle", multiline: true},
+    {key: "capability1Title", label: "Capability 1 Title"},
+    {key: "capability1Description", label: "Capability 1 Description", multiline: true},
+    {key: "capability2Title", label: "Capability 2 Title"},
+    {key: "capability2Description", label: "Capability 2 Description", multiline: true},
+    {key: "capability3Title", label: "Capability 3 Title"},
+    {key: "capability3Description", label: "Capability 3 Description", multiline: true},
+    {key: "capability4Title", label: "Capability 4 Title"},
+    {key: "capability4Description", label: "Capability 4 Description", multiline: true},
+    {key: "capability5Title", label: "Capability 5 Title"},
+    {key: "capability5Description", label: "Capability 5 Description", multiline: true},
+  ],
+
+  // ==========================================================
   // HERO
   // ==========================================================
-CAPABILITIES: [
-  { key: "label", label: "Eyebrow / Badge Label" },
-  { key: "title", label: "Section Title" },
-  { key: "subtitle", label: "Subtitle", multiline: true },
 
-  { key: "capability1Title", label: "Capability 1 Title" },
-  { key: "capability1Description", label: "Capability 1 Description", multiline: true },
-
-  { key: "capability2Title", label: "Capability 2 Title" },
-  { key: "capability2Description", label: "Capability 2 Description", multiline: true },
-
-  { key: "capability3Title", label: "Capability 3 Title" },
-  { key: "capability3Description", label: "Capability 3 Description", multiline: true },
-
-  { key: "capability4Title", label: "Capability 4 Title" },
-  { key: "capability4Description", label: "Capability 4 Description", multiline: true },
-
-  { key: "capability5Title", label: "Capability 5 Title" },
-  { key: "capability5Description", label: "Capability 5 Description", multiline: true },
-],
   HERO: [
-    {
-      key: "badge",
-      label: "Badge",
-    },
-
-    {
-      key: "headline",
-      label: "Headline (Fallback)",
-    },
-
-    {
-      key: "headlinePrefix",
-      label: "Headline Prefix",
-    },
-
-    {
-      key: "headlineAccent",
-      label: "Headline Accent / Gradient Part",
-    },
-
-    {
-      key: "subheadline",
-      label: "Subheadline",
-      multiline: true,
-    },
-
-    {
-      key: "primaryBtn",
-      label: "Primary Button Text",
-    },
-
-    {
-      key: "primaryBtnLink",
-      label: "Primary Button Link",
-    },
-
-    {
-      key: "secondaryBtn",
-      label: "Secondary Button Text",
-    },
-
-    {
-      key: "secondaryBtnLink",
-      label: "Secondary Button Link",
-    },
+    {key: "badge", label: "Badge"},
+    {key: "headline", label: "Headline (Fallback)"},
+    {key: "headlinePrefix", label: "Headline Prefix"},
+    {key: "headlineAccent", label: "Headline Accent / Gradient Part"},
+    {key: "subheadline", label: "Subheadline", multiline: true},
+    {key: "primaryBtn", label: "Primary Button Text"},
+    {key: "primaryBtnLink", label: "Primary Button Link"},
+    {key: "secondaryBtn", label: "Secondary Button Text"},
+    {key: "secondaryBtnLink", label: "Secondary Button Link"},
 
     // --------------------------------------------------------
     // TRUST BAR (4 stat cards overlapping the hero)
     // --------------------------------------------------------
 
-    {
-      key: "stat1Value",
-      label: "Trust Stat 1 Value (blank = live company count)",
-    },
+    {key: "stat1Value", label: "Trust Stat 1 Value (blank = live company count)"},
+    {key: "stat1Label", label: "Trust Stat 1 Label"},
+    {key: "stat2Value", label: "Trust Stat 2 Value"},
+    {key: "stat2Label", label: "Trust Stat 2 Label"},
+    {key: "stat3Value", label: "Trust Stat 3 Value"},
+    {key: "stat3Label", label: "Trust Stat 3 Label"},
+    {key: "stat4Value", label: "Trust Stat 4 Value"},
+    {key: "stat4Label", label: "Trust Stat 4 Label"},
+    {key: "lastUpdated", label: "Last Updated (e.g. January 5, 2026)"},
+  ],
 
-    {
-      key: "stat1Label",
-      label: "Trust Stat 1 Label",
-    },
+  // ==========================================================
+  // LEGAL
+  // ==========================================================
 
-    {
-      key: "stat2Value",
-      label: "Trust Stat 2 Value",
-    },
-
-    {
-      key: "stat2Label",
-      label: "Trust Stat 2 Label",
-    },
-
-    {
-      key: "stat3Value",
-      label: "Trust Stat 3 Value",
-    },
-
-    {
-      key: "stat3Label",
-      label: "Trust Stat 3 Label",
-    },
-
-    {
-      key: "stat4Value",
-      label: "Trust Stat 4 Value",
-    },
-
-    {
-      key: "stat4Label",
-      label: "Trust Stat 4 Label",
-    },
+  LEGAL: [
+    {key: "title", label: "Section Title (no number)"},
+    {key: "body", label: "Body (blank line = new paragraph, '- ' = bullet)", multiline: true},
   ],
 
   // ==========================================================
@@ -226,36 +154,12 @@ CAPABILITIES: [
   // ==========================================================
 
   WHO_WE_ARE: [
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "paragraph",
-      label: "Main Paragraph",
-      multiline: true,
-    },
-
-    {
-      key: "bullet1",
-      label: "Bullet Point 1",
-    },
-
-    {
-      key: "bullet2",
-      label: "Bullet Point 2",
-    },
-
-    {
-      key: "bullet3",
-      label: "Bullet Point 3",
-    },
-
-    {
-      key: "bullet4",
-      label: "Bullet Point 4",
-    },
+    {key: "title", label: "Section Title"},
+    {key: "paragraph", label: "Main Paragraph", multiline: true},
+    {key: "bullet1", label: "Bullet Point 1"},
+    {key: "bullet2", label: "Bullet Point 2"},
+    {key: "bullet3", label: "Bullet Point 3"},
+    {key: "bullet4", label: "Bullet Point 4"},
   ],
 
   // ==========================================================
@@ -263,21 +167,9 @@ CAPABILITIES: [
   // ==========================================================
 
   ECOSYSTEM: [
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-    },
-
-    {
-      key: "description",
-      label: "Description",
-      multiline: true,
-    },
+    {key: "title", label: "Section Title"},
+    {key: "subtitle", label: "Subtitle"},
+    {key: "description", label: "Description", multiline: true},
   ],
 
   // ==========================================================
@@ -285,62 +177,42 @@ CAPABILITIES: [
   // ==========================================================
 
   REVENUE: [
-    {key: "label", label: "Badge Label"}, 
+    {key: "label", label: "Badge Label"},
     {key: "headline", label: "Headline"},
-    {key: "paragraph", label: "Paragraph", multiline: true },
-    { key: "btnText", label: "Button Text" },
-    {key: "btnLink", label: "Button Link" },
-    { key: "secondaryBtnText", label: "Secondary Button Text" },
-    { key: "secondaryBtnLink", label: "Secondary Button Link" },
-],
+    {key: "paragraph", label: "Paragraph", multiline: true},
+    {key: "btnText", label: "Button Text"},
+    {key: "btnLink", label: "Button Link"},
+    {key: "secondaryBtnText", label: "Secondary Button Text"},
+    {key: "secondaryBtnLink", label: "Secondary Button Link"},
+  ],
 
   // ==========================================================
   // CLOSING AUTHORITY
   // ==========================================================
 
   CLOSING: [
-  { key: "label", label: "Eyebrow / Badge Label" },   // ← নতুন
-  { key: "headline", label: "Headline" },
-  { key: "paragraph", label: "Paragraph", multiline: true },
-  { key: "badge1", label: "Icon Item 1 (e.g. Scalable Infrastructure)" },
-  { key: "badge2", label: "Icon Item 2 (e.g. Multiple Revenue Channels)" },
-  { key: "badge3", label: "Icon Item 3 (e.g. Strategic Ownership Model)" },
-  { key: "ctaText", label: "Primary Button Text" },
-  { key: "ctaLink", label: "Primary Button Link" },
-  { key: "secondaryBtnText", label: "Secondary Button Text" },   
-  { key: "secondaryBtnLink", label: "Secondary Button Link" },   
-],
+    {key: "label", label: "Eyebrow / Badge Label"},
+    {key: "headline", label: "Headline"},
+    {key: "paragraph", label: "Paragraph", multiline: true},
+    {key: "badge1", label: "Icon Item 1 (e.g. Scalable Infrastructure)"},
+    {key: "badge2", label: "Icon Item 2 (e.g. Multiple Revenue Channels)"},
+    {key: "badge3", label: "Icon Item 3 (e.g. Strategic Ownership Model)"},
+    {key: "ctaText", label: "Primary Button Text"},
+    {key: "ctaLink", label: "Primary Button Link"},
+    {key: "secondaryBtnText", label: "Secondary Button Text"},
+    {key: "secondaryBtnLink", label: "Secondary Button Link"},
+  ],
 
   // ==========================================================
   // ABOUT
   // ==========================================================
 
   ABOUT: [
-    {
-      key: "title",
-      label: "Title",
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-    },
-
-    {
-      key: "body",
-      label: "Body",
-      multiline: true,
-    },
-
-    {
-      key: "btnText",
-      label: "Button Text",
-    },
-
-    {
-      key: "btnLink",
-      label: "Button Link",
-    },
+    {key: "title", label: "Title"},
+    {key: "subtitle", label: "Subtitle"},
+    {key: "body", label: "Body", multiline: true},
+    {key: "btnText", label: "Button Text"},
+    {key: "btnLink", label: "Button Link"},
   ],
 
   // ==========================================================
@@ -348,65 +220,18 @@ CAPABILITIES: [
   // ==========================================================
 
   SNAPSHOT: [
-    {
-      key: "label",
-      label: "Eyebrow / Badge Label",
-    },
-
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "entityTypeLabel",
-      label: "Fact 1 Label (e.g. Entity Type)",
-    },
-
-    {
-      key: "entityType",
-      label: "Fact 1 Value",
-    },
-
-    {
-      key: "headquartersLabel",
-      label: "Fact 2 Label (e.g. Headquarters)",
-    },
-
-    {
-      key: "headquarters",
-      label: "Fact 2 Value",
-    },
-
-    {
-      key: "structureLabel",
-      label: "Fact 3 Label (e.g. Structure)",
-    },
-
-    {
-      key: "structure",
-      label: "Fact 3 Value",
-    },
-
-    {
-      key: "businessModelLabel",
-      label: "Fact 4 Label (e.g. Business Model)",
-    },
-
-    {
-      key: "businessModel",
-      label: "Fact 4 Value",
-    },
-
-    {
-      key: "industryFocusLabel",
-      label: "Fact 5 Label (e.g. Industry Focus)",
-    },
-
-    {
-      key: "industryFocus",
-      label: "Fact 5 Value",
-    },
+    {key: "label", label: "Eyebrow / Badge Label"},
+    {key: "title", label: "Section Title"},
+    {key: "entityTypeLabel", label: "Fact 1 Label (e.g. Entity Type)"},
+    {key: "entityType", label: "Fact 1 Value"},
+    {key: "headquartersLabel", label: "Fact 2 Label (e.g. Headquarters)"},
+    {key: "headquarters", label: "Fact 2 Value"},
+    {key: "structureLabel", label: "Fact 3 Label (e.g. Structure)"},
+    {key: "structure", label: "Fact 3 Value"},
+    {key: "businessModelLabel", label: "Fact 4 Label (e.g. Business Model)"},
+    {key: "businessModel", label: "Fact 4 Value"},
+    {key: "industryFocusLabel", label: "Fact 5 Label (e.g. Industry Focus)"},
+    {key: "industryFocus", label: "Fact 5 Value"},
   ],
 
   // ==========================================================
@@ -414,76 +239,19 @@ CAPABILITIES: [
   // ==========================================================
 
   VALUES: [
-    {
-      key: "label",
-      label: "Section Label",
-    },
-
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-      multiline: true,
-    },
-
-    {
-      key: "step1Title",
-      label: "Step 1 Title",
-    },
-
-    {
-      key: "step1Description",
-      label: "Step 1 Description",
-      multiline: true,
-    },
-
-    {
-      key: "step2Title",
-      label: "Step 2 Title",
-    },
-
-    {
-      key: "step2Description",
-      label: "Step 2 Description",
-      multiline: true,
-    },
-
-    {
-      key: "step3Title",
-      label: "Step 3 Title",
-    },
-
-    {
-      key: "step3Description",
-      label: "Step 3 Description",
-      multiline: true,
-    },
-
-    {
-      key: "step4Title",
-      label: "Step 4 Title",
-    },
-
-    {
-      key: "step4Description",
-      label: "Step 4 Description",
-      multiline: true,
-    },
-
-    {
-      key: "step5Title",
-      label: "Step 5 Title",
-    },
-
-    {
-      key: "step5Description",
-      label: "Step 5 Description",
-      multiline: true,
-    },
+    {key: "label", label: "Section Label"},
+    {key: "title", label: "Section Title"},
+    {key: "subtitle", label: "Subtitle", multiline: true},
+    {key: "step1Title", label: "Step 1 Title"},
+    {key: "step1Description", label: "Step 1 Description", multiline: true},
+    {key: "step2Title", label: "Step 2 Title"},
+    {key: "step2Description", label: "Step 2 Description", multiline: true},
+    {key: "step3Title", label: "Step 3 Title"},
+    {key: "step3Description", label: "Step 3 Description", multiline: true},
+    {key: "step4Title", label: "Step 4 Title"},
+    {key: "step4Description", label: "Step 4 Description", multiline: true},
+    {key: "step5Title", label: "Step 5 Title"},
+    {key: "step5Description", label: "Step 5 Description", multiline: true},
   ],
 
   // ==========================================================
@@ -495,116 +263,44 @@ CAPABILITIES: [
     // HEADER
     // --------------------------------------------------------
 
-    {
-      key: "badge",
-      label: "Badge",
-    },
-
-    {
-      key: "title",
-      label: "Section Title",
-      multiline: true,
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-      multiline: true,
-    },
+    {key: "badge", label: "Badge"},
+    {key: "title", label: "Section Title", multiline: true},
+    {key: "subtitle", label: "Subtitle", multiline: true},
 
     // --------------------------------------------------------
     // BENEFIT 1
     // --------------------------------------------------------
 
-    {
-      key: "benefit1Icon",
-      label: "Benefit 1 Icon",
-    },
-
-    {
-      key: "benefit1Title",
-      label: "Benefit 1 Title",
-    },
-
-    {
-      key: "benefit1Description",
-      label: "Benefit 1 Description",
-      multiline: true,
-    },
+    {key: "benefit1Icon", label: "Benefit 1 Icon"},
+    {key: "benefit1Title", label: "Benefit 1 Title"},
+    {key: "benefit1Description", label: "Benefit 1 Description", multiline: true},
 
     // --------------------------------------------------------
     // BENEFIT 2
     // --------------------------------------------------------
 
-    {
-      key: "benefit2Icon",
-      label: "Benefit 2 Icon",
-    },
-
-    {
-      key: "benefit2Title",
-      label: "Benefit 2 Title",
-    },
-
-    {
-      key: "benefit2Description",
-      label: "Benefit 2 Description",
-      multiline: true,
-    },
+    {key: "benefit2Icon", label: "Benefit 2 Icon"},
+    {key: "benefit2Title", label: "Benefit 2 Title"},
+    {key: "benefit2Description", label: "Benefit 2 Description", multiline: true},
 
     // --------------------------------------------------------
     // BENEFIT 3
     // --------------------------------------------------------
 
-    {
-      key: "benefit3Icon",
-      label: "Benefit 3 Icon",
-    },
-
-    {
-      key: "benefit3Title",
-      label: "Benefit 3 Title",
-    },
-
-    {
-      key: "benefit3Description",
-      label: "Benefit 3 Description",
-      multiline: true,
-    },
+    {key: "benefit3Icon", label: "Benefit 3 Icon"},
+    {key: "benefit3Title", label: "Benefit 3 Title"},
+    {key: "benefit3Description", label: "Benefit 3 Description", multiline: true},
 
     // --------------------------------------------------------
     // STATS
     // --------------------------------------------------------
 
-    {
-      key: "statValue1",
-      label: "Stat 1 Value",
-    },
-
-    {
-      key: "statLabel1",
-      label: "Stat 1 Label",
-    },
-
-    {
-      key: "statValue2",
-      label: "Stat 2 Value",
-    },
-
-    {
-      key: "statLabel2",
-      label: "Stat 2 Label",
-    },
-
-    {
-      key: "statValue3",
-      label: "Stat 3 Value",
-    },
-
-    {
-      key: "statLabel3",
-      label: "Stat 3 Label",
-    },
+    {key: "statValue1", label: "Stat 1 Value"},
+    {key: "statLabel1", label: "Stat 1 Label"},
+    {key: "statValue2", label: "Stat 2 Value"},
+    {key: "statLabel2", label: "Stat 2 Label"},
+    {key: "statValue3", label: "Stat 3 Value"},
+    {key: "statLabel3", label: "Stat 3 Label"},
   ],
 
   // ==========================================================
@@ -616,101 +312,41 @@ CAPABILITIES: [
     // HEADER
     // --------------------------------------------------------
 
-    {
-      key: "badge",
-      label: "Badge Label",
-    },
-
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-      multiline: true,
-    },
+    {key: "badge", label: "Badge Label"},
+    {key: "title", label: "Section Title"},
+    {key: "subtitle", label: "Subtitle", multiline: true},
 
     // --------------------------------------------------------
     // STEP 1
     // --------------------------------------------------------
 
-    {
-      key: "step1Icon",
-      label: "Step 1 Icon",
-    },
-
-    {
-      key: "step1Title",
-      label: "Step 1 Title",
-    },
-
-    {
-      key: "step1Description",
-      label: "Step 1 Description",
-      multiline: true,
-    },
+    {key: "step1Icon", label: "Step 1 Icon"},
+    {key: "step1Title", label: "Step 1 Title"},
+    {key: "step1Description", label: "Step 1 Description", multiline: true},
 
     // --------------------------------------------------------
     // STEP 2
     // --------------------------------------------------------
 
-    {
-      key: "step2Icon",
-      label: "Step 2 Icon",
-    },
-
-    {
-      key: "step2Title",
-      label: "Step 2 Title",
-    },
-
-    {
-      key: "step2Description",
-      label: "Step 2 Description",
-      multiline: true,
-    },
+    {key: "step2Icon", label: "Step 2 Icon"},
+    {key: "step2Title", label: "Step 2 Title"},
+    {key: "step2Description", label: "Step 2 Description", multiline: true},
 
     // --------------------------------------------------------
     // STEP 3
     // --------------------------------------------------------
 
-    {
-      key: "step3Icon",
-      label: "Step 3 Icon",
-    },
-
-    {
-      key: "step3Title",
-      label: "Step 3 Title",
-    },
-
-    {
-      key: "step3Description",
-      label: "Step 3 Description",
-      multiline: true,
-    },
+    {key: "step3Icon", label: "Step 3 Icon"},
+    {key: "step3Title", label: "Step 3 Title"},
+    {key: "step3Description", label: "Step 3 Description", multiline: true},
 
     // --------------------------------------------------------
     // STEP 4
     // --------------------------------------------------------
 
-    {
-      key: "step4Icon",
-      label: "Step 4 Icon",
-    },
-
-    {
-      key: "step4Title",
-      label: "Step 4 Title",
-    },
-
-    {
-      key: "step4Description",
-      label: "Step 4 Description",
-      multiline: true,
-    },
+    {key: "step4Icon", label: "Step 4 Icon"},
+    {key: "step4Title", label: "Step 4 Title"},
+    {key: "step4Description", label: "Step 4 Description", multiline: true},
   ],
 
   // ==========================================================
@@ -718,124 +354,66 @@ CAPABILITIES: [
   // ==========================================================
 
   STATS: [
-    {
-      key: "eyebrow",
-      label: "Eyebrow",
-    },
-
-    {
-      key: "title",
-      label: "Title",
-    },
-
-    {
-      key: "description",
-      label: "Description",
-      multiline: true,
-    },
+    {key: "eyebrow", label: "Eyebrow"},
+    {key: "title", label: "Title"},
+    {key: "description", label: "Description", multiline: true},
   ],
 
   // ==========================================================
   // APPLICATION
   // ==========================================================
 
- APPLICATION: [
-  { key: "badge", label: "Eyebrow / Badge" },
-  { key: "title", label: "Left Panel Title" },
-  { key: "description", label: "Left Panel Description", multiline: true },
+  APPLICATION: [
+    {key: "badge", label: "Eyebrow / Badge"},
+    {key: "title", label: "Left Panel Title"},
+    {key: "description", label: "Left Panel Description", multiline: true},
 
-  // Checklist (dark card)
-  { key: "checklistTitle", label: "Dark Card Title" },
-  { key: "checklistDescription", label: "Dark Card Description", multiline: true },
+    // Checklist (dark card)
 
-  { key: "checklist1Title", label: "Checklist 1 Title" },
-  { key: "checklist1Desc", label: "Checklist 1 Description" },
-  { key: "checklist2Title", label: "Checklist 2 Title" },
-  { key: "checklist2Desc", label: "Checklist 2 Description" },
-  { key: "checklist3Title", label: "Checklist 3 Title" },
-  { key: "checklist3Desc", label: "Checklist 3 Description" },
+    {key: "checklistTitle", label: "Dark Card Title"},
+    {key: "checklistDescription", label: "Dark Card Description", multiline: true},
+    {key: "checklist1Title", label: "Checklist 1 Title"},
+    {key: "checklist1Desc", label: "Checklist 1 Description"},
+    {key: "checklist2Title", label: "Checklist 2 Title"},
+    {key: "checklist2Desc", label: "Checklist 2 Description"},
+    {key: "checklist3Title", label: "Checklist 3 Title"},
+    {key: "checklist3Desc", label: "Checklist 3 Description"},
 
-  // Form panel
-  { key: "formPanelTitle", label: "Form Panel Title" },
-  { key: "formPanelDescription", label: "Form Panel Subtitle", multiline: true },
+    // Form panel
 
-  // Note
-  { key: "noteTitle", label: "Note Box Title" },
-  { key: "noteDescription", label: "Note Box Description", multiline: true },
-],
+    {key: "formPanelTitle", label: "Form Panel Title"},
+    {key: "formPanelDescription", label: "Form Panel Subtitle", multiline: true},
+
+    // Note
+
+    {key: "noteTitle", label: "Note Box Title"},
+    {key: "noteDescription", label: "Note Box Description", multiline: true},
+  ],
+
   // ==========================================================
   // FEATURE
   // ==========================================================
 
- FEATURE: [
-    {
-      key: "icon",
-      label: "Icon Badge Text (e.g. 10 — blank = default icon)",
-    },
- 
-    {
-      key: "title",
-      label: "Title",
-    },
- 
-    {
-      key: "description",
-      label: "Description",
-      multiline: true,
-    },
- 
-    {
-      key: "btnText",
-      label: "Button Text",
-    },
- 
-    {
-      key: "btnLink",
-      label: "Button Link",
-    },
+  FEATURE: [
+    {key: "icon", label: "Icon Badge Text (e.g. 10 — blank = default icon)"},
+    {key: "title", label: "Title"},
+    {key: "description", label: "Description", multiline: true},
+    {key: "btnText", label: "Button Text"},
+    {key: "btnLink", label: "Button Link"},
   ],
- 
 
   // ==========================================================
   // CTA
   // ==========================================================
 
   CTA: [
-    {
-      key: "eyebrow",
-      label: "Eyebrow / Small Label",
-    },
-
-    {
-      key: "title",
-      label: "Title",
-    },
-
-    {
-      key: "description",
-      label: "Description",
-      multiline: true,
-    },
-
-    {
-      key: "btnText",
-      label: "Primary Button Text",
-    },
-
-    {
-      key: "btnLink",
-      label: "Primary Button Link",
-    },
-
-    {
-      key: "secondaryBtnText",
-      label: "Secondary Button Text",
-    },
-
-    {
-      key: "secondaryBtnLink",
-      label: "Secondary Button Link",
-    },
+    {key: "eyebrow", label: "Eyebrow / Small Label"},
+    {key: "title", label: "Title"},
+    {key: "description", label: "Description", multiline: true},
+    {key: "btnText", label: "Primary Button Text"},
+    {key: "btnLink", label: "Primary Button Link"},
+    {key: "secondaryBtnText", label: "Secondary Button Text"},
+    {key: "secondaryBtnLink", label: "Secondary Button Link"},
   ],
 
   // ==========================================================
@@ -843,26 +421,10 @@ CAPABILITIES: [
   // ==========================================================
 
   TESTIMONIALS: [
-    {
-      key: "title",
-      label: "Section Title",
-    },
-
-    {
-      key: "authorName",
-      label: "Author Name",
-    },
-
-    {
-      key: "authorTitle",
-      label: "Author Title",
-    },
-
-    {
-      key: "quote",
-      label: "Quote",
-      multiline: true,
-    },
+    {key: "title", label: "Section Title"},
+    {key: "authorName", label: "Author Name"},
+    {key: "authorTitle", label: "Author Title"},
+    {key: "quote", label: "Quote", multiline: true},
   ],
 
   // ==========================================================
@@ -870,16 +432,8 @@ CAPABILITIES: [
   // ==========================================================
 
   GALLERY: [
-    {
-      key: "title",
-      label: "Gallery Title",
-    },
-
-    {
-      key: "caption",
-      label: "Caption",
-      multiline: true,
-    },
+    {key: "title", label: "Gallery Title"},
+    {key: "caption", label: "Caption", multiline: true},
   ],
 
   // ==========================================================
@@ -887,62 +441,16 @@ CAPABILITIES: [
   // ==========================================================
 
   CONTACT: [
-    {
-      key: "badge",
-      label: "Badge",
-    },
-
-    {
-      key: "title",
-      label: "Title",
-    },
-
-    {
-      key: "subtitle",
-      label: "Subtitle",
-      multiline: true,
-    },
-
-    {
-      key: "email",
-      label: "Contact Email",
-    },
-
-    {
-      key: "website",
-      label: "Website",
-    },
-
-    {
-      key: "phone",
-      label: "Phone",
-    },
-
-    {
-      key: "location",
-      label: "Location",
-    },
-
-    {
-      key: "aboutLabel",
-      label: "About Label",
-    },
-
-    {
-      key: "aboutDescription",
-      label: "About Description",
-      multiline: true,
-    },
-
-    {
-      key: "formTitle",
-      label: "Form Title",
-    },
-
-    {
-      key: "formDescription",
-      label: "Form Description",
-      multiline: true,
-    },
+    {key: "badge", label: "Badge"},
+    {key: "title", label: "Title"},
+    {key: "subtitle", label: "Subtitle", multiline: true},
+    {key: "email", label: "Contact Email"},
+    {key: "website", label: "Website"},
+    {key: "phone", label: "Phone"},
+    {key: "location", label: "Location"},
+    {key: "aboutLabel", label: "About Label"},
+    {key: "aboutDescription", label: "About Description", multiline: true},
+    {key: "formTitle", label: "Form Title"},
+    {key: "formDescription", label: "Form Description", multiline: true},
   ],
 };

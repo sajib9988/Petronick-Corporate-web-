@@ -41,6 +41,9 @@ enum SectionType {
   TESTIMONIALS
   GALLERY
   CONTACT
+
+ LEGAL
+
 }
 
 enum FocusType {

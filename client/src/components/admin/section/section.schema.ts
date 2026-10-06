@@ -8,7 +8,7 @@ export const sectionSchema = z.object({
     "ECOSYSTEM",
     "REVENUE",
     "CLOSING",
-
+"LEGAL",
     "ABOUT",
     "SNAPSHOT",
     "VALUES",
