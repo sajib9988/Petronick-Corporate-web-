@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Landmark,
 } from "lucide-react";
-
 import { fadeUp, staggerContainer } from "@/lib/motion";
 
 interface ClosingContent {
@@ -65,7 +64,7 @@ export default function ClosingSection({
   ].filter(Boolean);
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl  sm:py-9">
+    <section className="relative w-full overflow-hidden rounded-2xl sm:py-9">
       {/* Decorative glow */}
       <div className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
 
@@ -100,19 +99,21 @@ export default function ClosingSection({
           {/* Buttons */}
           <motion.div
             variants={fadeUp(0.15, 0.6)}
-            className="flex flex-wrap gap-3"
+            className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
+            {/* Primary Button */}
             <Link
               href={ctaLink}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F2747] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#16365f]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#0F2747] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#16365f] sm:w-auto"
             >
               {ctaText}
               <ArrowRight size={15} />
             </Link>
 
+            {/* Secondary Button */}
             <Link
               href={secondaryBtnLink}
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-50 sm:w-auto"
             >
               {secondaryBtnText}
               <ArrowRight size={15} />
@@ -133,7 +134,7 @@ export default function ClosingSection({
           {/* ICON ITEMS */}
           <motion.div
             variants={staggerContainer(0.1, 0.1)}
-            className="grid grid-cols-3 gap-4"
+            className="grid grid-cols-1 gap-4 sm:grid-cols-3"
           >
             {items.map((itemLabel, i) => {
               const Icon = ICONS[i % ICONS.length];
@@ -162,4 +163,6 @@ export default function ClosingSection({
     </section>
   );
 }
+
+
 
