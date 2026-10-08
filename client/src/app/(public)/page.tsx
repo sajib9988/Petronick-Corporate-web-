@@ -114,14 +114,15 @@ export default async function HomePage() {
               ))}
             </div>
 
-            <div className="mt-6 text-center sm:hidden">
-              <Link
-                href="/companies"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-200 border border-gray-700 px-4 py-2 rounded-lg hover:bg-gray-800"
-              >
-                View all companies <ArrowRight size={13} />
-              </Link>
-            </div>
+           <div className="mt-6 w-full text-center sm:hidden">
+  <Link
+    href="/companies"
+    className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-700 px-4 py-2 text-sm font-semibold text-gray-200 hover:bg-gray-800"
+  >
+    View all companies
+    <ArrowRight size={13} />
+  </Link>
+</div>
           </div>
         </Container>
       </section>
