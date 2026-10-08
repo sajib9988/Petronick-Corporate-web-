@@ -173,7 +173,7 @@ export default function CompanyCard({ company, index = 0 }: CompanyCardProps) {
     href={`/companies/${company.id}`}
     className="
       inline-flex flex-1 items-center justify-center rounded-lg bg-[#0F2747]
-      px-4 py-2.5 text-[12px] font-semibold text-white transition-colors
+      px-4 py-2.5 text-[12px] font-semibold text-black transition-colors
       hover:bg-orange-600
     "
   >

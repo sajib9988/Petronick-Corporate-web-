@@ -74,11 +74,11 @@ export default function RevenueOpportunitySection({
         </p>
 
         {/* RIGHT: CTA */}
-        <div className="relative z-10 shrink-0">
-          <Link
-            href={btnLink}
-            className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg shadow-amber-900/30 transition-all hover:scale-[1.03] hover:shadow-amber-700/40"
-          >
+        <div className="relative z-10 w-full shrink-0 sm:w-auto">
+  <Link
+    href={btnLink}
+    className="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg shadow-amber-900/30 transition-all hover:scale-[1.03] hover:shadow-amber-700/40 sm:w-auto"
+  >
             {btnText}
             <ArrowRight size={15} />
           </Link>
