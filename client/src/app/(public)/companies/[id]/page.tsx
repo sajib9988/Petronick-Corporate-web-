@@ -106,22 +106,21 @@ export default async function CompanyDetailPage({
             <Reveal>
               <div className="mt-9 flex flex-col gap-7 sm:flex-row sm:items-end">
                 {/* Logo tile */}
-                <div className="relative flex-shrink-0">
-                  <div className="absolute -inset-[3px] rounded-[26px] bg-gradient-to-tr from-emerald-400/70 via-emerald-500/10 to-transparent" />
-                  <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] backdrop-blur-sm">
-                    {company.logo ? (
-                      <img
-                        src={company.logo}
-                        alt={company.name}
-                        className="h-full w-full rounded-[22px] object-contain p-3"
-                      />
-                    ) : (
-                      <span className="text-3xl font-bold text-white/80">
-                        {initial}
-                      </span>
-                    )}
-                  </div>
-                </div>
+             {/* Logo tile */}
+<div className="relative flex-shrink-0">
+  <div className="absolute -inset-[3px] rounded-[26px] bg-gradient-to-tr from-emerald-400/70 via-emerald-500/10 to-transparent" />
+  <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-[22px] border border-white/10 bg-white shadow-lg sm:h-28 sm:w-28">
+    {company.logo ? (
+      <img
+        src={company.logo}
+        alt={company.name}
+        className="h-full w-full object-contain p-2"
+      />
+    ) : (
+      <span className="text-3xl font-bold text-[#0B1220]">{initial}</span>
+    )}
+  </div>
+</div>
 
                 <div className="min-w-0 flex-1">
                   {company.category && (
@@ -206,7 +205,7 @@ export default async function CompanyDetailPage({
                   </a>
                 )}
                 <Link
-                  href="/promotion-agent"
+                  href="/promotion-agent#application"
                   className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
                 >
                   Represent This Unit
