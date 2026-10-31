@@ -90,7 +90,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="inline-block">
               <Image
-                src="/Word Mark.png"
+                src="/Word Mark.webp"
                 alt="Petronick Corporate Holdings LLC"
                 width={130}
                 height={40}
